@@ -3,14 +3,26 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
+import { Checkbox } from 'react-native-paper';
+
 
 const LoginScreen = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [checked, setChecked] = React.useState(false);
+
     const handleLogin = () => {
         console.log('Username:', username);
         console.log('Password:', password);
+    };
+
+    const handleUsernameChange = (text: string) => {
+        setUsername(text);
+    };
+
+    const handlePasswordChange = (text: string) => {
+        setPassword(text);
     };
 
     return (
@@ -24,14 +36,14 @@ const LoginScreen = () => {
             <CustomTextInput
                 placeholder="Username"
                 value={username}
-                onChangeText={setUsername}
+                onChangeText={handleUsernameChange}
                 autoCapitalize="none"
             />
 
             <CustomTextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
+                placeholder="Password"
+                value={password}
+                onChangeText={handlePasswordChange}
                 secureTextEntry
             />
 
@@ -39,6 +51,13 @@ const LoginScreen = () => {
                 text="Login"
                 onPressHandler={handleLogin}
                 textSize={20}
+            />
+
+            <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                    setChecked(!checked);
+                }}
             />
 
         </View>

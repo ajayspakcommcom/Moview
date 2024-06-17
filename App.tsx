@@ -10,6 +10,7 @@ import React from 'react';
 import { useColorScheme } from 'react-native';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import Colors from './src/styles/Colors';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,8 @@ function App(): React.JSX.Element {
 
 
   return (
+
+
 
     <NavigationContainer>
 

@@ -1,16 +1,23 @@
-// src/components/CommonTextInput.tsx
-
 import React from 'react';
 import { TextInput, StyleSheet, TextInputProps } from 'react-native';
 import Colors from '../../styles/Colors';
 
 interface CustomTextInputProps extends TextInputProps {
-    // Define any additional props you want to pass to TextInput
+
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = (props) => {
+
+    const { onChangeText, ...otherProps } = props;
+
+    const handleTextChange = (text: string) => {
+        if (onChangeText) {
+            onChangeText(text);
+        }
+    };
+
     return (
-        <TextInput {...props} style={[styles.input, props.style]} />
+        <TextInput {...props} style={[styles.input, props.style]} onChangeText={handleTextChange} />
     );
 };
 

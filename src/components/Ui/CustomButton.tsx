@@ -26,18 +26,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
 
         },
         text: {
-            fontSize: 18,
-            fontWeight: 'bold',
+            fontSize: Fonts.Size.Medium - 1,
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Bold
         },
         rippleEffect: {
-            //color: Colors.venetianRed,
+            opacity: 0.5
         },
     });
 
     const androidRippleConfig: PressableAndroidRippleConfig = {
-        //color: Colors.venetianRed,
+        color: Colors.dullRedColor
     };
 
     return (

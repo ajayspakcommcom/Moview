@@ -72,18 +72,18 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     
-    project.ext.react = [
-    entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
-    bundleInDebug: false,
-    bundleInRelease: true,
-    fonts: [
-        ["Thin": ["src/assets/fonts/Thin.ttf"]],
-        ["Light": ["src/assets/fonts/Light.ttf"]],
-        ["Bold": ["src/assets/fonts/Bold.ttf"]],
-        ["Medium": ["src/assets/fonts/Medium.ttf"]],
-    ]
-]
+//     project.ext.react = [
+//     entryFile: "index.js",
+//     enableHermes: false,  // clean and rebuild if changing
+//     bundleInDebug: false,
+//     bundleInRelease: true,
+//     fonts: [
+//         ["Thin": ["src/assets/fonts/Thin.ttf"]],
+//         ["Light": ["src/assets/fonts/Light.ttf"]],
+//         ["Bold": ["src/assets/fonts/Bold.ttf"]],
+//         ["Medium": ["src/assets/fonts/Medium.ttf"]],
+//     ]
+// ]
 
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion

@@ -4,6 +4,7 @@ import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 import { Checkbox } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
 
 
 const LoginScreen = () => {
@@ -53,12 +54,31 @@ const LoginScreen = () => {
                 textSize={20}
             />
 
-            <Checkbox
-                status={checked ? 'checked' : 'unchecked'}
-                onPress={() => {
-                    setChecked(!checked);
-                }}
-            />
+            <View style={styles.rememberForgot}>
+                <View style={styles.rememberCheckbox}>
+                    <Checkbox
+                        status={checked ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            setChecked(!checked);
+                        }}
+                    />
+                    <Text style={styles.remember}>Remember Me</Text>
+                </View>
+                <View>
+                    <Text style={styles.forgotText}>Forgot Password</Text>
+                </View>
+            </View>
+
+
+            <View style={styles.skipWrapper}>
+                <Text style={styles.skipText}>SKIP</Text>
+                <View style={styles.skipDont}>
+                    <Text style={styles.skipBottomText}>Don’t have an account?</Text>
+                    <Text style={styles.skipBottomText}>Register</Text>
+                </View>
+            </View>
+
+
 
         </View>
     );
@@ -75,7 +95,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 166,
         height: 118,
-        marginBottom: 20,
+        marginBottom: 60,
     },
 
     button: {
@@ -91,6 +111,57 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
+    rememberForgot: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color: Colors.whiteColor,
+        paddingRight: 10
+    },
+
+    rememberCheckbox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+
+    remember: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Small,
+    },
+
+    forgotText: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Small,
+        textDecorationLine: 'underline'
+    },
+
+    skipWrapper: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    skipText: {
+        fontSize: Fonts.Size.X_Large - 3,
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Light,
+        marginBottom: 30,
+        marginTop: 80
+    },
+
+    skipDont: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    skipBottomText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small,
+        lineHeight: 20
+    }
 });
 
 export default LoginScreen;

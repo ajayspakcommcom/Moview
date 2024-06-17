@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Colors from '../../styles/Colors';
+import CustomTextInput from '../../components/Ui/CustomTextInput';
+import CustomButton from '../../components/Ui/CustomButton';
 
 const LoginScreen = () => {
     const [username, setUsername] = useState('');
@@ -15,30 +17,30 @@ const LoginScreen = () => {
         <View style={styles.container}>
 
             <Image
-                source={require('../../assets/images/logo.png')} // Replace with your image path
+                source={require('../../assets/images/logo.png')} //Replace with your image path
                 style={styles.logo}
             />
 
-            <TextInput
-                style={styles.input}
+            <CustomTextInput
                 placeholder="Username"
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize="none"
             />
 
-
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
+            <CustomTextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={setUsername}
                 secureTextEntry
             />
 
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+            <CustomButton
+                text="Login"
+                onPressHandler={handleLogin}
+                textSize={20}
+            />
+
         </View>
     );
 };
@@ -56,20 +58,7 @@ const styles = StyleSheet.create({
         height: 118,
         marginBottom: 20,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        marginBottom: 15,
-    },
+
     button: {
         width: '100%',
         height: 50,

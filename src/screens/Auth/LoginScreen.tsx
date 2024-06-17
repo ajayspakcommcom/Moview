@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from 'react-native';
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
@@ -24,6 +24,10 @@ const LoginScreen = () => {
 
     const handlePasswordChange = (text: string) => {
         setPassword(text);
+    };
+
+    const skipHandler = (event: GestureResponderEvent) => {
+        console.log('Skip pressed!');
     };
 
     return (
@@ -71,7 +75,7 @@ const LoginScreen = () => {
 
 
             <View style={styles.skipWrapper}>
-                <Text style={styles.skipText}>SKIP</Text>
+                <Text style={styles.skipText} onPress={skipHandler}>SKIP</Text>
                 <View style={styles.skipDont}>
                     <Text style={styles.skipBottomText}>Don’t have an account?</Text>
                     <Text style={styles.skipBottomText}>Register</Text>

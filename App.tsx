@@ -5,7 +5,7 @@
  **/
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import RegisterScreen from './src/screens/Auth/RegisterScreen';
@@ -32,11 +32,9 @@ function App(): React.JSX.Element {
 
   React.useEffect(() => {
     setIsLoggedIn(true);
-    console.clear();
-    console.log('Ram...');
   }, []);
 
-  const tabScreenOptions = {
+  const tabScreenOptions: BottomTabNavigationOptions = {
     headerShown: false,
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
@@ -47,8 +45,6 @@ function App(): React.JSX.Element {
 
   return (
 
-
-
     <NavigationContainer>
 
       {!isLoggedIn &&
@@ -58,17 +54,14 @@ function App(): React.JSX.Element {
         </Stack.Navigator>
       }
 
-
       {isLoggedIn &&
         <Tab.Navigator screenOptions={{ ...tabScreenOptions }}>
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
           <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} />
-          {/* <Tab.Screen name="Setting" component={SettingNavigation} options={{ tabBarIcon: ({ color, size }) => <Icon name={'settings'} size={size} color={color} /> }} /> */}
           <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />
         </Tab.Navigator>
       }
-
 
     </NavigationContainer>
   );

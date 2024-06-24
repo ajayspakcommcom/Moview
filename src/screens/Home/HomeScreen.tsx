@@ -4,19 +4,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 
 type Props = {
-    navigation: StackNavigationProp<any>; // Replace with appropriate navigation prop type
+    navigation: StackNavigationProp<any>;
 };
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
-    const goToDetailScreen = () => {
+    const goto = (screen: string) => {
         navigation.navigate('DetailScreen');
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Home Screen</Text>
-            <Button title="Go to Detail Screen" onPress={goToDetailScreen} />
         </View>
     );
 };
@@ -26,7 +24,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.whiteColor,
+        width: '100%'
     },
     text: {
         fontSize: 24,

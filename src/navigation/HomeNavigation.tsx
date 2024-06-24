@@ -8,17 +8,21 @@ const Stack = createNativeStackNavigator();
 
 const HomeNavigation: React.FC = () => {
 
-    const screenOptions: NativeStackNavigationOptions = {
+    const navigatorOptions: NativeStackNavigationOptions = {
         headerShown: false,
         headerStyle: { backgroundColor: Colors.blackColor },
-        headerTintColor: 'white',
+        headerTintColor: 'red',
         headerTitleAlign: 'left',
         contentStyle: { backgroundColor: Colors.darkBackgroudColor }
     };
 
+    const screenOptions: NativeStackNavigationOptions = {
+        contentStyle: { backgroundColor: Colors.darkBackgroudColor }
+    };
+
     return (
-        <Stack.Navigator screenOptions={screenOptions}>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Navigator screenOptions={navigatorOptions}>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
         </Stack.Navigator>
     );
 };

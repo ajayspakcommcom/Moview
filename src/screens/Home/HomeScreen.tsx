@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
+import HomeCarousel from '../../components/Home-Carousel/HomeCarousel';
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -15,6 +16,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <HomeCarousel />
         </View>
     );
 };

@@ -8,13 +8,15 @@ import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type Props = {
-    navigation: StackNavigationProp<any>; // Adjust the type as per your navigation stack configuration
+    navigation: StackNavigationProp<any>;
 };
 
+const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+    const [firstname, setFirstname] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [phone, setPhone] = React.useState('');
 
     const [checked, setChecked] = React.useState(false);
 
@@ -23,12 +25,20 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         console.log('Password:', password);
     };
 
+    const handleFirstnameChange = (text: string) => {
+        setFirstname(text);
+    };
+
     const handleUsernameChange = (text: string) => {
         setUsername(text);
     };
 
     const handlePasswordChange = (text: string) => {
         setPassword(text);
+    };
+
+    const skipHandler = (event: GestureResponderEvent) => {
+        console.log('Skip pressed!');
     };
 
     const goto = (screen: string) => {
@@ -41,6 +51,13 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             <Image
                 source={require('../../assets/images/logo.png')} //Replace with your image path
                 style={styles.logo}
+            />
+
+            <CustomTextInput
+                placeholder="First name"
+                value={firstname}
+                onChangeText={handleFirstnameChange}
+                autoCapitalize="none"
             />
 
             <CustomTextInput
@@ -57,34 +74,24 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 secureTextEntry
             />
 
+            <CustomTextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={handlePasswordChange}
+                secureTextEntry
+            />
+
             <CustomButton
-                text="Login"
+                text="Register"
                 onPressHandler={handleLogin}
                 textSize={20}
             />
 
-            <View style={styles.rememberForgot}>
-                <View style={styles.rememberCheckbox}>
-                    <Checkbox
-                        status={checked ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setChecked(!checked);
-                        }}
-                    />
-                    <Text style={styles.remember}>Remember Me</Text>
-                </View>
-                <View>
-                    <Text style={styles.forgotText}>Forgot Password</Text>
-                </View>
-            </View>
 
 
-            <View style={styles.skipWrapper}>
-                <Text style={styles.skipText} onPress={() => goto('Home')}>SKIP</Text>
-                <View style={styles.skipDont}>
-                    <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                    <Text style={styles.skipBottomText} onPress={() => goto('Register')}>Register</Text>
-                </View>
+            <View style={styles.footerTextWrapper}>
+                <Text style={styles.dontHaveAccount}>Already have an account?</Text>
+                <Text style={[styles.dontHaveAccount, styles.login]} onPress={() => goto('Login')}>Login</Text>
             </View>
 
 
@@ -146,31 +153,23 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline'
     },
 
-    skipWrapper: {
-        flexDirection: 'column',
-        alignItems: 'center',
+    footerTextWrapper: {
+        marginTop: 25,
+        flexDirection: 'row',
+        width: '100%',
         justifyContent: 'center'
     },
 
-    skipText: {
-        fontSize: Fonts.Size.X_Large - 3,
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Light,
-        marginBottom: 30,
-        marginTop: 80
-    },
-
-    skipDont: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    skipBottomText: {
+    dontHaveAccount: {
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Small,
-        lineHeight: 20
+        lineHeight: 20,
+        textAlign: 'center'
+    },
+    login: {
+        color: Colors.whiteColor,
     }
 });
 
-export default LoginScreen;
+export default RegisterScreen;

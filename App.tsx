@@ -36,6 +36,14 @@ function App(): React.JSX.Element {
     console.log('Ram...');
   }, []);
 
+  const tabScreenOptions = {
+    headerShown: false,
+    tabBarActiveTintColor: Colors.tabActiveColor,
+    tabBarInactiveTintColor: Colors.whiteColor,
+    tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, height: 60, paddingBottom: 5 },
+    tabBarLabelStyle: { fontSize: 13, lineHeight: 15 },
+  };
+
 
   return (
 
@@ -52,7 +60,7 @@ function App(): React.JSX.Element {
 
 
       {isLoggedIn &&
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{ ...tabScreenOptions }}>
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
           <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} />

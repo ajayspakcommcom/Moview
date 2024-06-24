@@ -4,7 +4,9 @@ const Colors = {
     blackColor: '#000000',
     redColor: '#9D0421',
     dullRedColor: '#e0062e',
-    inputBackgroundColor: '#e6e6e6'
+    inputBackgroundColor: '#e6e6e6',
+    tabBgColor: '#48484A',
+    tabActiveColor: '#ECCD29',
 };
 
 export default Colors;

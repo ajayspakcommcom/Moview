@@ -27,8 +27,6 @@ const HomeCarousel = () => {
                 {pages.map((item: { key: string, text: string }) =>
                     <PagerViewItem key={item.key} text={item.text} currentIndex={currentIndex} />
                 )}
-
-
             </PagerView>
             <CarouselBulletNavigation pages={pages} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
         </View>

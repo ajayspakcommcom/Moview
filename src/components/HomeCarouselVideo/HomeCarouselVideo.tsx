@@ -9,9 +9,10 @@ interface HomeCarouselVideoProps {
     title: string;
     content: string;
     backgroundColor?: string;
+    videoUrl: string;
 }
 
-const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, backgroundColor = 'lightblue' }) => {
+const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, backgroundColor = 'lightblue', videoUrl }) => {
 
     const videoRef = React.useRef<VideoRef>(null);
     const [isPlaying, setIsPlaying] = React.useState(false);
@@ -43,7 +44,7 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
     return (
         <View style={styles.container}>
             <Video
-                source={{ uri: 'https://videos.pexels.com/video-files/4440931/4440931-hd_1920_1080_25fps.mp4' }}
+                source={{ uri: videoUrl }}
                 controls={false}
                 paused={!isPlaying}
                 resizeMode="cover"
@@ -54,7 +55,7 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                 onLoad={onLoad}
                 style={styles.backgroundVideo}
             />
-
+            {/* <Text style={{ color: '#fff' }}>{videoUrl}</Text> */}
             <TouchableOpacity activeOpacity={0.8} onPress={togglePlay} style={styles.actionButtonWrapper}>
                 <View>
                     <Icon name={!isPlaying ? 'play' : 'pause'} size={45} color={Colors.playPauseButtonColor} />

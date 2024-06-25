@@ -4,10 +4,11 @@ import HomeCarouselVideo from '../HomeCarouselVideo/HomeCarouselVideo';
 
 interface PagerViewItemProps {
     text: string;
+    videoUrl: string;
     currentIndex: number;
 }
 
-const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex }) => {
+const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex, videoUrl }) => {
     return (
 
         <View style={styles.pageItem}>
@@ -15,6 +16,7 @@ const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex }) => 
                 title="Another Example"
                 content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                 backgroundColor="lightgreen"
+                videoUrl={videoUrl}
             />
         </View>
     );

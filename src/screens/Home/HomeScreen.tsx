@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
-import HomeCarousel from '../../components/Home-Carousel/HomeCarousel';
+import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 
 type Props = {
     navigation: StackNavigationProp<any>;

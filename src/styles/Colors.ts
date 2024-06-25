@@ -7,6 +7,7 @@ const Colors = {
     inputBackgroundColor: '#e6e6e6',
     tabBgColor: '#48484A',
     tabActiveColor: '#ECCD29',
+    carouselActiveColor: '#6C60FD'
 };
 
 export default Colors;

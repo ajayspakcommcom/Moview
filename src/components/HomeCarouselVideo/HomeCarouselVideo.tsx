@@ -54,11 +54,14 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                 onLoad={onLoad}
                 style={styles.backgroundVideo}
             />
-            <View style={styles.actionButtonWrapper}>
-                <TouchableOpacity activeOpacity={0.8} onPress={togglePlay}>
-                    <Icon name={'play'} size={45} color={Colors.playPauseButtonColor} />
-                </TouchableOpacity>
-            </View>
+
+            <TouchableOpacity activeOpacity={0.8} onPress={togglePlay} style={styles.actionButtonWrapper}>
+                <View>
+                    <Icon name={!isPlaying ? 'play' : 'pause'} size={45} color={Colors.playPauseButtonColor} />
+                </View>
+            </TouchableOpacity>
+
+
         </View>
     );
 };

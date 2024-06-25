@@ -11,7 +11,6 @@ const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex }) => 
     return (
         <View style={styles.page}>
             <View style={styles.pageItem}>
-                <Text>{text} {currentIndex}</Text>
                 <HomeCarouselVideo
                     title="Another Example"
                     content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -24,13 +23,11 @@ const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex }) => 
 
 const styles = StyleSheet.create({
     page: {
-        flex: 1,
+
     },
     pageItem: {
-        position: 'relative',
-        minHeight: '100%',
+        height: 300,
         borderRadius: 5,
-        backgroundColor: 'pink',
         paddingHorizontal: 15,
         alignItems: 'center',
         justifyContent: 'center',

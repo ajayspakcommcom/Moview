@@ -24,15 +24,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%'
-    },
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
+    }
 });
 
 export default HomeScreen;

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Video, { VideoRef, OnLoadData } from 'react-native-video';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Foundation';
+import Colors from '../../styles/Colors';
 
 
 interface HomeCarouselVideoProps {
@@ -52,19 +54,38 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                 onLoad={onLoad}
                 style={styles.backgroundVideo}
             />
-            <TouchableOpacity activeOpacity={0.8} onPress={togglePlay}><Text>Hello World</Text></TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8} onPress={togglePlay} style={styles.actionButton}>
+                <Icon name={'play'} size={45} color={Colors.playPauseButtonColor} style={styles.icon} />
+            </TouchableOpacity>
         </>
     );
 };
 
 const styles = StyleSheet.create({
     backgroundVideo: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
+        width: '100%',
+        height: 300
     },
+
+    actionButton: {
+        borderWidth: 5,
+        borderColor: Colors.playPauseButtonColor,
+        borderRadius: 50,
+        width: 100,
+        height: 100,
+        top: '0%',
+        left: '0%',
+        transform: [{ translateX: -25 }, { translateY: -25 }],
+    },
+    icon: {
+        alignSelf: 'center',
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -25 }, { translateY: -25 }],
+    }
 });
 
 export default HomeCarouselVideo;

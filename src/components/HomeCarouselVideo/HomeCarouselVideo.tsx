@@ -60,8 +60,6 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                     <Icon name={!isPlaying ? 'play' : 'pause'} size={45} color={Colors.playPauseButtonColor} />
                 </View>
             </TouchableOpacity>
-
-
         </View>
     );
 };

@@ -41,12 +41,12 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
     };
 
     return (
-        <>
+        <View style={styles.container}>
             <Video
                 source={{ uri: 'https://videos.pexels.com/video-files/4440931/4440931-hd_1920_1080_25fps.mp4' }}
                 controls={false}
                 paused={!isPlaying}
-                resizeMode="contain"
+                resizeMode="cover"
                 repeat={true}
                 ref={videoRef}
                 onBuffer={onBuffer}
@@ -54,37 +54,45 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                 onLoad={onLoad}
                 style={styles.backgroundVideo}
             />
-            <TouchableOpacity activeOpacity={0.8} onPress={togglePlay} style={styles.actionButton}>
-                <Icon name={'play'} size={45} color={Colors.playPauseButtonColor} style={styles.icon} />
-            </TouchableOpacity>
-        </>
+            <View style={styles.actionButtonWrapper}>
+                <TouchableOpacity activeOpacity={0.8} onPress={togglePlay}>
+                    <Icon name={'play'} size={45} color={Colors.playPauseButtonColor} />
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    backgroundVideo: {
+
+    container: {
         width: '100%',
-        height: 300
+        minHeight: 300,
+        position: 'relative'
     },
 
-    actionButton: {
+    backgroundVideo: {
+        width: '100%',
+        minHeight: 200,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        right: 0
+    },
+
+    actionButtonWrapper: {
         borderWidth: 5,
         borderColor: Colors.playPauseButtonColor,
         borderRadius: 50,
         width: 100,
         height: 100,
-        top: '0%',
-        left: '0%',
-        transform: [{ translateX: -25 }, { translateY: -25 }],
-    },
-    icon: {
-        alignSelf: 'center',
-        position: 'absolute',
-        width: 100,
-        height: 100,
         top: '50%',
         left: '50%',
-        transform: [{ translateX: -25 }, { translateY: -25 }],
+        transform: [{ translateX: -50 }, { translateY: -50 }],
+        justifyContent: 'center',
+        alignItems: 'center',
+        opacity: 0.8
     }
 });
 

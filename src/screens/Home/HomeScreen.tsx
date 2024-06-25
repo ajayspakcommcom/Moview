@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Colors from '../../styles/Colors';
 import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 
 type Props = {

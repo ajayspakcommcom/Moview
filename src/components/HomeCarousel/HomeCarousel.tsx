@@ -23,7 +23,7 @@ const HomeCarousel = () => {
 
     return (
         <View style={styles.container}>
-            <PagerView style={styles.pagerView} initialPage={0} useNext={true} onPageSelected={(event) => setCurrentIndex(event.nativeEvent.position)}>
+            <PagerView initialPage={0} useNext={true} onPageSelected={(event) => setCurrentIndex(event.nativeEvent.position)} style={styles.PagerView}>
                 {pages.map((item: { key: string, text: string }) =>
                     <PagerViewItem key={item.key} text={item.text} currentIndex={currentIndex} />
                 )}
@@ -36,12 +36,13 @@ const HomeCarousel = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: 300
+        height: 300,
+        backgroundColor: 'pink',
+        position: 'relative'
     },
 
-    pagerView: {
-        // backgroundColor: 'pink',
-        // height: 300
+    PagerView: {
+        backgroundColor: 'green'
     }
 });
 

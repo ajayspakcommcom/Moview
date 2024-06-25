@@ -9,28 +9,20 @@ interface PagerViewItemProps {
 
 const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex }) => {
     return (
-        <View style={styles.page}>
-            <View style={styles.pageItem}>
-                <HomeCarouselVideo
-                    title="Another Example"
-                    content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    backgroundColor="lightgreen"
-                />
-            </View>
+
+        <View style={styles.pageItem}>
+            <HomeCarouselVideo
+                title="Another Example"
+                content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                backgroundColor="lightgreen"
+            />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    page: {
-
-    },
     pageItem: {
-        height: 300,
-        borderRadius: 5,
-        paddingHorizontal: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: 300
     }
 });
 

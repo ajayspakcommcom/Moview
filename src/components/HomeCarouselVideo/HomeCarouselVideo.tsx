@@ -55,7 +55,6 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
                 onLoad={onLoad}
                 style={styles.backgroundVideo}
             />
-            {/* <Text style={{ color: '#fff' }}>{videoUrl}</Text> */}
             <TouchableOpacity activeOpacity={0.8} onPress={togglePlay} style={styles.actionButtonWrapper}>
                 <View>
                     <Icon name={!isPlaying ? 'play' : 'pause'} size={45} color={Colors.playPauseButtonColor} />

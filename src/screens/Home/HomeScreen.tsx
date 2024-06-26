@@ -4,22 +4,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 import MovieList from '../../components/MovieList/MovieList';
 
-type Props = {
-    navigation: StackNavigationProp<any>;
+type RootStackParamList = {
+    HomeScreen: undefined;
+    DetailScreen: { itemId: string };
 };
 
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
+type HomeScreenProps = {
+    navigation: StackNavigationProp<RootStackParamList, 'HomeScreen'>;
+};
 
-    const [itemDimensions, setItemDimensions] = React.useState({ width: 0, height: 0 });
-
-    const goto = (screen: string) => {
-        navigation.navigate('DetailScreen');
-    };
-
-    const handleLayout = (event: any, index: any) => {
-        const { width, height } = event.nativeEvent.layout;
-        setItemDimensions({ height: width + 50, width: width });
-    };
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
     const styles = StyleSheet.create({
         container: {

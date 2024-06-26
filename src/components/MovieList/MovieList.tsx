@@ -1,12 +1,13 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList, RefreshControl, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Colors from '../../styles/Colors';
 import Video, { VideoRef, OnLoadData } from 'react-native-video';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 interface MovieListProps {
-}
 
-Image.resolveAssetSource
+}
 
 type DataItem = {
     id: string;
@@ -24,7 +25,7 @@ const data: DataItem[] = [
     { id: '7', title: 'Item 7', image: require('../../assets/images/movies/7.png') },
     { id: '8', title: 'Item 8', image: require('../../assets/images/movies/8.png') },
     { id: '9', title: 'Item 9', image: require('../../assets/images/movies/9.png') },
-    { id: '10', title: 'Item 10', image: require('../../assets/images/movies/10.png') },
+    { id: '10', title: 'Item 10', image: require('../../assets/images/movies/10.png') }
 ];
 
 
@@ -35,6 +36,7 @@ const MovieList: React.FC<MovieListProps> = () => {
     const [refreshing, setRefreshing] = React.useState(false);
     const flatListRef = React.useRef<FlatList<any>>(null);
     const videoRef = React.useRef<VideoRef>(null);
+    const navigation = useNavigation();
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -43,9 +45,16 @@ const MovieList: React.FC<MovieListProps> = () => {
         }, 2000);
     };
 
+    const handlePress = (itemId: string) => {
+        console.log('log...', itemId);
+        // navigation.navigate('DetailScreen');        
+    };
+
     const renderItem = ({ item }: { item: DataItem }) => (
         <View style={[styles.item]}>
-            <Image source={item.image} style={styles.image} />
+            <TouchableOpacity onPress={() => handlePress(item.id)}>
+                <Image source={item.image} style={styles.image} />
+            </TouchableOpacity>
         </View>
     );
 
@@ -66,7 +75,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                 refreshControl={<RefreshControl
                     refreshing={refreshing}
                     onRefresh={onRefresh}
-                    colors={['#ff0000', '#00ff00', '#0000ff']}
+                    colors={[Colors.blackColor, Colors.darkBackgroudColor, Colors.playPauseButtonColor]}
                     progressBackgroundColor="yellow"
                 />}
                 numColumns={2}
@@ -84,8 +93,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     item: {
-        backgroundColor: '#f9c2ff',
-
         width: (screenWidth / 2),
         height: (screenWidth / 2) + 60,
         position: 'relative',

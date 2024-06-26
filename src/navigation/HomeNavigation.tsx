@@ -4,6 +4,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import Colors from '../styles/Colors';
 import HomeScreen from '../screens/Home/HomeScreen';
 import TestScreen from '../screens/Test/TestScreen';
+import DetailScreen from '../screens/Home/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ const HomeNavigation: React.FC = () => {
     const navigatorOptions: NativeStackNavigationOptions = {
         headerShown: false,
         headerStyle: { backgroundColor: Colors.blackColor },
-        headerTintColor: 'red',
+        headerTintColor: Colors.whiteColor,
         headerTitleAlign: 'left',
         contentStyle: { backgroundColor: Colors.darkBackgroudColor }
     };
@@ -24,7 +25,7 @@ const HomeNavigation: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
-            {/* <Stack.Screen name="HomeScreen" component={TestScreen} options={{ ...screenOptions }} /> */}
+            {/* <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions }} /> */}
         </Stack.Navigator>
     );
 };

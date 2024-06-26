@@ -1,105 +1,67 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList, RefreshControl, Button } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, FlatList, RefreshControl, Image, Dimensions } from 'react-native';
 import Colors from '../../styles/Colors';
+import Video, { VideoRef, OnLoadData } from 'react-native-video';
 
 interface MovieListProps {
-
 }
+
+Image.resolveAssetSource
 
 type DataItem = {
     id: string;
     title: string;
+    image: string;
 };
 
 const data: DataItem[] = [
-    { id: '1', title: 'Item 1' },
-    { id: '2', title: 'Item 2' },
-    { id: '3', title: 'Item 3' },
-    { id: '4', title: 'Item 4' },
-    { id: '5', title: 'Item 5' },
-    { id: '6', title: 'Item 6' },
-    { id: '7', title: 'Item 7' },
-    { id: '8', title: 'Item 8' },
-    { id: '9', title: 'Item 9' },
-    { id: '10', title: 'Item 10' },
-    { id: '11', title: 'Item 11' },
+    { id: '1', title: 'Item 1', image: require('../../assets/images/movies/1.png') },
+    { id: '2', title: 'Item 2', image: require('../../assets/images/movies/2.png') },
+    { id: '3', title: 'Item 3', image: require('../../assets/images/movies/3.png') },
+    { id: '4', title: 'Item 4', image: require('../../assets/images/movies/4.png') },
+    { id: '5', title: 'Item 5', image: require('../../assets/images/movies/5.png') },
+    { id: '6', title: 'Item 6', image: require('../../assets/images/movies/6.png') },
+    { id: '7', title: 'Item 7', image: require('../../assets/images/movies/7.png') },
+    { id: '8', title: 'Item 8', image: require('../../assets/images/movies/8.png') },
+    { id: '9', title: 'Item 9', image: require('../../assets/images/movies/9.png') },
+    { id: '10', title: 'Item 10', image: require('../../assets/images/movies/10.png') },
 ];
 
 
+const screenWidth = Dimensions.get('window').width;
 
 const MovieList: React.FC<MovieListProps> = () => {
 
     const [refreshing, setRefreshing] = React.useState(false);
     const flatListRef = React.useRef<FlatList<any>>(null);
-
-    const renderItem = ({ item }: { item: DataItem }) => (
-        <View style={styles.item}>
-            <Text style={styles.title}>{item.title}</Text>
-        </View>
-    );
-
-    const ListFooter = () => (
-        <View style={styles.footer}>
-            <Text style={styles.footerText}>End of List</Text>
-        </View>
-    );
-
-    const ListHeader = () => (
-        <View style={styles.footer}>
-            <Text style={styles.footerText}>Start of List</Text>
-        </View>
-    );
+    const videoRef = React.useRef<VideoRef>(null);
 
     const onRefresh = () => {
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
-            console.log('Ram...');
         }, 2000);
     };
 
-    const handleScrollToTop = () => {
-        flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-        flatListRef.current?.flashScrollIndicators();
-    };
+    const renderItem = ({ item }: { item: DataItem }) => (
+        <View style={[styles.item]}>
+            <Image source={item.image} style={styles.image} />
+        </View>
+    );
 
-    const handleScrollToEnd = () => {
-        flatListRef.current?.scrollToEnd({ animated: true });
-    };
-
-    const handleScrollToIndex = (index: number) => {
-        flatListRef.current?.scrollToIndex({ index, animated: true });
-    };
-
-    const handleScrollToItem = (itemId: string) => {
-        const index = data.findIndex(item => item.id === itemId);
-        if (index !== -1) {
-            flatListRef.current?.scrollToIndex({ index, animated: true });
-        }
-    };
-
-    const getItemLayout = (data: any[] | null | undefined, index: number) => ({
-        length: 50,
-        offset: 50 * index,
-        index,
-    });
+    useLayoutEffect(() => {
+        return () => console.log('');
+    }, []);
 
 
     return (
         <>
-            {/* <Button title="Scroll to Top" onPress={handleScrollToTop} />
-            <Button title="Scroll To End" onPress={handleScrollToEnd} />
-            <Button title="Scroll To Index" onPress={() => handleScrollToIndex(5)} />
-            <Button title="Scroll to Item 8" onPress={() => handleScrollToItem('8')} /> */}
-            <Text>dasdasd</Text>
-            {/* <FlatList
+            <FlatList
                 ref={flatListRef}
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.container}
-                ListFooterComponent={<ListFooter />}
-                ListHeaderComponent={<ListHeader />}
                 horizontal={false}
                 refreshControl={<RefreshControl
                     refreshing={refreshing}
@@ -109,8 +71,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                 />}
                 numColumns={2}
                 extraData={data}
-                getItemLayout={getItemLayout}
-            /> */}
+            />
 
         </>
     );
@@ -120,28 +81,26 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        paddingVertical: 20,
+        justifyContent: 'flex-start'
     },
     item: {
         backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        borderRadius: 10,
+
+        width: (screenWidth / 2),
+        height: (screenWidth / 2) + 60,
+        position: 'relative',
     },
-    title: {
-        fontSize: 18,
-    },
-    footer: {
-        padding: 10,
-        alignItems: 'center',
-        backgroundColor: '#ccc',
-    },
-    footerText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
+    image: {
+        width: (screenWidth / 2),
+        height: (screenWidth / 2) + 60,
+        aspectRatio: 1,
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0
+    }
+
 });
 
 export default MovieList;

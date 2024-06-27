@@ -18,7 +18,7 @@ type Props = {
 
 const movieList: MovieItem[] = [...MovieDataList];
 
-const DetailScreen: React.FC<Props> = ({ }) => {
+const DetailScreen: React.FC<Props> = () => {
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
@@ -30,6 +30,8 @@ const DetailScreen: React.FC<Props> = ({ }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log(route);
+
         const movie = findMovieById(movieList, route.params.id);
 
         setDetailData(prevState => ({
@@ -39,6 +41,7 @@ const DetailScreen: React.FC<Props> = ({ }) => {
             image: movie?.image,
             videoUrl: movie?.videoUrl
         }));
+
 
         const backButtonHandler = () => {
             navigation.navigate('HomeScreen');
@@ -68,7 +71,8 @@ const DetailScreen: React.FC<Props> = ({ }) => {
     const onSaveHandler = () => {
         console.log('Ram');
         console.log(rating)
-        console.log(comment)
+        console.log(comment);
+        navigation.navigate('Notification');
     };
 
     return (

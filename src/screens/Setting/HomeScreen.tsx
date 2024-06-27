@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, BackHandler } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
@@ -29,6 +29,10 @@ const HomeScreen: React.FC<Props> = () => {
     const correntTabScreenDetailHandler = () => {
         screenDetailHandler('Manis Screen', 'Manish Tab');
     };
+
+    React.useLayoutEffect(() => {
+        return () => console.log('...');
+    }, []);
 
     return (
         <View style={styles.container}>

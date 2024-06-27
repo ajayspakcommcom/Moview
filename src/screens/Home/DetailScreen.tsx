@@ -72,10 +72,10 @@ const DetailScreen: React.FC<Props> = ({ }) => {
                     <AirbnbRating
                         count={5}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                        defaultRating={1}
+                        defaultRating={3}
                         size={25}
-                        onFinishRating={ratingCompleted}
                         showRating={false}
+                        isDisabled={true}
                     />
                 </View>
             </View>
@@ -86,12 +86,34 @@ const DetailScreen: React.FC<Props> = ({ }) => {
                 <View style={styles.genreItem}><Text style={styles.genreText}>Sic-Fi</Text></View>
             </View>
 
+            <View style={styles.releaseWrapper}>
+                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: 14 February 2018</Text></View>
+            </View>
+
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: Ryan Coogler</Text></View>
+            </View>
+
+            <View style={styles.editableRating}>
+                <AirbnbRating
+                    count={5}
+                    reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                    defaultRating={3}
+                    size={35}
+                    showRating={false}
+                    onFinishRating={ratingCompleted}
+                />
+            </View>
+
+
+
         </ScrollView>
     );
 };
 
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1
     },
@@ -139,7 +161,45 @@ const styles = StyleSheet.create({
     genreText: {
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Medium
+    },
+    releaseWrapper: {
+        marginTop: 10,
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    releaseItem: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    releaseText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium
+    },
+
+    directorWrapper: {
+        marginTop: 10,
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    directorItem: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    directorText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium
+    },
+
+    editableRating: {
+        width: '100%',
+        paddingTop: 25
     }
+
+
+
+
 
 
 

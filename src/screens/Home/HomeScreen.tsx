@@ -4,16 +4,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 import MovieList from '../../components/MovieList/MovieList';
 
-type RootStackParamList = {
-    HomeScreen: undefined;
-    DetailScreen: { itemId: string };
+type Props = {
+    navigation: StackNavigationProp<any>;
 };
 
-type HomeScreenProps = {
-    navigation: StackNavigationProp<RootStackParamList, 'HomeScreen'>;
-};
-
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     const styles = StyleSheet.create({
         container: {

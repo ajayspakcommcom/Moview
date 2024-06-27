@@ -1,26 +1,24 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 
-type RootStackParamList = {
-    HomeScreen: undefined;
-    DetailScreen: { itemId: string };
+type Props = {
+
 };
 
-type DetailScreenProps = StackScreenProps<RootStackParamList, 'DetailScreen'>;
 
+const DetailScreen: React.FC<Props> = ({ }) => {
 
-const DetailScreen: React.FC<DetailScreenProps> = () => {
-
-    const route = useRoute();
-    const navigation = useNavigation();
-
+    const navigation: NavigationProp<ParamListBase> = useNavigation();
+    const route: RouteProp<{ params: { id: string } }> = useRoute();
 
 
     React.useLayoutEffect(() => {
 
-        return console.log('')
+        console.log(route.params.id);
+
+        return console.log('');
     }, []);
 
     return (

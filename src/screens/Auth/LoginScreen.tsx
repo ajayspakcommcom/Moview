@@ -8,7 +8,7 @@ import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type Props = {
-    navigation: StackNavigationProp<any>; // Adjust the type as per your navigation stack configuration
+    navigation: StackNavigationProp<any>;
 };
 
 

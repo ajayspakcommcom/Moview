@@ -23,9 +23,9 @@ const HomeNavigation: React.FC = () => {
     };
 
     return (
-        <Stack.Navigator screenOptions={navigatorOptions}>
+        <Stack.Navigator screenOptions={navigatorOptions} initialRouteName='HomeScreen'>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
-            {/* <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions }} /> */}
+            <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions, headerShown: true }} />
         </Stack.Navigator>
     );
 };

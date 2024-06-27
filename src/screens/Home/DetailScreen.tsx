@@ -30,8 +30,6 @@ const DetailScreen: React.FC<Props> = () => {
 
     React.useLayoutEffect(() => {
 
-        console.log(route);
-
         const movie = findMovieById(movieList, route.params.id);
 
         setDetailData(prevState => ({

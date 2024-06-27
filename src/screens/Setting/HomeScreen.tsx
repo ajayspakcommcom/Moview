@@ -3,11 +3,14 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import { useAppContext } from '../../context/AppContext';
 
 type Props = {
 }
 
 const HomeScreen: React.FC<Props> = () => {
+
+    const { screenDetail, screenDetailHandler } = useAppContext();
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
@@ -24,14 +27,12 @@ const HomeScreen: React.FC<Props> = () => {
     };
 
     const correntTabScreenDetailHandler = () => {
-        console.log('current screen', route.name);
-        console.log('current tab', route);
-        console.log('...');
+        screenDetailHandler('Manis Screen', 'Manish Tab');
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Setting Screen</Text>
+            <Text style={styles.text}>Setting Screen {JSON.stringify(screenDetail)}</Text>
             <Button title="Go to Detail Screen" onPress={goToDetailScreen} />
             <Button title="Go to Detail Screen" onPress={() => correntTabScreenDetailHandler()} />
         </View>

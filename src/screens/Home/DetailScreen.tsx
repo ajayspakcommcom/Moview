@@ -18,7 +18,7 @@ type Props = {
 
 const movieList: MovieItem[] = [...MovieDataList];
 
-const DetailScreen: React.FC<Props> = () => {
+const DetailScreen: React.FC = () => {
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();

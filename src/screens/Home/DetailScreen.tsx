@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput } from 'react-native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import { findMovieById } from '../../utils/Common';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import CustomButton from '../../components/Ui/CustomButton';
 
 
 type Props = {
@@ -22,6 +23,10 @@ const DetailScreen: React.FC<Props> = ({ }) => {
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
+
+    const [comment, setComment] = React.useState<string>('');
+    const [rating, setRating] = React.useState<number>(0);
+
 
     React.useLayoutEffect(() => {
 
@@ -57,8 +62,14 @@ const DetailScreen: React.FC<Props> = ({ }) => {
     }, []);
 
     const ratingCompleted = (rating: number) => {
-        console.log("Rating is: " + rating)
+        setRating(rating);
     }
+
+    const onSaveHandler = () => {
+        console.log('Ram');
+        console.log(rating)
+        console.log(comment)
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -105,7 +116,22 @@ const DetailScreen: React.FC<Props> = ({ }) => {
                 />
             </View>
 
-
+            <View style={styles.formWrapper}>
+                <TextInput
+                    style={styles.textInput}
+                    multiline={true}
+                    numberOfLines={10}
+                    placeholder="Type Here..."
+                    onChangeText={setComment}
+                    value={comment}
+                />
+                <CustomButton
+                    text="Submit"
+                    onPressHandler={onSaveHandler}
+                    textSize={20}
+                    style={{ backgroundColor: Colors.playPauseButtonColor }}
+                />
+            </View>
 
         </ScrollView>
     );
@@ -137,13 +163,11 @@ const styles = StyleSheet.create({
         fontSize: Fonts.Size.Medium + 4,
         textTransform: 'uppercase'
     },
-
     ratingWrapper: {
         paddingVertical: 5,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
-
     genreWrapper: {
         flexDirection: 'row',
         paddingHorizontal: 15
@@ -176,7 +200,6 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Medium
     },
-
     directorWrapper: {
         marginTop: 10,
         paddingHorizontal: 15,
@@ -191,17 +214,25 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Medium
     },
-
     editableRating: {
         width: '100%',
         paddingTop: 25
+    },
+    formWrapper: {
+        marginTop: 20,
+        paddingHorizontal: 15,
+        marginBottom: 15
+    },
+    textInput: {
+        backgroundColor: Colors.playPauseButtonColor,
+        width: '100%',
+        height: 120,
+        paddingHorizontal: 10,
+        fontSize: Fonts.Size.Medium,
+        textAlignVertical: 'top',
+        color: Colors.whiteColor,
+        marginBottom: 15
     }
-
-
-
-
-
-
 
 });
 

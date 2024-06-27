@@ -27,7 +27,7 @@ const HomeScreen: React.FC<Props> = () => {
     };
 
     const correntTabScreenDetailHandler = () => {
-        screenDetailHandler('Manis Screen', 'Manish Tab');
+        screenDetailHandler('Manish Screen', 'Manish Tab');
     };
 
     React.useLayoutEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ImageSourcePropType } from 'react-native';
 import Colors from '../../styles/Colors';
 import Video, { VideoRef, OnLoadData } from 'react-native-video';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -12,7 +12,7 @@ interface MovieListProps {
 type DataItem = {
     id: string;
     title: string;
-    image: string;
+    image: ImageSourcePropType;
 };
 
 const data: DataItem[] = [

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 type RootStackParamList = {
     HomeScreen: undefined;
@@ -10,12 +11,14 @@ type RootStackParamList = {
 type DetailScreenProps = StackScreenProps<RootStackParamList, 'DetailScreen'>;
 
 
-const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
+const DetailScreen: React.FC<DetailScreenProps> = () => {
+
+    const route = useRoute();
+    const navigation = useNavigation();
+
 
 
     React.useLayoutEffect(() => {
-
-
 
         return console.log('')
     }, []);

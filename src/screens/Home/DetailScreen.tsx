@@ -1,12 +1,18 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType } from 'react-native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../../styles/Colors';
+import { MovieItem } from '../../types/Movie';
+import { findMovieById } from '../../utils/Common';
+import { MovieDataList } from '../../utils/Data';
 
 type Props = {
 
 };
 
+const movieList: MovieItem[] = [...MovieDataList];
 
 const DetailScreen: React.FC<Props> = ({ }) => {
 
@@ -16,15 +22,33 @@ const DetailScreen: React.FC<Props> = ({ }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log(route.params.id);
+        const movie = findMovieById(movieList, route.params.id);
+
+        const backButtonHandler = () => {
+            navigation.navigate('HomeScreen');
+        };
+
+        const gotoNotification = () => {
+            console.log('Notification...');
+        };
+
+        navigation.setOptions({
+            title: `${movie?.title}`,
+            headerLeft: () => {
+                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+            },
+            headerRight: () => {
+                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
+            }
+        });
 
         return console.log('');
     }, []);
 
     return (
-        <View style={styles.container}>
-            <Text style={{ color: 'red' }}>Detail</Text>
-        </View>
+        <ScrollView style={styles.container}>
+            <View style={styles.box}></View>
+        </ScrollView>
     );
 };
 
@@ -32,14 +56,14 @@ const DetailScreen: React.FC<Props> = ({ }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%'
+        backgroundColor: 'pink'
     },
-    movieList: {
-        flex: 1,
+    box: {
         width: '100%',
-        backgroundColor: 'grey',
+        height: 500,
+        backgroundColor: 'red',
+        borderWidth: 1,
+        borderColor: 'yellow'
     }
 });
 

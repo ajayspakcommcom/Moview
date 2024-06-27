@@ -5,6 +5,7 @@ import Colors from '../styles/Colors';
 import HomeScreen from '../screens/Home/HomeScreen';
 import TestScreen from '../screens/Test/TestScreen';
 import DetailScreen from '../screens/Home/DetailScreen';
+import { TextAlign } from '../styles/TextAlignmentUtils';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ const HomeNavigation: React.FC = () => {
         headerShown: false,
         headerStyle: { backgroundColor: Colors.blackColor },
         headerTintColor: Colors.whiteColor,
-        headerTitleAlign: 'left',
+        headerTitleAlign: TextAlign.Center,
         contentStyle: { backgroundColor: Colors.darkBackgroudColor }
     };
 

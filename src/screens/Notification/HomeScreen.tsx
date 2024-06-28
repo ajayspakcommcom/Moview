@@ -75,10 +75,16 @@ const Notification: React.FC<Props> = () => {
                     </View>
                 </View>
 
-                <View style={styles.genreWrapper}>
+                {/* <View style={styles.genreWrapper}>
                     <View style={styles.genreItem}><Text style={styles.genreText}>Action</Text></View>
                     <View style={styles.genreItem}><Text style={styles.genreText}>Adventures</Text></View>
                     <View style={styles.genreItem}><Text style={styles.genreText}>Sic-Fi</Text></View>
+                </View> */}
+
+                <View style={styles.genreWrapper}>
+                    <Text style={styles.genreText}>Action</Text>
+                    <Text style={styles.genreText}>Adventures</Text>
+                    <Text style={styles.genreText}>Sic-Fi</Text>
                 </View>
 
                 <View style={styles.releaseWrapper}>
@@ -89,7 +95,7 @@ const Notification: React.FC<Props> = () => {
                     <View style={styles.directorItem}><Text style={styles.directorText}>Director: Ryan Coogler</Text></View>
                 </View>
             </View>
-        </View>
+        </View >
     );
 
     return (
@@ -145,25 +151,24 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     genreWrapper: {
-        paddingHorizontal: 15
-    },
-    genreItem: {
-        marginRight: 15,
-        paddingVertical: 2,
+        display: 'flex',
         paddingHorizontal: 15,
-        borderWidth: 1,
-        borderColor: Colors.whiteColor,
-        borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     genreText: {
         color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium
+        fontFamily: Fonts.Family.Medium,
+        borderColor: Colors.whiteColor,
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        borderRadius: 50,
+        marginBottom: 10,
+        display: 'flex',
+        marginRight: 15
     },
     releaseWrapper: {
-        marginTop: 10,
+        marginTop: 0,
         paddingHorizontal: 15,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'

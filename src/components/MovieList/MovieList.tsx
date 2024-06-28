@@ -62,12 +62,11 @@ const MovieList: React.FC<MovieListProps> = () => {
                     refreshing={refreshing}
                     onRefresh={onRefresh}
                     colors={[Colors.blackColor, Colors.darkBackgroudColor, Colors.playPauseButtonColor]}
-                    progressBackgroundColor="yellow"
+                    progressBackgroundColor={Colors.tabActiveColor}
                 />}
                 numColumns={2}
                 extraData={movieList}
             />
-
         </>
     );
 };

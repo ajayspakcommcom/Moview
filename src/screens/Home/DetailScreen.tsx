@@ -47,6 +47,7 @@ const DetailScreen: React.FC = () => {
 
         const gotoNotification = () => {
             console.log('Notification...');
+            navigation.navigate('Notification');
         };
 
         navigation.setOptions({
@@ -67,10 +68,8 @@ const DetailScreen: React.FC = () => {
     }
 
     const onSaveHandler = () => {
-        console.log('Ram');
         console.log(rating)
         console.log(comment);
-        navigation.navigate('Notification');
     };
 
     return (

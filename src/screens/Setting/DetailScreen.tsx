@@ -13,12 +13,6 @@ const DetailScreen: React.FC<Props> = () => {
     const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
 
     React.useLayoutEffect(() => {
-
-        console.log(route.params);
-        // console.log(route.params.email);
-        // console.log(route.params.userId);
-        // console.log(route.params.userName);
-
         return console.log('');
     }, []);
 

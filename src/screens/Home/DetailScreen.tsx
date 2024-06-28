@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput } from 'react-native';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';

@@ -49,7 +49,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         <View style={styles.container}>
 
             <Image
-                source={require('../../assets/images/logo.png')} //Replace with your image path
+                source={require('../../assets/images/logo.png')}
                 style={styles.logo}
             />
 

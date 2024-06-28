@@ -35,11 +35,9 @@ function App(): React.JSX.Element {
 
 
   React.useLayoutEffect(() => {
-    //setIsLoggedIn(false);
 
     const getUserData = async () => {
       const storedToken = await AsyncStorage.getItem('userToken');
-
       if (storedToken) {
         setIsLoggedIn(true);
       } else {

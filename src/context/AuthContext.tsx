@@ -1,23 +1,23 @@
-// AuthContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-// Define the shape of our user object
+import React, { createContext, useContext, useState, ReactNode, useLayoutEffect } from 'react';
+import { getData, removeData, storeData } from '../utils/Storage';
+
 interface User {
     username: string;
-    email: string;
+    password: string;
 }
 
-// Define the shape of our context
+
 interface AuthContextType {
     user: User | null;
     login: (username: string, password: string) => void;
     logout: () => void;
 }
 
-// Create the context
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Custom hook to use AuthContext
+
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
@@ -30,21 +30,26 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-// AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+
     const [user, setUser] = useState<User | null>(null);
 
-    // Simulate login function
-    const login = (username: string, password: string) => {
-        // Example: In a real app, this would be an API call
-        const userData: User = {
-            username: username,
-            email: `${username}@example.com`, // Simulate email for simplicity
+    useLayoutEffect(() => {
+        const fetchData = async () => {
+            const data = await getData('userToken');
+            setUser(data);
         };
+        fetchData();
+    }, []);
+
+    const login = (username: string, password: string) => {
+        const userData: User = { username: username, password: password };
+        storeData('userToken', userData);
         setUser(userData);
     };
 
     const logout = () => {
+        removeData('userToken');
         setUser(null);
     };
 

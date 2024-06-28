@@ -1,27 +1,28 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useAuth } from '../../context/AuthContext';
+import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 
 type Props = {
-    navigation: StackNavigationProp<any>;
+
 };
 
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const LoginScreen: React.FC<Props> = () => {
+
+    const { user, login } = useAuth();
+
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-
     const [checked, setChecked] = React.useState(false);
 
-    const handleLogin = () => {
-        console.log('Username:', username);
-        console.log('Password:', password);
-    };
+    const navigation: NavigationProp<ParamListBase> = useNavigation();
+    const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
@@ -29,6 +30,19 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handlePasswordChange = (text: string) => {
         setPassword(text);
+    };
+
+    const handleLogin = async () => {
+        try {
+            if (username.trim() === '' || password.trim() === '') {
+                Alert.alert('Error', 'Username or password cannot be empty');
+                return;
+            }
+            await login(username, password);
+        } catch (error) {
+            console.error('Login error:', error);
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
     };
 
     const goto = (screen: string) => {

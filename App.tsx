@@ -3,10 +3,11 @@
  * https://github.com/facebook/react-native
  * @format
  **/
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import RegisterScreen from './src/screens/Auth/RegisterScreen';
 import Colors from './src/styles/Colors';
@@ -15,12 +16,15 @@ import SearchNavigation from './src/navigation/SearchNavigation';
 import SettingNavigation from './src/navigation/SettingNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
+import { useAuth } from './src/context/AuthContext';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App(): React.JSX.Element {
 
+  const { user } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 
@@ -30,9 +34,22 @@ function App(): React.JSX.Element {
   };
 
 
-  React.useEffect(() => {
-    setIsLoggedIn(true);
-  }, []);
+  React.useLayoutEffect(() => {
+    //setIsLoggedIn(false);
+
+    const getUserData = async () => {
+      const storedToken = await AsyncStorage.getItem('userToken');
+
+      if (storedToken) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+
+    getUserData();
+
+  }, [user]);
 
   const tabScreenOptions: BottomTabNavigationOptions = {
     headerShown: false,

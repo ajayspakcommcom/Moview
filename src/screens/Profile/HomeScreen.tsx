@@ -60,6 +60,12 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                 </View>
             </View>
 
+            <View style={styles.myMoviesWrapper}>
+                <Text style={styles.movieHeaderText}>My Movies</Text>
+                <View style={styles.hr}></View>
+            </View>
+
+
         </ScrollView>
     );
 };
@@ -79,9 +85,7 @@ const styles = StyleSheet.create({
         minHeight: 300,
         justifyContent: 'center',
         alignContent: 'center',
-        flexWrap: 'wrap',
-        borderWidth: 1,
-        borderBottomColor: 'red'
+        flexWrap: 'wrap'
     },
     headerContent: {
         width: 200,
@@ -154,6 +158,25 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Medium,
         color: Colors.whiteColor
+    },
+    myMoviesWrapper: {
+        width: '100%',
+        minHeight: 200,
+        paddingHorizontal: 30
+    },
+    movieHeaderText: {
+        paddingTop: 20,
+        fontFamily: Fonts.Family.Bold,
+        fontSize: Fonts.Size.Medium + 2,
+        color: Colors.whiteColor
+    },
+    hr: {
+        marginTop: 10,
+        marginBottom: 10,
+        width: '100%',
+        minHeight: 2,
+        backgroundColor: Colors.tabBgColor,
+        borderRadius: 50
     }
 
 });

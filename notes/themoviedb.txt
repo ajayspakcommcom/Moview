@@ -1,0 +1,69 @@
+API Key
+88162df481ed51a3613a5c2c4518cee0
+
+
+API Read Access Token
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ODE2MmRmNDgxZWQ1MWEzNjEzYTVjMmM0NTE4Y2VlMCIsIm5iZiI6MTcxOTU4MTg5OC4xNzU0MjgsInN1YiI6IjY2N2ViYmJhYTU2OWE3ODVkMjY3ZTBhZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PMEuiOTLZFDZCWqPOr0S8xm0Rv7Q4wjXuDgooUFJi5s
+
+
+
+https://api.themoviedb.org/3/movie/550?api_key=88162df481ed51a3613a5c2c4518cee0
+
+
+
+this is movie
+
+const apiKey = '88162df481ed51a3613a5c2c4518cee0';
+const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
+
+const fetchMovies = async () => {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Fetched movies:', data.results);
+        return data.results; // Assuming data.results contains the list of movies
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        return null; // Handle error appropriately in your application
+    }
+};
+
+// Call the function to fetch movies
+fetchMovies();
+
+
+this is favourite tv
+
+const apiKey = '88162df481ed51a3613a5c2c4518cee0';
+let currentPage = 1;
+const apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&page=${currentPage}`;
+
+const fetchTVShows = async () => {
+    try {
+        let allTVShows = [];
+        while (true) {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            allTVShows = [...allTVShows, ...data.results];
+            currentPage++;
+            if (currentPage > data.total_pages) {
+                break; // Exit the loop if we've fetched all pages
+            }
+            apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&page=${currentPage}`;
+        }
+        console.log('Fetched all TV shows:', allTVShows);
+        return allTVShows;
+    } catch (error) {
+        console.error('Error fetching TV shows:', error);
+        return null; // Handle error appropriately in your application
+    }
+};
+
+// Call the function to fetch all TV shows
+fetchTVShows();

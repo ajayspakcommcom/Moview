@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView, Pressable, PressableProps } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 
 
@@ -18,12 +19,24 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const { user, logout } = useAuth();
 
-    const onSaveHandler = () => {
+    const gotoHandler = () => {
         navigation.navigate('Home', { screen: 'Notification' });
     };
 
-    const onLogoutHandler = () => {
+    const onLogoutHandler = (event: PressableProps) => {
         logout();
+    };
+
+    const onRatingReviewHandler = (event: PressableProps) => {
+        console.log('onRatingReviewHandler');
+    };
+
+    const onFavouriteHandler = (event: PressableProps) => {
+        console.log('onFavouriteHandler');
+    };
+
+    const onBookmarkHandler = (event: PressableProps) => {
+        console.log('onBookmarkHandler');
     };
 
 
@@ -63,8 +76,26 @@ const HomeScreen: React.FC<Props> = ({ }) => {
             <View style={styles.myMoviesWrapper}>
                 <Text style={styles.movieHeaderText}>My Movies</Text>
                 <View style={styles.hr}></View>
-            </View>
 
+                <View style={styles.footerWrapper}>
+                    <Pressable style={styles.footerItem} onPress={onRatingReviewHandler}>
+                        <Icon name={'star'} style={styles.footerIcon} />
+                        <Text style={styles.footerText}>Ratings and Reviews</Text>
+                    </Pressable>
+                    <Pressable style={styles.footerItem} onPress={onFavouriteHandler}>
+                        <Icon name={'heart'} style={styles.footerIcon} />
+                        <Text style={styles.footerText}>Favorite Films</Text>
+                    </Pressable>
+                    <Pressable style={styles.footerItem} onPress={onBookmarkHandler}>
+                        <Icon name={'bookmark'} style={styles.footerIcon} />
+                        <Text style={styles.footerText}>Want to Watch</Text>
+                    </Pressable>
+                    <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
+                        <MaterialIcon name={'logout'} style={styles.footerIcon} />
+                        <Text style={styles.footerText}>Logout</Text>
+                    </Pressable>
+                </View>
+            </View>
 
         </ScrollView>
     );
@@ -132,7 +163,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 150
     },
-
     followerWrapper: {
         width: '100%',
         //height: 100,
@@ -177,6 +207,27 @@ const styles = StyleSheet.create({
         minHeight: 2,
         backgroundColor: Colors.tabBgColor,
         borderRadius: 50
+    },
+    footerWrapper: {
+        paddingTop: 25
+    },
+    footerItem: {
+        flexWrap: 'nowrap',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    footerIcon: {
+        color: Colors.tabActiveColor,
+        fontSize: Fonts.Size.XX_Large,
+        width: 40,
+        textAlign: 'center',
+        marginBottom: 20
+    },
+    footerText: {
+        color: Colors.whiteColor,
+        paddingLeft: 15,
+        paddingTop: 5
     }
 
 });

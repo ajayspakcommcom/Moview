@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, Pressable, PressableProps } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { View, Text, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
@@ -18,6 +17,8 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const { user, logout } = useAuth();
+
+
 
     const gotoHandler = () => {
         navigation.navigate('Home', { screen: 'Notification' });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -8,7 +8,7 @@ import { findMovieById } from '../../utils/Common';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import ReviewList from '../../components/ReviewList/ReviewList';
+import CustomButton from '../../components/Ui/CustomButton';
 
 
 type Props = {
@@ -72,7 +72,7 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.header}>
                 {detailData.image && <Image source={detailData.image} style={styles.img} />}
             </View>
@@ -105,18 +105,35 @@ const DetailScreen: React.FC = () => {
                 <View style={styles.directorItem}><Text style={styles.directorText}>Director: Ryan Coogler</Text></View>
             </View>
 
-            <View style={styles.hrWrapper}>
-                <View style={styles.hr}></View>
+            <View style={styles.editableRating}>
+                <AirbnbRating
+                    count={5}
+                    reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                    defaultRating={3}
+                    size={35}
+                    showRating={false}
+                    onFinishRating={ratingCompleted}
+                />
             </View>
 
-            <View style={styles.castReviewBtnWrapper}>
-                <View style={styles.castReviewText}><Text style={[styles.crText]}>Cast</Text></View>
-                <View style={styles.castReviewText}><Text style={[styles.crText, styles.crTextActive]}>Reviews</Text></View>
+            <View style={styles.formWrapper}>
+                <TextInput
+                    style={styles.textInput}
+                    multiline={true}
+                    numberOfLines={10}
+                    placeholder="Type Here..."
+                    onChangeText={setComment}
+                    value={comment}
+                />
+                <CustomButton
+                    text="Submit"
+                    onPressHandler={onSaveHandler}
+                    textSize={20}
+                    style={{ backgroundColor: Colors.playPauseButtonColor }}
+                />
             </View>
 
-            <ReviewList />
-
-        </View>
+        </ScrollView>
     );
 };
 
@@ -127,12 +144,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     header: {
+        flex: 1,
         width: '100%',
         paddingHorizontal: 15
     },
     img: {
         width: '100%',
-        height: 150,
+        height: 300,
         resizeMode: 'cover'
     },
     detailText: {
@@ -183,7 +201,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium
     },
     directorWrapper: {
-        marginTop: 0,
+        marginTop: 10,
         paddingHorizontal: 15,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
@@ -200,33 +218,20 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingTop: 25
     },
-    hrWrapper: {
-        paddingVertical: 10,
+    formWrapper: {
+        marginTop: 20,
+        paddingHorizontal: 15,
+        marginBottom: 15
+    },
+    textInput: {
+        backgroundColor: Colors.playPauseButtonColor,
         width: '100%',
-        paddingHorizontal: 15,
-    },
-    hr: {
-        minHeight: 2,
-        backgroundColor: Colors.tabBgColor,
-    },
-    castReviewBtnWrapper: {
-        paddingHorizontal: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        marginBottom: 10
-    },
-    castReviewText: {
-
-    },
-    crText: {
+        height: 120,
+        paddingHorizontal: 10,
         fontSize: Fonts.Size.Medium,
-        color: Colors.tabBgColor,
-        fontWeight: '500'
-    },
-
-    crTextActive: {
+        textAlignVertical: 'top',
         color: Colors.whiteColor,
+        marginBottom: 15
     }
 
 });

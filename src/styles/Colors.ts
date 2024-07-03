@@ -8,7 +8,8 @@ const Colors = {
     tabBgColor: '#48484A',
     tabActiveColor: '#ECCD29',
     carouselActiveColor: '#6C60FD',
-    playPauseButtonColor: '#707070'
+    playPauseButtonColor: '#707070',
+    reviewBgColor: '#535353'
 };
 
 export default Colors;

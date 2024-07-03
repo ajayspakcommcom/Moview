@@ -73,7 +73,7 @@ function App(): React.JSX.Element {
         <Tab.Navigator screenOptions={{ ...tabScreenOptions }}>
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
-          <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} />
+          {/* <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} /> */}
           <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />
         </Tab.Navigator>
       }

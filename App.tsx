@@ -4,6 +4,7 @@
  * @format
  **/
 import * as React from 'react';
+import { Keyboard, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,6 +18,7 @@ import SettingNavigation from './src/navigation/SettingNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
 import { useAuth } from './src/context/AuthContext';
+import { useAppContext } from './src/context/AppContext';
 
 
 const Stack = createStackNavigator();
@@ -26,6 +28,7 @@ function App(): React.JSX.Element {
 
   const { user } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [keyboardVisible, setKeyboardVisible] = React.useState(false);
 
 
   const stackScreenOptions = {
@@ -44,8 +47,15 @@ function App(): React.JSX.Element {
         setIsLoggedIn(false);
       }
     };
-
     getUserData();
+
+    const keyboardDidShowListener = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', () => setKeyboardVisible(true));
+    const keyboardDidHideListener = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', () => setKeyboardVisible(false));
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    }
 
   }, [user]);
 
@@ -53,8 +63,8 @@ function App(): React.JSX.Element {
     headerShown: false,
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
-    tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, height: 60, paddingBottom: 5 },
-    tabBarLabelStyle: { fontSize: 13, lineHeight: 15 },
+    tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, paddingTop: 10, height: 50, paddingBottom: 0 },
+    //tabBarLabelStyle: { fontSize: 13, lineHeight: 15 },
   };
 
 
@@ -70,7 +80,7 @@ function App(): React.JSX.Element {
       }
 
       {isLoggedIn &&
-        <Tab.Navigator screenOptions={{ ...tabScreenOptions }}>
+        <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.tabBgColor } }} >
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
           {/* <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} /> */}
@@ -78,7 +88,7 @@ function App(): React.JSX.Element {
         </Tab.Navigator>
       }
 
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
 

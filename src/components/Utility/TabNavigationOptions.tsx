@@ -13,21 +13,25 @@ const TabNavigationOptions: TabOptions = {
         tabBarIcon: ({ color, size }) => (
             <FontAwesome name={'home'} size={size} color={color} />
         ),
+        tabBarLabel: ''
     },
     Search: {
         tabBarIcon: ({ color, size }) => (
             <FontAwesome name={'search'} size={size} color={color} />
         ),
+        tabBarLabel: ''
     },
     Setting: {
         tabBarIcon: ({ color, size }) => (
             <Icon name={'settings'} size={size} color={color} />
         ),
+        tabBarLabel: ''
     },
     Profile: {
         tabBarIcon: ({ color, size }) => (
             <FontAwesome name={'user-circle'} size={size} color={color} />
         ),
+        tabBarLabel: ''
     },
 
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { Rating, AirbnbRating } from 'react-native-ratings';
@@ -23,6 +23,10 @@ const ReviewForm: React.FC<ItemProps> = () => {
         setRating(rating);
     }
 
+    const handleCommentChange = (text: string) => {
+        setComment(text);
+    };
+
 
     const onSaveHandler = () => {
         console.log('rating', rating)
@@ -30,7 +34,6 @@ const ReviewForm: React.FC<ItemProps> = () => {
     };
 
     return (
-
         <>
             <View style={styles.editableRating}>
                 <AirbnbRating
@@ -49,7 +52,7 @@ const ReviewForm: React.FC<ItemProps> = () => {
                     multiline={true}
                     numberOfLines={10}
                     placeholder="Type Here..."
-                    onChangeText={setComment}
+                    onChangeText={handleCommentChange}
                     value={comment}
                 />
                 <CustomButton

@@ -25,15 +25,17 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+
     const [screenDetail, serScreenDetail] = useState<ScreenDetail | null>(null);
 
     const screenDetailHandler = (screenName: string, tabName: string) => {
         const screenDetail: ScreenDetail = {
             currentScreenName: screenName,
-            currentTabtabName: tabName,
+            currentTabtabName: tabName
         };
         serScreenDetail(screenDetail);
     };
+
 
     const appContextValue: AppContextType = {
         screenDetail,

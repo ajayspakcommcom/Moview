@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -74,7 +74,8 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+
             <View style={styles.header}>
                 {detailData.image && <Image source={detailData.image} style={styles.img} />}
             </View>
@@ -123,11 +124,12 @@ const DetailScreen: React.FC = () => {
                 </TouchableOpacity>
             </View>
 
+
             {activeTab === 'synopsis' && <CastList />}
             {activeTab === 'reviews' && <ReviewList />}
-            {activeTab === 'writeReview' && <ReviewForm />}
+            {activeTab === 'writeReview' && <ScrollView><ReviewForm /></ScrollView>}
 
-        </View>
+        </SafeAreaView>
     );
 };
 

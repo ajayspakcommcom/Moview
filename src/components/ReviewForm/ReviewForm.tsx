@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Keyboard, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { Rating, AirbnbRating } from 'react-native-ratings';
@@ -32,6 +32,13 @@ const ReviewForm: React.FC<ItemProps> = () => {
         console.log('rating', rating)
         console.log('comment', comment);
     };
+
+    React.useLayoutEffect(() => {
+
+        return () => {
+
+        };
+    }, []);
 
     return (
         <>

@@ -64,7 +64,7 @@ function App(): React.JSX.Element {
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
     tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, paddingTop: 10, height: 50, paddingBottom: 0 },
-    //tabBarLabelStyle: { fontSize: 13, lineHeight: 15 },
+    tabBarLabelStyle: { fontSize: 13, lineHeight: 0 },
   };
 
 

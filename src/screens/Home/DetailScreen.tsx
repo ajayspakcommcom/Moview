@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -10,6 +10,7 @@ import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ReviewList from '../../components/ReviewList/ReviewList';
 import CastList from '../../components/CastList/CastList';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
 
 
 type Props = {
@@ -124,7 +125,7 @@ const DetailScreen: React.FC = () => {
 
             {activeTab === 'synopsis' && <CastList />}
             {activeTab === 'reviews' && <ReviewList />}
-            {activeTab === 'writeReview' && <Text style={{ color: 'white' }}>writeReview</Text>}
+            {activeTab === 'writeReview' && <ReviewForm />}
 
         </View>
     );

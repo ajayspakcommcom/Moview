@@ -10,7 +10,6 @@ import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import CustomButton from '../../components/Ui/CustomButton';
 
-
 type Props = {
 
 };

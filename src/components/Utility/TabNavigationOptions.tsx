@@ -1,6 +1,7 @@
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 
 
@@ -21,9 +22,9 @@ const TabNavigationOptions: TabOptions = {
         ),
         tabBarLabel: ''
     },
-    Setting: {
+    MyReview: {
         tabBarIcon: ({ color, size }) => (
-            <Icon name={'settings'} size={size} color={color} />
+            <MaterialIcons name={'reviews'} size={size} color={color} />
         ),
         tabBarLabel: ''
     },

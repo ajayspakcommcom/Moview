@@ -14,11 +14,10 @@ import RegisterScreen from './src/screens/Auth/RegisterScreen';
 import Colors from './src/styles/Colors';
 import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
-import SettingNavigation from './src/navigation/SettingNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
 import { useAuth } from './src/context/AuthContext';
-import { useAppContext } from './src/context/AppContext';
+import MyReviewNavigation from './src/navigation/MyReviewNavigation';
 
 
 const Stack = createStackNavigator();
@@ -64,7 +63,7 @@ function App(): React.JSX.Element {
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
     tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, paddingTop: 10, height: 50, paddingBottom: 0 },
-    tabBarLabelStyle: { fontSize: 13, lineHeight: 0 },
+    tabBarLabelStyle: { fontSize: 12, lineHeight: 0, height: 0 },
   };
 
 
@@ -83,7 +82,7 @@ function App(): React.JSX.Element {
         <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.tabBgColor } }} >
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
-          {/* <Tab.Screen name="Setting" component={SettingNavigation} options={TabNavigationOptions.Setting} /> */}
+          <Tab.Screen name="MyReview" component={MyReviewNavigation} options={TabNavigationOptions.MyReview} />
           <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />
         </Tab.Navigator>
       }

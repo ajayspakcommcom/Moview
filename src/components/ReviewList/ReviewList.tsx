@@ -36,7 +36,8 @@ const ReviewList: React.FC<ListProps> = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingHorizontal: 20
     }
 });
 

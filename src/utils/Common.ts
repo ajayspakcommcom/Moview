@@ -17,3 +17,13 @@ export function truncateText(text: string, maxLength: number): string {
         }
     }
 }
+
+export const getFirstAndSecondChar = (name: string): string => {
+    const words = name.split(' ');
+    if (words.length < 2) {
+        return '';
+    }
+    const firstChar = words[0].charAt(0).toUpperCase() + '' + words[0].substring(1);
+    const secondChar = words[1].charAt(0);
+    return `${firstChar} ${secondChar.toUpperCase()}`;
+};

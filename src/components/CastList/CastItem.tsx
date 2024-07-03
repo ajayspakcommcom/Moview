@@ -1,0 +1,63 @@
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Cast } from '../../models/Common';
+import Colors from '../../styles/Colors';
+import Fonts from '../../styles/Fonts';
+import { getFirstAndSecondChar, truncateText } from '../../utils/Common';
+import LinearGradient from 'react-native-linear-gradient';
+
+interface ItemProps {
+    item: Cast;
+}
+
+const windowWidth = Dimensions.get('window').width;
+
+const CastItem: React.FC<ItemProps> = ({ item }) => {
+
+    const [isExpanded, setIsExpanded] = React.useState(false);
+
+    const toggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
+
+    return (
+        <TouchableOpacity onPress={toggleExpand}>
+            <View style={styles.wrapper}>
+                <View style={styles.headerWrapper}>
+                    <View style={styles.user}>
+                        <Icon name={'user-circle'} size={60} color={Colors.whiteColor} />
+                    </View>
+                    <Text style={styles.name}>{getFirstAndSecondChar('ajay singh')}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+const styles = StyleSheet.create({
+    wrapper: {
+        padding: 15,
+        width: (windowWidth / 3),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    headerWrapper: {
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    user: {
+
+    },
+    name: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Light,
+        fontSize: Fonts.Size.Small + 2,
+        textAlign: 'center',
+        marginTop: 5
+    }
+});
+
+export default CastItem;

@@ -9,6 +9,7 @@ import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ReviewList from '../../components/ReviewList/ReviewList';
+import CastList from '../../components/CastList/CastList';
 
 
 type Props = {
@@ -121,8 +122,8 @@ const DetailScreen: React.FC = () => {
                 </TouchableOpacity>
             </View>
 
+            {activeTab === 'synopsis' && <CastList />}
             {activeTab === 'reviews' && <ReviewList />}
-            {activeTab === 'synopsis' && <Text style={{ color: 'white' }}>Synopsis</Text>}
             {activeTab === 'writeReview' && <Text style={{ color: 'white' }}>writeReview</Text>}
 
         </View>

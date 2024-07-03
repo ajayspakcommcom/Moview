@@ -5,3 +5,8 @@ export interface Review {
     award: string;
     description: string;
 }
+
+export interface Cast {
+    id: string;
+    name: string;
+}

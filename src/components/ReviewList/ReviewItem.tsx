@@ -7,6 +7,7 @@ import { Review } from '../../models/Common';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { truncateText } from '../../utils/Common';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface ItemProps {
     item: Review;
@@ -25,7 +26,9 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
             <View style={styles.wrapper}>
                 <View style={styles.headerWrapper}>
                     <View style={styles.user}>
-                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                            <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                        </LinearGradient>
                     </View>
                     <View style={styles.content}>
                         <Text style={styles.name}>{item.name}</Text>
@@ -67,6 +70,9 @@ const styles = StyleSheet.create({
     user: {
         width: 30
     },
+    gradient: {
+        borderRadius: 30
+    },
     content: {
         flex: 1,
         paddingHorizontal: 10
@@ -82,13 +88,15 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     toggleIcon: {
-        width: 30
+        width: 30,
+        display: 'none'
     },
     footerWrapper: {
         marginTop: 2
     },
     footerText: {
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        lineHeight: 20
     }
 });
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -22,6 +22,7 @@ const DetailScreen: React.FC = () => {
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
+    const [activeTab, setActiveTab] = React.useState('reviews');
 
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
@@ -66,9 +67,8 @@ const DetailScreen: React.FC = () => {
         setRating(rating);
     }
 
-    const onSaveHandler = () => {
-        console.log(rating)
-        console.log(comment);
+    const handleTabClick = (tabName: string) => {
+        setActiveTab(tabName);
     };
 
     return (
@@ -84,7 +84,7 @@ const DetailScreen: React.FC = () => {
                         count={5}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
                         defaultRating={3}
-                        size={25}
+                        size={16}
                         showRating={false}
                         isDisabled={true}
                     />
@@ -110,11 +110,20 @@ const DetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.castReviewBtnWrapper}>
-                <View style={styles.castReviewText}><Text style={[styles.crText]}>Cast</Text></View>
-                <View style={styles.castReviewText}><Text style={[styles.crText, styles.crTextActive]}>Reviews</Text></View>
+                <TouchableOpacity onPress={() => handleTabClick('synopsis')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Synopsis & Cast </Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleTabClick('reviews')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleTabClick('writeReview')}>
+                    <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
+                </TouchableOpacity>
             </View>
 
-            <ReviewList />
+            {activeTab === 'reviews' && <ReviewList />}
+            {activeTab === 'synopsis' && <Text style={{ color: 'white' }}>Synopsis</Text>}
+            {activeTab === 'writeReview' && <Text style={{ color: 'white' }}>writeReview</Text>}
 
         </View>
     );
@@ -136,17 +145,17 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     detailText: {
-        paddingVertical: 15,
+        paddingVertical: 10,
         paddingHorizontal: 15
     },
     detailHeading: {
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium + 4,
+        fontSize: Fonts.Size.Medium + 1,
         textTransform: 'uppercase'
     },
     ratingWrapper: {
-        paddingVertical: 5,
+        paddingVertical: 0,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
     },
     genreItem: {
         marginRight: 15,
-        paddingVertical: 2,
+        paddingVertical: 1,
         paddingHorizontal: 15,
         borderWidth: 1,
         borderColor: Colors.whiteColor,
@@ -169,7 +178,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium
     },
     releaseWrapper: {
-        marginTop: 10,
+        marginTop: 5,
         paddingHorizontal: 15,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
@@ -214,7 +223,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
     },
     castReviewText: {
 

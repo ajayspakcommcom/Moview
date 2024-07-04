@@ -6,37 +6,38 @@ import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
 import FilteredMovieList from '../../components/MovieList/FilteredMovieList';
+import { Dimensions } from 'react-native';
 
 type Props = {
     navigation: StackNavigationProp<any>;
 };
 
-const movieList: MovieItem[] = [...MovieDataList];
+const { width, height } = Dimensions.get('window');
 
 const HomeScreen: React.FC<Props> = () => {
 
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [movies, setMovies] = React.useState(movieList);
-    const [fiteredMovies, setFilteredMovies] = React.useState(movies);
-    const [movieData, setMovieData] = React.useState<MovieItem[]>([]);
+    const [searchQuery, setSearchQuery] = React.useState<string>('');
+    const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>(MovieDataList);
 
 
-    const onChangeSearch = (query: string): void => {
+    const onChangeSearch = (query: string) => {
         setSearchQuery(query);
-
-        const filteredArray = searchQuery ? movies.filter((movie: MovieItem) => movie.title.toLowerCase().trim() === searchQuery.toLowerCase().trim()) : movies;
-        setFilteredMovies(filteredArray);
-
+        setFilteredMovies(MovieDataList.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
+        );
     };
 
     const onClearHandler = () => {
-        setFilteredMovies(movies);
+        setFilteredMovies(MovieDataList);
     };
 
+
     React.useLayoutEffect(() => {
-        setMovieData(movieList);
-        return () => setMovieData([]);
-    }, [movieData]);
+
+        return () => {
+
+        };
+
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -46,13 +47,8 @@ const HomeScreen: React.FC<Props> = () => {
             </View>
 
             <View style={styles.movieList}>
-                {movieData.length >= 0 &&
-                    <>
-                        <Text>Hello World</Text>
-                        <FilteredMovieList movies={fiteredMovies} />
-                    </>
-                }
-                {movieData.length <= 0 && <View><Text style={styles.text}>Emypty List</Text></View>}
+                {filteredMovies.length >= 0 && <FilteredMovieList movies={filteredMovies} />}
+                {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>}
             </View>
 
         </View>
@@ -65,17 +61,24 @@ const styles = StyleSheet.create({
         padding: 15
     },
     searchWrapper: {
-        flexGrow: 1,
+        flexGrow: 0.01,
         paddingVertical: 15
     },
     movieList: {
-        flexGrow: 1
+        flexGrow: 1,
+        position: 'relative',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
-
     text: {
+        position: 'absolute',
+        top: '50%',
+        left: 0,
+        transform: [{ translateY: -50 }],
         color: Colors.whiteColor,
         textAlign: 'center',
-        marginTop: '50%'
+        flexGrow: 1,
+        width: '100%'
     }
 });
 

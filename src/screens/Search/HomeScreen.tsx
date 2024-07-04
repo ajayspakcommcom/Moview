@@ -5,7 +5,7 @@ import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
-import MovieList from '../../components/MovieList/MovieList';
+import FilteredMovieList from '../../components/MovieList/FilteredMovieList';
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -18,10 +18,15 @@ const HomeScreen: React.FC<Props> = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [movies, setMovies] = React.useState(movieList);
     const [fiteredMovies, setFilteredMovies] = React.useState(movies);
-    const [movie, setMovie] = React.useState<MovieItem[]>([]);
+    const [movieData, setMovieData] = React.useState<MovieItem[]>([]);
+
 
     const onChangeSearch = (query: string): void => {
         setSearchQuery(query);
+
+        const filteredArray = searchQuery ? movies.filter((movie: MovieItem) => movie.title.toLowerCase().trim() === searchQuery.toLowerCase().trim()) : movies;
+        setFilteredMovies(filteredArray);
+
     };
 
     const onClearHandler = () => {
@@ -29,9 +34,9 @@ const HomeScreen: React.FC<Props> = () => {
     };
 
     React.useLayoutEffect(() => {
-        setMovie(movieList);
-        return () => setMovie([]);
-    }, [movie]);
+        setMovieData(movieList);
+        return () => setMovieData([]);
+    }, [movieData]);
 
     return (
         <View style={styles.container}>
@@ -41,8 +46,13 @@ const HomeScreen: React.FC<Props> = () => {
             </View>
 
             <View style={styles.movieList}>
-                {movie.length >= 0 && <MovieList />}
-                {movie.length <= 0 && <View><Text style={styles.text}>Emypty List</Text></View>}
+                {movieData.length >= 0 &&
+                    <>
+                        <Text>Hello World</Text>
+                        <FilteredMovieList movies={fiteredMovies} />
+                    </>
+                }
+                {movieData.length <= 0 && <View><Text style={styles.text}>Emypty List</Text></View>}
             </View>
 
         </View>

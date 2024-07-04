@@ -8,14 +8,14 @@ import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
 
 interface MovieListProps {
-
+    movies: MovieItem[]
 }
 
 
-const movieList: MovieItem[] = [...MovieDataList];
+
 const screenWidth = Dimensions.get('window').width;
 
-const MovieList: React.FC<MovieListProps> = () => {
+const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
 
@@ -43,14 +43,14 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     useLayoutEffect(() => {
         return () => console.log('');
-    }, []);
+    }, [movies]);
 
 
     return (
         <>
             <FlatList
                 ref={flatListRef}
-                data={movieList}
+                data={movies}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.container}
@@ -62,7 +62,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                     progressBackgroundColor={Colors.tabActiveColor}
                 />}
                 numColumns={2}
-                extraData={movieList}
+                extraData={movies}
             />
         </>
     );
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default MovieList;
+export default FilteredMovieList;

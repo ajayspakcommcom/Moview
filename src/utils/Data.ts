@@ -1,7 +1,7 @@
 import { MovieItem } from "../types/Movie";
 
 export const MovieDataList: MovieItem[] = [
-    { id: '1', title: 'Movie 1', image: require('../assets/images/movies/1.jpg'), videoUrl: '' },
+    { id: '1', title: 'First Movie', image: require('../assets/images/movies/1.jpg'), videoUrl: '' },
     { id: '2', title: 'Movie 2', image: require('../assets/images/movies/2.jpg'), videoUrl: '' },
     { id: '3', title: 'Movie 3', image: require('../assets/images/movies/3.jpg'), videoUrl: '' },
     { id: '4', title: 'Movie 4', image: require('../assets/images/movies/4.jpg'), videoUrl: '' },

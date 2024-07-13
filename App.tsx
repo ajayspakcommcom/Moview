@@ -18,6 +18,7 @@ import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
 import { useAuth } from './src/context/AuthContext';
 import MyReviewNavigation from './src/navigation/MyReviewNavigation';
+import SplashScreen from 'react-native-splash-screen';
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,11 @@ function App(): React.JSX.Element {
   const { user } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+
+  React.useLayoutEffect(() => {
+    SplashScreen.hide();
+    return () => console.log('');
+  }, []);
 
 
   const stackScreenOptions = {

@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, ReactNode, useLayoutEffect } from 'react';
 import { getData, removeData, storeData } from '../utils/Storage';
+import { API_URL } from '../configure/config.android';
 
 interface User {
     username: string;
@@ -42,10 +43,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         fetchData();
     }, []);
 
-    const login = (username: string, password: string) => {
+    const login = async (username: string, password: string) => {
         const userData: User = { username: username, password: password };
-        storeData('userToken', userData);
-        setUser(userData);
+
+        //console.log(API_URL);
+
+        // storeData('userToken', userData);
+        // setUser(userData);
+
+
+        try {
+            const response = await fetch(`${API_URL}login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            // if (response.ok) {
+            //     console.log('Login successful:', result.token);
+            //     // await storeData('userToken', result.token);
+            //     // setUser({ username, token: result.token });
+            // } else {
+            //     console.error('Login failed:', result.status);
+            // }
+
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
+
+
     };
 
     const logout = () => {

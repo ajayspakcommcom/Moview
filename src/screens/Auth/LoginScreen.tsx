@@ -7,8 +7,6 @@ import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
-import { API_URL } from '../../configure/config.android';
-
 
 
 type Props = {
@@ -20,8 +18,6 @@ type Props = {
 const LoginScreen: React.FC<Props> = () => {
 
     const { user, login } = useAuth();
-
-
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -103,11 +99,9 @@ const LoginScreen: React.FC<Props> = () => {
                 <Text style={styles.skipText} onPress={() => goto('Home')}>SKIP</Text>
                 <View style={styles.skipDont}>
                     <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                    <Text style={styles.skipBottomText} onPress={() => goto('Register')}>Register {API_URL}</Text>
+                    <Text style={styles.skipBottomText} onPress={() => goto('Register')}>Register</Text>
                 </View>
             </View>
-
-
 
         </View>
     );

@@ -19,6 +19,7 @@ import TabNavigationOptions from './src/components/Utility/TabNavigationOptions'
 import { useAuth } from './src/context/AuthContext';
 import MyReviewNavigation from './src/navigation/MyReviewNavigation';
 import SplashScreen from 'react-native-splash-screen';
+import Orientation from 'react-native-orientation-locker';
 
 
 const Stack = createStackNavigator();
@@ -32,6 +33,7 @@ function App(): React.JSX.Element {
 
   React.useLayoutEffect(() => {
     SplashScreen.hide();
+    Orientation.lockToPortrait();
     return () => console.log('');
   }, []);
 

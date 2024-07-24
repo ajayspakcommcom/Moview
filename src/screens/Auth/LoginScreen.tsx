@@ -13,14 +13,12 @@ type Props = {
 
 };
 
-
-
 const LoginScreen: React.FC<Props> = () => {
 
-    const { user, login } = useAuth();
+    const { user, login, responseError } = useAuth();
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [username, setUsername] = React.useState('roobee@gmail.com');
+    const [password, setPassword] = React.useState('12345');
     const [checked, setChecked] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
@@ -58,6 +56,14 @@ const LoginScreen: React.FC<Props> = () => {
                 source={require('../../assets/images/logo.png')} //Replace with your image path
                 style={styles.logo}
             />
+
+            {
+                responseError &&
+                <View style={styles.errorWrapper}>
+                    <Text style={styles.errorText}>{responseError.message}</Text>
+                </View>
+            }
+
 
             <CustomTextInput
                 placeholder="Username"
@@ -119,6 +125,16 @@ const styles = StyleSheet.create({
         width: 166,
         height: 118,
         marginBottom: 60,
+    },
+
+    errorWrapper: {
+        paddingBottom: 15
+    },
+
+    errorText: {
+        color: Colors.redColor,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Medium,
     },
 
     button: {

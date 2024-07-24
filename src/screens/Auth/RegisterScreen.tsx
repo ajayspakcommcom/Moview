@@ -14,10 +14,10 @@ type Props = {
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
-    const [firstname, setFirstname] = React.useState('manish');
-    const [username, setUsername] = React.useState('manish@gmail.com');
-    const [password, setPassword] = React.useState('12345');
-    const [phone, setPhone] = React.useState('8652248919');
+    const [firstname, setFirstname] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [phone, setPhone] = React.useState('');
 
     const handleLogin = async () => {
 

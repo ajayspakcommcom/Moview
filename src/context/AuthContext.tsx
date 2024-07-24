@@ -6,6 +6,7 @@ import { API_URL } from '../configure/config.android';
 interface User {
     username: string;
     password: string;
+    token?: string;
 }
 
 
@@ -46,28 +47,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const login = async (username: string, password: string) => {
         const userData: User = { username: username, password: password };
 
+        // const response = await fetch(`http://15.206.151.124/api/user`, {
+        //     method: 'GET',
+        //     // headers: { 'Content-Type': 'application/json' }
+        // });
+
+        // const result = await response.json();
+        // console.log(result);
+        // console.log(result.data.users);
+
+
         //console.log(API_URL);
 
         // storeData('userToken', userData);
         // setUser(userData);
 
-
         try {
             const response = await fetch(`${API_URL}login`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
             });
 
             const result = await response.json();
             console.log(result);
 
+            await storeData('userToken', result.token);
+            setUser({ username, token: result.token } as User);
+
             // if (response.ok) {
-            //     console.log('Login successful:', result.token);
-            //     // await storeData('userToken', result.token);
-            //     // setUser({ username, token: result.token });
+            //     console.log('Login successful:', result);
+            //     await storeData('userToken', result.token);
+            //     setUser({ username, token: result.token } as User);
             // } else {
             //     console.error('Login failed:', result.status);
             // }

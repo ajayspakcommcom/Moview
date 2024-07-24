@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
+import { capitalizeFirstLetter } from '../../utils/Common';
 
 
 type Props = {
@@ -14,9 +15,11 @@ type Props = {
 
 const HomeScreen: React.FC<Props> = ({ }) => {
 
+
+    const { user, logout } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
-    const { user, logout } = useAuth();
+
 
 
 
@@ -52,7 +55,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                                 <Icon name={'user-alt'} size={80} color={Colors.tabBgColor} onPress={() => console.log('Ram...')} style={styles.icon} />
                             </View>
                             <View style={styles.userTextWrapper}>
-                                <Text style={styles.name}>Shiv Kar</Text>
+                                <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
                                 <Text style={styles.critic}>Film Critic</Text>
                             </View>
                         </View>

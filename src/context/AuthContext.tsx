@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             if (result.status === 'success') {
                 await storeData('userToken', result.token);
-                setUser({ username, token: result.token } as User);
+                setUser({ username: result.userDetail.firstname, token: result.token } as User);
                 setResponseError(null); // Clear previous errors
             }
             else {

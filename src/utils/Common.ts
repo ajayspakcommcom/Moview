@@ -27,3 +27,8 @@ export const getFirstAndSecondChar = (name: string): string => {
     const secondChar = words[1].charAt(0);
     return `${firstChar} ${secondChar.toUpperCase()}`;
 };
+
+export const capitalizeFirstLetter = (str: string): string => {
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};

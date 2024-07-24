@@ -10,8 +10,6 @@ interface CarouselBulletNavigationProps {
 
 const CarouselBulletNavigation: React.FC<CarouselBulletNavigationProps> = ({ pages, currentIndex, setCurrentIndex }) => {
 
-
-
     return (
         <View style={styles.bulletContainer}>
             {pages.map((item, index) => (

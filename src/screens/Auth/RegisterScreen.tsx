@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { API_URL } from '../../configure/config.android';
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -13,16 +14,71 @@ type Props = {
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
-    const [firstname, setFirstname] = React.useState('');
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [phone, setPhone] = React.useState('');
+    const [firstname, setFirstname] = React.useState('manish');
+    const [username, setUsername] = React.useState('manish@gmail.com');
+    const [password, setPassword] = React.useState('12345');
+    const [phone, setPhone] = React.useState('8652248919');
 
-    const [checked, setChecked] = React.useState(false);
+    const handleLogin = async () => {
 
-    const handleLogin = () => {
-        console.log('Username:', username);
-        console.log('Password:', password);
+        try {
+            const fields = [
+                { name: 'First name', value: firstname },
+                { name: 'Username', value: username },
+                { name: 'Password', value: password },
+                { name: 'Phone', value: phone }
+            ];
+
+            const emptyField = fields.find(field => field.value.trim() === '');
+
+            if (emptyField) {
+                Alert.alert('Error', `${emptyField.name} is required`);
+                return;
+            } else {
+
+                try {
+                    const response = await fetch(`${API_URL}user`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            "firstname": firstname,
+                            "username": username,
+                            "email": username,
+                            "phone": phone,
+                            "password": password
+                        }),
+                    });
+
+                    const result = await response.json();
+                    console.log(result);
+
+                    if (result.status === 'success') {
+                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
+                            {
+                                text: 'OK', onPress: () => {
+                                    setFirstname('');
+                                    setUsername('');
+                                    setPassword('');
+                                    setPhone('');
+                                }
+                            },
+                        ]);
+                    } else {
+                        Alert.alert('Error', `${result.message}`, [
+                            { text: 'OK', onPress: () => console.log('') }
+                        ]);
+                    }
+
+                } catch (error) {
+                    console.log({ message: 'Registration Failed', status: 'error' });
+                }
+            }
+
+        } catch (error) {
+            console.error('Login error:', error);
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
+
     };
 
     const handleFirstnameChange = (text: string) => {
@@ -31,6 +87,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
+    };
+
+    const handlePhoneChange = (text: string) => {
+        setPhone(text);
     };
 
     const handlePasswordChange = (text: string) => {
@@ -68,10 +128,9 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             />
 
             <CustomTextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={handlePasswordChange}
-                secureTextEntry
+                placeholder="Phone"
+                value={phone}
+                onChangeText={handlePhoneChange}
             />
 
             <CustomTextInput

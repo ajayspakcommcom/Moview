@@ -36,7 +36,7 @@ export const capitalizeFirstLetter = (str: string): string => {
 };
 
 
-export const fetchMovies = async (userToken: string) => {
+export const fetchMovies = async (userToken: string, signal: AbortSignal) => {
     const url = `${API_URL}movie`;
     const token = userToken;
 
@@ -46,7 +46,8 @@ export const fetchMovies = async (userToken: string) => {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            signal: signal // Pass the signal to the fetch request
         });
 
         if (!response.ok) {
@@ -54,11 +55,21 @@ export const fetchMovies = async (userToken: string) => {
         }
 
         const movies = await response.json();
-        return movies.data.movies;
+        return movies;
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        throw error;
+        if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+                console.log('Fetch aborted');
+            } else {
+                console.error('Error fetching movies:', error);
+            }
+        } else {
+            console.error('Unknown error', error);
+        }
+        throw error; // Re-throw the error to be handled by the caller if necessary
     }
 };
+
+
 
 

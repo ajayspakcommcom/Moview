@@ -48,13 +48,30 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     useLayoutEffect(() => {
 
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
         const getMovieList = async () => {
             if (user) {
-                const resp = await fetchMovies(user?.token!);
-                for (const item of resp) {
-                    console.log('=======================================');
-                    console.log(item);
-                    console.log('=======================================');
+                try {
+                    const resp = await fetchMovies(user.token!, signal);
+                    console.log(resp.data.movies);
+                    for (const item of resp.data.movies) {
+                        console.log('=======================================');
+                        console.log(item);
+                        console.log('=======================================');
+                    }
+                } catch (error) {
+                    if (error instanceof Error) {
+                        if (error.name === 'AbortError') {
+                            console.log('Fetch aborted');
+                        } else {
+                            console.error('Error fetching movies:', error);
+                        }
+                    } else {
+                        console.error('Unknown error', error);
+                    }
+                    throw error; // Re-throw the error to be handled by the caller if necessary
                 }
             }
         };
@@ -63,7 +80,7 @@ const MovieList: React.FC<MovieListProps> = () => {
 
 
         return () => {
-
+            abortController.abort(); // Cleanup on unmount
         };
     }, [user?.token]);
 

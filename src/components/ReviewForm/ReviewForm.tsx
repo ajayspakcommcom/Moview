@@ -5,6 +5,7 @@ import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import CustomButton from '../Ui/CustomButton';
 import { MovieItem } from '../../types/Movie';
+import { useAuth } from '../../context/AuthContext';
 
 interface ItemProps {
     movieItem: MovieItem
@@ -12,13 +13,11 @@ interface ItemProps {
 
 const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 
+    const { userDetail } = useAuth();
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
 
     React.useLayoutEffect(() => {
-
-        console.log('movieItem...', movieItem._id);
-
         return () => console.log('');
     }, [movieItem._id]);
 
@@ -43,6 +42,14 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                 Alert.alert('Error', 'Please provide a review.');
                 return;
             }
+
+            console.log('userDetail', userDetail._id);
+            console.log('comment', comment);
+            console.log('rating', rating);
+            console.log('movieItem', movieItem._id);
+
+
+
 
             ///await login(username, password);
         } catch (error) {

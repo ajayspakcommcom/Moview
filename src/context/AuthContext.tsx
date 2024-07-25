@@ -17,6 +17,7 @@ interface AuthContextType {
     login: (username: string, password: string) => void;
     logout: () => void;
     responseError: ResponseError | null;
+    userDetail: any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,6 +37,8 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [responseError, setResponseError] = useState<ResponseError | null>(null);
+    const [userDetail, setUserDetail] = useState<any>(null);
+
 
     useLayoutEffect(() => {
 
@@ -56,6 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             if (result.status === 'success') {
                 setUser({ username: result.userDetail.firstname, token: result.token } as User);
                 setResponseError(null);
+                setUserDetail(result.userDetail);
             }
             else {
                 setResponseError({ message: result.message, status: result.status });
@@ -77,6 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         login,
         logout,
         responseError,
+        userDetail
     };
 
     return (

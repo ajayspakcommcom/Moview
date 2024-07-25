@@ -146,8 +146,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                 textSize={20}
             />
 
-
-
             <View style={styles.footerTextWrapper}>
                 <Text style={styles.dontHaveAccount}>Already have an account?</Text>
                 <Text style={[styles.dontHaveAccount, styles.login]} onPress={() => goto('Login')}>Login</Text>

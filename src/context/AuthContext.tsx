@@ -50,6 +50,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async (username: string, password: string) => {
         const userData: User = { username, password };
+        // console.log('Ram...');
+        // console.log(userData)
 
         try {
             const response = await fetch(`${API_URL}login`, {
@@ -59,19 +61,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
 
             const result = await response.json();
-            console.log(result);
+            console.log('result', result);
 
             if (result.status === 'success') {
                 await storeData('userToken', result.token);
                 setUser({ username: result.userDetail.firstname, token: result.token } as User);
                 setResponseError(null); // Clear previous errors
+                console.log('success');
             }
             else {
                 setResponseError({ message: result.message, status: result.status });
+                console.log('error');
             }
 
         } catch (error) {
             setResponseError({ message: 'Login Failed', status: 'error' });
+            console.log(error);
         }
     };
 

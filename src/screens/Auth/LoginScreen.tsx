@@ -33,30 +33,17 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     const handleLogin = async () => {
+        try {
+            if (username.trim() === '' || password.trim() === '') {
+                Alert.alert('Error', 'Username or password cannot be empty');
+                return;
+            }
 
-        await fetch(`https://spak-it.com/api/contact`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "Name": "test",
-                "Email": "test@gmail.com",
-                "Mobile": "8652248919",
-                "QueryMessage": "test",
-                "type": "CREATE"
-            }),
-        });
-
-
-        // try {
-        //     if (username.trim() === '' || password.trim() === '') {
-        //         Alert.alert('Error', 'Username or password cannot be empty');
-        //         return;
-        //     }
-        //     await login(username, password);
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     Alert.alert('Error', 'Login failed. Please try again.');
-        // }
+            await login(username, password);
+        } catch (error) {
+            console.error('Login error:', error);
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
     };
 
     const goto = (screen: string) => {
@@ -170,7 +157,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         color: Colors.whiteColor,
-        paddingRight: 10
+        paddingRight: 10,
+        display: 'none'
     },
 
     rememberCheckbox: {
@@ -201,13 +189,15 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         fontFamily: Fonts.Family.Light,
         marginBottom: 30,
-        marginTop: 80
+        marginTop: 80,
+        display: 'none'
     },
 
     skipDont: {
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 30,
     },
     skipBottomText: {
         color: Colors.whiteColor,

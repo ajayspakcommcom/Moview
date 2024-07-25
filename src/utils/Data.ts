@@ -24,3 +24,5 @@ export const MovieDataList: MovieItem[] = [
     { id: '21', title: 'Dark', image: require('../assets/images/movies/21.jpg'), videoUrl: '' },
     { id: '22', title: 'Kraven', image: require('../assets/images/movies/22.jpg'), videoUrl: '' }
 ];
+
+

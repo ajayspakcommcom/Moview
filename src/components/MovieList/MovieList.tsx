@@ -1,21 +1,18 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../../styles/Colors';
-import Video, { VideoRef, OnLoadData } from 'react-native-video';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
-import { MovieDataList } from '../../utils/Data';
 import { fetchMovies } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
-import { getData } from '../../utils/Storage';
+import FastImage from 'react-native-fast-image';
 
 interface MovieListProps {
 
 }
 
 
-const movieList: MovieItem[] = [...MovieDataList];
+// const movieList: MovieItem[] = [...MovieDataList];
 const screenWidth = Dimensions.get('window').width;
 
 const MovieList: React.FC<MovieListProps> = () => {
@@ -24,27 +21,10 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
 
+    const [movieList, setMovieList] = React.useState<MovieItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
     const flatListRef = React.useRef<FlatList<any>>(null);
-
-    const onRefresh = () => {
-        setRefreshing(true);
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 2000);
-    };
-
-    const navigateToDetails = (itemId: string) => {
-        navigation.navigate('DetailScreen', { id: itemId });
-    };
-
-    const renderItem = ({ item }: { item: MovieItem }) => (
-        <View style={[styles.item]}>
-            <TouchableOpacity onPress={() => navigateToDetails(item.id)}>
-                <Image source={item.image} style={styles.image} />
-            </TouchableOpacity>
-        </View>
-    );
+    const [loading, setLoading] = React.useState(true);
 
     useLayoutEffect(() => {
 
@@ -55,12 +35,14 @@ const MovieList: React.FC<MovieListProps> = () => {
             if (user) {
                 try {
                     const resp = await fetchMovies(user.token!, signal);
-                    console.log(resp.data.movies);
-                    for (const item of resp.data.movies) {
-                        console.log('=======================================');
-                        console.log(item);
-                        console.log('=======================================');
-                    }
+                    console.clear();
+
+                    setTimeout(() => {
+                        setMovieList(resp.data.movies);
+                        setLoading(false);
+                    }, 2000);
+
+
                 } catch (error) {
                     if (error instanceof Error) {
                         if (error.name === 'AbortError') {
@@ -78,12 +60,47 @@ const MovieList: React.FC<MovieListProps> = () => {
 
         getMovieList();
 
+        console.log((screenWidth / 2) + 60)
 
         return () => {
             abortController.abort(); // Cleanup on unmount
         };
     }, [user?.token]);
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    };
+
+    const navigateToDetails = (itemId: string) => {
+        navigation.navigate('DetailScreen', { id: itemId });
+    };
+
+    const renderItem = ({ item }: { item: MovieItem }) => (
+        <View style={[styles.item]}>
+            <TouchableOpacity onPress={() => navigateToDetails(item._id)}>
+                <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: item.poster_url,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
 
     return (
         <>
@@ -91,7 +108,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                 ref={flatListRef}
                 data={movieList}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
                 contentContainerStyle={styles.container}
                 horizontal={false}
                 refreshControl={<RefreshControl
@@ -108,6 +125,11 @@ const MovieList: React.FC<MovieListProps> = () => {
 };
 
 const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     container: {
         flexGrow: 1,
         alignItems: 'flex-start',

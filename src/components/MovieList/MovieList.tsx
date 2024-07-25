@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
@@ -11,8 +11,6 @@ interface MovieListProps {
 
 }
 
-
-// const movieList: MovieItem[] = [...MovieDataList];
 const screenWidth = Dimensions.get('window').width;
 
 const MovieList: React.FC<MovieListProps> = () => {
@@ -74,13 +72,13 @@ const MovieList: React.FC<MovieListProps> = () => {
         }, 2000);
     };
 
-    const navigateToDetails = (itemId: string) => {
-        navigation.navigate('DetailScreen', { id: itemId });
+    const navigateToDetails = (movieItem: MovieItem) => {
+        navigation.navigate('DetailScreen', { movie: movieItem });
     };
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            <TouchableOpacity onPress={() => navigateToDetails(item._id)}>
+            <TouchableOpacity onPress={() => navigateToDetails(item)}>
                 <FastImage
                     style={styles.image}
                     source={{

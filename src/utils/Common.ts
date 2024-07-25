@@ -3,7 +3,7 @@ import { MovieItem } from "../types/Movie";
 import { getData } from "./Storage";
 
 export const findMovieById = (data: Partial<MovieItem>[], id: string): Partial<MovieItem> | undefined => {
-    return data.find(item => item.id === id);
+    return data.find(item => item._id === id);
 };
 
 export function truncateText(text: string, maxLength: number): string {
@@ -71,5 +71,15 @@ export const fetchMovies = async (userToken: string, signal: AbortSignal) => {
 };
 
 
+export const formatDate = (date: Date, format: string): string => {
+    // Helper function to add leading zeroes
+    const addLeadingZero = (num: number): string => (num < 10 ? `0${num}` : num.toString());
 
+    // Extracting parts of the date
+    const day: string = addLeadingZero(date.getDate());
+    const month: string = addLeadingZero(date.getMonth() + 1); // Months are zero-based
+    const year: string = date.getFullYear().toString();
 
+    // Replace placeholders in the format string
+    return format.replace('DD', day).replace('MM', month).replace('YYYY', year);
+}

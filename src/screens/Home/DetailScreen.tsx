@@ -4,13 +4,14 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } fro
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { findMovieById } from '../../utils/Common';
+import { findMovieById, formatDate } from '../../utils/Common';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ReviewList from '../../components/ReviewList/ReviewList';
 import CastList from '../../components/CastList/CastList';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
+import FastImage from 'react-native-fast-image';
 
 
 type Props = {
@@ -22,7 +23,7 @@ const movieList: MovieItem[] = [...MovieDataList];
 const DetailScreen: React.FC = () => {
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-    const route: RouteProp<{ params: { id: string } }> = useRoute();
+    const route: RouteProp<{ params: { movie: MovieItem } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
     const [activeTab, setActiveTab] = React.useState('reviews');
 
@@ -32,14 +33,18 @@ const DetailScreen: React.FC = () => {
 
     React.useLayoutEffect(() => {
 
-        const movie = findMovieById(movieList, route.params.id);
+        console.log('==========================================');
+        console.log('==========================================');
+        console.log(route.params.movie);
 
         setDetailData(prevState => ({
             ...prevState,
-            id: movie?.id,
-            title: movie?.title,
-            image: movie?.image,
-            videoUrl: movie?.videoUrl
+            id: route.params.movie?._id,
+            title: route.params.movie?.title,
+            poster_url: route.params.movie?.poster_url,
+            release_date: route.params.movie?.release_date,
+            director: route.params.movie?.director,
+            genre: route.params.movie?.genre,
         }));
 
 
@@ -53,7 +58,7 @@ const DetailScreen: React.FC = () => {
         };
 
         navigation.setOptions({
-            title: `${movie?.title}`,
+            title: `${route.params.movie?.title}`,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },
@@ -62,7 +67,9 @@ const DetailScreen: React.FC = () => {
             }
         });
 
-        return console.log('');
+        return () => {
+
+        };
     }, []);
 
     const ratingCompleted = (rating: number) => {
@@ -76,12 +83,25 @@ const DetailScreen: React.FC = () => {
     return (
         <SafeAreaView style={styles.container}>
 
+
             <View style={styles.header}>
-                {detailData.image && <Image source={detailData.image} style={styles.img} />}
+                {detailData.poster_url &&
+
+                    <FastImage
+                        style={styles.img}
+                        source={{
+                            uri: detailData.poster_url,
+                            priority: FastImage.priority.high,
+                            cache: FastImage.cacheControl.immutable
+                        }}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                }
             </View>
 
+
             <View style={styles.detailText}>
-                <Text style={styles.detailHeading}>Black Panther</Text>
+                <Text style={styles.detailHeading}>{detailData.title}</Text>
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
                         count={5}
@@ -95,17 +115,19 @@ const DetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.genreWrapper}>
-                <View style={styles.genreItem}><Text style={styles.genreText}>Action</Text></View>
-                <View style={styles.genreItem}><Text style={styles.genreText}>Adventures</Text></View>
-                <View style={styles.genreItem}><Text style={styles.genreText}>Sic-Fi</Text></View>
+                {detailData.genre?.split(',').map((genre, index) => (
+                    <View key={index} style={styles.genreItem}>
+                        <Text style={styles.genreText}>{genre}</Text>
+                    </View>
+                ))}
             </View>
 
             <View style={styles.releaseWrapper}>
-                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: 14 February 2018</Text></View>
+                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text></View>
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Director: Ryan Coogler</Text></View>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>
@@ -141,12 +163,14 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        paddingHorizontal: 15
+        height: 50,
+        paddingHorizontal: 0,
+        flexGrow: 1
     },
     img: {
         width: '100%',
-        height: 150,
-        resizeMode: 'cover'
+        height: 'auto',
+        flexGrow: 1
     },
     detailText: {
         paddingVertical: 10,

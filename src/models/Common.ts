@@ -7,6 +7,7 @@ export interface Review {
 }
 
 export interface Cast {
-    id: string;
-    name: string;
+    _id: string;
+    actor: string;
+    role: string;
 }

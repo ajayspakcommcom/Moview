@@ -30,7 +30,7 @@ const CastItem: React.FC<ItemProps> = ({ item }) => {
                     <View style={styles.user}>
                         <Icon name={'user-circle'} size={60} color={Colors.whiteColor} />
                     </View>
-                    <Text style={styles.name}>{getFirstAndSecondChar('ajay singh')}</Text>
+                    <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
                 </View>
             </View>
         </TouchableOpacity>

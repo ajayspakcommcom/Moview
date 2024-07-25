@@ -45,6 +45,8 @@ const DetailScreen: React.FC = () => {
             release_date: route.params.movie?.release_date,
             director: route.params.movie?.director,
             genre: route.params.movie?.genre,
+            cast: route.params.movie?.cast,
+            rating: route.params.movie?.rating,
         }));
 
 
@@ -104,9 +106,9 @@ const DetailScreen: React.FC = () => {
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
-                        count={5}
+                        count={10}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                        defaultRating={3}
+                        defaultRating={detailData.rating}
                         size={16}
                         showRating={false}
                         isDisabled={true}
@@ -146,8 +148,7 @@ const DetailScreen: React.FC = () => {
                 </TouchableOpacity>
             </View>
 
-
-            {activeTab === 'synopsis' && <CastList />}
+            {activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
             {activeTab === 'reviews' && <ReviewList />}
             {activeTab === 'writeReview' && <ScrollView><ReviewForm /></ScrollView>}
 

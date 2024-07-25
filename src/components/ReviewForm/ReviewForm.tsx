@@ -6,6 +6,7 @@ import Fonts from '../../styles/Fonts';
 import CustomButton from '../Ui/CustomButton';
 import { MovieItem } from '../../types/Movie';
 import { useAuth } from '../../context/AuthContext';
+import { API_URL } from '../../configure/config.android';
 
 interface ItemProps {
     movieItem: MovieItem
@@ -13,7 +14,7 @@ interface ItemProps {
 
 const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 
-    const { userDetail } = useAuth();
+    const { userDetail, user } = useAuth();
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
 
@@ -43,15 +44,46 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                 return;
             }
 
-            console.log('userDetail', userDetail._id);
-            console.log('comment', comment);
-            console.log('rating', rating);
-            console.log('movieItem', movieItem._id);
+            try {
+                const response = await fetch(`${API_URL}review`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user?.token}`,
+                    },
+                    body: JSON.stringify({
+                        "movie": movieItem._id,
+                        "user": userDetail._id,
+                        "rating": rating,
+                        "review_text": comment,
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    Alert.alert('Review Successfully', 'Thank you for your review.', [
+                        {
+                            text: 'OK', onPress: () => {
+                                setComment('');
+                                setRating(0);
+                            }
+                        },
+                    ]);
+                } else {
+                    Alert.alert('Error', `${result.message}`, [
+                        { text: 'OK', onPress: () => console.log('') }
+                    ]);
+                }
 
 
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                Alert.alert(`Error: ${error}`);
+                throw error;
+            }
 
 
-            ///await login(username, password);
         } catch (error) {
             console.error('error:', error);
             Alert.alert('Error', 'Error');

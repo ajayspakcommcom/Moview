@@ -6,3 +6,4 @@ export type MovieItem = {
     image: ImageSourcePropType;
     videoUrl: string;
 };
+

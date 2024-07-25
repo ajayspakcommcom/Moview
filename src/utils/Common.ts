@@ -1,4 +1,6 @@
+import { API_URL } from "../configure/config.android";
 import { MovieItem } from "../types/Movie";
+import { getData } from "./Storage";
 
 export const findMovieById = (data: Partial<MovieItem>[], id: string): Partial<MovieItem> | undefined => {
     return data.find(item => item.id === id);
@@ -32,3 +34,31 @@ export const capitalizeFirstLetter = (str: string): string => {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+
+export const fetchMovies = async (userToken: string) => {
+    const url = `${API_URL}movie`;
+    const token = userToken;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const movies = await response.json();
+        return movies.data.movies;
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        throw error;
+    }
+};
+
+

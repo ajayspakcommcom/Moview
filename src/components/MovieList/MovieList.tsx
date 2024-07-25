@@ -6,6 +6,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
+import { fetchMovies } from '../../utils/Common';
+import { useAuth } from '../../context/AuthContext';
+import { getData } from '../../utils/Storage';
 
 interface MovieListProps {
 
@@ -16,6 +19,8 @@ const movieList: MovieItem[] = [...MovieDataList];
 const screenWidth = Dimensions.get('window').width;
 
 const MovieList: React.FC<MovieListProps> = () => {
+
+    const { user } = useAuth();
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
 
@@ -42,8 +47,25 @@ const MovieList: React.FC<MovieListProps> = () => {
     );
 
     useLayoutEffect(() => {
-        return () => console.log('');
-    }, []);
+
+        const getMovieList = async () => {
+            if (user) {
+                const resp = await fetchMovies(user?.token!);
+                for (const item of resp) {
+                    console.log('=======================================');
+                    console.log(item);
+                    console.log('=======================================');
+                }
+            }
+        };
+
+        getMovieList();
+
+
+        return () => {
+
+        };
+    }, [user?.token]);
 
 
     return (

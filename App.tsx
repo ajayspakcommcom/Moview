@@ -8,7 +8,6 @@ import { Keyboard, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import RegisterScreen from './src/screens/Auth/RegisterScreen';
 import Colors from './src/styles/Colors';
@@ -47,12 +46,13 @@ function App(): React.JSX.Element {
   React.useLayoutEffect(() => {
 
     const getUserData = async () => {
-      const storedToken = await AsyncStorage.getItem('userToken');
-      if (storedToken) {
+
+      if (user?.token) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
       }
+
     };
     getUserData();
 

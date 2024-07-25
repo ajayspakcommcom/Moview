@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode, useLayoutEffect } from 'react';
-import { getData, removeData, storeData } from '../utils/Storage';
 import { API_URL } from '../configure/config.android';
 
 interface User {
@@ -39,19 +38,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [responseError, setResponseError] = useState<ResponseError | null>(null);
 
     useLayoutEffect(() => {
-        const fetchData = async () => {
-            const data = await getData('userToken');
-            if (data) {
-                setUser({ ...user, token: data } as User);
-            }
-        };
-        fetchData();
+
     }, []);
 
     const login = async (username: string, password: string) => {
         const userData: User = { username, password };
-        // console.log('Ram...');
-        // console.log(userData)
 
         try {
             const response = await fetch(`${API_URL}login`, {
@@ -61,13 +52,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
 
             const result = await response.json();
-            console.log('result', result);
 
             if (result.status === 'success') {
-                await storeData('userToken', result.token);
                 setUser({ username: result.userDetail.firstname, token: result.token } as User);
-                setResponseError(null); // Clear previous errors
-                console.log('success');
+                setResponseError(null);
             }
             else {
                 setResponseError({ message: result.message, status: result.status });
@@ -81,7 +69,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const logout = async () => {
-        await removeData('userToken');
         setUser(null);
     };
 

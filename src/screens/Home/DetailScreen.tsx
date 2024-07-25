@@ -33,10 +33,6 @@ const DetailScreen: React.FC = () => {
 
     React.useLayoutEffect(() => {
 
-        console.log('==========================================');
-        console.log('==========================================');
-        console.log(route.params.movie);
-
         setDetailData(prevState => ({
             ...prevState,
             id: route.params.movie?._id,
@@ -150,7 +146,7 @@ const DetailScreen: React.FC = () => {
 
             {activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
             {activeTab === 'reviews' && <ReviewList />}
-            {activeTab === 'writeReview' && <ScrollView><ReviewForm /></ScrollView>}
+            {activeTab === 'writeReview' && <ScrollView><ReviewForm movieItem={route.params.movie} /></ScrollView>}
 
         </SafeAreaView>
     );

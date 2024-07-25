@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Keyboard, BackHandler } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import { Rating, AirbnbRating } from 'react-native-ratings';
-import { Review } from '../../models/Common';
+import { View, StyleSheet, TextInput, Alert } from 'react-native';
+import { AirbnbRating } from 'react-native-ratings';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
-import { truncateText } from '../../utils/Common';
-import LinearGradient from 'react-native-linear-gradient';
 import CustomButton from '../Ui/CustomButton';
+import { MovieItem } from '../../types/Movie';
 
 interface ItemProps {
-
+    movieItem: MovieItem
 }
 
-const ReviewForm: React.FC<ItemProps> = () => {
+const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
+
+    React.useLayoutEffect(() => {
+
+        console.log('movieItem...', movieItem._id);
+
+        return () => console.log('');
+    }, [movieItem._id]);
 
     const ratingCompleted = (rating: number) => {
         setRating(rating);
@@ -28,17 +31,27 @@ const ReviewForm: React.FC<ItemProps> = () => {
     };
 
 
-    const onSaveHandler = () => {
-        console.log('rating', rating)
-        console.log('comment', comment);
+    const onSaveHandler = async () => {
+        try {
+
+            if (rating === 0) {
+                Alert.alert('Error', 'Please give a rate.');
+                return;
+            }
+
+            if (comment.trim() === '') {
+                Alert.alert('Error', 'Please provide a review.');
+                return;
+            }
+
+            ///await login(username, password);
+        } catch (error) {
+            console.error('error:', error);
+            Alert.alert('Error', 'Error');
+        }
+
     };
 
-    React.useLayoutEffect(() => {
-
-        return () => {
-
-        };
-    }, []);
 
     return (
         <>

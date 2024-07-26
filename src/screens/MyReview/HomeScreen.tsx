@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import ReviewList from '../../components/ReviewList/ReviewList';
+import { useAuth } from '../../context/AuthContext';
 
 type Props = {
 
@@ -8,7 +9,12 @@ type Props = {
 
 const HomeScreen: React.FC<Props> = () => {
 
+    const { userDetail } = useAuth();
+
     React.useLayoutEffect(() => {
+
+        console.log(userDetail);
+
         return console.log('');
     }, []);
 
@@ -16,7 +22,7 @@ const HomeScreen: React.FC<Props> = () => {
     return (
         <>
             <View style={styles.container}>
-                <ReviewList />
+                <ReviewList userItem={userDetail} />
             </View>
         </>
     );

@@ -6,22 +6,16 @@ import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { MovieItem } from '../../types/Movie';
 import Colors from '../../styles/Colors';
+import { UserItem } from '../../types/User';
 
 interface ListProps {
     movieItem?: MovieItem;
+    userItem?: UserItem;
 }
 
 const keyExtractor = (item: Review) => item._id;
 
-const desc = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
-
-const data: any[] = [
-    { _id: '1', name: 'Ajay Vishwakarma', rating: 4, award: 'gold', description: desc },
-    { _id: '2', name: 'Omkar Sawant', rating: 3, award: 'silver', description: desc }
-];
-
-
-const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
+const ReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
 
     const { user, userDetail } = useAuth();
     const abortController = new AbortController();
@@ -30,7 +24,7 @@ const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
 
     React.useLayoutEffect(() => {
 
-        const getReviewList = async () => {
+        const getReviewListByMovie = async () => {
 
             const url = `${API_URL}review/movie/${movieItem?._id}`;
             const token = user;
@@ -65,15 +59,52 @@ const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
             }
         };
 
+        const getReviewListByUser = async () => {
+
+            const url = `${API_URL}review/user/${userItem?._id}`;
+            const token = user;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token?.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    signal: signal
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    setReviewData(result.data.reviews);
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.name === 'AbortError') {
+                        console.log('Fetch aborted');
+                    } else {
+                        console.error('Error fetching movies:', error);
+                    }
+                } else {
+                    console.error('Unknown error', error);
+                }
+                throw error;
+            }
+        };
+
         if (movieItem) {
-            getReviewList();
+            getReviewListByMovie();
         }
 
+        if (userItem) {
+            getReviewListByUser();
+        }
 
         return () => {
             abortController.abort();
         };
-    }, [movieItem]);
+    }, [movieItem?._id, userItem?._id, API_URL, reviewData]);
 
     return (
         <>

@@ -17,7 +17,7 @@ const LoginScreen: React.FC<Props> = () => {
 
     const { user, login, responseError } = useAuth();
 
-    const [username, setUsername] = React.useState('sujeet@gmail.com');
+    const [username, setUsername] = React.useState('hariom@gmail.com');
     const [password, setPassword] = React.useState('12345');
     const [checked, setChecked] = React.useState(false);
 

@@ -6,13 +6,11 @@ import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
 import FilteredMovieList from '../../components/MovieList/FilteredMovieList';
-import { Dimensions } from 'react-native';
+
 
 type Props = {
     navigation: StackNavigationProp<any>;
 };
-
-const { width, height } = Dimensions.get('window');
 
 const HomeScreen: React.FC<Props> = () => {
 
@@ -22,8 +20,7 @@ const HomeScreen: React.FC<Props> = () => {
 
     const onChangeSearch = (query: string) => {
         setSearchQuery(query);
-        setFilteredMovies(MovieDataList.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
-        );
+        setFilteredMovies(MovieDataList.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase())));
     };
 
     const onClearHandler = () => {
@@ -32,6 +29,8 @@ const HomeScreen: React.FC<Props> = () => {
 
 
     React.useLayoutEffect(() => {
+
+
 
         return () => {
 
@@ -47,6 +46,7 @@ const HomeScreen: React.FC<Props> = () => {
             </View>
 
             <View style={styles.movieList}>
+                <Text style={{ color: '#fff' }}>{searchQuery}</Text>
                 {filteredMovies.length >= 0 && <FilteredMovieList movies={filteredMovies} />}
                 {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>}
             </View>

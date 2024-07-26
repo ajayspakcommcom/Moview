@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CastList;
+export default React.memo(CastList);

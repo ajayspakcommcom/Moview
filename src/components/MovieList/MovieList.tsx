@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default MovieList;
+export default React.memo(MovieList);

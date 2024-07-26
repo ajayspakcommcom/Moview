@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeCarouselVideo;
+export default React.memo(HomeCarouselVideo);

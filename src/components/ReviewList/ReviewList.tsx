@@ -8,7 +8,7 @@ import { MovieItem } from '../../types/Movie';
 import Colors from '../../styles/Colors';
 
 interface ListProps {
-    movieItem: MovieItem
+    movieItem?: MovieItem;
 }
 
 const keyExtractor = (item: Review) => item._id;
@@ -32,7 +32,7 @@ const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
 
         const getReviewList = async () => {
 
-            const url = `${API_URL}review/movie/${movieItem._id}`;
+            const url = `${API_URL}review/movie/${movieItem?._id}`;
             const token = user;
 
             try {
@@ -65,7 +65,9 @@ const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
             }
         };
 
-        getReviewList();
+        if (movieItem) {
+            getReviewList();
+        }
 
 
         return () => {
@@ -111,4 +113,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ReviewList;
+export default React.memo(ReviewList);

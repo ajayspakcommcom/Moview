@@ -35,8 +35,8 @@ const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            <TouchableOpacity onPress={() => navigateToDetails(item.id)}>
-                <Image source={item.image} style={styles.image} />
+            <TouchableOpacity onPress={() => navigateToDetails(item._id)}>
+                <Image source={{ uri: item.poster_url }} style={styles.image} />
             </TouchableOpacity>
         </View>
     );
@@ -52,7 +52,7 @@ const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
                 ref={flatListRef}
                 data={movies}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
                 contentContainerStyle={styles.container}
                 horizontal={false}
                 refreshControl={<RefreshControl
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default FilteredMovieList;
+export default React.memo(FilteredMovieList);

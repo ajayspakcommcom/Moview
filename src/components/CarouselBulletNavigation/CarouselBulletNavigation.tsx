@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CarouselBulletNavigation;
+export default React.memo(CarouselBulletNavigation);

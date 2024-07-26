@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeCarousel;
+export default React.memo(HomeCarousel);

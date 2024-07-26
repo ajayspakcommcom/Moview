@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CastItem;
+export default React.memo(CastItem);

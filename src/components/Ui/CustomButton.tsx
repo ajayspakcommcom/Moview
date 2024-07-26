@@ -46,4 +46,4 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
     );
 };
 
-export default CustomButton;
+export default React.memo(CustomButton);

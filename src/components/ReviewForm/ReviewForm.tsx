@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ReviewForm;
+export default React.memo(ReviewForm);

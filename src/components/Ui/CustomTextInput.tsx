@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CustomTextInput;
+export default React.memo(CustomTextInput);

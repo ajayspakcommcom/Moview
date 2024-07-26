@@ -33,10 +33,9 @@ const DetailScreen: React.FC = () => {
 
         setDetailData(prevState => ({
             ...prevState,
-            id: movie?.id,
+            id: movie?._id,
             title: movie?.title,
-            image: movie?.image,
-            videoUrl: movie?.videoUrl
+            image: movie?.poster_url
         }));
 
 

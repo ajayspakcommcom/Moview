@@ -7,6 +7,7 @@ import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 
 type Props = {
@@ -53,9 +54,10 @@ const LoginScreen: React.FC<Props> = () => {
     return (
         <View style={styles.container}>
 
-            <Image
-                source={require('../../assets/images/logo.png')} //Replace with your image path
+            <FastImage
                 style={styles.logo}
+                source={require('../../assets/images/logo.png')}
+                resizeMode={FastImage.resizeMode.contain}
             />
 
             {

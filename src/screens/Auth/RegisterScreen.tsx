@@ -7,6 +7,7 @@ import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.android';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -108,9 +109,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
-            <Image
-                source={require('../../assets/images/logo.png')}
+            <FastImage
                 style={styles.logo}
+                source={require('../../assets/images/logo.png')}
+                resizeMode={FastImage.resizeMode.contain}
             />
 
             <CustomTextInput

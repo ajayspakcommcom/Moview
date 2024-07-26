@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
+import FastImage from 'react-native-fast-image';
 
 interface MovieListProps {
     movies: MovieItem[]
@@ -36,7 +37,15 @@ const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
             <TouchableOpacity onPress={() => navigateToDetails(item._id)}>
-                <Image source={{ uri: item.poster_url }} style={styles.image} />
+                <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: item.poster_url,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
             </TouchableOpacity>
         </View>
     );

@@ -9,6 +9,7 @@ import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import CustomButton from '../../components/Ui/CustomButton';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
 
@@ -73,7 +74,12 @@ const DetailScreen: React.FC = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                {detailData.image && <Image source={detailData.image} style={styles.img} />}
+                {detailData.poster_url &&
+                    <FastImage
+                        source={{ uri: detailData.poster_url }} style={styles.img}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                }
             </View>
 
             <View style={styles.detailText}>

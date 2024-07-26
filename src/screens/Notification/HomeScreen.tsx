@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, FlatList, Image, RefreshControl, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, RefreshControl } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
 
@@ -58,7 +59,12 @@ const Notification: React.FC<Props> = () => {
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
             <View style={styles.content}>
-                <Image source={movieList[0].image} style={styles.img} />
+
+                <FastImage
+                    source={{ uri: movieList[0].poster_url }} style={styles.img}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
+
             </View>
             <View style={styles.img}>
                 <View style={styles.detailText}>
@@ -104,7 +110,7 @@ const Notification: React.FC<Props> = () => {
                 ref={flatListRef}
                 data={movieList}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
 
                 horizontal={false}
                 refreshControl={<RefreshControl

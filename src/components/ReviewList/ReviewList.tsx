@@ -1,36 +1,97 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, Text } from 'react-native';
 import ReviewItem from './ReviewItem';
-import { Review } from '../../models/Common';
+import { Review } from '../../models/Review';
+import { API_URL } from '../../configure/config.android';
+import { useAuth } from '../../context/AuthContext';
+import { MovieItem } from '../../types/Movie';
+import Colors from '../../styles/Colors';
 
-interface ListProps { }
+interface ListProps {
+    movieItem: MovieItem
+}
 
-const keyExtractor = (item: Review) => item.id;
+const keyExtractor = (item: Review) => item._id;
 
 const desc = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
 
-const data: Review[] = [
-    { id: '1', name: 'Ajay Vishwakarma', rating: 4, award: 'gold', description: desc },
-    { id: '2', name: 'Omkar Sawant', rating: 3, award: 'silver', description: desc },
-    { id: '3', name: 'Nilesh Acharekar', rating: 3, award: 'gold', description: desc },
-    { id: '4', name: 'Omkar Sawant', rating: 3, award: 'bronze', description: desc },
-    { id: '5', name: 'John Doe', rating: 5, award: 'gold', description: desc },
-    { id: '6', name: 'Jane Smith', rating: 4, award: 'silver', description: desc },
-    { id: '7', name: 'Alice Johnson', rating: 4, award: 'bronze', description: desc },
-    { id: '8', name: 'David Lee', rating: 3, award: 'gold', description: desc },
-    { id: '9', name: 'Sarah Brown', rating: 5, award: 'silver', description: desc },
-    { id: '10', name: 'Michael Clark', rating: 4, award: 'bronze', description: desc },
+const data: any[] = [
+    { _id: '1', name: 'Ajay Vishwakarma', rating: 4, award: 'gold', description: desc },
+    { _id: '2', name: 'Omkar Sawant', rating: 3, award: 'silver', description: desc }
 ];
 
 
-const ReviewList: React.FC<ListProps> = () => {
+const ReviewList: React.FC<ListProps> = ({ movieItem }) => {
+
+    const { user, userDetail } = useAuth();
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    const [reviewData, setReviewData] = React.useState<Review[]>([]);
+
+    React.useLayoutEffect(() => {
+
+        const getReviewList = async () => {
+
+            const url = `${API_URL}review/movie/${movieItem._id}`;
+            const token = user;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token?.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    signal: signal
+                });
+
+                const result = await response.json();
+                console.log(result);
+
+                if (result.status === 'success') {
+                    setReviewData(result.data.reviews);
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.name === 'AbortError') {
+                        console.log('Fetch aborted');
+                    } else {
+                        console.error('Error fetching movies:', error);
+                    }
+                } else {
+                    console.error('Unknown error', error);
+                }
+                throw error; // Re-throw the error to be handled by the caller if necessary
+            }
+        };
+
+        getReviewList();
+
+
+        return () => {
+            abortController.abort();
+        };
+    }, [movieItem]);
+
     return (
-        <FlatList
-            style={styles.container}
-            data={data}
-            renderItem={({ item }) => <ReviewItem item={item} />}
-            keyExtractor={keyExtractor}
-        />
+        <>
+            {reviewData.length > 0 &&
+                <FlatList
+                    style={styles.container}
+                    data={reviewData}
+                    renderItem={({ item }) => <ReviewItem item={item} />}
+                    keyExtractor={keyExtractor}
+                />
+            }
+
+            {
+                reviewData.length === 0 &&
+                <View style={styles.noReviewWrapper}>
+                    <Text style={styles.reviewText}>No Review found</Text>
+                </View>
+            }
+
+        </>
     );
 };
 
@@ -38,6 +99,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20
+    },
+    noReviewWrapper: {
+        marginHorizontal: 15,
+        marginVertical: 15,
+        padding: 50
+    },
+    reviewText: {
+        color: Colors.whiteColor,
+        textAlign: 'center'
     }
 });
 

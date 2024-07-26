@@ -145,7 +145,7 @@ const DetailScreen: React.FC = () => {
             </View>
 
             {activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
-            {activeTab === 'reviews' && <ReviewList />}
+            {activeTab === 'reviews' && <ReviewList movieItem={route.params.movie} />}
             {activeTab === 'writeReview' && <ScrollView><ReviewForm movieItem={route.params.movie} /></ScrollView>}
 
         </SafeAreaView>

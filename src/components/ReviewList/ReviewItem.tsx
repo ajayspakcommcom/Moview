@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import { Rating, AirbnbRating } from 'react-native-ratings';
-import { Review } from '../../models/Common';
+import { AirbnbRating } from 'react-native-ratings';
+import { Review } from '../../models/Review';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { truncateText } from '../../utils/Common';
@@ -21,6 +21,15 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
         setIsExpanded(!isExpanded);
     };
 
+    React.useLayoutEffect(() => {
+
+        console.log(item)
+
+        return () => {
+            console.log('');
+        }
+    }, []);
+
     return (
         <TouchableOpacity onPress={toggleExpand}>
             <View style={styles.wrapper}>
@@ -31,7 +40,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                         </LinearGradient>
                     </View>
                     <View style={styles.content}>
-                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.name}>{item.user.firstname}</Text>
                         <View style={styles.rating}>
                             <AirbnbRating
                                 count={5}
@@ -49,7 +58,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                 </View>
 
                 <View style={styles.footerWrapper}>
-                    <Text style={styles.footerText}>{isExpanded ? item.description : truncateText(item.description, 100)}</Text>
+                    <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
                 </View>
             </View>
         </TouchableOpacity>

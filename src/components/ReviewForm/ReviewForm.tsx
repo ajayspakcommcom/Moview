@@ -113,12 +113,13 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                     placeholder="Type Here..."
                     onChangeText={handleCommentChange}
                     value={comment}
+                    inputMode={'text'}
                 />
                 <CustomButton
                     text="Submit"
                     onPressHandler={onSaveHandler}
                     textSize={20}
-                    style={{ backgroundColor: Colors.playPauseButtonColor }}
+                    style={{ backgroundColor: Colors.tabActiveColor }}
                 />
             </View>
         </>

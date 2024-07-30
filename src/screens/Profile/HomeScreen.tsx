@@ -90,7 +90,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <Icon name={'heart'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Favorite Films</Text>
                     </Pressable>
-                    <Pressable style={styles.footerItem} onPress={onBookmarkHandler}>
+                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onBookmarkHandler}>
                         <Icon name={'bookmark'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Want to Watch</Text>
                     </Pressable>
@@ -169,15 +169,14 @@ const styles = StyleSheet.create({
     },
     followerWrapper: {
         width: '100%',
-        //height: 100,
-        //backgroundColor: 'pink',
         flexDirection: 'row',
         justifyContent: 'center',
     },
     movies: {
         marginRight: 15,
         borderRightColor: Colors.whiteColor,
-        padding: 15
+        padding: 15,
+        display: 'none'
     },
     followers: {
         marginRight: 15,

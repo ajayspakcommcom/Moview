@@ -4,22 +4,20 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } fro
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { findMovieById, formatDate } from '../../utils/Common';
+import { formatDate } from '../../utils/Common';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { AirbnbRating } from 'react-native-ratings';
 import ReviewList from '../../components/ReviewList/ReviewList';
 import CastList from '../../components/CastList/CastList';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
 
-
 type Props = {
 
 };
 
-const movieList: MovieItem[] = [...MovieDataList];
 
 const DetailScreen: React.FC = () => {
 
@@ -88,7 +86,6 @@ const DetailScreen: React.FC = () => {
                     <FastImage
                         style={styles.img}
                         source={MovieImageMap[detailData.poster_url]}
-
                     />
                 }
             </View>
@@ -156,9 +153,8 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        height: 50,
-        paddingHorizontal: 0,
-        flexGrow: 1
+        height: 200,
+        paddingHorizontal: 0
     },
     img: {
         width: '100%',

@@ -19,7 +19,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
             paddingVertical: 10,
             width: '100%',
             height: 50,
-            backgroundColor: Colors.redColor,
+            backgroundColor: Colors.tabActiveColor,
             borderRadius: 1,
             justifyContent: 'center',
             alignItems: 'center',
@@ -27,7 +27,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
         },
         text: {
             fontSize: Fonts.Size.Medium - 1,
-            color: Colors.whiteColor,
+            color: Colors.blackColor,
             fontFamily: Fonts.Family.Bold
         },
         rippleEffect: {
@@ -36,7 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
     });
 
     const androidRippleConfig: PressableAndroidRippleConfig = {
-        color: Colors.dullRedColor
+        color: Colors.tabActiveOpacityColor
     };
 
     return (

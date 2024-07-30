@@ -8,6 +8,8 @@ import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { truncateText } from '../../utils/Common';
 import LinearGradient from 'react-native-linear-gradient';
+import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
+import { GestureHandlerStateChangeNativeEvent, PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 interface ItemProps {
     item: Review;
@@ -23,45 +25,57 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log(item)
-
         return () => {
             console.log('');
         }
     }, []);
 
+    const onSwipe = (event: PanGestureHandlerGestureEvent) => {
+        console.log('Swipe detected!', event.nativeEvent);
+    };
+
+    const onTap = (event: TapGestureHandlerGestureEvent) => {
+        console.log('Tap detected!', event.nativeEvent);
+    };
+
+
     return (
-        <TouchableOpacity onPress={toggleExpand}>
-            <View style={styles.wrapper}>
-                <View style={styles.headerWrapper}>
-                    <View style={styles.user}>
-                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                            <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                        </LinearGradient>
-                    </View>
-                    <View style={styles.content}>
-                        <Text style={styles.name}>{item.user.firstname}</Text>
-                        <View style={styles.rating}>
-                            <AirbnbRating
-                                count={5}
-                                reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                                defaultRating={3}
-                                size={15}
-                                showRating={false}
-                                isDisabled={true}
-                            />
+        <GestureHandlerRootView>
+            <PanGestureHandler onGestureEvent={onSwipe}>
+                <TouchableOpacity onPress={toggleExpand}>
+                    <View style={styles.wrapper}>
+                        <View style={styles.headerWrapper}>
+                            <View style={styles.user}>
+                                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                                </LinearGradient>
+                            </View>
+                            <View style={styles.content}>
+                                <Text style={styles.name}>{item.user.firstname}</Text>
+                                <View style={styles.rating}>
+                                    <AirbnbRating
+                                        count={5}
+                                        reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                                        defaultRating={3}
+                                        size={15}
+                                        showRating={false}
+                                        isDisabled={true}
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.toggleIcon}>
+                                <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
+                            </View>
+                        </View>
+
+                        <View style={styles.footerWrapper}>
+                            <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
                         </View>
                     </View>
-                    <View style={styles.toggleIcon}>
-                        <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
-                    </View>
-                </View>
+                </TouchableOpacity>
+            </PanGestureHandler>
+        </GestureHandlerRootView>
 
-                <View style={styles.footerWrapper}>
-                    <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
     );
 };
 

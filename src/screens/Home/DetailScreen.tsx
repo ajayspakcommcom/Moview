@@ -13,6 +13,7 @@ import CastList from '../../components/CastList/CastList';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
+import TestComp from '../../components/TestComp/TestComp'
 
 type Props = {
 
@@ -136,6 +137,9 @@ const DetailScreen: React.FC = () => {
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
                 </TouchableOpacity>
             </View>
+
+
+            <TestComp />
 
             {activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
             {activeTab === 'reviews' && <ReviewList movieItem={route.params.movie} />}

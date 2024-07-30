@@ -1,15 +1,17 @@
 import React, { useLayoutEffect } from 'react';
-import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator, Text } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
 import { fetchMovies } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
+import MovieImageMap from '../../utils/MovieImageMap';
 
 interface MovieListProps {
 
 }
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -29,11 +31,13 @@ const MovieList: React.FC<MovieListProps> = () => {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
+
         const getMovieList = async () => {
             if (user) {
                 try {
                     const resp = await fetchMovies(user.token!, signal);
-                    console.clear();
+
+
 
                     setTimeout(() => {
                         setMovieList(resp.data.movies);
@@ -79,15 +83,20 @@ const MovieList: React.FC<MovieListProps> = () => {
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
             <TouchableOpacity onPress={() => navigateToDetails(item)}>
+                {/* <FastImage
+                    style={styles.image}
+                    source={MovieImageMap[`${item.poster_url}`]}
+                    //source={require(`../../assets/images/movies/aladdin-poster.jpg`)}
+                    resizeMode={FastImage.resizeMode.contain}
+                /> */}
+
                 <FastImage
                     style={styles.image}
-                    source={{
-                        uri: item.poster_url,
-                        priority: FastImage.priority.high,
-                        cache: FastImage.cacheControl.immutable
-                    }}
+                    source={MovieImageMap[item.poster_url]}
                     resizeMode={FastImage.resizeMode.contain}
                 />
+
+
             </TouchableOpacity>
         </View>
     );

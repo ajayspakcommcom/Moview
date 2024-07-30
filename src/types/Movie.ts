@@ -27,3 +27,4 @@ export type MovieItem = {
     is_deleted: boolean;
     __v: number;
 };
+

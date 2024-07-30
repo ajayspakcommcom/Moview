@@ -59,7 +59,7 @@ export const fetchMovies = async (userToken: string, signal: AbortSignal) => {
     } catch (error) {
         if (error instanceof Error) {
             if (error.name === 'AbortError') {
-                console.log('Fetch aborted');
+
             } else {
                 console.error('Error fetching movies:', error);
             }

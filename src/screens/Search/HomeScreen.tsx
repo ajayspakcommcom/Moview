@@ -17,7 +17,6 @@ const HomeScreen: React.FC<Props> = () => {
     const [searchQuery, setSearchQuery] = React.useState<string>('');
     const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>(MovieDataList);
 
-
     const onChangeSearch = (query: string) => {
         setSearchQuery(query);
         setFilteredMovies(MovieDataList.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase())));

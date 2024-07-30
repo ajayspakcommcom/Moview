@@ -30,7 +30,7 @@ const Notification: React.FC<Props> = () => {
         };
 
         const gotoNotification = () => {
-            console.log('Notification...');
+
         };
 
         navigation.setOptions({
@@ -48,7 +48,7 @@ const Notification: React.FC<Props> = () => {
 
     const onRefresh = () => {
         setTimeout(() => {
-            console.log('......');
+
         }, 2000);
     };
 

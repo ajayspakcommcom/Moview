@@ -12,6 +12,7 @@ import ReviewList from '../../components/ReviewList/ReviewList';
 import CastList from '../../components/CastList/CastList';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import FastImage from 'react-native-fast-image';
+import MovieImageMap from '../../utils/MovieImageMap';
 
 
 type Props = {
@@ -84,15 +85,10 @@ const DetailScreen: React.FC = () => {
 
             <View style={styles.header}>
                 {detailData.poster_url &&
-
                     <FastImage
                         style={styles.img}
-                        source={{
-                            uri: detailData.poster_url,
-                            priority: FastImage.priority.high,
-                            cache: FastImage.cacheControl.immutable
-                        }}
-                        resizeMode={FastImage.resizeMode.cover}
+                        source={MovieImageMap[detailData.poster_url]}
+
                     />
                 }
             </View>

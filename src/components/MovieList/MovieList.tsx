@@ -83,20 +83,11 @@ const MovieList: React.FC<MovieListProps> = () => {
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
             <TouchableOpacity onPress={() => navigateToDetails(item)}>
-                {/* <FastImage
-                    style={styles.image}
-                    source={MovieImageMap[`${item.poster_url}`]}
-                    //source={require(`../../assets/images/movies/aladdin-poster.jpg`)}
-                    resizeMode={FastImage.resizeMode.contain}
-                /> */}
-
                 <FastImage
                     style={styles.image}
                     source={MovieImageMap[item.poster_url]}
                     resizeMode={FastImage.resizeMode.contain}
                 />
-
-
             </TouchableOpacity>
         </View>
     );

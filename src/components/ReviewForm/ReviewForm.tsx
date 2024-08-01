@@ -17,6 +17,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
     const { userDetail, user } = useAuth();
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
+    const [loader, setLoader] = React.useState(false);
 
     React.useLayoutEffect(() => {
         return () => console.log('');
@@ -45,6 +46,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
             }
 
             try {
+                setLoader(true);
                 const response = await fetch(`${API_URL}review`, {
                     method: 'POST',
                     headers: {
@@ -62,6 +64,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                 const result = await response.json();
 
                 if (result.status === 'success') {
+                    setLoader(false);
                     Alert.alert('Review Successfully', 'Thank you for your review.', [
                         {
                             text: 'OK', onPress: () => {
@@ -99,7 +102,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                     count={5}
                     reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
                     defaultRating={0}
-                    size={35}
+                    size={25}
                     showRating={false}
                     onFinishRating={ratingCompleted}
                 />
@@ -116,10 +119,11 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                     inputMode={'text'}
                 />
                 <CustomButton
-                    text="Submit"
+                    text={loader ? "Submit..." : "Submit"}
                     onPressHandler={onSaveHandler}
                     textSize={20}
                     style={{ backgroundColor: Colors.tabActiveColor }}
+                    isDisabled={loader ? true : false}
                 />
             </View>
         </>

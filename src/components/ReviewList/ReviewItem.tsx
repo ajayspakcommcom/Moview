@@ -25,6 +25,8 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log(item);
+
         return () => {
             console.log('');
         }
@@ -56,7 +58,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                                     <AirbnbRating
                                         count={5}
                                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                                        defaultRating={3}
+                                        defaultRating={item.rating}
                                         size={15}
                                         showRating={false}
                                         isDisabled={true}

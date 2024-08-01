@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 import MovieList from '../../components/MovieList/MovieList';
+import { setTransparentHeader } from '../../utils/navigationOptions';
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -23,6 +24,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             backgroundColor: 'grey',
         }
     });
+
+
+    React.useLayoutEffect(() => {
+
+        setTransparentHeader(navigation, '', 'notifications');
+
+        return () => {
+
+        };
+    }, []);
 
     return (
         <View style={styles.container}>

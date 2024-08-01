@@ -10,7 +10,8 @@ const Colors = {
     carouselActiveColor: '#6C60FD',
     playPauseButtonColor: '#707070',
     reviewBgColor: '#535353',
-    tabActiveOpacityColor: '#efd243'
+    tabActiveOpacityColor: '#efd243',
+    transparentColor: 'transparent'
 };
 
 export default Colors;

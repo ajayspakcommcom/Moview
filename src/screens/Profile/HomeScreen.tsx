@@ -16,12 +16,9 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ }) => {
 
 
-    const { user, logout } = useAuth();
+    const { user, logout, userDetail } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
-
-
-
 
     const gotoHandler = () => {
         navigation.navigate('Home', { screen: 'Notification' });
@@ -42,6 +39,13 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const onBookmarkHandler = (event: PressableProps) => {
         console.log('onBookmarkHandler');
     };
+
+    React.useLayoutEffect(() => {
+
+        console.log('userDetail', userDetail.followers)
+
+        return () => console.log('');
+    }, []);
 
 
     return (
@@ -67,11 +71,11 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <Text style={styles.follText}>Movies</Text>
                     </View>
                     <View style={styles.followers}>
-                        <Text style={styles.follText}>179</Text>
+                        <Text style={styles.follText}>{userDetail.followers.length}</Text>
                         <Text style={styles.follText}>Followers</Text>
                     </View>
                     <View style={styles.following}>
-                        <Text style={styles.follText}>179</Text>
+                        <Text style={styles.follText}>{userDetail.following.length}</Text>
                         <Text style={styles.follText}>Following</Text>
                     </View>
                 </View>

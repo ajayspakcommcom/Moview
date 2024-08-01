@@ -117,21 +117,22 @@ const styles = StyleSheet.create({
     followerWrapper: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 5
+        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     movies: {
-        marginRight: 30,
         borderRightColor: Colors.whiteColor,
-        padding: 15,
+        paddingVertical: 15,
+
     },
     followers: {
-        marginRight: 15,
         borderRightColor: Colors.whiteColor,
-        padding: 15
+        paddingVertical: 15
     },
     following: {
-        padding: 15
+        paddingVertical: 15,
+        paddingHorizontal: 15
     },
     follText: {
         textAlign: 'center',

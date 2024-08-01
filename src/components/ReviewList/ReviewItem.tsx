@@ -10,6 +10,7 @@ import { truncateText } from '../../utils/Common';
 import LinearGradient from 'react-native-linear-gradient';
 import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
 import { GestureHandlerStateChangeNativeEvent, PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 interface ItemProps {
     item: Review;
@@ -18,6 +19,7 @@ interface ItemProps {
 const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const navigation = useNavigation<any>();
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
@@ -40,6 +42,12 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
         console.log('Tap detected!', event.nativeEvent);
     };
 
+    const gotoUserProfile = (id: string) => {
+        console.log('Item', item);
+        console.log('id', id);
+        navigation.navigate('FollowerFollowing', { userId: id });
+    };
+
 
     return (
         <GestureHandlerRootView>
@@ -49,11 +57,11 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                         <View style={styles.headerWrapper}>
                             <View style={styles.user}>
                                 <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} onPress={gotoUserProfile.bind(null, item.user._id)} />
                                 </LinearGradient>
                             </View>
                             <View style={styles.content}>
-                                <Text style={styles.name}>{item.user.firstname}</Text>
+                                <Text style={styles.name} onPress={gotoUserProfile.bind(null, item.user._id)}>{item.user.firstname}</Text>
                                 <View style={styles.rating}>
                                     <AirbnbRating
                                         count={5}
@@ -99,8 +107,7 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     content: {
-        flex: 1,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     name: {
         fontSize: Fonts.Size.Medium,

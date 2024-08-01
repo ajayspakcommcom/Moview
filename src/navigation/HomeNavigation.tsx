@@ -6,6 +6,8 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import DetailScreen from '../screens/Home/DetailScreen';
 import { TextAlign } from '../styles/TextAlignmentUtils';
 import Notification from '../screens/Notification/HomeScreen';
+import FollowerFollowingScreen from '../screens/Home/FollowerFollowingScreen';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +30,7 @@ const HomeNavigation: React.FC = () => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
+            <Stack.Screen name="FollowerFollowing" component={FollowerFollowingScreen} options={{ ...screenOptions, headerShown: true }} />
         </Stack.Navigator>
     );
 };

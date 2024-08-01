@@ -19,10 +19,12 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [phone, setPhone] = React.useState('');
+    const [loader, setLoader] = React.useState(false);
 
     const handleLogin = async () => {
 
         try {
+
             const fields = [
                 { name: 'First name', value: firstname },
                 { name: 'Username', value: username },
@@ -38,6 +40,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             } else {
 
                 try {
+                    setLoader(true);
                     const response = await fetch(`${API_URL}user`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -54,6 +57,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                     console.log(result);
 
                     if (result.status === 'success') {
+                        setLoader(false);
                         Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
                             {
                                 text: 'OK', onPress: () => {
@@ -143,9 +147,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             />
 
             <CustomButton
-                text="Register"
+                text={loader ? "Register..." : "Register"}
                 onPressHandler={handleLogin}
                 textSize={20}
+                isDisabled={loader ? true : false}
             />
 
             <View style={styles.footerTextWrapper}>

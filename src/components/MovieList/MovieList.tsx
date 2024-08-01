@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
@@ -82,13 +82,22 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            <TouchableOpacity onPress={() => navigateToDetails(item)}>
+            {/* <TouchableOpacity onPress={() => navigateToDetails(item)}>
                 <FastImage
                     style={styles.image}
                     source={MovieImageMap[item.poster_url]}
                     resizeMode={FastImage.resizeMode.contain}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+            <Pressable onPress={() => navigateToDetails(item)}>
+                <FastImage
+                    style={styles.image}
+                    source={MovieImageMap[item.poster_url]}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
+            </Pressable>
+
         </View>
     );
 

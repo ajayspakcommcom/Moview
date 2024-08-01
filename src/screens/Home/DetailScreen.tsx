@@ -56,7 +56,7 @@ const DetailScreen: React.FC = () => {
         };
 
         navigation.setOptions({
-            title: `${route.params.movie?.title}`,
+            title: ``,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },
@@ -137,9 +137,6 @@ const DetailScreen: React.FC = () => {
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
                 </TouchableOpacity>
             </View>
-
-
-            <TestComp />
 
             {activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
             {activeTab === 'reviews' && <ReviewList movieItem={route.params.movie} />}

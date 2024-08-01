@@ -78,7 +78,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
             </View>
 
             <View style={styles.myMoviesWrapper}>
-                <Text style={styles.movieHeaderText}>My Movies</Text>
+                {/* <Text style={styles.movieHeaderText}>My Movies</Text> */}
                 <View style={styles.hr}></View>
 
                 <View style={styles.footerWrapper}>

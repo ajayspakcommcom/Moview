@@ -104,7 +104,7 @@ const ReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
         return () => {
             abortController.abort();
         };
-    }, [movieItem?._id, userItem?._id, API_URL, reviewData]);
+    }, [movieItem, userItem]);
 
     return (
         <>

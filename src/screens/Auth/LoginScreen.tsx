@@ -21,6 +21,7 @@ const LoginScreen: React.FC<Props> = () => {
     const [username, setUsername] = React.useState('hariom@gmail.com');
     const [password, setPassword] = React.useState('12345');
     const [checked, setChecked] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
@@ -34,6 +35,7 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     const handleLogin = async () => {
+        setLoader(true);
         try {
             if (username.trim() === '' || password.trim() === '') {
                 Alert.alert('Error', 'Username or password cannot be empty');
@@ -41,6 +43,7 @@ const LoginScreen: React.FC<Props> = () => {
             }
 
             await login(username, password);
+            setLoader(false);
         } catch (error) {
             console.error('Login error:', error);
             Alert.alert('Error', 'Login failed. Please try again.');
@@ -83,9 +86,10 @@ const LoginScreen: React.FC<Props> = () => {
             />
 
             <CustomButton
-                text="Login"
+                text={loader ? 'Login...' : 'Login'}
                 onPressHandler={handleLogin}
                 textSize={20}
+                isDisabled={loader ? true : false}
             />
 
             <View style={styles.rememberForgot}>

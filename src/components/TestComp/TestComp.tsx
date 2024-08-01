@@ -27,7 +27,7 @@ const TestComp: React.FC<ListProps> = () => {
 
     // Event handler for pan gesture state change
     const onHandlerStateChange = (event: PanGestureHandlerGestureEvent) => {
-        if (event.nativeEvent.oldState === 4) {
+        if (event.nativeEvent.state === 4) {
             // When the gesture ends, reset translation values
             Animated.spring(translateX, {
                 toValue: 0,

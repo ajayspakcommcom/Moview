@@ -17,9 +17,13 @@ type Props = {
 
 const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
+    const { userDetail } = useAuth();
+
     React.useLayoutEffect(() => {
 
         console.log('userData', userData);
+        console.log('userId', userData?._id);
+        console.log('userDetail', userDetail?._id);
 
         return () => console.log('');
     }, [userData]);
@@ -35,7 +39,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 <View style={styles.headerContent}>
                     <View style={styles.userTextIcon}>
                         <View style={styles.userIcon}>
-                            <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} onPress={() => console.log('Ram...')} style={styles.icon} />
+                            <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />
                         </View>
                         <View>
                             <Text style={styles.name}>{capitalizeFirstLetter(userData?.firstname as string)}</Text>
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     userTextIcon: {
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     userIcon: {
         backgroundColor: Colors.whiteColor,

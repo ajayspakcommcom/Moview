@@ -127,13 +127,13 @@ const DetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.castReviewBtnWrapper}>
-                <TouchableOpacity onPress={() => handleTabClick('synopsis')}>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'synopsis')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Synopsis & Cast </Text></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleTabClick('reviews')}>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleTabClick('writeReview')}>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
                 </TouchableOpacity>
             </View>

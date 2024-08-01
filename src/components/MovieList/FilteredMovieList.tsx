@@ -36,7 +36,7 @@ const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            <TouchableOpacity onPress={() => navigateToDetails(item._id)}>
+            <TouchableOpacity onPress={navigateToDetails.bind(null, item._id)}>
                 <FastImage
                     style={styles.image}
                     source={{

@@ -82,22 +82,13 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            {/* <TouchableOpacity onPress={() => navigateToDetails(item)}>
+            <TouchableOpacity onPress={navigateToDetails.bind(null, item)}>
                 <FastImage
                     style={styles.image}
                     source={MovieImageMap[item.poster_url]}
                     resizeMode={FastImage.resizeMode.contain}
                 />
-            </TouchableOpacity> */}
-
-            <Pressable onPress={() => navigateToDetails(item)}>
-                <FastImage
-                    style={styles.image}
-                    source={MovieImageMap[item.poster_url]}
-                    resizeMode={FastImage.resizeMode.contain}
-                />
-            </Pressable>
-
+            </TouchableOpacity>
         </View>
     );
 

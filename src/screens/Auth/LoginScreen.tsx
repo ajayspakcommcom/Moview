@@ -109,10 +109,10 @@ const LoginScreen: React.FC<Props> = () => {
 
 
             <View style={styles.skipWrapper}>
-                <Text style={styles.skipText} onPress={() => goto('Home')}>SKIP</Text>
+                <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
                 <View style={styles.skipDont}>
                     <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                    <Text style={styles.skipBottomText} onPress={() => goto('Register')}>Register</Text>
+                    <Text style={styles.skipBottomText} onPress={goto.bind(null, 'Register')}>Register</Text>
                 </View>
             </View>
 

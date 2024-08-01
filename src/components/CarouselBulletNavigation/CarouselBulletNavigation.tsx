@@ -16,7 +16,7 @@ const CarouselBulletNavigation: React.FC<CarouselBulletNavigationProps> = ({ pag
                 <TouchableOpacity
                     key={index}
                     style={[styles.bullet, index === currentIndex && styles.activeBullet]}
-                    onPress={() => setCurrentIndex(index)}
+                    onPress={setCurrentIndex.bind(null, index)}
                 />
             ))}
         </View>

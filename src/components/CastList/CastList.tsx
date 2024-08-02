@@ -21,7 +21,9 @@ const CastList: React.FC<ListProps> = ({ castList }) => {
 
     React.useLayoutEffect(() => {
 
-        return () => console.log('');
+        return () => {
+
+        }
     }, []);
 
     return (

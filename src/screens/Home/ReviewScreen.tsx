@@ -44,7 +44,6 @@ const DetailScreen: React.FC = () => {
         };
 
         const gotoNotification = () => {
-            console.log('Notification...');
             navigation.navigate('Notification');
         };
 
@@ -58,7 +57,9 @@ const DetailScreen: React.FC = () => {
             }
         });
 
-        return console.log('');
+        return () => {
+
+        }
     }, []);
 
     const ratingCompleted = (rating: number) => {
@@ -66,8 +67,7 @@ const DetailScreen: React.FC = () => {
     }
 
     const onSaveHandler = () => {
-        console.log(rating)
-        console.log(comment);
+
     };
 
     return (

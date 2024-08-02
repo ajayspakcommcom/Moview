@@ -48,12 +48,12 @@ const MovieList: React.FC<MovieListProps> = () => {
                 } catch (error) {
                     if (error instanceof Error) {
                         if (error.name === 'AbortError') {
-                            console.log('Fetch aborted');
+
                         } else {
-                            console.error('Error fetching movies:', error);
+
                         }
                     } else {
-                        console.error('Unknown error', error);
+
                     }
                     throw error; // Re-throw the error to be handled by the caller if necessary
                 }
@@ -62,7 +62,7 @@ const MovieList: React.FC<MovieListProps> = () => {
 
         getMovieList();
 
-        console.log((screenWidth / 2) + 60)
+
 
         return () => {
             abortController.abort(); // Cleanup on unmount

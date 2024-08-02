@@ -15,7 +15,9 @@ const HomeScreen: React.FC<Props> = () => {
 
 
 
-        return console.log('');
+        return () => {
+
+        }
     }, []);
 
 

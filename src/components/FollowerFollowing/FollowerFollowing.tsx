@@ -18,18 +18,29 @@ type Props = {
 const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
     const { userDetail } = useAuth();
+    const [isFollowing, setIsFollowing] = React.useState(false);
 
     React.useLayoutEffect(() => {
 
-        console.log('userData', userData);
+        console.log('userData', userData?._id);
         console.log('userId', userData?._id);
         console.log('userDetail', userDetail?._id);
 
-        return () => console.log('');
+
+        console.log((userDetail as UserItem).following.includes(userData?._id));
+        setIsFollowing((userDetail as UserItem).following.includes(userData?._id));
+
+        return () => {
+
+        };
     }, [userData]);
 
-    const formHandler = async () => {
-        console.log('formHandler');
+    const followHandler = async () => {
+        console.log('followHandler');
+    };
+
+    const UnFollowHandler = async () => {
+        console.log('UnFollowHandler');
     };
 
     return (
@@ -64,12 +75,25 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 </View>
             </View>
 
-            <CustomButton
-                text={'Follow'}
-                onPressHandler={formHandler}
-                textSize={20}
-                isDisabled={false}
-            />
+            <Text>{isFollowing ? 'Following' : 'No Following'}</Text>
+
+            {!isFollowing &&
+                <CustomButton
+                    text={'Follow'}
+                    onPressHandler={followHandler}
+                    textSize={20}
+                    isDisabled={false}
+                />
+            }
+
+            {isFollowing &&
+                <CustomButton
+                    text={'Unfollow'}
+                    onPressHandler={UnFollowHandler}
+                    textSize={20}
+                    isDisabled={false}
+                />
+            }
 
         </ScrollView>
     );

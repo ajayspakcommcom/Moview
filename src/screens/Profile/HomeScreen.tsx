@@ -29,22 +29,24 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     };
 
     const onRatingReviewHandler = (event: PressableProps) => {
-        console.log('onRatingReviewHandler');
+
     };
 
     const onFavouriteHandler = (event: PressableProps) => {
-        console.log('onFavouriteHandler');
+
     };
 
     const onBookmarkHandler = (event: PressableProps) => {
-        console.log('onBookmarkHandler');
+
     };
 
     React.useLayoutEffect(() => {
 
-        console.log('userDetail', userDetail.followers)
 
-        return () => console.log('');
+
+        return () => {
+
+        }
     }, []);
 
 
@@ -56,7 +58,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                     <View style={styles.headerContent}>
                         <View style={styles.userTextIcon}>
                             <View style={styles.userIcon}>
-                                <Icon name={'user-alt'} size={80} color={Colors.tabBgColor} onPress={() => console.log('Ram...')} style={styles.icon} />
+                                <Icon name={'user-alt'} size={80} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
                             </View>
                             <View style={styles.userTextWrapper}>
                                 <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>

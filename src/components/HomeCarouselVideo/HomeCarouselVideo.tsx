@@ -29,7 +29,7 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
     };
 
     const onBuffer = (event: { isBuffering: boolean }) => {
-        console.log('Buffering:', event.isBuffering);
+
     };
 
     const onError = (error: any) => {
@@ -37,8 +37,7 @@ const HomeCarouselVideo: React.FC<HomeCarouselVideoProps> = ({ title, content, b
     };
 
     const onLoad = (data: OnLoadData) => {
-        console.log('Duration:', data.duration);
-        console.log('Current Time:', data.currentTime);
+
     };
 
     return (

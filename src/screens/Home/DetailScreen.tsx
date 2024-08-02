@@ -51,7 +51,7 @@ const DetailScreen: React.FC = () => {
         };
 
         const gotoNotification = () => {
-            console.log('Notification...');
+
             navigation.navigate('Notification');
         };
 

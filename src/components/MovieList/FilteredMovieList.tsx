@@ -51,7 +51,9 @@ const FilteredMovieList: React.FC<MovieListProps> = ({ movies }) => {
     );
 
     useLayoutEffect(() => {
-        return () => console.log('');
+        return () => {
+
+        }
     }, [movies]);
 
 

@@ -27,24 +27,23 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log(item);
+
 
         return () => {
-            console.log('');
+
         }
     }, []);
 
     const onSwipe = (event: PanGestureHandlerGestureEvent) => {
-        console.log('Swipe detected!', event.nativeEvent);
+
     };
 
     const onTap = (event: TapGestureHandlerGestureEvent) => {
-        console.log('Tap detected!', event.nativeEvent);
+
     };
 
     const gotoUserProfile = (id: string) => {
-        console.log('Item', item);
-        console.log('id', id);
+
         navigation.navigate('FollowerFollowing', { userId: id });
     };
 

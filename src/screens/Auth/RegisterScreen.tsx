@@ -54,7 +54,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                     });
 
                     const result = await response.json();
-                    console.log(result);
+
 
                     if (result.status === 'success') {
                         setLoader(false);
@@ -70,12 +70,12 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         ]);
                     } else {
                         Alert.alert('Error', `${result.message}`, [
-                            { text: 'OK', onPress: () => console.log('') }
+                            { text: 'OK', onPress: () => { } }
                         ]);
                     }
 
                 } catch (error) {
-                    console.log({ message: 'Registration Failed', status: 'error' });
+
                 }
             }
 
@@ -103,7 +103,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const skipHandler = (event: GestureResponderEvent) => {
-        console.log('Skip pressed!');
+
     };
 
     const goto = (screen: string) => {

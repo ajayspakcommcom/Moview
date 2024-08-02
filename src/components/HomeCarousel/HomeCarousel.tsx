@@ -17,7 +17,9 @@ const HomeCarousel = () => {
     ];
 
     useLayoutEffect(() => {
-        return () => console.log('');
+        return () => {
+
+        }
     }, []);
 
 

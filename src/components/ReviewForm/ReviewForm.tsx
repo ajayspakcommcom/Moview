@@ -20,7 +20,9 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
     const [loader, setLoader] = React.useState(false);
 
     React.useLayoutEffect(() => {
-        return () => console.log('');
+        return () => {
+
+        };
     }, [movieItem._id]);
 
     const ratingCompleted = (rating: number) => {
@@ -75,7 +77,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                     ]);
                 } else {
                     Alert.alert('Error', `${result.message}`, [
-                        { text: 'OK', onPress: () => console.log('') }
+                        { text: 'OK', onPress: () => { } }
                     ]);
                 }
 

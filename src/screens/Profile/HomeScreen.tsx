@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
+import { API_URL } from '../../configure/config.android';
 
 
 type Props = {
@@ -19,6 +20,10 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const { user, logout, userDetail } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
+    const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
     const gotoHandler = () => {
         navigation.navigate('Home', { screen: 'Notification' });
@@ -42,10 +47,86 @@ const HomeScreen: React.FC<Props> = ({ }) => {
 
     React.useLayoutEffect(() => {
 
+        const getFollowerCount = async () => {
 
+            const url = `${API_URL}follower/${userDetail._id}`;
+            const token = user;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token?.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    signal: signal
+                });
+
+                const result = await response.json();
+
+                console.log('Ram...');
+                console.log(result.data.length);
+
+                if (result.status === 'success') {
+                    setFollowData((prevState) => ({
+                        ...prevState,
+                        followers: result.data.length
+                    }));
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.name === 'AbortError') {
+
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+        };
+
+        const getFollowingCount = async () => {
+
+            const url = `${API_URL}following/${userDetail._id}`;
+            const token = user;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token?.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    signal: signal
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    setFollowData((prevState) => ({
+                        ...prevState,
+                        following: result.data.length
+                    }));
+                }
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.name === 'AbortError') {
+
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+        };
+
+        getFollowerCount();
+        getFollowingCount();
 
         return () => {
-
+            abortController.abort();
         }
     }, []);
 
@@ -73,11 +154,11 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <Text style={styles.follText}>Movies</Text>
                     </View>
                     <View style={styles.followers}>
-                        <Text style={styles.follText}>{userDetail.followers.length}</Text>
+                        <Text style={styles.follText}>{followData.followers}</Text>
                         <Text style={styles.follText}>Followers</Text>
                     </View>
                     <View style={styles.following}>
-                        <Text style={styles.follText}>{userDetail.following.length}</Text>
+                        <Text style={styles.follText}>{followData.following}</Text>
                         <Text style={styles.follText}>Following</Text>
                     </View>
                 </View>

@@ -9,55 +9,20 @@ import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
 
 interface ListProps {
-    movieItem?: MovieItem;
     userItem?: UserItem;
 }
 
 const keyExtractor = (item: Review) => item._id;
 
-const MyReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
+const MyReviewList: React.FC<ListProps> = ({ userItem }) => {
 
-    const { user, userDetail } = useAuth();
+    const { user } = useAuth();
     const abortController = new AbortController();
     const signal = abortController.signal;
     const [reviewData, setReviewData] = React.useState<Review[]>([]);
 
     React.useLayoutEffect(() => {
 
-        const getReviewListByMovie = async () => {
-
-            const url = `${API_URL}review/movie/${movieItem?._id}`;
-            const token = user;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token?.token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    signal: signal
-                });
-
-                const result = await response.json();
-
-
-                if (result.status === 'success') {
-                    setReviewData(result.data.reviews);
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    if (error.name === 'AbortError') {
-
-                    } else {
-
-                    }
-                } else {
-
-                }
-                throw error; // Re-throw the error to be handled by the caller if necessary
-            }
-        };
 
         const getReviewListByUser = async () => {
 
@@ -82,20 +47,16 @@ const MyReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.name === 'AbortError') {
-
+                        //
                     } else {
-
+                        //
                     }
                 } else {
-
+                    //
                 }
-                throw error;
             }
         };
 
-        if (movieItem) {
-            getReviewListByMovie();
-        }
 
         if (userItem) {
             getReviewListByUser();
@@ -104,10 +65,12 @@ const MyReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
         return () => {
             abortController.abort();
         };
-    }, [movieItem, userItem]);
+    }, [userItem]);
 
     return (
         <>
+            {reviewData.length > 0 && <Text style={{ color: '#fff' }}>{JSON.stringify(reviewData[0].movie.title)}</Text>}
+
             {reviewData.length > 0 &&
                 <FlatList
                     style={styles.container}

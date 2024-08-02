@@ -43,7 +43,6 @@ const MyReviewItem: React.FC<ItemProps> = ({ item }) => {
     };
 
     const gotoUserProfile = (id: string) => {
-
         navigation.navigate('FollowerFollowing', { userId: id });
     };
 
@@ -56,11 +55,11 @@ const MyReviewItem: React.FC<ItemProps> = ({ item }) => {
                         <View style={styles.headerWrapper}>
                             <View style={styles.user}>
                                 <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} onPress={gotoUserProfile.bind(null, item.user._id)} />
+                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                                 </LinearGradient>
                             </View>
                             <View style={styles.content}>
-                                <Text style={styles.name} onPress={gotoUserProfile.bind(null, item.user._id)}>{item.user.firstname}</Text>
+                                <Text style={styles.name}>{item.movie.title}</Text>
                                 <View style={styles.rating}>
                                     <AirbnbRating
                                         count={5}

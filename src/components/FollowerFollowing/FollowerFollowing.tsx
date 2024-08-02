@@ -17,53 +17,126 @@ type Props = {
 
 const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
-    const { userDetail, user, appCounter } = useAuth();
+    const { userDetail, user, appCounter, counter } = useAuth();
     const [isFollowing, setIsFollowing] = React.useState(false);
+    const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
+
+
+
     const abortController = new AbortController();
     const signal = abortController.signal;
 
+    const getFollowerCount = async () => {
+
+        const url = `${API_URL}follower/${userData?._id}`;
+        const token = user;
+
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+
+            if (result.status === 'success') {
+                setFollowData((prevState) => ({
+                    ...prevState,
+                    followers: result.data.length
+                }));
+                console.log('result.data.length', result.data.length);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
+
+    const getFollowingCount = async () => {
+
+        const url = `${API_URL}following/${userData?._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+            console.log('following', result.data.length);
+
+            if (result.status === 'success') {
+                setFollowData((prevState) => ({
+                    ...prevState,
+                    following: result.data.length
+                }));
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
+
+    const checkIfFollowing = async () => {
+        try {
+
+            const response = await fetch(`${API_URL}check-if-following`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token}`,
+                },
+                body: JSON.stringify({
+                    "userId": userData?._id,
+                    "followerId": userDetail?._id,
+                }),
+                signal: signal
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (result.status === 'success') {
+                if (result.isFollowing === 1) {
+                    setIsFollowing(true);
+                }
+            }
+
+        } catch (error) {
+            Alert.alert(`Error: ${error}`);
+        }
+    };
+
     React.useLayoutEffect(() => {
 
-
-        // console.log('userId', userData?._id);
-        // console.log('followerId', userDetail?._id);
-
-        //console.log('userDetail', (userDetail as UserItem).following);
-
-        //console.log((userDetail as UserItem).following.includes(userData?._id));
-        //setIsFollowing((userDetail as UserItem).following.includes(userData?._id));
-
-        const checkIfFollowing = async () => {
-            try {
-
-                const response = await fetch(`${API_URL}check-if-following`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user?.token}`,
-                    },
-                    body: JSON.stringify({
-                        "userId": userData?._id,
-                        "followerId": userDetail?._id,
-                    }),
-                    signal: signal
-                });
-
-                const result = await response.json();
-                console.log(result);
-
-                if (result.status === 'success') {
-                    if (result.isFollowing === 1) {
-                        setIsFollowing(true);
-                    }
-                }
-
-            } catch (error) {
-                Alert.alert(`Error: ${error}`);
-            }
-        };
-
         checkIfFollowing();
+        getFollowerCount();
+        getFollowingCount();
 
         return () => {
             abortController.abort();
@@ -93,6 +166,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                         text: 'OK', onPress: () => {
                             setIsFollowing(true);
                             appCounter();
+                            getFollowerCount();
                         }
                     },
                 ]);
@@ -109,6 +183,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     };
 
     const UnFollowHandler = async () => {
+
         try {
 
             const response = await fetch(`${API_URL}unfollow`, {
@@ -125,12 +200,18 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
             const result = await response.json();
 
+
+
             if (result.status === 'success') {
-                Alert.alert('Successfully', 'Thank you for unfollowing.', [
+                Alert.alert('Successfully', 'Unfollow', [
                     {
                         text: 'OK', onPress: () => {
                             setIsFollowing(false);
                             appCounter();
+                            setFollowData((prevState) => ({
+                                ...prevState,
+                                followers: followData.followers - 1
+                            }));
                         }
                     },
                 ]);
@@ -163,11 +244,11 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
             <View style={styles.followerWrapper}>
                 <View style={styles.followers}>
-                    <Text style={styles.follText}>{0}</Text>
+                    <Text style={styles.follText}>{followData.followers}</Text>
                     <Text style={styles.follText}>Followers</Text>
                 </View>
                 <View style={styles.following}>
-                    <Text style={styles.follText}>{0}</Text>
+                    <Text style={styles.follText}>{followData.following}</Text>
                     <Text style={styles.follText}>Following</Text>
                 </View>
                 <View style={styles.movies}>

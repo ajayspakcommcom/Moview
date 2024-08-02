@@ -83,3 +83,8 @@ export const formatDate = (date: Date, format: string): string => {
     // Replace placeholders in the format string
     return format.replace('DD', day).replace('MM', month).replace('YYYY', year);
 }
+
+export const extractUniqueMovieIds = (reviews: { movie: { _id: string; } }[]): string[] => {
+    const movieIds: string[] = reviews.map(review => review.movie._id);
+    return Array.from(new Set(movieIds));
+};

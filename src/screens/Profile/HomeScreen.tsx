@@ -257,7 +257,6 @@ const styles = StyleSheet.create({
         marginRight: 15,
         borderRightColor: Colors.whiteColor,
         padding: 15,
-        display: 'none'
     },
     followers: {
         marginRight: 15,

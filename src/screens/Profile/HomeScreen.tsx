@@ -17,7 +17,7 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ }) => {
 
 
-    const { user, logout, userDetail } = useAuth();
+    const { user, logout, userDetail, counter } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
@@ -63,9 +63,6 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                 });
 
                 const result = await response.json();
-
-                console.log('Ram...');
-                console.log(result.data.length);
 
                 if (result.status === 'success') {
                     setFollowData((prevState) => ({
@@ -128,7 +125,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
         return () => {
             abortController.abort();
         }
-    }, []);
+    }, [counter]);
 
 
     return (
@@ -194,10 +191,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        // justifyContent: 'flex-start',
-        // alignItems: 'center',
-        // backgroundColor: Colors.darkBackgroudColor,
+        flex: 1
     },
     headerWrapper: {
 
@@ -322,4 +316,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeScreen;
+export default React.memo(HomeScreen);

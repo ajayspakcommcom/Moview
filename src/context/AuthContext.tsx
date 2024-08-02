@@ -18,6 +18,8 @@ interface AuthContextType {
     logout: () => void;
     responseError: ResponseError | null;
     userDetail: any;
+    counter: number;
+    appCounter: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [responseError, setResponseError] = useState<ResponseError | null>(null);
     const [userDetail, setUserDetail] = useState<any>(null);
+    const [counter, setCounter] = useState<any>(null);
 
 
     useLayoutEffect(() => {
@@ -72,6 +75,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
+    const appCounter = () => {
+        setCounter(counter + 1);
+    };
+
     const logout = async () => {
         setUser(null);
     };
@@ -81,7 +88,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         login,
         logout,
         responseError,
-        userDetail
+        userDetail,
+        counter,
+        appCounter
     };
 
     return (

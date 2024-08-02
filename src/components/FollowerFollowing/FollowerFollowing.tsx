@@ -17,7 +17,7 @@ type Props = {
 
 const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
-    const { userDetail, user } = useAuth();
+    const { userDetail, user, appCounter } = useAuth();
     const [isFollowing, setIsFollowing] = React.useState(false);
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -92,6 +92,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     {
                         text: 'OK', onPress: () => {
                             setIsFollowing(true);
+                            appCounter();
                         }
                     },
                 ]);
@@ -129,6 +130,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     {
                         text: 'OK', onPress: () => {
                             setIsFollowing(false);
+                            appCounter();
                         }
                     },
                 ]);

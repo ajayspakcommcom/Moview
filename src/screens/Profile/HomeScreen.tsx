@@ -135,7 +135,6 @@ const HomeScreen: React.FC<Props> = ({ }) => {
             const result = await response.json();
 
             if (result.status === 'success') {
-                console.log('Ajay', result.data.reviews);
                 setMoviesReviewed(result.data.reviews.length);
             }
         } catch (error) {

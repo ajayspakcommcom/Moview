@@ -8,6 +8,9 @@ import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { API_URL } from '../../configure/config.android';
+import { useAuth } from '../../context/AuthContext';
+import { Notification } from '../../types/Notification';
 
 type Props = {
 
@@ -69,14 +72,59 @@ const movieList: MovieItem[] = [
 
 const MyNotification: React.FC<Props> = () => {
 
+    const { user, userDetail, counter } = useAuth();
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
-    const [userIconWidth, setUserIconWidth] = React.useState(0);
+    const [data, setData] = React.useState<Notification[]>([]);
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const getNotificationCount = async () => {
+
+
+
+        const url = `${API_URL}notification/follower/${userDetail._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setData(result.data.notification);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
 
 
     React.useLayoutEffect(() => {
 
-        return console.log('');
+        getNotificationCount();
+
+
+
+        return () => {
+            abortController.abort();
+        };
     }, []);
 
     const onRefresh = () => {
@@ -93,27 +141,28 @@ const MyNotification: React.FC<Props> = () => {
         //const { width } = event.nativeEvent.layout;
     };
 
-    const renderItem = ({ item }: { item: MovieItem }) => (
+    const renderItem = ({ item }: { item: Notification }) => (
+        <>
+            <View style={[styles.item]}>
 
-        <View style={[styles.item]}>
+                <View style={styles.userIcon} onLayout={onLayout}>
+                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                </View>
 
-            <View style={styles.userIcon} onLayout={onLayout}>
-                <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                <View style={[styles.headingWrapper]}>
+                    <Text style={styles.heading}>{item.title}</Text>
+                    <Text style={styles.desc}>{item.message}</Text>
+                </View>
+
             </View>
-
-            <View style={[styles.headingWrapper]}>
-                <Text style={styles.heading}>Black Panther</Text>
-                <Text style={styles.desc}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-            </View>
-
-        </View >
+        </>
     );
 
     return (
         <>
             <FlatList
                 ref={flatListRef}
-                data={movieList}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={item => item._id}
                 style={styles.flatListWrapper}

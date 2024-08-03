@@ -289,7 +289,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 </View>
             </View>
 
-            <Text>{isFollowing ? 'Following' : 'No Following'}</Text>
 
             {!isFollowing &&
                 <CustomButton

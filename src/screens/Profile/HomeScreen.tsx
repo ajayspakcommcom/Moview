@@ -21,6 +21,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { id: string } }> = useRoute();
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
+    const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -42,85 +43,116 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     };
 
     const onBookmarkHandler = (event: PressableProps) => {
-
     };
+
+    const getFollowerCount = async () => {
+
+        const url = `${API_URL}follower/${userDetail._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setFollowData((prevState) => ({
+                    ...prevState,
+                    followers: result.data.length
+                }));
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
+
+    const getFollowingCount = async () => {
+
+        const url = `${API_URL}following/${userDetail._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setFollowData((prevState) => ({
+                    ...prevState,
+                    following: result.data.length
+                }));
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
+
+    const getReviewListByUser = async () => {
+
+        const url = `${API_URL}review/user/${userDetail?._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                console.log('Ajay', result.data.reviews);
+                setMoviesReviewed(result.data.reviews.length);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+                    //
+                }
+            }
+        }
+    };
+
 
     React.useLayoutEffect(() => {
 
-        const getFollowerCount = async () => {
-
-            const url = `${API_URL}follower/${userDetail._id}`;
-            const token = user;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token?.token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    signal: signal
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    setFollowData((prevState) => ({
-                        ...prevState,
-                        followers: result.data.length
-                    }));
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    if (error.name === 'AbortError') {
-
-                    } else {
-
-                    }
-                } else {
-
-                }
-            }
-        };
-
-        const getFollowingCount = async () => {
-
-            const url = `${API_URL}following/${userDetail._id}`;
-            const token = user;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token?.token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    signal: signal
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    setFollowData((prevState) => ({
-                        ...prevState,
-                        following: result.data.length
-                    }));
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    if (error.name === 'AbortError') {
-
-                    } else {
-
-                    }
-                } else {
-
-                }
-            }
-        };
-
         getFollowerCount();
         getFollowingCount();
+        getReviewListByUser();
 
         return () => {
             abortController.abort();
@@ -147,7 +179,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                 </View>
                 <View style={styles.followerWrapper}>
                     <View style={styles.movies}>
-                        <Text style={styles.follText}>200</Text>
+                        <Text style={styles.follText}>{moviesReviewed}</Text>
                         <Text style={styles.follText}>Movies</Text>
                     </View>
                     <View style={styles.followers}>

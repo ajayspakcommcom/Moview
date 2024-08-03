@@ -43,7 +43,6 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
     };
 
     const gotoUserProfile = (id: string) => {
-
         navigation.navigate('FollowerFollowing', { userId: id });
     };
 

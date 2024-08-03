@@ -64,8 +64,7 @@ const MyReviewList: React.FC<ListProps> = ({ userItem }) => {
 
     return (
         <>
-            <Text style={{ color: '#fff' }}>{JSON.stringify(reviewData[0].movie)}</Text>
-            <Text style={{ color: '#fff' }}>{JSON.stringify(reviewData[0].movie._id)}</Text>
+
             {reviewData.length > 0 &&
                 <FlatList
                     style={styles.container}

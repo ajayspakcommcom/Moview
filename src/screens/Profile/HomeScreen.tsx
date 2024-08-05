@@ -193,15 +193,15 @@ const HomeScreen: React.FC<Props> = ({ }) => {
             </View>
 
             <View style={styles.myMoviesWrapper}>
-                {/* <Text style={styles.movieHeaderText}>My Movies</Text> */}
+
                 <View style={styles.hr}></View>
 
                 <View style={styles.footerWrapper}>
-                    <Pressable style={styles.footerItem} onPress={onRatingReviewHandler}>
+                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onRatingReviewHandler}>
                         <Icon name={'star'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Ratings and Reviews</Text>
                     </Pressable>
-                    <Pressable style={styles.footerItem} onPress={onFavouriteHandler}>
+                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onFavouriteHandler}>
                         <Icon name={'heart'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Favorite Films</Text>
                     </Pressable>

@@ -17,23 +17,16 @@ const windowWidth = Dimensions.get('window').width;
 
 const CastItem: React.FC<ItemProps> = ({ item }) => {
 
-    const [isExpanded, setIsExpanded] = React.useState(false);
-
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
 
     return (
-        <TouchableOpacity onPress={toggleExpand}>
-            <View style={styles.wrapper}>
-                <View style={styles.headerWrapper}>
-                    <View style={styles.user}>
-                        <Icon name={'user-circle'} size={60} color={Colors.whiteColor} />
-                    </View>
-                    <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
+        <View style={styles.wrapper}>
+            <View style={styles.headerWrapper}>
+                <View style={styles.user}>
+                    <Icon name={'user-circle'} size={60} color={Colors.whiteColor} />
                 </View>
+                <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 };
 

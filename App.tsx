@@ -89,7 +89,7 @@ function App(): React.JSX.Element {
       {isLoggedIn &&
         <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.tabBgColor } }} >
           <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
-          <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
+          {/* <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} /> */}
           <Tab.Screen name="MyReview" component={MyReviewNavigation} options={TabNavigationOptions.MyReview} />
           <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />
         </Tab.Navigator>

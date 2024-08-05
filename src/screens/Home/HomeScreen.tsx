@@ -37,7 +37,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <HomeCarousel />
+            {/* <HomeCarousel /> */}
             <View style={styles.movieList}>
                 <MovieList />
             </View>

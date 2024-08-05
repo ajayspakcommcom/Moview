@@ -66,6 +66,25 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                 const result = await response.json();
 
                 if (result.status === 'success') {
+
+                    try {
+                        const response = await fetch(`${API_URL}notification`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${user?.token}`,
+                            },
+                            body: JSON.stringify({
+                                "user_id": userDetail._id,
+                                "title": userDetail.firstname,
+                                "message": comment,
+                                "type": "review"
+                            }),
+                        });
+                    } catch (error) {
+                        //
+                    }
+
                     setLoader(false);
                     Alert.alert('Review Successfully', 'Thank you for your review.', [
                         {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, Platform, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
@@ -18,7 +18,7 @@ const LoginScreen: React.FC<Props> = () => {
 
     const { user, login, responseError } = useAuth();
 
-    const [username, setUsername] = React.useState('hariom@gmail.com');
+    const [username, setUsername] = React.useState('omkar@gmail.com');
     const [password, setPassword] = React.useState('12345');
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
@@ -53,6 +53,16 @@ const LoginScreen: React.FC<Props> = () => {
     const goto = (screen: string) => {
         navigation.navigate(screen);
     };
+
+    React.useLayoutEffect(() => {
+
+        console.log('Ram...', Platform.OS);
+        console.log('Ram...',);
+
+        return () => {
+
+        };
+    }, [])
 
     return (
         <View style={styles.container}>

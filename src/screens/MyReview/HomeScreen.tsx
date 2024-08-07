@@ -13,8 +13,6 @@ const HomeScreen: React.FC<Props> = () => {
 
     React.useLayoutEffect(() => {
 
-        console.log('userDetail', userDetail);
-
         return () => {
 
         }

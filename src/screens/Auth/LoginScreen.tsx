@@ -56,9 +56,6 @@ const LoginScreen: React.FC<Props> = () => {
 
     React.useLayoutEffect(() => {
 
-        console.log('Ram...', Platform.OS);
-        console.log('Ram...',);
-
         return () => {
 
         };

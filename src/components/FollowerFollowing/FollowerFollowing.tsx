@@ -51,7 +51,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     ...prevState,
                     followers: result.data.length
                 }));
-                console.log('result.data.length', result.data.length);
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -82,7 +81,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
             });
 
             const result = await response.json();
-            console.log('following', result.data.length);
 
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
@@ -120,7 +118,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (result.status === 'success') {
                 if (result.isFollowing === 1) {

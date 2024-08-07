@@ -33,7 +33,9 @@ function App(): React.JSX.Element {
   React.useLayoutEffect(() => {
     SplashScreen.hide();
     Orientation.lockToPortrait();
-    return () => console.log('');
+    return () => {
+
+    };
   }, []);
 
 

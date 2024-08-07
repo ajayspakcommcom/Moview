@@ -27,8 +27,8 @@ const DetailScreen: React.FC = () => {
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
     const [activeTab, setActiveTab] = React.useState('reviews');
 
-    const [comment, setComment] = React.useState<string>('');
-    const [rating, setRating] = React.useState<number>(0);
+    // const [comment, setComment] = React.useState<string>('');
+    // const [rating, setRating] = React.useState<number>(0);
 
 
     React.useLayoutEffect(() => {
@@ -70,9 +70,9 @@ const DetailScreen: React.FC = () => {
         };
     }, []);
 
-    const ratingCompleted = (rating: number) => {
-        setRating(rating);
-    }
+    // const ratingCompleted = (rating: number) => {
+    //     setRating(rating);
+    // }
 
     const handleTabClick = (tabName: string) => {
         setActiveTab(tabName);

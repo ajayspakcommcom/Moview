@@ -81,7 +81,6 @@ const DetailScreen: React.FC = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-
             <View style={styles.header}>
                 {detailData.poster_url &&
                     <FastImage

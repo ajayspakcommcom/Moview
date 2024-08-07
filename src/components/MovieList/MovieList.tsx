@@ -36,9 +36,6 @@ const MovieList: React.FC<MovieListProps> = () => {
             if (user) {
                 try {
                     const resp = await fetchMovies(user.token!, signal);
-
-
-
                     setTimeout(() => {
                         setMovieList(resp.data.movies);
                         setLoading(false);

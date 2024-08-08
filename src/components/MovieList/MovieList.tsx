@@ -79,7 +79,6 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-
             <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
                 <FastImage
                     style={styles.image}

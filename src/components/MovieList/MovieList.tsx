@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ActivityIndicator, Pressable } from 'react-native';
+import { View, StyleSheet, FlatList, RefreshControl, Dimensions, ActivityIndicator, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
@@ -79,13 +79,14 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const renderItem = ({ item }: { item: MovieItem }) => (
         <View style={[styles.item]}>
-            <TouchableOpacity onPress={navigateToDetails.bind(null, item)}>
+
+            <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
                 <FastImage
                     style={styles.image}
                     source={MovieImageMap[item.poster_url]}
                     resizeMode={FastImage.resizeMode.contain}
                 />
-            </TouchableOpacity>
+            </Pressable>
         </View>
     );
 
@@ -104,7 +105,6 @@ const MovieList: React.FC<MovieListProps> = () => {
                 data={movieList}
                 renderItem={renderItem}
                 keyExtractor={item => item._id}
-                contentContainerStyle={styles.container}
                 horizontal={false}
                 refreshControl={<RefreshControl
                     refreshing={refreshing}
@@ -121,19 +121,16 @@ const MovieList: React.FC<MovieListProps> = () => {
 
 const styles = StyleSheet.create({
     loadingContainer: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    container: {
-        flexGrow: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start'
     },
     item: {
         width: (screenWidth / 2),
         height: (screenWidth / 2) + 60,
         position: 'relative',
+    },
+    pressable: {
+        flex: 1,
     },
     image: {
         width: (screenWidth / 2),
@@ -144,6 +141,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
         left: 0
+    },
+    text: {
+        color: 'white',
+        fontSize: 50
     }
 
 });

@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%',
-        backgroundColor: '#201E43'
+        width: '100%'
     },
     movieList: {
         backgroundColor: 'grey',

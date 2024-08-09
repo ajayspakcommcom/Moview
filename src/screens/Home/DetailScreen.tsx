@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -79,6 +79,7 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
+
         <SafeAreaView style={styles.container}>
 
             <View style={styles.header}>
@@ -142,6 +143,7 @@ const DetailScreen: React.FC = () => {
             {activeTab === 'writeReview' && <ScrollView><ReviewForm movieItem={route.params.movie} /></ScrollView>}
 
         </SafeAreaView>
+
     );
 };
 

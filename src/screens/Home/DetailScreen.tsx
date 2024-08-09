@@ -109,9 +109,11 @@ const DetailScreen: React.FC = () => {
             <View style={styles.genreWrapper}>
                 {detailData.genre?.split(',').map((genre, index) => (
                     <View key={index} style={styles.genreItem}>
-                        <Text style={styles.genreText}>{genre}</Text>
+                        <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? ',' : ''}</Text>
                     </View>
                 ))}
+
+                <Text style={{ color: 'red' }}>{ }</Text>
             </View>
 
             <View style={styles.releaseWrapper}>
@@ -183,12 +185,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     },
     genreItem: {
-        marginRight: 15,
         paddingVertical: 1,
-        paddingHorizontal: 15,
-        borderWidth: 1,
         borderColor: Colors.whiteColor,
-        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center'
     },

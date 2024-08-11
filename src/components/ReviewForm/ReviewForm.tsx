@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
@@ -130,15 +130,17 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
             </View>
 
             <View style={styles.formWrapper}>
-                <TextInput
-                    style={styles.textInput}
-                    multiline={true}
-                    numberOfLines={10}
-                    placeholder="Type Here..."
-                    onChangeText={handleCommentChange}
-                    value={comment}
-                    inputMode={'text'}
-                />
+                <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+                    <TextInput
+                        style={styles.textInput}
+                        multiline={true}
+                        numberOfLines={10}
+                        placeholder="Type Here..."
+                        onChangeText={handleCommentChange}
+                        value={comment}
+                        inputMode={'text'}
+                    />
+                </KeyboardAvoidingView>
                 <CustomButton
                     text={loader ? "Submit..." : "Submit"}
                     onPressHandler={onSaveHandler}
@@ -152,6 +154,10 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'red'
+    },
     editableRating: {
         width: '100%',
         paddingTop: 25

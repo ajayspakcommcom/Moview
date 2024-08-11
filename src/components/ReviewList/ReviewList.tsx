@@ -114,6 +114,7 @@ const ReviewList: React.FC<ListProps> = ({ movieItem, userItem }) => {
                     data={reviewData}
                     renderItem={({ item }) => <ReviewItem item={item} />}
                     keyExtractor={keyExtractor}
+                    contentContainerStyle={styles.container}
                 />
             }
 

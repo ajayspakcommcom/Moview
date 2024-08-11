@@ -1,121 +1,284 @@
-import React from 'react';
-import { View, TextInput, Button, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, Keyboard } from 'react-native';
+import * as React from 'react';
+import { View, TextInput, Button, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, ListRenderItem, TouchableOpacity, FlatList } from 'react-native';
+import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../../styles/Colors';
+import { MovieItem } from '../../types/Movie';
+import { formatDate } from '../../utils/Common';
+import Fonts from '../../styles/Fonts';
+import { AirbnbRating } from 'react-native-ratings';
+import CastList from '../../components/CastList/CastList';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
+import FastImage from 'react-native-fast-image';
+import MovieImageMap from '../../utils/MovieImageMap';
+import ReviewList from '../../components/ReviewList/ReviewList';
+import CastItem from '../../components/CastList/CastItem';
+import ReviewItem from '../../components/ReviewList/ReviewItem';
+
+
+interface ListItem {
+    id: string;
+    name: string;
+}
+
+
+
+
 
 const DetailScreen: React.FC = () => {
 
-    const [text, setText] = React.useState('');
+    const navigation: NavigationProp<ParamListBase> = useNavigation();
+    const route: RouteProp<{ params: { movie: MovieItem } }> = useRoute();
+    const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
+    const [activeTab, setActiveTab] = React.useState('reviews');
 
-    const handlePress = () => {
-        Alert.alert('Button Pressed', `You entered: ${text}`);
-    };
+    React.useLayoutEffect(() => {
 
-    const [keyboardStatus, setKeyboardStatus] = React.useState('');
+        setDetailData(prevState => ({
+            ...prevState,
+            id: route.params.movie?._id,
+            title: route.params.movie?.title,
+            poster_url: route.params.movie?.poster_url,
+            release_date: route.params.movie?.release_date,
+            director: route.params.movie?.director,
+            genre: route.params.movie?.genre,
+            cast: route.params.movie?.cast,
+            rating: route.params.movie?.rating,
+        }));
 
-    React.useEffect(() => {
 
-        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardStatus('show'));
-        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardStatus('hide'));
+        const backButtonHandler = () => {
+            navigation.navigate('HomeScreen');
+        };
+
+        const gotoNotification = () => {
+
+            navigation.navigate('Notification');
+        };
+
+        navigation.setOptions({
+            title: ``,
+            headerLeft: () => {
+                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+            },
+            headerRight: () => {
+                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
+            }
+        });
 
         return () => {
-            keyboardDidHideListener.remove();
-            keyboardDidShowListener.remove();
+
         };
     }, []);
 
-    return (
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={keyboardStatus === 'show' ? 50 : 0} style={styles.container}>
-            <ScrollView automaticallyAdjustContentInsets={true}>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View style={styles.commentBox}><Text style={styles.text}>Hello</Text></View>
-                <View>
-                    <ScrollView>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                        <View style={styles.commentBox1}><Text style={styles.text}>Hello</Text></View>
-                    </ScrollView>
-                </View>
-                <Text>{keyboardStatus}</Text>
-                <View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Enter some text"
-                        value={text}
-                        onChangeText={setText}
+    const handleTabClick = (tabName: string) => {
+        setActiveTab(tabName);
+    };
+
+    const headerContent = () => {
+        return <>
+            <View style={styles.header}>
+                {detailData.poster_url &&
+                    <FastImage
+                        style={styles.img}
+                        source={MovieImageMap[detailData.poster_url]}
                     />
-                    <Button title="Press Me" onPress={handlePress} />
+                }
+            </View>
+
+            <View style={styles.detailText}>
+                <Text style={styles.detailHeading}>{detailData.title}</Text>
+                <View style={styles.ratingWrapper}>
+                    <AirbnbRating
+                        count={10}
+                        reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                        defaultRating={detailData.rating}
+                        size={16}
+                        showRating={false}
+                        isDisabled={true}
+                    />
                 </View>
-            </ScrollView>
+            </View>
+
+            <View style={styles.genreWrapper}>
+                {detailData.genre?.split(',').map((genre, index) => (
+                    <View key={index} style={styles.genreItem}>
+                        <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? ',' : ''}</Text>
+                    </View>
+                ))}
+
+                <Text style={{ color: 'red' }}>{ }</Text>
+            </View>
+
+            <View style={styles.releaseWrapper}>
+                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text></View>
+            </View>
+
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
+            </View>
+
+            <View style={styles.hrWrapper}>
+                <View style={styles.hr}></View>
+            </View>
+
+            <View style={styles.castReviewBtnWrapper}>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'synopsis')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Synopsis & Cast </Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
+                    <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
+                </TouchableOpacity>
+            </View>
+        </>
+    }
+
+    return (
+        <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
+
+            {activeTab === 'synopsis' &&
+                <FlatList
+                    ListHeaderComponent={() => (
+                        headerContent()
+                    )}
+                    data={detailData.cast}
+                    renderItem={({ item }) => <CastItem item={item} />}
+                    keyExtractor={(item) => item._id}
+                    contentContainerStyle={styles.container}
+                    numColumns={3}
+                />
+            }
+
+            {activeTab === 'reviews' &&
+                <FlatList
+                    ListHeaderComponent={() => (
+                        headerContent()
+                    )}
+                    data={detailData.cast}
+                    renderItem={({ item }) => <ReviewList movieItem={route.params.movie} />}
+                    keyExtractor={(item) => item._id}
+                />
+            }
+
+            {activeTab === 'writeReview' &&
+                <ScrollView>
+                    {headerContent()}
+                    <ReviewForm movieItem={route.params.movie} />
+                </ScrollView>
+            }
+
+            {/*{activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
+            {activeTab === 'reviews' && <ReviewList movieItem={route.params.movie} />}
+            {activeTab === 'writeReview' && <ReviewForm movieItem={route.params.movie} />} */}
+
         </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'red',
-        flex: 1
+        flex: 1,
     },
-    commentBox: {
-        marginBottom: 20,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        backgroundColor: 'brown'
+    header: {
+        width: '100%',
+        height: 200,
+        paddingHorizontal: 0
     },
-    commentBox1: {
-        marginBottom: 20,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        backgroundColor: 'yellow'
+    img: {
+        width: '100%',
+        height: 200,
+        flexGrow: 1
     },
-    input: {
-        height: 100,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        padding: 10,
+    detailText: {
+        paddingVertical: 10,
+        paddingHorizontal: 15
+    },
+    detailHeading: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Bold,
+        fontSize: Fonts.Size.Medium + 1,
+        textTransform: 'uppercase'
+    },
+    ratingWrapper: {
+        paddingVertical: 0,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    genreWrapper: {
+        flexDirection: 'row',
+        paddingHorizontal: 15
+    },
+    genreItem: {
+        paddingVertical: 1,
+        borderColor: Colors.whiteColor,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    genreText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium
+    },
+    releaseWrapper: {
+        marginTop: 5,
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    releaseItem: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    releaseText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium
+    },
+    directorWrapper: {
+        marginTop: 0,
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    directorItem: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    directorText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium
+    },
+    editableRating: {
+        width: '100%',
+        paddingTop: 25
+    },
+    hrWrapper: {
+        paddingVertical: 10,
+        width: '100%',
+        paddingHorizontal: 15,
+    },
+    hr: {
+        minHeight: 2,
+        backgroundColor: Colors.tabBgColor,
+    },
+    castReviewBtnWrapper: {
+        paddingHorizontal: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         marginBottom: 10,
-        borderRadius: 5,
-        color: '#fff'
     },
-    text: {
-        color: '#fff'
+    castReviewText: {
+    },
+    crText: {
+        fontSize: Fonts.Size.Medium,
+        color: Colors.tabBgColor,
+        fontWeight: '500'
+    },
+
+    crTextActive: {
+        color: Colors.whiteColor,
     }
 });
 

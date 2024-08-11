@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, VirtualizedList } from 'react-native';
 import CastItem from './CastItem';
 import { Cast } from '../../models/Common';
 
@@ -19,6 +19,8 @@ const data: Cast[] = [
 
 const CastList: React.FC<ListProps> = ({ castList }) => {
 
+
+
     React.useLayoutEffect(() => {
 
         return () => {
@@ -27,13 +29,15 @@ const CastList: React.FC<ListProps> = ({ castList }) => {
     }, []);
 
     return (
-        <FlatList
-            style={styles.container}
-            data={castList}
-            renderItem={({ item }) => <CastItem item={item} />}
-            keyExtractor={keyExtractor}
-            numColumns={3}
-        />
+        <>
+            <FlatList
+                style={styles.container}
+                data={castList}
+                renderItem={({ item }) => <CastItem item={item} />}
+                keyExtractor={keyExtractor}
+                numColumns={3}
+            />
+        </>
     );
 };
 

@@ -18,7 +18,8 @@ const MyReviewNavigation: React.FC = () => {
     };
 
     const screenOptions: NativeStackNavigationOptions = {
-        contentStyle: { backgroundColor: Colors.darkBackgroudColor }
+        contentStyle: { backgroundColor: Colors.darkBackgroudColor },
+        animation: 'slide_from_left'
     };
 
     return (

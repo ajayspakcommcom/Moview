@@ -90,7 +90,7 @@ const DetailScreen: React.FC = () => {
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
-                        count={10}
+                        count={5}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
                         defaultRating={detailData.rating}
                         size={16}

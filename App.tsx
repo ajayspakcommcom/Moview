@@ -83,14 +83,14 @@ function App(): React.JSX.Element {
 
       {!isLoggedIn &&
         <Stack.Navigator initialRouteName="Login" screenOptions={{ ...stackScreenOptions }}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ animationEnabled: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} options={{ animationEnabled: false }} />
         </Stack.Navigator>
       }
 
       {isLoggedIn &&
         <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.tabBgColor } }} >
-          <Tab.Screen name="Home" component={HomeNavigation} options={TabNavigationOptions.Home} />
+          <Tab.Screen name="Home" component={HomeNavigation} options={{ ...TabNavigationOptions.Home }} />
           {/* <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} /> */}
           <Tab.Screen name="MyReview" component={MyReviewNavigation} options={TabNavigationOptions.MyReview} />
           <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />

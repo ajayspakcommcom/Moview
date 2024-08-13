@@ -6,8 +6,8 @@ import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
-const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
+import CustomTextInput from '../../components/Ui/CustomTextInput';
+import CustomButton from '../../components/Ui/CustomButton';
 
 type Props = {
 
@@ -74,6 +74,7 @@ const LoginScreen: React.FC<Props> = () => {
                     <Text style={styles.errorText}>{responseError.message}</Text>
                 </View>
             }
+
 
             <CustomTextInput
                 placeholder="Username"

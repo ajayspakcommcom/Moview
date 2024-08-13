@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
@@ -8,6 +8,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
+import { Button, Dialog, Portal, PaperProvider, Text } from 'react-native-paper';
+import AlertDialog from '../../components/AlertDialog/AlertDialog';
 
 
 type Props = {
@@ -23,6 +25,13 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
+    const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
+    const cancelDialog = () => setDialogVisible(false);
+    const signOutDialog = () => {
+        logout();
+        setDialogVisible(false)
+    };
+
     const abortController = new AbortController();
     const signal = abortController.signal;
 
@@ -31,7 +40,8 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     };
 
     const onLogoutHandler = (event: PressableProps) => {
-        logout();
+        setDialogVisible(true);
+        //logout();
     };
 
     const onRatingReviewHandler = (event: PressableProps) => {
@@ -215,7 +225,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                     </Pressable>
                 </View>
             </View>
-
+            <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
         </ScrollView>
     );
 };

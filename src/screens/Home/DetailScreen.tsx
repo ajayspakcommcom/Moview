@@ -274,8 +274,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     castReviewText: {
-        borderWidth: 2,
-        borderColor: Colors.tabBgColor,
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 50

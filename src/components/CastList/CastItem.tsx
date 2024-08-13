@@ -22,7 +22,7 @@ const CastItem: React.FC<ItemProps> = ({ item }) => {
         <View style={styles.wrapper}>
             <View style={styles.headerWrapper}>
                 <View style={styles.user}>
-                    <Icon name={'user-circle'} size={60} color={Colors.whiteColor} />
+                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                 </View>
                 <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
             </View>
@@ -32,7 +32,7 @@ const CastItem: React.FC<ItemProps> = ({ item }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        padding: 15,
+        padding: 5,
         width: (windowWidth / 3),
         justifyContent: 'center',
         alignItems: 'center'

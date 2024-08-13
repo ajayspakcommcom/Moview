@@ -147,7 +147,6 @@ const DetailScreen: React.FC = () => {
                     data={detailData.cast}
                     renderItem={({ item }) => <CastItem item={item} />}
                     keyExtractor={(item) => item._id}
-                    contentContainerStyle={styles.container}
                     numColumns={3}
                 />
             }

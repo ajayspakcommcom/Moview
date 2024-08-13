@@ -120,8 +120,17 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
         <>
             <View style={styles.editableRating}>
                 <AirbnbRating
-                    count={5}
-                    reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                    count={10}
+                    reviews={["Terrible",
+                        "Bad",
+                        "Okay",
+                        "Good",
+                        "Great",
+                        "Awesome",
+                        "Excellent",
+                        "Superb",
+                        "Outstanding",
+                        "Perfect"]}
                     defaultRating={0}
                     size={25}
                     showRating={false}

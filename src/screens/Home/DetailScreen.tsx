@@ -75,7 +75,7 @@ const DetailScreen: React.FC = () => {
     const headerContent = () => {
         return <>
 
-            <Text style={{ color: '#fff', fontSize: 14 }}>{route.params.movie?._id}</Text>
+            {/* <Text style={{ color: '#fff', fontSize: 14 }}>{route.params.movie?._id}</Text> */}
 
             <View style={styles.header}>
                 {detailData.poster_url &&

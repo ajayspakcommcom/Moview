@@ -41,7 +41,6 @@ const HomeScreen: React.FC<Props> = ({ }) => {
 
     const onLogoutHandler = (event: PressableProps) => {
         setDialogVisible(true);
-        //logout();
     };
 
     const onRatingReviewHandler = (event: PressableProps) => {

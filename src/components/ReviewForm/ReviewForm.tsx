@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Text } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
@@ -9,7 +9,8 @@ import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 
 interface ItemProps {
-    movieItem: MovieItem
+    movieItem: MovieItem,
+    onPress?: () => void;
 }
 
 const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
@@ -35,6 +36,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 
 
     const onSaveHandler = async () => {
+
         try {
 
             if (rating === 0) {
@@ -116,17 +118,22 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
     };
 
 
+
+
     return (
         <>
             <View style={styles.editableRating}>
-                <AirbnbRating
-                    count={5}
-                    reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                    defaultRating={0}
-                    size={25}
-                    showRating={false}
-                    onFinishRating={ratingCompleted}
-                />
+                <View style={styles.editableRatingInnerWrapper}>
+                    <AirbnbRating
+                        count={5}
+                        reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                        defaultRating={0}
+                        size={25}
+                        showRating={false}
+                        onFinishRating={ratingCompleted}
+                    />
+                    {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>}
+                </View>
             </View>
 
             <View style={styles.formWrapper}>
@@ -156,11 +163,29 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red'
     },
     editableRating: {
-        width: '100%',
-        paddingTop: 25
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    editableRatingInnerWrapper: {
+        paddingTop: 25,
+        position: 'relative',
+
+    },
+    countRatingWrapper: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
+        borderRadius: 5,
+        alignSelf: 'center'
+    },
+    ratingText: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Medium + 3,
+        fontWeight: '600'
     },
     formWrapper: {
         marginTop: 20,

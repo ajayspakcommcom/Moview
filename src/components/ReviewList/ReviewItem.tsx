@@ -8,8 +8,8 @@ import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { truncateText } from '../../utils/Common';
 import LinearGradient from 'react-native-linear-gradient';
-import { GestureHandlerRootView, PanGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
-import { GestureHandlerStateChangeNativeEvent, PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
+import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 interface ItemProps {

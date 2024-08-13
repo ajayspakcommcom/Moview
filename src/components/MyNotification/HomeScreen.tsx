@@ -1,12 +1,8 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, RefreshControl, LayoutChangeEvent } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent } from 'react-native';
 import Colors from '../../styles/Colors';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
-import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
-import { AirbnbRating } from 'react-native-ratings';
-import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';

@@ -19,7 +19,6 @@ const MovieList: React.FC<MovieListProps> = () => {
     const { user } = useAuth();
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-
     const [movieList, setMovieList] = React.useState<MovieItem[]>([]);
     const [refreshing, setRefreshing] = React.useState(false);
     const flatListRef = React.useRef<FlatList<any>>(null);
@@ -29,7 +28,6 @@ const MovieList: React.FC<MovieListProps> = () => {
 
         const abortController = new AbortController();
         const signal = abortController.signal;
-
 
         const getMovieList = async () => {
             if (user) {

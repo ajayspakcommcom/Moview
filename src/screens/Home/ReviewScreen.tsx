@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -7,9 +7,10 @@ import { MovieItem } from '../../types/Movie';
 import { findMovieById } from '../../utils/Common';
 import { MovieDataList } from '../../utils/Data';
 import Fonts from '../../styles/Fonts';
-import { Rating, AirbnbRating } from 'react-native-ratings';
-import CustomButton from '../../components/Ui/CustomButton';
+import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
+
+const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
 type Props = {
 

@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, PressableProps, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { UserItem } from '../../types/User';

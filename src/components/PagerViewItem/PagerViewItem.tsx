@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import HomeCarouselVideo from '../HomeCarouselVideo/HomeCarouselVideo';
+
+const HomeCarouselVideo = React.lazy(() => import('../HomeCarouselVideo/HomeCarouselVideo'));
+const Loading = React.lazy(() => import('../Loading/Loading'));
 
 interface PagerViewItemProps {
     text: string;
@@ -12,12 +14,14 @@ const PagerViewItem: React.FC<PagerViewItemProps> = ({ text, currentIndex, video
     return (
 
         <View style={styles.pageItem}>
-            <HomeCarouselVideo
-                title="Another Example"
-                content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                backgroundColor="lightgreen"
-                videoUrl={videoUrl}
-            />
+            <React.Suspense fallback={<Loading />}>
+                <HomeCarouselVideo
+                    title="Another Example"
+                    content="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    backgroundColor="lightgreen"
+                    videoUrl={videoUrl}
+                />
+            </React.Suspense>
         </View>
     );
 };

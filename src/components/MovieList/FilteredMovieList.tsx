@@ -1,18 +1,13 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList, RefreshControl, Image, Dimensions, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import { View, StyleSheet, FlatList, RefreshControl, Dimensions, TouchableOpacity } from 'react-native';
 import Colors from '../../styles/Colors';
-import Video, { VideoRef, OnLoadData } from 'react-native-video';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
-import { MovieDataList } from '../../utils/Data';
 import FastImage from 'react-native-fast-image';
 
 interface MovieListProps {
     movies: MovieItem[]
 }
-
-
 
 const screenWidth = Dimensions.get('window').width;
 

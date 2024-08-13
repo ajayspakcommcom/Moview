@@ -5,8 +5,9 @@ import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
 import { MovieDataList } from '../../utils/Data';
-import FilteredMovieList from '../../components/MovieList/FilteredMovieList';
 
+const FilteredMovieList = React.lazy(() => import('../../components/MovieList/FilteredMovieList'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -46,7 +47,7 @@ const HomeScreen: React.FC<Props> = () => {
 
             <View style={styles.movieList}>
                 <Text style={{ color: '#fff' }}>{searchQuery}</Text>
-                {filteredMovies.length >= 0 && <FilteredMovieList movies={filteredMovies} />}
+                {filteredMovies.length >= 0 && <React.Suspense fallback={<Loading />}><FilteredMovieList movies={filteredMovies} /></React.Suspense>}
                 {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>}
             </View>
 

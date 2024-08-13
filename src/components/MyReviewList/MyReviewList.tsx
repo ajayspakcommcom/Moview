@@ -4,10 +4,8 @@ import ReviewItem from './MyReviewItem';
 import { Review } from '../../models/Review';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
-import { MovieItem } from '../../types/Movie';
 import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
-import { extractUniqueMovieIds } from '../../utils/Common';
 
 interface ListProps {
     userItem?: UserItem;

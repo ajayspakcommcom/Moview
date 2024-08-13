@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, ListRenderItem, TouchableOpacity, FlatList } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, VirtualizedList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import CastItem from './CastItem';
 import { Cast } from '../../models/Common';
 

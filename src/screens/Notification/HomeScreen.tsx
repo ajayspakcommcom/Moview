@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { MovieItem } from '../../types/Movie';
-import { AirbnbRating } from 'react-native-ratings';
-import FastImage from 'react-native-fast-image';
-import MyNotification from '../../components/MyNotification/HomeScreen';
+import { View, StyleSheet } from 'react-native';
+
+const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 
 type Props = {
@@ -24,7 +23,9 @@ const Notification: React.FC<Props> = () => {
 
     return (
         <View style={styles.container}>
-            <MyNotification />
+            <React.Suspense fallback={<Loading />}>
+                <MyNotification />
+            </React.Suspense>
         </View>
     );
 };

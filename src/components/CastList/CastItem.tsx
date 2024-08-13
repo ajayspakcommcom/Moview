@@ -1,13 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import { Rating, AirbnbRating } from 'react-native-ratings';
 import { Cast } from '../../models/Common';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
-import { getFirstAndSecondChar, truncateText } from '../../utils/Common';
-import LinearGradient from 'react-native-linear-gradient';
+import { getFirstAndSecondChar } from '../../utils/Common';
 
 interface ItemProps {
     item: Cast;

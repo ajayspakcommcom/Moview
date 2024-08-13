@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import MyReviewList from '../../components/MyReviewList/MyReviewList';
 import { useAuth } from '../../context/AuthContext';
+const MyReviewList = React.lazy(() => import('../../components/MyReviewList/MyReviewList'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
 
@@ -22,7 +23,9 @@ const HomeScreen: React.FC<Props> = () => {
     return (
         <>
             <View style={styles.container}>
-                <MyReviewList userItem={userDetail} />
+                <React.Suspense fallback={<Loading />}>
+                    <MyReviewList userItem={userDetail} />
+                </React.Suspense>
             </View>
         </>
     );

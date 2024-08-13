@@ -1,27 +1,17 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button, ScrollView, ImageSourcePropType, Image, TextInput } from 'react-native';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Colors from '../../styles/Colors';
-import { MovieItem } from '../../types/Movie';
-import { findMovieById } from '../../utils/Common';
-import { MovieDataList } from '../../utils/Data';
-import Fonts from '../../styles/Fonts';
-import { Rating, AirbnbRating } from 'react-native-ratings';
-import CustomButton from '../../components/Ui/CustomButton';
-import FastImage from 'react-native-fast-image';
+import { StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { UserItem } from '../../types/User';
-import FollowerFollowing from '../../components/FollowerFollowing/FollowerFollowing';
+
+const FollowerFollowing = React.lazy(() => import('../../components/FollowerFollowing/FollowerFollowing'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
     navigation: StackNavigationProp<any>;
     route: any;
 };
-
-
 
 const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
 
@@ -29,9 +19,7 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
     const abortController = new AbortController();
     const signal = abortController.signal;
     const [userDetail, setUserDetail] = React.useState<UserItem>();
-
     const { user } = useAuth();
-
 
     React.useLayoutEffect(() => {
 
@@ -82,7 +70,9 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return (
         <>
-            <FollowerFollowing userData={userDetail} />
+            <React.Suspense fallback={<Loading />}>
+                <FollowerFollowing userData={userDetail} />
+            </React.Suspense>
         </>
     );
 };

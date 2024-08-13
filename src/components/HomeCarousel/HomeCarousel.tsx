@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import Colors from '../../styles/Colors';
-import CarouselBulletNavigation from '../CarouselBulletNavigation/CarouselBulletNavigation';
 import PagerViewItem from '../PagerViewItem/PagerViewItem';
 
+const CarouselBulletNavigation = React.lazy(() => import('../../components/CarouselBulletNavigation/CarouselBulletNavigation'));
+const Loading = React.lazy(() => import('../Loading/Loading'));
 
 const HomeCarousel = () => {
 
@@ -30,7 +30,9 @@ const HomeCarousel = () => {
                     <PagerViewItem key={item.key} text={item.text} currentIndex={currentIndex} videoUrl={item.videoUrl} />
                 )}
             </PagerView>
-            <CarouselBulletNavigation pages={pages} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+            <React.Suspense fallback={<Loading />}>
+                <CarouselBulletNavigation pages={pages} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+            </React.Suspense>
         </View>
     );
 };

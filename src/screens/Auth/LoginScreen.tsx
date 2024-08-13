@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
@@ -16,15 +16,14 @@ type Props = {
 
 const LoginScreen: React.FC<Props> = () => {
 
-    const { user, login, responseError } = useAuth();
-
+    const { login, responseError } = useAuth();
     const [username, setUsername] = React.useState('omkar@gmail.com');
     const [password, setPassword] = React.useState('12345');
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-    const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
+    //const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
@@ -41,7 +40,6 @@ const LoginScreen: React.FC<Props> = () => {
                 Alert.alert('Error', 'Username or password cannot be empty');
                 return;
             }
-
             await login(username, password);
             setLoader(false);
         } catch (error) {
@@ -49,6 +47,7 @@ const LoginScreen: React.FC<Props> = () => {
             Alert.alert('Error', 'Login failed. Please try again.');
         }
     };
+
 
     const goto = (screen: string) => {
         navigation.navigate(screen);
@@ -76,7 +75,6 @@ const LoginScreen: React.FC<Props> = () => {
                     <Text style={styles.errorText}>{responseError.message}</Text>
                 </View>
             }
-
 
             <CustomTextInput
                 placeholder="Username"

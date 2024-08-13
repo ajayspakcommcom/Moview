@@ -158,8 +158,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={[styles.dontHaveAccount, styles.login]} onPress={goto.bind(null, 'Login')}>Login</Text>
             </View>
 
-
-
         </View>
     );
 };

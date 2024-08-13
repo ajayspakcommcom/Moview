@@ -24,7 +24,6 @@ const MovieImageMap: ImageMap = {
     'uncharted-poster': require(`../assets/images/movies/uncharted-poster.jpg`),
     'wandavision-poster': require(`../assets/images/movies/wandavision-poster.jpg`),
     'wood-poster': require(`../assets/images/movies/wood-poster.jpg`)
-
 };
 
 export default MovieImageMap;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, Button, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, ListRenderItem, TouchableOpacity, FlatList } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, ListRenderItem, TouchableOpacity, FlatList } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -7,13 +7,14 @@ import { MovieItem } from '../../types/Movie';
 import { formatDate } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
-import CastList from '../../components/CastList/CastList';
 import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
-import ReviewList from '../../components/ReviewList/ReviewList';
-import CastItem from '../../components/CastList/CastItem';
-import ReviewItem from '../../components/ReviewList/ReviewItem';
+
+const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
+const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
+
 
 
 interface ListItem {
@@ -106,8 +107,6 @@ const DetailScreen: React.FC = () => {
                         <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? ',' : ''}</Text>
                     </View>
                 ))}
-
-                <Text style={{ color: 'red' }}>{ }</Text>
             </View>
 
             <View style={styles.releaseWrapper}>
@@ -137,43 +136,46 @@ const DetailScreen: React.FC = () => {
     }
 
     return (
-        <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
+        <>
+            <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
 
-            {activeTab === 'synopsis' &&
-                <FlatList
-                    ListHeaderComponent={() => (
-                        headerContent()
-                    )}
-                    data={detailData.cast}
-                    renderItem={({ item }) => <CastItem item={item} />}
-                    keyExtractor={(item) => item._id}
-                    numColumns={3}
-                />
-            }
+                {activeTab === 'synopsis' &&
+                    <React.Suspense fallback={<Loading />}>
+                        <FlatList
+                            ListHeaderComponent={() => (
+                                headerContent()
+                            )}
+                            data={detailData.cast}
+                            renderItem={({ item }) => <CastItem item={item} />}
+                            keyExtractor={(item) => item._id}
+                            numColumns={3}
+                        />
+                    </React.Suspense>
+                }
 
-            {activeTab === 'reviews' &&
-                <FlatList
-                    ListHeaderComponent={() => (
-                        headerContent()
-                    )}
-                    data={detailData.cast}
-                    renderItem={({ item }) => <ReviewList movieItem={route.params.movie} />}
-                    keyExtractor={(item) => item._id}
-                />
-            }
+                {activeTab === 'reviews' &&
+                    <React.Suspense fallback={<Loading />}>
+                        <FlatList
+                            ListHeaderComponent={() => (
+                                headerContent()
+                            )}
+                            data={detailData.cast}
+                            renderItem={({ item }) => <ReviewList movieItem={route.params.movie} />}
+                            keyExtractor={(item) => item._id}
+                        />
+                    </React.Suspense>
+                }
 
-            {activeTab === 'writeReview' &&
-                <ScrollView>
-                    {headerContent()}
-                    <ReviewForm movieItem={route.params.movie} />
-                </ScrollView>
-            }
-
-            {/*{activeTab === 'synopsis' && <CastList castList={detailData.cast} />}
-            {activeTab === 'reviews' && <ReviewList movieItem={route.params.movie} />}
-            {activeTab === 'writeReview' && <ReviewForm movieItem={route.params.movie} />} */}
-
-        </KeyboardAvoidingView>
+                {activeTab === 'writeReview' &&
+                    <React.Suspense fallback={<Loading />}>
+                        <ScrollView>
+                            {headerContent()}
+                            <ReviewForm movieItem={route.params.movie} />
+                        </ScrollView>
+                    </React.Suspense>
+                }
+            </KeyboardAvoidingView>
+        </>
     );
 };
 

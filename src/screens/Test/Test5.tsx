@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../styles/Colors';
 
 // Define props interface (optional if you have specific props)
@@ -11,7 +11,6 @@ interface LoadingProps {
 const Test5: React.FC<LoadingProps> = ({ message = 'Test5' }) => {
     return (
         <View style={styles.container}>
-            {/* <ActivityIndicator size="large" color={Colors.tabActiveColor} /> */}
             {message && <Text style={styles.message}>{message}</Text>}
         </View>
     );

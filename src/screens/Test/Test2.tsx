@@ -11,7 +11,6 @@ interface LoadingProps {
 const Test2: React.FC<LoadingProps> = ({ message = 'Test2' }) => {
     return (
         <View style={styles.container}>
-            {/* <ActivityIndicator size="large" color={Colors.tabActiveColor} /> */}
             {message && <Text style={styles.message}>{message}</Text>}
         </View>
     );

@@ -89,5 +89,13 @@ export const extractUniqueMovieIds = (reviews: { movie: { _id: string; } }[]): s
     return Array.from(new Set(movieIds));
 };
 
+export const hitSlops = (top: number = 0, bottom: number = 0, left: number = 0, right: number = 0): { top: number; bottom: number; left: number; right: number } => {
+    return {
+        top,
+        bottom,
+        left,
+        right,
+    };
+};
 
 

@@ -4,7 +4,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } fro
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { formatDate } from '../../utils/Common';
+import { formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
@@ -121,7 +121,7 @@ const DetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.castReviewBtnWrapper}>
-                <TouchableOpacity onPress={handleTabClick.bind(null, 'synopsis')}>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'synopsis')} hitSlop={hitSlops()}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Synopsis & Cast </Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
@@ -274,6 +274,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     castReviewText: {
+        borderWidth: 2,
+        borderColor: Colors.tabBgColor,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 50
     },
     crText: {
         fontSize: Fonts.Size.Medium,

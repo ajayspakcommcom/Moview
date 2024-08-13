@@ -10,10 +10,10 @@ import { API_URL } from '../../configure/config.android';
 
 interface ItemProps {
     movieItem: MovieItem,
-    onPress?: () => void;
+    onPress?: (bool: string) => void;
 }
 
-const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
+const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
     const { userDetail, user } = useAuth();
     const [comment, setComment] = React.useState<string>('');
@@ -93,6 +93,9 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
                             text: 'OK', onPress: () => {
                                 setComment('');
                                 setRating(0);
+                                if (onPress) {
+                                    onPress('reviews');
+                                }
                             }
                         },
                     ]);
@@ -116,9 +119,6 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem }) => {
         }
 
     };
-
-
-
 
     return (
         <>

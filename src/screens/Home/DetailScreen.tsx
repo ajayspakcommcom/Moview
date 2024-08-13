@@ -134,6 +134,10 @@ const DetailScreen: React.FC = () => {
         </>
     }
 
+    const onReviewPressHandler = (str: string) => {
+        setActiveTab(str);
+    };
+
     return (
         <>
             <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
@@ -169,7 +173,7 @@ const DetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            <ReviewForm movieItem={route.params.movie} />
+                            <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />
                         </ScrollView>
                     </React.Suspense>
                 }

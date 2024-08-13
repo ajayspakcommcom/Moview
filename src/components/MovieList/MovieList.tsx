@@ -12,7 +12,6 @@ interface MovieListProps {
 
 }
 
-
 const screenWidth = Dimensions.get('window').width;
 
 const MovieList: React.FC<MovieListProps> = () => {

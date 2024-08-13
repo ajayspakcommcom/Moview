@@ -80,8 +80,6 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
         };
     }, []);
 
-
-
     return (
         <>
             <FollowerFollowing userData={userDetail} />

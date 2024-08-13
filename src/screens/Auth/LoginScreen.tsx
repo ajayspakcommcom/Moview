@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
-import CustomTextInput from '../../components/Ui/CustomTextInput';
-import CustomButton from '../../components/Ui/CustomButton';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-
+const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
+const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
 type Props = {
 

@@ -7,23 +7,18 @@ import { MovieItem } from '../../types/Movie';
 import { formatDate } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
-import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
+const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
-
-
 
 interface ListItem {
     id: string;
     name: string;
 }
-
-
-
 
 
 const DetailScreen: React.FC = () => {
@@ -70,6 +65,7 @@ const DetailScreen: React.FC = () => {
         return () => {
 
         };
+
     }, []);
 
     const handleTabClick = (tabName: string) => {

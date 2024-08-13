@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, Pressable, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import MovieList from '../../components/MovieList/MovieList';
 import { setTransparentHeader } from '../../utils/navigationOptions';
+
+const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
+const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
     navigation: StackNavigationProp<any>;
 };
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
-
-
-
 
     React.useLayoutEffect(() => {
 
@@ -22,28 +21,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         };
     }, []);
 
-
     const handlePress = () => {
         console.log('Ram...');
         Alert.alert('Button pressed', 'Ram...');
     };
 
-
     return (
         <>
             <View style={styles.container}>
                 <View style={styles.movieList}>
-                    <MovieList />
+                    <React.Suspense fallback={<Loading />}>
+                        <MovieList />
+                    </React.Suspense>
                 </View>
             </View>
-
-            {/* <View style={styles.container}>
-                <Pressable onPress={() => console.log('Ram...')}>
-                    <Text style={styles.text}>Hello</Text>
-                </Pressable>
-            </View> */}
-
-
         </>
     );
 };

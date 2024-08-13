@@ -8,17 +8,17 @@ import { Keyboard, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Colors from './src/styles/Colors';
+import { useAuth } from './src/context/AuthContext';
+import SplashScreen from 'react-native-splash-screen';
+import Orientation from 'react-native-orientation-locker';
+import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import RegisterScreen from './src/screens/Auth/RegisterScreen';
-import Colors from './src/styles/Colors';
+import MyReviewNavigation from './src/navigation/MyReviewNavigation';
 import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
-import TabNavigationOptions from './src/components/Utility/TabNavigationOptions';
-import { useAuth } from './src/context/AuthContext';
-import MyReviewNavigation from './src/navigation/MyReviewNavigation';
-import SplashScreen from 'react-native-splash-screen';
-import Orientation from 'react-native-orientation-locker';
 
 
 const Stack = createStackNavigator();

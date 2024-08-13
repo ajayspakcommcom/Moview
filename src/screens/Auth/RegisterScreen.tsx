@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
-import CustomTextInput from '../../components/Ui/CustomTextInput';
-import CustomButton from '../../components/Ui/CustomButton';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.android';
 import FastImage from 'react-native-fast-image';
+const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
+const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
 type Props = {
     navigation: StackNavigationProp<any>;

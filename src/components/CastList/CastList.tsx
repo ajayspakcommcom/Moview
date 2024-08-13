@@ -1,21 +1,15 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import CastItem from './CastItem';
 import { Cast } from '../../models/Common';
+
+const CastItem = React.lazy(() => import('./CastItem'));
+const Loading = React.lazy(() => import('../Loading/Loading'));
 
 interface ListProps {
     castList?: Cast[]
 }
 
 const keyExtractor = (item: Cast) => item._id;
-
-const data: Cast[] = [
-    { _id: '5', actor: 'John Doe', role: '' },
-];
-
-
-
-
 
 const CastList: React.FC<ListProps> = ({ castList }) => {
 
@@ -33,7 +27,7 @@ const CastList: React.FC<ListProps> = ({ castList }) => {
             <FlatList
                 style={styles.container}
                 data={castList}
-                renderItem={({ item }) => <CastItem item={item} />}
+                renderItem={({ item }) => <React.Suspense fallback={<Loading />}><CastItem item={item} /></React.Suspense>}
                 keyExtractor={keyExtractor}
                 numColumns={3}
             />

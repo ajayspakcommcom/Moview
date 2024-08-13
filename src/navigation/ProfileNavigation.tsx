@@ -4,6 +4,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import Colors from '../styles/Colors';
 import HomeScreen from '../screens/Profile/HomeScreen';
 import { TextAlign } from '../styles/TextAlignmentUtils';
+import TestScreen from '../screens/Test/TestScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const ProfileNavigation: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
+            <Stack.Screen name="TestScreen" component={TestScreen} options={{ ...screenOptions }} />
         </Stack.Navigator>
     );
 };

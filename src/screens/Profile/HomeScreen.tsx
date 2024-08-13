@@ -36,7 +36,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const signal = abortController.signal;
 
     const gotoHandler = () => {
-        navigation.navigate('Home', { screen: 'Notification' });
+        navigation.navigate('TestScreen');
     };
 
     const onLogoutHandler = (event: PressableProps) => {
@@ -221,6 +221,10 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                     <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Logout</Text>
+                    </Pressable>
+                    <Pressable style={styles.footerItem} onPress={gotoHandler}>
+                        <MaterialIcon name={'logout'} style={styles.footerIcon} />
+                        <Text style={styles.footerText}>Test</Text>
                     </Pressable>
                 </View>
             </View>

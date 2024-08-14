@@ -115,11 +115,9 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
     return (
         <View style={styles.container}>
 
-
             <View style={styles.userIcon}>
                 <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
             </View>
-
 
             <CustomTextInput
                 placeholder="First name"

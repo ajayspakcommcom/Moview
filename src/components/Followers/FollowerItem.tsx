@@ -1,6 +1,7 @@
 // FollowerItem.tsx
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import Colors from '../../styles/Colors';
 
 
 interface Follower {
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
+        color: Colors.whiteColor
     },
 });
 

@@ -4,7 +4,7 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import FollowingItem from './FollowingItem';
 
 
-interface Follower {
+interface Following {
     id: string;
     name: string;
     profilePicture: string; // URL to the profile picture
@@ -12,16 +12,16 @@ interface Follower {
 
 
 interface FollowingListProps {
-    followers: Follower[];
+    following: Following[];
 }
 
-const FollowingList: React.FC<FollowingListProps> = ({ followers }) => {
+const FollowingList: React.FC<FollowingListProps> = ({ following }) => {
     return (
         <View style={styles.container}>
             <FlatList
-                data={followers}
+                data={following}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => <FollowingItem follower={item} />}
+                renderItem={({ item }) => <FollowingItem following={item} />}
             />
         </View>
     );

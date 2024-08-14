@@ -1,23 +1,24 @@
 // FollowerItem.tsx
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import Colors from '../../styles/Colors';
 
 
-interface Follower {
+interface Following {
     id: string;
     name: string;
     profilePicture: string; // URL to the profile picture
 }
 
 interface FollowingItemProps {
-    follower: Follower;
+    following: Following;
 }
 
-const FollowingItem: React.FC<FollowingItemProps> = ({ follower }) => {
+const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
     return (
         <View style={styles.container}>
-            <Image source={{ uri: follower.profilePicture }} style={styles.profilePicture} />
-            <Text style={styles.name}>{follower.name}</Text>
+            <Image source={{ uri: following.profilePicture }} style={styles.profilePicture} />
+            <Text style={styles.name}>{following.name}</Text>
         </View>
     );
 };
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
+        color: Colors.whiteColor
     },
 });
 

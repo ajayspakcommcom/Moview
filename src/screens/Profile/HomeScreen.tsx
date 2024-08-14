@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { View, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-native';
 import Colors from '../../styles/Colors';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
@@ -15,18 +13,18 @@ import Feather from 'react-native-vector-icons/Feather';
 const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
-const FollowingList = React.lazy(() => import('../../components/Followings/FollowingList'));
-const FollowersList = React.lazy(() => import('../../components/Followers/FollowerList'));
+
+
 
 type Props = {
-
+    navigation: any;
+    route: any;
 };
 
-const HomeScreen: React.FC<Props> = ({ }) => {
+const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
     const { user, logout, userDetail, counter } = useAuth();
-    const navigation: NavigationProp<ParamListBase> = useNavigation();
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
@@ -43,7 +41,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const signal = abortController.signal;
 
     const gotoScreen = (screen: string) => {
-        navigation.navigate('Home');
+        navigation.navigate(screen);
     };
 
     const gotoTabScreen = (tab: string, screen: string) => {
@@ -217,14 +215,21 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                                     <Text style={styles.follText}>Movies</Text>
                                 </View>
                             </Pressable>
-                            <View style={styles.followers}>
-                                <Text style={styles.follText}>{followData.followers}</Text>
-                                <Text style={styles.follText}>Followers</Text>
-                            </View>
-                            <View style={styles.following}>
-                                <Text style={styles.follText}>{followData.following}</Text>
-                                <Text style={styles.follText}>Following</Text>
-                            </View>
+
+                            <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
+                                <View style={styles.followers}>
+                                    <Text style={styles.follText}>{followData.followers}</Text>
+                                    <Text style={styles.follText}>Followers</Text>
+                                </View>
+                            </Pressable>
+
+                            <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
+                                <View style={styles.following}>
+                                    <Text style={styles.follText}>{followData.following}</Text>
+                                    <Text style={styles.follText}>Following</Text>
+                                </View>
+                            </Pressable>
+
                         </View>
 
                         <View style={styles.myMoviesWrapper}>

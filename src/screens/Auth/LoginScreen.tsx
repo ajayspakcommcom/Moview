@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -8,6 +8,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } fro
 import FastImage from 'react-native-fast-image';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
+import { hitSlops } from '../../utils/Common';
 
 type Props = {
 
@@ -117,9 +118,15 @@ const LoginScreen: React.FC<Props> = () => {
                 <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
                 <View style={styles.skipDont}>
                     <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                    <Text style={styles.skipBottomText} onPress={goto.bind(null, 'Register')}>Register</Text>
                 </View>
             </View>
+
+            <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                <View style={styles.registerBtnWrapper}>
+                    <Text style={styles.skipBottomText}>Register</Text>
+                </View>
+            </Pressable>
+
 
         </View>
     );
@@ -215,6 +222,17 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Small,
         lineHeight: 20
+    },
+    registerBtnPressable: {
+        width: '100%',
+        marginTop: 20
+    },
+    registerBtnWrapper: {
+        borderWidth: 2,
+        borderColor: Colors.whiteColor,
+        width: '100%',
+        alignItems: 'center',
+        padding: 15
     }
 });
 

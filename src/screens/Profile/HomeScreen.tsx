@@ -8,9 +8,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
-import { Button, Dialog, Portal, PaperProvider, Text } from 'react-native-paper';
-import AlertDialog from '../../components/AlertDialog/AlertDialog';
+import { Text } from 'react-native-paper';
+import Feather from 'react-native-vector-icons/Feather';
 
+// import CustomButton from '../../components/Ui/CustomButton';
+
+const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
+const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
 type Props = {
 
@@ -43,7 +47,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
         navigation.navigate(tab, { screen: screen });
     };
 
-    const onLogoutHandler = (event: PressableProps) => {
+    const onLogoutHandler = () => {
         setDialogVisible(true);
     };
 
@@ -171,46 +175,50 @@ const HomeScreen: React.FC<Props> = ({ }) => {
         }
     }, [counter]);
 
+    const editHandler = () => {
+        console.log('Ram...');
+    };
+
 
     return (
         <ScrollView style={styles.container}>
 
-            <View style={styles.headerWrapper}>
-                <View style={styles.header}>
-                    <View style={styles.headerContent}>
-                        <View style={styles.userTextIcon}>
-                            <View style={styles.userIcon}>
-                                <Icon name={'user-alt'} size={80} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
-                            </View>
-                            <View style={styles.userTextWrapper}>
-                                <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
-                                <Text style={styles.critic}>Film Critic</Text>
-                            </View>
+            <View style={styles.editWrapper}>
+                <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />
+            </View>
+            <View style={styles.header}>
+                <View style={styles.headerContent}>
+                    <View style={styles.userTextIcon}>
+                        <View style={styles.userIcon}>
+                            <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
                         </View>
-                    </View>
-                </View>
-                <View style={styles.followerWrapper}>
-                    <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                        <View style={styles.movies}>
-                            <Text style={styles.follText}>{moviesReviewed}</Text>
-                            <Text style={styles.follText}>Movies</Text>
+                        <View style={styles.userTextWrapper}>
+                            <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
+                            <Text style={styles.critic}>Film Critic</Text>
                         </View>
-                    </Pressable>
-                    <View style={styles.followers}>
-                        <Text style={styles.follText}>{followData.followers}</Text>
-                        <Text style={styles.follText}>Followers</Text>
-                    </View>
-                    <View style={styles.following}>
-                        <Text style={styles.follText}>{followData.following}</Text>
-                        <Text style={styles.follText}>Following</Text>
                     </View>
                 </View>
             </View>
 
+            <View style={styles.followerWrapper}>
+                <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                    <View style={styles.movies}>
+                        <Text style={styles.follText}>{moviesReviewed}</Text>
+                        <Text style={styles.follText}>Movies</Text>
+                    </View>
+                </Pressable>
+                <View style={styles.followers}>
+                    <Text style={styles.follText}>{followData.followers}</Text>
+                    <Text style={styles.follText}>Followers</Text>
+                </View>
+                <View style={styles.following}>
+                    <Text style={styles.follText}>{followData.following}</Text>
+                    <Text style={styles.follText}>Following</Text>
+                </View>
+            </View>
+
             <View style={styles.myMoviesWrapper}>
-
                 <View style={styles.hr}></View>
-
                 <View style={styles.footerWrapper}>
                     <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onRatingReviewHandler}>
                         <Icon name={'star'} style={styles.footerIcon} />
@@ -224,14 +232,20 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <Icon name={'bookmark'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Want to Watch</Text>
                     </Pressable>
-                    <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
+
+                    {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Logout</Text>
-                    </Pressable>
-                    <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                    </Pressable> */}
+
+                    {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Test</Text>
-                    </Pressable>
+                    </Pressable> */}
+
+                    <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+
+
                 </View>
             </View>
             <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
@@ -243,22 +257,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    headerWrapper: {
-
+    editWrapper: {
+        paddingTop: 30,
+        paddingHorizontal: 30,
+        alignItems: 'flex-end'
+    },
+    editIcon: {
+        color: Colors.whiteColor
     },
     header: {
         width: '100%',
-        minHeight: 300,
+        minHeight: 200,
         justifyContent: 'center',
         alignContent: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     headerContent: {
         width: 200,
         minHeight: 200,
         justifyContent: 'center',
         alignContent: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     userTextIcon: {
         width: '100%',
@@ -269,11 +288,13 @@ const styles = StyleSheet.create({
     },
     userIcon: {
         backgroundColor: Colors.whiteColor,
-        width: 150,
-        height: 150,
-        borderRadius: 150,
-        justifyContent: 'center',
-        alignContent: 'center'
+        width: 80,
+        height: 80,
+        borderRadius: 80,
+        justifyContent: 'center'
+    },
+    icon: {
+        textAlign: 'center'
     },
     userTextWrapper: {
         width: '100%',
@@ -293,10 +314,6 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Medium + 2,
         lineHeight: 25
-    },
-    icon: {
-        textAlign: 'center',
-        lineHeight: 150
     },
     followerWrapper: {
         width: '100%',

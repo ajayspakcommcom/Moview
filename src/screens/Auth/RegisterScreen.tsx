@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent, Alert, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.android';
 import FastImage from 'react-native-fast-image';
+import { hitSlops } from '../../utils/Common';
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
@@ -155,8 +156,14 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
             <View style={styles.footerTextWrapper}>
                 <Text style={styles.dontHaveAccount}>Already have an account?</Text>
-                <Text style={[styles.dontHaveAccount, styles.login]} onPress={goto.bind(null, 'Login')}>Login</Text>
+
             </View>
+
+            <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
+                <View style={styles.registerBtnWrapper}>
+                    <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
+                </View>
+            </Pressable>
 
         </View>
     );
@@ -231,6 +238,17 @@ const styles = StyleSheet.create({
     },
     login: {
         color: Colors.whiteColor,
+    },
+    registerBtnPressable: {
+        width: '100%',
+        marginTop: 20
+    },
+    registerBtnWrapper: {
+        borderWidth: 2,
+        borderColor: Colors.whiteColor,
+        width: '100%',
+        alignItems: 'center',
+        padding: 15
     }
 });
 

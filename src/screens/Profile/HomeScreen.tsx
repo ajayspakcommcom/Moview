@@ -15,6 +15,8 @@ import Feather from 'react-native-vector-icons/Feather';
 const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
+const FollowingList = React.lazy(() => import('../../components/Followings/FollowingList'));
+const FollowersList = React.lazy(() => import('../../components/Followers/FollowerList'));
 
 type Props = {
 
@@ -180,12 +182,10 @@ const HomeScreen: React.FC<Props> = ({ }) => {
         setIsEditMode(true);
     };
 
-
     const onEditCancelHandler = (bool: boolean) => {
         console.log(bool);
         setIsEditMode(bool);
     };
-
 
     return (
         <ScrollView style={styles.container}>
@@ -244,14 +244,14 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                                 </Pressable>
 
                                 {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
-                        <MaterialIcon name={'logout'} style={styles.footerIcon} />
-                        <Text style={styles.footerText}>Logout</Text>
-                    </Pressable> */}
+                                    <MaterialIcon name={'logout'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Logout</Text>
+                                </Pressable> */}
 
                                 {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                        <MaterialIcon name={'logout'} style={styles.footerIcon} />
-                        <Text style={styles.footerText}>Test</Text>
-                    </Pressable> */}
+                                    <MaterialIcon name={'logout'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Test</Text>
+                                </Pressable> */}
 
                                 <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
 

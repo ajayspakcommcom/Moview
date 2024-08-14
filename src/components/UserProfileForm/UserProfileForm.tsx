@@ -29,16 +29,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
     const editHandler = async () => {
 
-        const user = {
-            firstname,
-            username,
-            phone,
-            password,
-            bio,
-        };
-
-        console.log(user);
-
         // try {
 
         //     const fields = [

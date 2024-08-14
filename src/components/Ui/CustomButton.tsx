@@ -10,9 +10,10 @@ interface CustomButtonProps {
     textSize?: number;
     style?: any; //Adjust type as per your specific styles
     isDisabled?: boolean;
+    textStyle?: any;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textSize = 18, style, isDisabled }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textSize = 18, style, isDisabled, textStyle }) => {
 
     const styles = StyleSheet.create({
         button: {
@@ -42,7 +43,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
 
     return (
         <Pressable style={[styles.button, style]} android_ripple={androidRippleConfig} onPress={onPressHandler} disabled={isDisabled}>
-            <Text style={[styles.text]}>{text}</Text>
+            <Text style={[styles.text, textStyle]}>{text}</Text>
         </Pressable>
     );
 };

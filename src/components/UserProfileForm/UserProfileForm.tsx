@@ -1,20 +1,22 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, GestureResponderEvent, Alert, Pressable } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
-import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.android';
 import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
+
 type Props = {
-    navigation: StackNavigationProp<any>;
+    onCancel: (bool: boolean) => void;
 };
 
-const RegisterScreen: React.FC<Props> = ({ navigation }) => {
+const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
     const [firstname, setFirstname] = React.useState('');
     const [username, setUsername] = React.useState('');
@@ -22,7 +24,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const [phone, setPhone] = React.useState('');
     const [loader, setLoader] = React.useState(false);
 
-    const handleLogin = async () => {
+    const editHandler = async () => {
 
         try {
 
@@ -84,7 +86,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             console.error('Login error:', error);
             Alert.alert('Error', 'Login failed. Please try again.');
         }
-
     };
 
     const handleFirstnameChange = (text: string) => {
@@ -107,18 +108,18 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
     };
 
-    const goto = (screen: string) => {
-        navigation.navigate(screen);
+    const cancelHandler = () => {
+        onCancel(false);
     };
 
     return (
         <View style={styles.container}>
 
-            <FastImage
-                style={styles.logo}
-                source={require('../../assets/images/logo.png')}
-                resizeMode={FastImage.resizeMode.contain}
-            />
+
+            <View style={styles.userIcon}>
+                <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
+            </View>
+
 
             <CustomTextInput
                 placeholder="First name"
@@ -132,6 +133,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                 value={username}
                 onChangeText={handleUsernameChange}
                 autoCapitalize="none"
+                editable={false}
             />
 
             <CustomTextInput
@@ -148,22 +150,20 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             />
 
             <CustomButton
-                text={loader ? "Register..." : "Register"}
-                onPressHandler={handleLogin}
+                text={loader ? "Updating..." : "Update"}
+                onPressHandler={editHandler}
                 textSize={20}
                 isDisabled={loader ? true : false}
             />
 
-            <View style={styles.footerTextWrapper}>
-                <Text style={styles.dontHaveAccount}>Already have an account?</Text>
-
-            </View>
-
-            <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
-                <View style={styles.registerBtnWrapper}>
-                    <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
-                </View>
-            </Pressable>
+            <CustomButton
+                text={"Cancel"}
+                onPressHandler={cancelHandler}
+                textSize={20}
+                isDisabled={loader ? true : false}
+                style={{ ...styles.cancelBtn }}
+                textStyle={{ ...styles.cancelText }}
+            />
 
         </View>
     );
@@ -171,18 +171,35 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
-        backgroundColor: Colors.darkBackgroudColor
+        paddingTop: '25%'
+    },
+    userIcon: {
+        backgroundColor: Colors.whiteColor,
+        width: 80,
+        height: 80,
+        borderRadius: 80,
+        justifyContent: 'center',
+        marginBottom: 15
+    },
+    icon: {
+        textAlign: 'center'
+    },
+    cancelBtn: {
+        backgroundColor: Colors.dullRedColor,
+        marginTop: 15
+    },
+    cancelText: {
+        color: Colors.whiteColor
     },
     logo: {
         width: 166,
         height: 118,
         marginBottom: 60,
     },
-
     button: {
         width: '100%',
         height: 50,
@@ -195,61 +212,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
-    },
-    rememberForgot: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: Colors.whiteColor,
-        paddingRight: 10
-    },
-
-    rememberCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-
-    remember: {
-        color: Colors.whiteColor,
-        fontSize: Fonts.Size.Small,
-    },
-
-    forgotText: {
-        color: Colors.whiteColor,
-        fontSize: Fonts.Size.Small,
-        textDecorationLine: 'underline'
-    },
-
-    footerTextWrapper: {
-        marginTop: 25,
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'center'
-    },
-
-    dontHaveAccount: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium,
-        fontSize: Fonts.Size.Small,
-        lineHeight: 20,
-        textAlign: 'center'
-    },
-    login: {
-        color: Colors.whiteColor,
-    },
-    registerBtnPressable: {
-        width: '100%',
-        marginTop: 20
-    },
-    registerBtnWrapper: {
-        borderWidth: 2,
-        borderColor: Colors.whiteColor,
-        width: '100%',
-        alignItems: 'center',
-        padding: 15
     }
+
 });
 
-export default RegisterScreen;
+
+export default React.memo(UserProfileForm);

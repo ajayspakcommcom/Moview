@@ -11,10 +11,10 @@ import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
 
-// import CustomButton from '../../components/Ui/CustomButton';
 
 const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
+const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
 
 type Props = {
 
@@ -25,12 +25,13 @@ const HomeScreen: React.FC<Props> = ({ }) => {
 
     const { user, logout, userDetail, counter } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-    const route: RouteProp<{ params: { id: string } }> = useRoute();
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
     const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
     const cancelDialog = () => setDialogVisible(false);
+    const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
+
     const signOutDialog = () => {
         logout();
         setDialogVisible(false)
@@ -176,86 +177,103 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     }, [counter]);
 
     const editHandler = () => {
-        console.log('Ram...');
+        setIsEditMode(true);
+    };
+
+
+    const onEditCancelHandler = (bool: boolean) => {
+        console.log(bool);
+        setIsEditMode(bool);
     };
 
 
     return (
         <ScrollView style={styles.container}>
-
-            <View style={styles.editWrapper}>
-                <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />
-            </View>
-            <View style={styles.header}>
-                <View style={styles.headerContent}>
-                    <View style={styles.userTextIcon}>
-                        <View style={styles.userIcon}>
-                            <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
+            <View style={styles.innerContainer}>
+                {
+                    !isEditMode &&
+                    <>
+                        <View style={styles.editWrapper}>
+                            <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />
                         </View>
-                        <View style={styles.userTextWrapper}>
-                            <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
-                            <Text style={styles.critic}>Film Critic</Text>
+                        <View style={styles.header}>
+                            <View style={styles.headerContent}>
+                                <View style={styles.userTextIcon}>
+                                    <View style={styles.userIcon}>
+                                        <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
+                                    </View>
+                                    <View style={styles.userTextWrapper}>
+                                        <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
+                                        <Text style={styles.critic}>Film Critic</Text>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                </View>
-            </View>
 
-            <View style={styles.followerWrapper}>
-                <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                    <View style={styles.movies}>
-                        <Text style={styles.follText}>{moviesReviewed}</Text>
-                        <Text style={styles.follText}>Movies</Text>
-                    </View>
-                </Pressable>
-                <View style={styles.followers}>
-                    <Text style={styles.follText}>{followData.followers}</Text>
-                    <Text style={styles.follText}>Followers</Text>
-                </View>
-                <View style={styles.following}>
-                    <Text style={styles.follText}>{followData.following}</Text>
-                    <Text style={styles.follText}>Following</Text>
-                </View>
-            </View>
+                        <View style={styles.followerWrapper}>
+                            <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                                <View style={styles.movies}>
+                                    <Text style={styles.follText}>{moviesReviewed}</Text>
+                                    <Text style={styles.follText}>Movies</Text>
+                                </View>
+                            </Pressable>
+                            <View style={styles.followers}>
+                                <Text style={styles.follText}>{followData.followers}</Text>
+                                <Text style={styles.follText}>Followers</Text>
+                            </View>
+                            <View style={styles.following}>
+                                <Text style={styles.follText}>{followData.following}</Text>
+                                <Text style={styles.follText}>Following</Text>
+                            </View>
+                        </View>
 
-            <View style={styles.myMoviesWrapper}>
-                <View style={styles.hr}></View>
-                <View style={styles.footerWrapper}>
-                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onRatingReviewHandler}>
-                        <Icon name={'star'} style={styles.footerIcon} />
-                        <Text style={styles.footerText}>Ratings and Reviews</Text>
-                    </Pressable>
-                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onFavouriteHandler}>
-                        <Icon name={'heart'} style={styles.footerIcon} />
-                        <Text style={styles.footerText}>Favorite Films</Text>
-                    </Pressable>
-                    <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onBookmarkHandler}>
-                        <Icon name={'bookmark'} style={styles.footerIcon} />
-                        <Text style={styles.footerText}>Want to Watch</Text>
-                    </Pressable>
+                        <View style={styles.myMoviesWrapper}>
+                            <View style={styles.hr}></View>
+                            <View style={styles.footerWrapper}>
+                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onRatingReviewHandler}>
+                                    <Icon name={'star'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Ratings and Reviews</Text>
+                                </Pressable>
+                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onFavouriteHandler}>
+                                    <Icon name={'heart'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Favorite Films</Text>
+                                </Pressable>
+                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onBookmarkHandler}>
+                                    <Icon name={'bookmark'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Want to Watch</Text>
+                                </Pressable>
 
-                    {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
+                                {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Logout</Text>
                     </Pressable> */}
 
-                    {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                                {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Test</Text>
                     </Pressable> */}
 
-                    <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
 
 
-                </View>
+                            </View>
+                        </View>
+                    </>
+                }
+
+                {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
+                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
             </View>
-            <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+    },
+    innerContainer: {
+        flex: 1,
     },
     editWrapper: {
         paddingTop: 30,

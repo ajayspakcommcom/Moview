@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
     },
     img: {
         width: 30,
-        height: 30,
-        shadowColor: '#000', // Shadow color
+        height: 40,
+        shadowColor: Colors.blackColor, // Shadow color
         shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
-        shadowOpacity: 0.3, // Shadow opacity
+        shadowOpacity: 0.9, // Shadow opacity
         shadowRadius: 4, // Shadow blur radius
         elevation: 5, // Elevation for Android (creates a shadow)
-        backgroundColor: 'white', // Background color is necessary for shadow on iOS
-        borderRadius: 10, // Optional: to match the image's border radius
+        backgroundColor: Colors.transparentColor, // Background color is necessary for shadow on iOS
+        borderRadius: 5, // Optional: to match the image's border radius
     },
     gradient: {
         borderRadius: 30

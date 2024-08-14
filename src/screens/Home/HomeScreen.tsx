@@ -32,7 +32,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                {/* <Header /> */}
+                <Header />
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         <MovieList />
@@ -46,8 +46,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         width: '100%'
     },
     movieList: {

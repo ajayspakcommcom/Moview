@@ -9,6 +9,8 @@ import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
+import { API_URL } from '../../configure/config.android';
+import { useAuth } from '../../context/AuthContext';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
@@ -23,10 +25,44 @@ interface ListItem {
 
 const DetailScreen: React.FC = () => {
 
+    const { user } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { movie: MovieItem } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
     const [activeTab, setActiveTab] = React.useState('reviews');
+    const [rating, setRating] = React.useState(0);
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const getReviewListByUser = async () => {
+
+        const url = `${API_URL}review/movie-rating/${route.params.movie?._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setRating(+result.data.toFixed(1))
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+                    //
+                }
+            }
+        }
+    };
 
     React.useLayoutEffect(() => {
 
@@ -62,8 +98,10 @@ const DetailScreen: React.FC = () => {
             }
         });
 
-        return () => {
+        getReviewListByUser();
 
+        return () => {
+            abortController.abort();
         };
 
     }, []);
@@ -74,8 +112,6 @@ const DetailScreen: React.FC = () => {
 
     const headerContent = () => {
         return <>
-
-            {/* <Text style={{ color: '#fff', fontSize: 14 }}>{route.params.movie?._id}</Text> */}
 
             <View style={styles.header}>
                 {detailData.poster_url &&
@@ -90,13 +126,18 @@ const DetailScreen: React.FC = () => {
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
-                        count={5}
+                        count={1}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                        defaultRating={detailData.rating}
-                        size={16}
+                        defaultRating={rating}
+                        size={25}
                         showRating={false}
                         isDisabled={true}
                     />
+                    <View style={styles.ratingTextWrapper}>
+                        <Text style={styles.ratingText}>{rating}</Text>
+                        <Text style={styles.ratingSlash}>/</Text>
+                        <Text style={styles.totalRatingText}>5</Text>
+                    </View>
                 </View>
             </View>
 
@@ -186,6 +227,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    ratingTextWrapper: {
+        flexDirection: 'row',
+        alignItems: 'flex-end'
+    },
+    ratingText: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Medium + 5,
+        fontWeight: '600'
+    },
+    ratingSlash: {
+        color: Colors.whiteColor,
+        marginHorizontal: 2
+    },
+    totalRatingText: {
+        color: Colors.tabBgColor,
+        fontSize: Fonts.Size.Small,
+        fontWeight: '500'
+    },
     header: {
         width: '100%',
         height: 200,
@@ -208,8 +267,8 @@ const styles = StyleSheet.create({
     },
     ratingWrapper: {
         paddingVertical: 0,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start'
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     genreWrapper: {
         flexDirection: 'row',

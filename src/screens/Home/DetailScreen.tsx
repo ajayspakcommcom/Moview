@@ -234,7 +234,8 @@ const styles = StyleSheet.create({
     ratingText: {
         color: Colors.whiteColor,
         fontSize: Fonts.Size.Medium + 5,
-        fontWeight: '600'
+        fontWeight: '600',
+        paddingLeft: 5
     },
     ratingSlash: {
         color: Colors.whiteColor,
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     ratingWrapper: {
         paddingVertical: 0,
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     genreWrapper: {
         flexDirection: 'row',

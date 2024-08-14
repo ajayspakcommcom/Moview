@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';

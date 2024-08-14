@@ -9,11 +9,12 @@ import { UserItem } from '../../types/User';
 
 interface ListProps {
     userItem?: UserItem;
+    isUser?: boolean;
 }
 
 const keyExtractor = (item: Review) => item._id;
 
-const MyReviewList: React.FC<ListProps> = ({ userItem }) => {
+const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
 
     const { user } = useAuth();
     const abortController = new AbortController();
@@ -51,6 +52,8 @@ const MyReviewList: React.FC<ListProps> = ({ userItem }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log('userItem', userItem);
+
         if (userItem) {
             getReviewListByUser();
         }
@@ -63,11 +66,13 @@ const MyReviewList: React.FC<ListProps> = ({ userItem }) => {
     return (
         <>
 
+
+
             {reviewData.length > 0 &&
                 <FlatList
                     style={styles.container}
                     data={reviewData}
-                    renderItem={({ item }) => <ReviewItem item={item} />}
+                    renderItem={({ item }) => <ReviewItem item={item} isUser={isUser} />}
                     keyExtractor={keyExtractor}
                 />
             }

@@ -11,12 +11,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import MovieImageMap from '../../utils/MovieImageMap';
+import FastImage from 'react-native-fast-image';
 
 interface ItemProps {
     item: Review;
+    isUser?: boolean;
 }
 
-const MyReviewItem: React.FC<ItemProps> = ({ item }) => {
+const MyReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
 
     const [isExpanded, setIsExpanded] = React.useState(false);
     const navigation = useNavigation<any>();
@@ -26,8 +29,6 @@ const MyReviewItem: React.FC<ItemProps> = ({ item }) => {
     };
 
     React.useLayoutEffect(() => {
-
-
 
         return () => {
 
@@ -54,9 +55,21 @@ const MyReviewItem: React.FC<ItemProps> = ({ item }) => {
                     <View style={styles.wrapper}>
                         <View style={styles.headerWrapper}>
                             <View style={styles.user}>
-                                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                                </LinearGradient>
+
+                                {isUser &&
+                                    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                                    </LinearGradient>
+                                }
+
+                                {!isUser &&
+                                    <FastImage
+                                        style={styles.img}
+                                        source={MovieImageMap[item.movie.poster_url]}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                    />
+                                }
+
                             </View>
                             <View style={styles.content}>
                                 <Text style={styles.name}>{item.movie.title}</Text>
@@ -100,6 +113,17 @@ const styles = StyleSheet.create({
     },
     user: {
         width: 30
+    },
+    img: {
+        width: 30,
+        height: 30,
+        shadowColor: '#000', // Shadow color
+        shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
+        shadowOpacity: 0.3, // Shadow opacity
+        shadowRadius: 4, // Shadow blur radius
+        elevation: 5, // Elevation for Android (creates a shadow)
+        backgroundColor: 'white', // Background color is necessary for shadow on iOS
+        borderRadius: 10, // Optional: to match the image's border radius
     },
     gradient: {
         borderRadius: 30

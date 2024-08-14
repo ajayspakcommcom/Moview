@@ -32,7 +32,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <Header />
+                {/* <Header /> */}
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         <MovieList />

@@ -35,8 +35,12 @@ const HomeScreen: React.FC<Props> = ({ }) => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    const gotoHandler = () => {
-        navigation.navigate('TestScreen');
+    const gotoScreen = (screen: string) => {
+        navigation.navigate('Home');
+    };
+
+    const gotoTabScreen = (tab: string, screen: string) => {
+        navigation.navigate(tab, { screen: screen });
     };
 
     const onLogoutHandler = (event: PressableProps) => {
@@ -186,10 +190,12 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                     </View>
                 </View>
                 <View style={styles.followerWrapper}>
-                    <View style={styles.movies}>
-                        <Text style={styles.follText}>{moviesReviewed}</Text>
-                        <Text style={styles.follText}>Movies</Text>
-                    </View>
+                    <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                        <View style={styles.movies}>
+                            <Text style={styles.follText}>{moviesReviewed}</Text>
+                            <Text style={styles.follText}>Movies</Text>
+                        </View>
+                    </Pressable>
                     <View style={styles.followers}>
                         <Text style={styles.follText}>{followData.followers}</Text>
                         <Text style={styles.follText}>Followers</Text>
@@ -222,7 +228,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Logout</Text>
                     </Pressable>
-                    <Pressable style={styles.footerItem} onPress={gotoHandler}>
+                    <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                         <MaterialIcon name={'logout'} style={styles.footerIcon} />
                         <Text style={styles.footerText}>Test</Text>
                     </Pressable>

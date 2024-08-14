@@ -3,6 +3,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import { StyleSheet, View } from 'react-native';
+import Svg, { Use, Image } from 'react-native-svg';
+
 
 
 type TabOptions = {
@@ -36,5 +39,13 @@ const TabNavigationOptions: TabOptions = {
     },
 
 };
+
+const styles = StyleSheet.create({
+    logo: {
+        width: 30,
+        height: 30,
+        color: 'red'
+    }
+});
 
 export default TabNavigationOptions;

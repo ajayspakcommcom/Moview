@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     pressable: {
-        flex: 1,
+        flex: 1
     },
     image: {
         width: (screenWidth / 2),
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         right: 0,
-        left: 0
+        left: 0,
     },
     text: {
         color: 'white',

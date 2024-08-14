@@ -135,7 +135,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             />
 
             <CustomTextInput
-                placeholder="Phone"
+                placeholder="Mobile"
                 value={phone}
                 onChangeText={handlePhoneChange}
             />

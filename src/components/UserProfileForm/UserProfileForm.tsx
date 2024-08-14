@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, TextInput } from 'react-native';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
+const CustomTextTextarea = React.lazy(() => import('../Ui/CustomTextTextarea'));
 
 
 type Props = {
@@ -22,70 +23,84 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [phone, setPhone] = React.useState('');
+    const [bio, setBio] = React.useState('');
+
     const [loader, setLoader] = React.useState(false);
 
     const editHandler = async () => {
 
-        try {
+        const user = {
+            firstname,
+            username,
+            phone,
+            password,
+            bio,
+        };
 
-            const fields = [
-                { name: 'First name', value: firstname },
-                { name: 'Username', value: username },
-                { name: 'Password', value: password },
-                { name: 'Phone', value: phone }
-            ];
+        console.log(user);
 
-            const emptyField = fields.find(field => field.value.trim() === '');
+        // try {
 
-            if (emptyField) {
-                Alert.alert('Error', `${emptyField.name} is required`);
-                return;
-            } else {
+        //     const fields = [
+        //         { name: 'First name', value: firstname },
+        //         { name: 'Username', value: username },
+        //         { name: 'Password', value: password },
+        //         { name: 'Phone', value: phone },
+        //         { name: 'Bio', value: bio }
+        //     ];
 
-                try {
-                    setLoader(true);
-                    const response = await fetch(`${API_URL}user`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            "firstname": firstname,
-                            "username": username,
-                            "email": username,
-                            "phone": phone,
-                            "password": password
-                        }),
-                    });
+        //     const emptyField = fields.find(field => field.value.trim() === '');
 
-                    const result = await response.json();
+        //     if (emptyField) {
+        //         Alert.alert('Error', `${emptyField.name} is required`);
+        //         return;
+        //     } else {
+
+        //         try {
+        //             setLoader(true);
+        //             const response = await fetch(`${API_URL}user`, {
+        //                 method: 'POST',
+        //                 headers: { 'Content-Type': 'application/json' },
+        //                 body: JSON.stringify({
+        //                     "firstname": firstname,
+        //                     "username": username,
+        //                     "email": username,
+        //                     "phone": phone,
+        //                     "password": password,
+        //                     "bio": bio
+        //                 }),
+        //             });
+
+        //             const result = await response.json();
 
 
-                    if (result.status === 'success') {
-                        setLoader(false);
-                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
-                            {
-                                text: 'OK', onPress: () => {
-                                    setFirstname('');
-                                    setUsername('');
-                                    setPassword('');
-                                    setPhone('');
-                                }
-                            },
-                        ]);
-                    } else {
-                        Alert.alert('Error', `${result.message}`, [
-                            { text: 'OK', onPress: () => { } }
-                        ]);
-                    }
+        //             if (result.status === 'success') {
+        //                 setLoader(false);
+        //                 Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
+        //                     {
+        //                         text: 'OK', onPress: () => {
+        //                             setFirstname('');
+        //                             setUsername('');
+        //                             setPassword('');
+        //                             setPhone('');
+        //                         }
+        //                     },
+        //                 ]);
+        //             } else {
+        //                 Alert.alert('Error', `${result.message}`, [
+        //                     { text: 'OK', onPress: () => { } }
+        //                 ]);
+        //             }
 
-                } catch (error) {
+        //         } catch (error) {
 
-                }
-            }
+        //         }
+        //     }
 
-        } catch (error) {
-            console.error('Login error:', error);
-            Alert.alert('Error', 'Login failed. Please try again.');
-        }
+        // } catch (error) {
+        //     console.error('Login error:', error);
+        //     Alert.alert('Error', 'Login failed. Please try again.');
+        // }
     };
 
     const handleFirstnameChange = (text: string) => {
@@ -102,6 +117,10 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
     const handlePasswordChange = (text: string) => {
         setPassword(text);
+    };
+
+    const handleBioChange = (text: string) => {
+        setBio(text);
     };
 
     const skipHandler = (event: GestureResponderEvent) => {
@@ -124,6 +143,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 value={firstname}
                 onChangeText={handleFirstnameChange}
                 autoCapitalize="none"
+                editable={false}
             />
 
             <CustomTextInput
@@ -135,7 +155,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
             />
 
             <CustomTextInput
-                placeholder="Phone"
+                placeholder="Mobile"
                 value={phone}
                 onChangeText={handlePhoneChange}
             />
@@ -145,6 +165,15 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 value={password}
                 onChangeText={handlePasswordChange}
                 secureTextEntry
+            />
+
+            <CustomTextTextarea
+                style={styles.textArea}
+                placeholder="Write something about your self..."
+                multiline={true}
+                numberOfLines={4}
+                value={bio}
+                onChangeText={handleBioChange}
             />
 
             <CustomButton
@@ -173,7 +202,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
-        paddingTop: '25%'
+        paddingTop: '15%'
+    },
+    textArea: {
+        height: 100,
+        justifyContent: "flex-start",
+        textAlignVertical: "top", // Ensures text starts at the top of the TextInput
+        borderColor: 'gray',
+        borderWidth: 1,
+        padding: 10,
     },
     userIcon: {
         backgroundColor: Colors.whiteColor,

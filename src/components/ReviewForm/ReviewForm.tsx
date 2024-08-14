@@ -19,8 +19,10 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
+    const [totalCount, setTotalCount] = React.useState(5);
 
     React.useLayoutEffect(() => {
+
         return () => {
 
         };
@@ -125,14 +127,20 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating
-                        count={5}
+                        count={totalCount}
                         reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
                         defaultRating={0}
                         size={25}
                         showRating={false}
                         onFinishRating={ratingCompleted}
                     />
-                    {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>}
+                    {/* {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>} */}
+
+                    <View style={styles.countRatingWrapper}>
+                        <Text style={styles.ratingText}>{rating}</Text>
+                        <Text style={styles.ratingSlash}>/</Text>
+                        <Text style={styles.totalRatingText}>{totalCount}</Text>
+                    </View>
                 </View>
             </View>
 
@@ -169,23 +177,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     editableRatingInnerWrapper: {
+        width: 200,
         paddingTop: 25,
         position: 'relative',
+        flexDirection: 'row',
 
     },
     countRatingWrapper: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        paddingHorizontal: 5,
-        paddingVertical: 2,
-        borderRadius: 5,
-        alignSelf: 'center'
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        marginLeft: 5
     },
     ratingText: {
         color: Colors.whiteColor,
-        fontSize: Fonts.Size.Medium + 3,
+        fontSize: Fonts.Size.Medium + 5,
         fontWeight: '600'
+    },
+    ratingSlash: {
+        color: Colors.whiteColor,
+        marginHorizontal: 2
+    },
+    totalRatingText: {
+        color: Colors.tabBgColor,
+        fontSize: Fonts.Size.Small,
+        fontWeight: '500'
     },
     formWrapper: {
         marginTop: 20,

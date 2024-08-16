@@ -23,6 +23,7 @@ const CustomTextTextarea: React.FC<CustomTextTextareaProps> = (props) => {
         <TextInput {...props}
             style={[styles.input, props.style]}
             onChangeText={handleTextChange}
+            placeholderTextColor={Colors.blackColor}
         />
     );
 };

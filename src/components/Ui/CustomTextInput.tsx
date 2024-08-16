@@ -18,7 +18,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = (props) => {
     };
 
     return (
-        <TextInput {...props} style={[styles.input, props.style]} onChangeText={handleTextChange} />
+        <TextInput {...props} placeholderTextColor={Colors.blackColor} style={[styles.input, props.style]} onChangeText={handleTextChange} />
     );
 };
 

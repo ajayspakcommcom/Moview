@@ -1,10 +1,12 @@
 import React from 'react';
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Foundation from 'react-native-vector-icons/Foundation';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
-import Svg, { Use, Image } from 'react-native-svg';
 
 
 
@@ -15,7 +17,7 @@ type TabOptions = {
 const TabNavigationOptions: TabOptions = {
     Home: {
         tabBarIcon: ({ color, size }) => (
-            <FontAwesome name={'home'} size={size} color={color} />
+            <Foundation name={'home'} size={size} color={color} />
         ),
         tabBarLabel: ''
     },
@@ -27,13 +29,13 @@ const TabNavigationOptions: TabOptions = {
     },
     MyReview: {
         tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name={'reviews'} size={size} color={color} />
+            <AntDesign name={'star'} size={size} color={color} />
         ),
         tabBarLabel: ''
     },
     Profile: {
         tabBarIcon: ({ color, size }) => (
-            <FontAwesome name={'user-circle'} size={size} color={color} />
+            <FontAwesome name={'user'} size={size} color={color} />
         ),
         tabBarLabel: ''
     },

@@ -14,7 +14,7 @@ const MyReviewNavigation: React.FC = () => {
         headerStyle: { backgroundColor: Colors.blackColor },
         headerTintColor: Colors.whiteColor,
         headerTitleAlign: TextAlign.Center,
-        contentStyle: { backgroundColor: Colors.darkBackgroudColor }
+        contentStyle: { backgroundColor: Colors.darkBackgroudColor },
     };
 
     const screenOptions: NativeStackNavigationOptions = {
@@ -24,7 +24,7 @@ const MyReviewNavigation: React.FC = () => {
 
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions, headerShown: false, }} />
             <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
         </Stack.Navigator>
     );

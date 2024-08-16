@@ -133,6 +133,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                         size={25}
                         showRating={false}
                         onFinishRating={ratingCompleted}
+                        selectedColor={Colors.tabActiveColor}
                     />
                     {/* {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>} */}
 

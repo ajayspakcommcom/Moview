@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 166,
         height: 118,
-        marginBottom: 60,
+        marginBottom: 40,
     },
 
     button: {

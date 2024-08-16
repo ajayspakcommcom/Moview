@@ -23,7 +23,6 @@ const LoginScreen: React.FC<Props> = () => {
     const [loader, setLoader] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-    //const route: RouteProp<{ params: { email: string, userId: string, userName: string } }> = useRoute();
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
@@ -141,9 +140,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.darkBackgroudColor
     },
     logo: {
-        width: 166,
-        height: 118,
-        marginBottom: 60,
+        width: 150,
+        height: 72,
+        marginBottom: 40,
     },
 
     errorWrapper: {

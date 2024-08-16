@@ -68,6 +68,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                                         size={15}
                                         showRating={false}
                                         isDisabled={true}
+                                        selectedColor={Colors.tabActiveColor}
                                     />
                                 </View>
                             </View>

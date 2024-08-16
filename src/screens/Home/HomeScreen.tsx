@@ -41,7 +41,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <Header onPressedHandler={onHeaderPressedHandler} />
+                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} />
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList />}

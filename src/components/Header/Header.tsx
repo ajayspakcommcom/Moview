@@ -9,9 +9,10 @@ import { hitSlops } from '../../utils/Common';
 interface HeaderProps {
     message?: string;
     onPressedHandler?: (selectedTab: string) => void;
+    navigation: any
 }
 
-const Header: React.FC<HeaderProps> = ({ message, onPressedHandler }) => {
+const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }) => {
 
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
 
@@ -21,6 +22,10 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler }) => {
             onPressedHandler(item);
         }
 
+    };
+
+    const notificationHandler = () => {
+        navigation.navigate("Home", { screen: "Notification" });
     };
 
 
@@ -33,7 +38,6 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler }) => {
                         source={require('../../assets/images/small-logo.png')}
                         resizeMode={FastImage.resizeMode.contain}
                     />
-
                 </View>
                 <View style={[styles.childWrapper, styles.contentWrapper]}>
                     <Pressable onPress={handlePress.bind(null, 'Latest')} hitSlop={hitSlops()}>
@@ -47,7 +51,9 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler }) => {
                     </Pressable>
                 </View>
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
-                    <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
+                    <Pressable hitSlop={hitSlops()} onPress={notificationHandler}>
+                        <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
+                    </Pressable>
                 </View>
             </View>
         </>

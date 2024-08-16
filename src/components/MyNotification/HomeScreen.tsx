@@ -116,8 +116,6 @@ const MyNotification: React.FC<Props> = () => {
 
         getNotificationCount();
 
-
-
         return () => {
             abortController.abort();
         };
@@ -188,8 +186,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.reviewBgColor,
         alignItems: 'center',
         borderRadius: 5,
-
-
     },
     userIcon: {
         paddingRight: 15,

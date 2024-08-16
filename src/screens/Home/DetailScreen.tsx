@@ -64,6 +64,26 @@ const DetailScreen: React.FC = () => {
         }
     };
 
+    const backButtonHandler = () => {
+        navigation.navigate('HomeScreen');
+    };
+
+    const gotoNotification = () => {
+        navigation.navigate('Notification');
+    };
+
+    const loadHeaderContent = () => {
+        navigation.setOptions({
+            title: ``,
+            headerLeft: () => {
+                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+            },
+            headerRight: () => {
+                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
+            }
+        });
+    };
+
     React.useLayoutEffect(() => {
 
         setDetailData(prevState => ({
@@ -79,25 +99,7 @@ const DetailScreen: React.FC = () => {
         }));
 
 
-        const backButtonHandler = () => {
-            navigation.navigate('HomeScreen');
-        };
-
-        const gotoNotification = () => {
-
-            navigation.navigate('Notification');
-        };
-
-        navigation.setOptions({
-            title: ``,
-            headerLeft: () => {
-                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
-            },
-            headerRight: () => {
-                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
-            }
-        });
-
+        loadHeaderContent();
         getReviewListByUser();
 
         return () => {
@@ -286,7 +288,6 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Family.Medium
     },
     releaseWrapper: {
-        marginTop: 5,
         paddingHorizontal: 15,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'

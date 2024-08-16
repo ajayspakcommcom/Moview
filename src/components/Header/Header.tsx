@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
     };
 
     const notificationHandler = () => {
-        navigation.navigate("Home", { screen: "Notification" });
+        navigation.navigate("Notification");
     };
 
 

@@ -41,6 +41,7 @@ const TabNavigationOptions: TabOptions = {
         tabBarLabel: ''
     },
 
+
 };
 
 const styles = StyleSheet.create({

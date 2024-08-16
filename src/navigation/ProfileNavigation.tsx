@@ -7,6 +7,7 @@ import { TextAlign } from '../styles/TextAlignmentUtils';
 import TestScreen from '../screens/Test/TestScreen';
 import Follower from '../screens/Profile/Follower';
 import Following from '../screens/Profile/Following';
+import Notification from '../screens/Notification/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const ProfileNavigation: React.FC = () => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
             <Stack.Screen name="FollowerScreen" component={Follower} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="FollowingScreen" component={Following} options={{ ...screenOptions, headerShown: true }} />
+            <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="TestScreen" component={TestScreen} options={{ ...screenOptions }} />
         </Stack.Navigator>
     );

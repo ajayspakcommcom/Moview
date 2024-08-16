@@ -3,6 +3,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import Colors from '../styles/Colors';
 import HomeScreen from '../screens/MyReview/HomeScreen';
 import { TextAlign } from '../styles/TextAlignmentUtils';
+import Notification from '../screens/Notification/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const MyReviewNavigation: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
+            <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
         </Stack.Navigator>
     );
 };

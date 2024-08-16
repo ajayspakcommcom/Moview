@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
+import { useRoute, useNavigationState } from '@react-navigation/native';
+
 
 const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -11,6 +13,9 @@ type Props = {
 };
 
 const Notification: React.FC<Props> = ({ navigation }) => {
+
+    const route = useRoute();
+    const navigationState = useNavigationState(state => state);
 
     const backButtonHandler = () => {
         navigation.navigate('HomeScreen');
@@ -26,6 +31,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
     };
 
     React.useLayoutEffect(() => {
+
+        const previousRoute = navigationState.routes[navigationState.index - 1];
+        const previousRouteName = previousRoute?.name;
+
+        console.log('previousRoute', previousRoute);
+        console.log('previousRouteName', previousRouteName);
 
         loadHeaderContent();
 

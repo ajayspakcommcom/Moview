@@ -4,17 +4,23 @@ import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import FastImage from 'react-native-fast-image';
+import { hitSlops } from '../../utils/Common';
 
 interface HeaderProps {
     message?: string;
+    onPressedHandler?: (selectedTab: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ message }) => {
+const Header: React.FC<HeaderProps> = ({ message, onPressedHandler }) => {
 
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
 
     const handlePress = (item: string) => {
         setSelectedItem(item);
+        if (onPressedHandler) {
+            onPressedHandler(item);
+        }
+
     };
 
 
@@ -30,13 +36,13 @@ const Header: React.FC<HeaderProps> = ({ message }) => {
 
                 </View>
                 <View style={[styles.childWrapper, styles.contentWrapper]}>
-                    <Pressable onPress={handlePress.bind(null, 'Latest')}>
+                    <Pressable onPress={handlePress.bind(null, 'Latest')} hitSlop={hitSlops()}>
                         <Text style={[styles.contentText, selectedItem === 'Latest' ? styles.selected : styles.notSelected]}>Latest</Text>
                     </Pressable>
-                    <Pressable onPress={handlePress.bind(null, 'Movies')}>
+                    <Pressable onPress={handlePress.bind(null, 'Movies')} hitSlop={hitSlops()}>
                         <Text style={[styles.contentText, selectedItem === 'Movies' ? styles.selected : styles.notSelected]}>Movies</Text>
                     </Pressable>
-                    <Pressable onPress={handlePress.bind(null, 'Shows')}>
+                    <Pressable onPress={handlePress.bind(null, 'Shows')} hitSlop={hitSlops()}>
                         <Text style={[styles.contentText, selectedItem === 'Shows' ? styles.selected : styles.notSelected]}>Shows</Text>
                     </Pressable>
                 </View>

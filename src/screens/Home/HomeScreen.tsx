@@ -3,9 +3,11 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
-// import Header from '../../components/Header/Header';
 
+const LatestMovieShowList = React.lazy(() => import('../../components/LatestMovieShowList/LatestMovieShowList'));
 const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
+const ShowList = React.lazy(() => import('../../components/ShowList/ShowList'));
+
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 const Header = React.lazy(() => import('../../components/Header/Header'));
 
@@ -14,6 +16,8 @@ type Props = {
 };
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
+
+    const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
 
     React.useLayoutEffect(() => {
 
@@ -29,13 +33,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         Alert.alert('Button pressed', 'Ram...');
     };
 
+    const onHeaderPressedHandler = (tab: string) => {
+        console.log('Ram...', tab);
+        setSelectedTab(tab)
+    };
+
     return (
         <>
             <View style={styles.container}>
-                <Header />
+                <Header onPressedHandler={onHeaderPressedHandler} />
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
-                        <MovieList />
+                        {selectedTab === 'Latest' && <LatestMovieShowList />}
+                        {selectedTab === 'Movies' && <MovieList />}
+                        {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>
             </View>
@@ -49,7 +60,9 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     movieList: {
-        backgroundColor: Colors.tabBgColor
+        flex: 1,
+        backgroundColor: Colors.blackColor,
+        justifyContent: 'center'
     },
     text: {
         color: 'white',

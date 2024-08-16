@@ -80,7 +80,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                 <FastImage
                     style={styles.image}
                     source={MovieImageMap[item.poster_url]}
-                    resizeMode={FastImage.resizeMode.contain}
+                    resizeMode={FastImage.resizeMode.cover}
                 />
             </Pressable>
         </View>
@@ -89,7 +89,7 @@ const MovieList: React.FC<MovieListProps> = () => {
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color={Colors.tabActiveColor} />
             </View>
         );
     }
@@ -110,6 +110,7 @@ const MovieList: React.FC<MovieListProps> = () => {
                 />}
                 numColumns={2}
                 extraData={movieList}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
             />
         </>
     );
@@ -121,28 +122,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     item: {
-        width: (screenWidth / 2),
-        height: (screenWidth / 2) + 60,
-        position: 'relative',
+        width: ((screenWidth) / 2),
+        height: (screenWidth / 2) + 55,
+        overflow: 'hidden'
     },
     pressable: {
         flex: 1
     },
     image: {
-        width: (screenWidth / 2),
-        height: (screenWidth / 2) + 60,
-        aspectRatio: 1,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
+        width: ((screenWidth - 6) / 2),
+        height: (screenWidth / 2) + 55,
+        alignSelf: 'center',
     },
     text: {
-        color: 'white',
+        color: Colors.whiteColor,
         fontSize: 50
+    },
+    separator: {
+        height: 3
     }
-
 });
 
 export default React.memo(MovieList);

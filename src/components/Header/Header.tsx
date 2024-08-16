@@ -11,7 +11,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ message }) => {
 
-    const [selectedItem, setSelectedItem] = React.useState<string | null>(null);
+    const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
 
     const handlePress = (item: string) => {
         setSelectedItem(item);
@@ -31,13 +31,13 @@ const Header: React.FC<HeaderProps> = ({ message }) => {
                 </View>
                 <View style={[styles.childWrapper, styles.contentWrapper]}>
                     <Pressable onPress={handlePress.bind(null, 'Latest')}>
-                        <Text style={[styles.contentText, selectedItem === 'Latest' && styles.selected]}>Latest</Text>
+                        <Text style={[styles.contentText, selectedItem === 'Latest' ? styles.selected : styles.notSelected]}>Latest</Text>
                     </Pressable>
                     <Pressable onPress={handlePress.bind(null, 'Movies')}>
-                        <Text style={[styles.contentText, selectedItem === 'Movies' && styles.selected]}>Movies</Text>
+                        <Text style={[styles.contentText, selectedItem === 'Movies' ? styles.selected : styles.notSelected]}>Movies</Text>
                     </Pressable>
                     <Pressable onPress={handlePress.bind(null, 'Shows')}>
-                        <Text style={[styles.contentText, selectedItem === 'Shows' && styles.selected]}>Shows</Text>
+                        <Text style={[styles.contentText, selectedItem === 'Shows' ? styles.selected : styles.notSelected]}>Shows</Text>
                     </Pressable>
                 </View>
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: 'red'
     },
     logoImg: {
         width: 60,
@@ -87,13 +86,16 @@ const styles = StyleSheet.create({
         fontSize: Fonts.Size.Medium + 5
     },
     contentText: {
-        color: Colors.tabBgColor,
+        color: Colors.whiteColor,
         paddingHorizontal: 10
     },
     pressable: {
     },
     selected: {
         color: Colors.whiteColor
+    },
+    notSelected: {
+        color: Colors.tabBgColor
     }
 });
 

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     movieList: {
-        backgroundColor: 'grey',
+        backgroundColor: Colors.tabBgColor
     },
     text: {
         color: 'white',

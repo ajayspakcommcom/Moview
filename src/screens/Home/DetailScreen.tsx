@@ -79,7 +79,8 @@ const DetailScreen: React.FC = () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },
             headerRight: () => {
-                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
+                // return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
+                return ''
             }
         });
     };
@@ -97,6 +98,7 @@ const DetailScreen: React.FC = () => {
             cast: route.params.movie?.cast,
             rating: route.params.movie?.rating,
         }));
+
 
 
         loadHeaderContent();

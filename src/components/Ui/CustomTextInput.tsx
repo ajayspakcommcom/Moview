@@ -11,8 +11,6 @@ const CustomTextInput: React.FC<CustomTextInputProps> = (props) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('Ram...', props.editable);
-
         return () => {
 
         }

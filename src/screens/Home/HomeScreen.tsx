@@ -29,12 +29,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }, []);
 
     const handlePress = () => {
-        console.log('Ram...');
-        Alert.alert('Button pressed', 'Ram...');
+
     };
 
     const onHeaderPressedHandler = (tab: string) => {
-        console.log('Ram...', tab);
         setSelectedTab(tab)
     };
 

@@ -21,12 +21,20 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
         if (onPressedHandler) {
             onPressedHandler(item);
         }
-
     };
 
     const notificationHandler = () => {
         navigation.navigate("Notification");
     };
+
+    React.useLayoutEffect(() => {
+
+        console.log('Ram...');
+
+        return () => {
+
+        }
+    }, []);
 
 
     return (

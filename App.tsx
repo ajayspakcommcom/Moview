@@ -73,7 +73,7 @@ function App(): React.JSX.Element {
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
     tabBarStyle: { backgroundColor: Colors.tabBgColor, paddingHorizontal: 5, paddingTop: 10, height: 50, paddingBottom: 0 },
-    tabBarLabelStyle: { fontSize: 12, lineHeight: 0, height: 0 },
+    tabBarLabelStyle: { fontSize: 12, lineHeight: 0, height: 0 }
   };
 
 
@@ -92,8 +92,8 @@ function App(): React.JSX.Element {
         <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor } }} >
           <Tab.Screen name="Home" component={HomeNavigation} options={{ ...TabNavigationOptions.Home }} />
           {/* <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} /> */}
-          <Tab.Screen name="MyReview" component={MyReviewNavigation} options={TabNavigationOptions.MyReview} />
-          <Tab.Screen name="Profile" component={ProfileNavigation} options={TabNavigationOptions.Profile} />
+          <Tab.Screen name="MyReview" component={MyReviewNavigation} options={{ ...TabNavigationOptions.MyReview }} />
+          <Tab.Screen name="Profile" component={ProfileNavigation} options={{ ...TabNavigationOptions.Profile }} />
         </Tab.Navigator>
       }
 

@@ -148,6 +148,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 placeholder="Mobile"
                 value={phone}
                 onChangeText={handlePhoneChange}
+                editable={true}
             />
 
             <CustomTextInput
@@ -155,6 +156,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 value={password}
                 onChangeText={handlePasswordChange}
                 secureTextEntry
+                editable={true}
             />
 
             <CustomTextTextarea

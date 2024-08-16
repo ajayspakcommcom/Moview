@@ -9,6 +9,15 @@ interface CustomTextInputProps extends TextInputProps {
 
 const CustomTextInput: React.FC<CustomTextInputProps> = (props) => {
 
+    React.useLayoutEffect(() => {
+
+        console.log('Ram...', props.editable);
+
+        return () => {
+
+        }
+    }, []);
+
     const { onChangeText, ...otherProps } = props;
 
     const handleTextChange = (text: string) => {
@@ -18,7 +27,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = (props) => {
     };
 
     return (
-        <TextInput {...props} placeholderTextColor={Colors.blackColor} style={[styles.input, props.style]} onChangeText={handleTextChange} />
+        <TextInput {...props} placeholderTextColor={Colors.blackColor} style={[styles.input, props.editable === false && styles.disabled, props.style]} onChangeText={handleTextChange} />
     );
 };
 
@@ -35,6 +44,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.inputBackgroundColor,
         fontFamily: Fonts.Family.Medium
     },
+    disabled: {
+        backgroundColor: Colors.textInputDisabled,
+        borderColor: Colors.textInputDisabled,
+        borderWidth: 1,
+    }
 });
 
 export default React.memo(CustomTextInput);

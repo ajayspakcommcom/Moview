@@ -12,7 +12,8 @@ const Colors = {
     playPauseButtonColor: '#707070',
     reviewBgColor: '#535353',
     tabActiveOpacityColor: '#efd243',
-    transparentColor: 'transparent'
+    transparentColor: 'transparent',
+    textInputDisabled: 'rgba(128, 128, 128, 0.9)'
 };
 
 export default Colors;

@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, TextInput } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
-import Fonts from '../../styles/Fonts';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.android';
-import FastImage from 'react-native-fast-image';
-import { hitSlops } from '../../utils/Common';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../context/AuthContext';
 
@@ -29,8 +25,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
     const [biography, setBiography] = React.useState('');
 
     const [loader, setLoader] = React.useState(false);
-
-
 
 
     React.useLayoutEffect(() => {

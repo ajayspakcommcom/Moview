@@ -70,6 +70,40 @@ export const fetchMovies = async (userToken: string, signal: AbortSignal) => {
     }
 };
 
+export const fetchShows = async (userToken: string, signal: AbortSignal) => {
+    const url = `${API_URL}show`;
+    const token = userToken;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            signal: signal // Pass the signal to the fetch request
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const movies = await response.json();
+        return movies;
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+
+            } else {
+                console.error('Error fetching movies:', error);
+            }
+        } else {
+            console.error('Unknown error', error);
+        }
+        throw error; // Re-throw the error to be handled by the caller if necessary
+    }
+};
+
 
 export const formatDate = (date: Date, format: string): string => {
     // Helper function to add leading zeroes

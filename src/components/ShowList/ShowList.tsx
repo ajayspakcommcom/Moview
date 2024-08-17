@@ -3,10 +3,11 @@ import { View, StyleSheet, FlatList, RefreshControl, Dimensions, ActivityIndicat
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { ShowItem } from '../../types/Show';
-import { fetchMovies } from '../../utils/Common';
+import { fetchMovies, fetchShows } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
-import MovieImageMap from '../../utils/MovieImageMap';
+import ShowImageMap from '../../utils/ShowImageMap';
+import { Text } from 'react-native-paper';
 
 interface ShowListProps {
 
@@ -32,9 +33,10 @@ const ShowList: React.FC<ShowListProps> = () => {
         const getShowList = async () => {
             if (user) {
                 try {
-                    const resp = await fetchMovies(user.token!, signal);
+                    const resp = await fetchShows(user.token!, signal);
+                    console.log('Resp', resp);
                     setTimeout(() => {
-                        setShowList(resp.data.movies);
+                        setShowList(resp.data.shows);
                         setLoading(false);
                     }, 2000);
 
@@ -73,15 +75,18 @@ const ShowList: React.FC<ShowListProps> = () => {
     };
 
     const renderItem = ({ item }: { item: ShowItem }) => (
-        <View style={[styles.item]}>
-            <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                <FastImage
-                    style={styles.image}
-                    source={MovieImageMap[item.poster_url]}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-            </Pressable>
-        </View>
+        <>
+            <View style={[styles.item]}>
+                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
+                    <FastImage
+                        style={styles.image}
+                        source={ShowImageMap[item.poster_url]}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text>{item.title}</Text>
+                </Pressable>
+            </View>
+        </>
     );
 
     if (loading) {

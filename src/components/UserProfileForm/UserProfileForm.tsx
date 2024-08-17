@@ -35,9 +35,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('==================');
-        console.log('userDetail', userDetail);
-
         setFirstname(userDetail.firstname);
         setUsername(userDetail.username);
         setPhone(userDetail.phone);
@@ -69,8 +66,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 return;
             } else {
 
-                console.log('Ram...');
-
                 try {
                     setLoader(true);
                     const response = await fetch(`${API_URL}user/${userDetail._id}`, {
@@ -90,17 +85,15 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
                     const result = await response.json();
 
-                    console.log('Result...', result);
-
-
-
 
                     if (result.status === 'success') {
                         setLoader(false);
                         updateUserDetail(result.data.user)
                         Alert.alert('Profile Updated Successfully', '', [
                             {
-                                text: 'OK', onPress: () => { }
+                                text: 'OK', onPress: () => {
+                                    onCancel(false);
+                                }
                             },
                         ]);
                     } else {

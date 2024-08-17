@@ -180,7 +180,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const onEditCancelHandler = (bool: boolean) => {
-        console.log(bool);
         setIsEditMode(bool);
     };
 

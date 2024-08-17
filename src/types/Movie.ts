@@ -25,6 +25,7 @@ export type MovieItem = {
     cast: CastMember[];
     poster_url: string;
     is_deleted: boolean;
+    test_poster_url: string;
     __v: number;
 };
 

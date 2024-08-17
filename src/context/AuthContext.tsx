@@ -20,6 +20,7 @@ interface AuthContextType {
     userDetail: any;
     counter: number;
     appCounter: () => void;
+    updateUserDetail: (data: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -83,6 +84,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(null);
     };
 
+    const updateUserDetail = (data: any) => {
+        setUserDetail(data);
+    };
+
     const authContextValue: AuthContextType = {
         user,
         login,
@@ -90,7 +95,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         responseError,
         userDetail,
         counter,
-        appCounter
+        appCounter,
+        updateUserDetail
     };
 
     return (

@@ -29,11 +29,10 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
 
     React.useLayoutEffect(() => {
 
-        console.log('Ram...');
-
         return () => {
 
         }
+
     }, []);
 
 

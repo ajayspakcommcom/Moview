@@ -7,6 +7,7 @@ import { fetchMovies } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
+import { Text } from 'react-native-paper';
 
 interface MovieListProps {
 
@@ -56,8 +57,6 @@ const MovieList: React.FC<MovieListProps> = () => {
 
         getMovieList();
 
-
-
         return () => {
             abortController.abort(); // Cleanup on unmount
         };
@@ -75,15 +74,17 @@ const MovieList: React.FC<MovieListProps> = () => {
     };
 
     const renderItem = ({ item }: { item: MovieItem }) => (
-        <View style={[styles.item]}>
-            <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                <FastImage
-                    style={styles.image}
-                    source={MovieImageMap[item.poster_url]}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-            </Pressable>
-        </View>
+        <>
+            <View style={[styles.item]}>
+                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
+                    <FastImage
+                        style={styles.image}
+                        source={MovieImageMap[item.poster_url]}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                </Pressable>
+            </View>
+        </>
     );
 
     if (loading) {

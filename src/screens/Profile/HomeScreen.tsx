@@ -15,7 +15,6 @@ const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton')
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
 
 
-
 type Props = {
     navigation: any;
     route: any;
@@ -201,8 +200,9 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                         <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
                                     </View>
                                     <View style={styles.userTextWrapper}>
-                                        <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text>
-                                        <Text style={styles.critic}>Film Critic</Text>
+                                        {/* <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text> */}
+                                        <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
+                                        {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
                                     </View>
                                 </View>
                             </View>

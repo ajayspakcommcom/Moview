@@ -4,7 +4,7 @@ import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
@@ -17,8 +17,8 @@ type Props = {
 const LoginScreen: React.FC<Props> = () => {
 
     const { login, responseError } = useAuth();
-    const [username, setUsername] = React.useState('omkar@gmail.com');
-    const [password, setPassword] = React.useState('12345');
+    const [username, setUsername] = React.useState('manish@gmail.com');
+    const [password, setPassword] = React.useState('7');
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
 

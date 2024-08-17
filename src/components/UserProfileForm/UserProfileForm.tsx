@@ -7,6 +7,7 @@ import { API_URL } from '../../configure/config.android';
 import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useAuth } from '../../context/AuthContext';
 
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
@@ -19,78 +20,103 @@ type Props = {
 
 const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
+    const { userDetail, user, updateUserDetail } = useAuth();
+
     const [firstname, setFirstname] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [phone, setPhone] = React.useState('');
-    const [bio, setBio] = React.useState('');
+    const [biography, setBiography] = React.useState('');
 
     const [loader, setLoader] = React.useState(false);
 
+
+
+
+    React.useLayoutEffect(() => {
+
+        console.log('==================');
+        console.log('userDetail', userDetail);
+
+        setFirstname(userDetail.firstname);
+        setUsername(userDetail.username);
+        setPhone(userDetail.phone);
+        setPassword(userDetail.password_hash);
+        setBiography(userDetail.biography);
+
+        return () => {
+
+        }
+
+    }, []);
+
     const editHandler = async () => {
 
-        // try {
+        try {
 
-        //     const fields = [
-        //         { name: 'First name', value: firstname },
-        //         { name: 'Username', value: username },
-        //         { name: 'Password', value: password },
-        //         { name: 'Phone', value: phone },
-        //         { name: 'Bio', value: bio }
-        //     ];
+            const fields = [
+                { name: 'First name', value: firstname },
+                { name: 'Username', value: username },
+                { name: 'Password', value: password },
+                { name: 'Phone', value: phone },
+                { name: 'Biography', value: biography }
+            ];
 
-        //     const emptyField = fields.find(field => field.value.trim() === '');
+            const emptyField = fields.find(field => field.value.trim() === '');
 
-        //     if (emptyField) {
-        //         Alert.alert('Error', `${emptyField.name} is required`);
-        //         return;
-        //     } else {
+            if (emptyField) {
+                Alert.alert('Error', `${emptyField.name} is required`);
+                return;
+            } else {
 
-        //         try {
-        //             setLoader(true);
-        //             const response = await fetch(`${API_URL}user`, {
-        //                 method: 'POST',
-        //                 headers: { 'Content-Type': 'application/json' },
-        //                 body: JSON.stringify({
-        //                     "firstname": firstname,
-        //                     "username": username,
-        //                     "email": username,
-        //                     "phone": phone,
-        //                     "password": password,
-        //                     "bio": bio
-        //                 }),
-        //             });
+                console.log('Ram...');
 
-        //             const result = await response.json();
+                try {
+                    setLoader(true);
+                    const response = await fetch(`${API_URL}user/${userDetail._id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${user?.token}`
+                        },
+                        body: JSON.stringify({
+                            "firstname": firstname,
+                            "username": username,
+                            "phone": phone,
+                            "password": password,
+                            "biography": biography
+                        }),
+                    });
+
+                    const result = await response.json();
+
+                    console.log('Result...', result);
 
 
-        //             if (result.status === 'success') {
-        //                 setLoader(false);
-        //                 Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
-        //                     {
-        //                         text: 'OK', onPress: () => {
-        //                             setFirstname('');
-        //                             setUsername('');
-        //                             setPassword('');
-        //                             setPhone('');
-        //                         }
-        //                     },
-        //                 ]);
-        //             } else {
-        //                 Alert.alert('Error', `${result.message}`, [
-        //                     { text: 'OK', onPress: () => { } }
-        //                 ]);
-        //             }
 
-        //         } catch (error) {
 
-        //         }
-        //     }
+                    if (result.status === 'success') {
+                        setLoader(false);
+                        updateUserDetail(result.data.user)
+                        Alert.alert('Profile Updated Successfully', '', [
+                            {
+                                text: 'OK', onPress: () => { }
+                            },
+                        ]);
+                    } else {
+                        Alert.alert('Error', `${result.message}`, [
+                            { text: 'OK', onPress: () => { } }
+                        ]);
+                    }
+                } catch (error) {
 
-        // } catch (error) {
-        //     console.error('Login error:', error);
-        //     Alert.alert('Error', 'Login failed. Please try again.');
-        // }
+                }
+            }
+
+        } catch (error) {
+            console.error('Login error:', error);
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
     };
 
     const handleFirstnameChange = (text: string) => {
@@ -110,7 +136,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
     };
 
     const handleBioChange = (text: string) => {
-        setBio(text);
+        setBiography(text);
     };
 
     const skipHandler = (event: GestureResponderEvent) => {
@@ -133,7 +159,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 value={firstname}
                 onChangeText={handleFirstnameChange}
                 autoCapitalize="none"
-                editable={false}
             />
 
             <CustomTextInput
@@ -164,7 +189,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 placeholder="Write something about your self..."
                 multiline={true}
                 numberOfLines={4}
-                value={bio}
+                value={biography}
                 onChangeText={handleBioChange}
             />
 

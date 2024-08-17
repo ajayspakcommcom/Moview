@@ -17,13 +17,17 @@ const ShowImageMap: ShowMap = {
     'sasural-simar-ka-poster': require(`../assets/images/shows/sasural-simar-ka-poster.png`),
     'na-bole-tum-na-maine-kuch-kaha-poster': require(`../assets/images/shows/na-bole-tum-na-maine-kuch-kaha-poster.png`),
     'udaan-poster': require(`../assets/images/shows/udaan-poster.png`),
-    'bhabhi-ji-ghar-pe-hain': require(`../assets/images/shows/bhabhi-ji-ghar-pe-hain.png`),
-    'pyar-ki-yeh-ek-kahani': require(`../assets/images/shows/pyar-ki-yeh-ek-kahani.png`),
+    'bhabhi-ji-ghar-pe-hain-poster': require(`../assets/images/shows/bhabhi-ji-ghar-pe-hain-poster.png`),
+    'pyar-ki-yeh-ek-kahani-poster': require(`../assets/images/shows/pyar-ki-yeh-ek-kahani-poster.png`),
+    'kaisi-yeh-yaariaan-poster': require(`../assets/images/shows/kaisi-yeh-yaariaan-poster.png`),
+    'kundali-bhagya-poster': require(`../assets/images/shows/kundali-bhagya-poster.png`),
 
 };
 
 export default ShowImageMap;
 
+
+//kundali-bhagya-poster
 
 
 

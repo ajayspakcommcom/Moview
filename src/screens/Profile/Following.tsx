@@ -35,9 +35,6 @@ type FollowingType = {
     __v: number;
 };
 
-const following: FollowingType[] = [
-    // { "_id": "1", "name": "Jane Doe", "profilePicture": "https://randomuser.me/api/portraits/men/1.jpg" }
-];
 
 const Following: React.FC<Props> = ({ navigation, route }) => {
 
@@ -70,16 +67,6 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
-            console.log('');
-            console.log('');
-            console.log('');
-            console.log('');
-            console.log('Length', result.data.length);
-            console.log('');
-            console.log('');
-            console.log('');
-            console.log('');
-            console.log('Result', result.data);
 
             if (result.status === 'success') {
                 setFollowingData(result.data)

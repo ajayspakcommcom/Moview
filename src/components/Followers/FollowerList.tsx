@@ -4,15 +4,31 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import FollowerItem from './FollowerItem';
 
 
-interface Follower {
-    id: string;
-    name: string;
-    profilePicture: string; // URL to the profile picture
-}
+type User = {
+    _id: string;
+    firstname: string;
+    username: string;
+    email: string;
+    phone: string;
+    password_hash: string;
+    is_deleted: boolean;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
+    __v: number;
+};
+
+type FollowerType = {
+    _id: string;
+    userId: string;
+    followerId: User;
+    createdAt: string;
+    __v: number;
+};
 
 
 interface FollowersListProps {
-    followers: Follower[];
+    followers: FollowerType[];
 }
 
 const FollowersList: React.FC<FollowersListProps> = ({ followers }) => {
@@ -20,7 +36,7 @@ const FollowersList: React.FC<FollowersListProps> = ({ followers }) => {
         <View style={styles.container}>
             <FlatList
                 data={followers}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 renderItem={({ item }) => <FollowerItem follower={item} />}
             />
         </View>

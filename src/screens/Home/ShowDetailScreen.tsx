@@ -204,16 +204,22 @@ const ShowDetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'reviews' &&
-                    <React.Suspense fallback={<Loading />}>
-                        <FlatList
-                            ListHeaderComponent={() => (
-                                headerContent()
-                            )}
-                            data={detailData.cast}
-                            renderItem={({ item }) => <ShowReviewList showItem={route.params.showItem} />}
-                            keyExtractor={(item) => item._id}
-                        />
-                    </React.Suspense>
+                    <>
+                        {/* <React.Suspense fallback={<Loading />}>
+                            <FlatList
+                                ListHeaderComponent={() => (
+                                    headerContent()
+                                )}
+                                data={detailData.cast}
+                                renderItem={({ item }) => <ShowReviewList showItem={route.params.showItem} />}
+                                keyExtractor={(item) => item._id}
+                            />
+                        </React.Suspense> */}
+                        <Text style={{ color: '#fff' }}>{JSON.stringify(route.params.showItem)}</Text>
+                        <Text style={{ color: '#fff' }}>=============================================</Text>
+                        <Text style={{ color: '#fff' }}>{JSON.stringify(route.params.showItem)}</Text>
+
+                    </>
                 }
 
                 {activeTab === 'writeReview' &&

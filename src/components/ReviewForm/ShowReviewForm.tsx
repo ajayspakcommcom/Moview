@@ -39,6 +39,15 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
 
     const onSaveHandler = async () => {
 
+        // console.log({
+        //     show: showItem._id,
+        //     user: userDetail._id,
+        //     rating: rating,
+        //     review_text: comment,
+        //     created_at: new Date().toISOString(), // Optional, if you want to manually add the date
+        //     is_deleted: false // Optional, defaults to false in your schema
+        // });
+
         try {
 
             if (rating === 0) {
@@ -53,7 +62,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
 
             try {
                 setLoader(true);
-                const response = await fetch(`${API_URL}review`, {
+                const response = await fetch(`${API_URL}review-show`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,7 +81,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                 if (result.status === 'success') {
 
                     try {
-                        const response = await fetch(`${API_URL}notification`, {
+                        const response = await fetch(`${API_URL}notification-show`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -86,7 +95,6 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                             }),
                         });
                     } catch (error) {
-                        //
                     }
 
                     setLoader(false);
@@ -135,7 +143,6 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                         onFinishRating={ratingCompleted}
                         selectedColor={Colors.tabActiveColor}
                     />
-                    {/* {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>} */}
 
                     <View style={styles.countRatingWrapper}>
                         <Text style={styles.ratingText}>{rating}</Text>

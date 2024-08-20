@@ -24,6 +24,8 @@ const ShowReviewList: React.FC<ListProps> = ({ showItem, userItem }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log('showItem', showItem);
+
         const getReviewListByShow = async () => {
 
             const url = `${API_URL}review-show/show/${showItem?._id}`;
@@ -109,6 +111,7 @@ const ShowReviewList: React.FC<ListProps> = ({ showItem, userItem }) => {
 
     return (
         <>
+
             {reviewData.length > 0 &&
                 <FlatList
                     style={styles.container}

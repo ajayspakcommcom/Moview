@@ -16,7 +16,7 @@ import ShowImageMap from '../../utils/ShowImageMap';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ShowReviewList = React.lazy(() => import('../../components/ReviewList/ShowReviewList'));
-const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
+const ShowReviewForm = React.lazy(() => import('../../components/ReviewForm/ShowReviewForm'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 interface ListItem {
@@ -216,14 +216,14 @@ const ShowDetailScreen: React.FC = () => {
                     </React.Suspense>
                 }
 
-                {/* {activeTab === 'writeReview' &&
+                {activeTab === 'writeReview' &&
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />
+                            <ShowReviewForm showItem={route.params.showItem} onPress={onReviewPressHandler} />
                         </ScrollView>
                     </React.Suspense>
-                } */}
+                }
 
             </KeyboardAvoidingView>
         </>

@@ -71,7 +71,7 @@ const ShowList: React.FC<ShowListProps> = () => {
     };
 
     const navigateToDetails = (showItem: ShowItem) => {
-        navigation.navigate('DetailScreen', { movie: showItem });
+        navigation.navigate('ShowDetail', { showItem: showItem });
     };
 
     const renderItem = ({ item }: { item: ShowItem }) => (

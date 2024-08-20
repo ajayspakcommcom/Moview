@@ -13,7 +13,8 @@ const Colors = {
     reviewBgColor: '#535353',
     tabActiveOpacityColor: '#efd243',
     transparentColor: 'transparent',
-    textInputDisabled: 'rgba(128, 128, 128, 0.9)'
+    textInputDisabled: 'rgba(128, 128, 128, 0.9)',
+    categoryRedColor: '#982B1C'
 };
 
 export default Colors;

@@ -17,6 +17,8 @@ export type LastesMovieShowItem = {
     cast: CastMember[];
     poster_url: string;
     is_deleted: boolean;
+    isMovie: boolean;
+    isShow: boolean;
     __v: number;
 };
 

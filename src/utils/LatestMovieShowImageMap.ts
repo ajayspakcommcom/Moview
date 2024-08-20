@@ -1,0 +1,47 @@
+type ImageMap = {
+    [key: string]: any;
+};
+
+const LatestMovieShowImageMap: ImageMap = {
+    'aladdin-poster': require(`../assets/images/movies/aladdin-poster.jpg`),
+    'andhadhun-poster': require(`../assets/images/movies/andhadhun-poster.jpg`),
+    'avengers-poster': require(`../assets/images/movies/avengers-poster.jpg`),
+    'blackpanther-poster': require(`../assets/images/movies/blackpanther-poster.jpg`),
+    'blacktothefuture-poster': require(`../assets/images/movies/blacktothefuture-poster.jpg`),
+    'dark-poster': require(`../assets/images/movies/dark-poster.jpg`),
+    'flash-poster': require(`../assets/images/movies/flash-poster.jpg`),
+    'freedom-poster': require(`../assets/images/movies/freedom-poster.jpg`),
+    'joker-poster': require(`../assets/images/movies/joker-poster.jpg`),
+    'kraven-poster': require(`../assets/images/movies/kraven-poster.jpg`),
+    'mission-impossible-poster': require(`../assets/images/movies/mission-impossible-poster.jpg`),
+    'moonlight-poster': require(`../assets/images/movies/moonlight-poster.jpg`),
+    'pathaan-poster': require(`../assets/images/movies/pathaan-poster.jpg`),
+    'polis-poster': require(`../assets/images/movies/polis-poster.jpg`),
+    'starwars-poster': require(`../assets/images/movies/starwars-poster.jpg`),
+    'thor-poster': require(`../assets/images/movies/thor-poster.jpg`),
+    'threethousandyears-poster': require(`../assets/images/movies/threethousandyears-poster.jpg`),
+    'thrillermovies-poster': require(`../assets/images/movies/thrillermovies-poster.jpg`),
+    'uncharted-poster': require(`../assets/images/movies/uncharted-poster.jpg`),
+    'wandavision-poster': require(`../assets/images/movies/wandavision-poster.jpg`),
+    'wood-poster': require(`../assets/images/movies/wood-poster.jpg`),
+    'kumkum-bhagya-poster': require(`../assets/images/shows/kumkum-bhagya-poster.png`),
+    'yeh-rista-kya-kehlata-hai-poster': require(`../assets/images/shows/yeh-rista-kya-kehlata-hai-poster.png`),
+    'kasuati-zindagi-ki-poster': require(`../assets/images/shows/kasuati-zindagi-ki-poster.png`),
+    'naagin-poster': require(`../assets/images/shows/naagin-poster.png`),
+    'taarak-mehta-kaulta-chasma-poster': require(`../assets/images/shows/taarak-mehta-kaulta-chasma-poster.png`),
+    'paatal-lok-poster': require(`../assets/images/shows/paatal-lok-poster.png`),
+    'the-family-man-poster': require(`../assets/images/shows/the-family-man-poster.png`),
+    'chandrakanta-poster': require(`../assets/images/shows/chandrakanta-poster.png`),
+    'balika-vadhu-poster': require(`../assets/images/shows/balika-vadhu-poster.png`),
+    'kapil-sharma-show-poster': require(`../assets/images/shows/kapil-sharma-show-poster.png`),
+    'mirzapur-poster': require(`../assets/images/shows/mirzapur-poster.png`),
+    'sasural-simar-ka-poster': require(`../assets/images/shows/sasural-simar-ka-poster.png`),
+    'na-bole-tum-na-maine-kuch-kaha-poster': require(`../assets/images/shows/na-bole-tum-na-maine-kuch-kaha-poster.png`),
+    'udaan-poster': require(`../assets/images/shows/udaan-poster.png`),
+    'bhabhi-ji-ghar-pe-hain-poster': require(`../assets/images/shows/bhabhi-ji-ghar-pe-hain-poster.png`),
+    'pyar-ki-yeh-ek-kahani-poster': require(`../assets/images/shows/pyar-ki-yeh-ek-kahani-poster.png`),
+    'kaisi-yeh-yaariaan-poster': require(`../assets/images/shows/kaisi-yeh-yaariaan-poster.png`),
+    'kundali-bhagya-poster': require(`../assets/images/shows/kundali-bhagya-poster.png`),
+};
+
+export default LatestMovieShowImageMap;

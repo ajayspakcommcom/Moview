@@ -99,6 +99,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
         return () => {
 
         }
+
     }, []);
 
 

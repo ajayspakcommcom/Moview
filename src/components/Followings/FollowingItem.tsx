@@ -34,7 +34,6 @@ interface FollowingItemProps {
 const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
     return (
         <View style={styles.container}>
-            {/* <Image source={{ uri: following.profilePicture }} style={styles.profilePicture} /> */}
             <View style={styles.user}>
                 <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
                     <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
@@ -49,7 +48,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },

@@ -1,24 +1,46 @@
 // FollowerItem.tsx
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../../styles/Colors';
 
 
-interface Following {
-    id: string;
-    name: string;
-    profilePicture: string; // URL to the profile picture
-}
+type User = {
+    _id: string;
+    firstname: string;
+    username: string;
+    email: string;
+    phone: string;
+    password_hash: string;
+    is_deleted: boolean;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
+    __v: number;
+};
 
+type FollowingType = {
+    _id: string;
+    userId: string;
+    followingId: User;
+    createdAt: string;
+    __v: number;
+};
 interface FollowingItemProps {
-    following: Following;
+    following: FollowingType;
 }
 
 const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
     return (
         <View style={styles.container}>
-            <Image source={{ uri: following.profilePicture }} style={styles.profilePicture} />
-            <Text style={styles.name}>{following.name}</Text>
+            {/* <Image source={{ uri: following.profilePicture }} style={styles.profilePicture} /> */}
+            <View style={styles.user}>
+                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                </LinearGradient>
+            </View>
+            <Text style={styles.name}>{following.followingId?.firstname}</Text>
         </View>
     );
 };
@@ -39,7 +61,14 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
-        color: Colors.whiteColor
+        color: Colors.whiteColor,
+        paddingLeft: 10
+    },
+    user: {
+        width: 30
+    },
+    gradient: {
+        borderRadius: 30
     },
 });
 

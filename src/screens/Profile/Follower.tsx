@@ -76,13 +76,11 @@ const followers: Follower[] = [
 
 const Follower: React.FC<Props> = ({ navigation, route }) => {
 
-
     const backButtonHandler = () => {
         navigation.navigate('HomeScreen');
     };
 
-    React.useLayoutEffect(() => {
-
+    const headerHandler = () => {
         navigation.setOptions({
             title: ``,
             headerLeft: () => {
@@ -92,6 +90,11 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
                 return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
             }
         });
+    };
+
+    React.useLayoutEffect(() => {
+
+        headerHandler();
 
         return () => {
 

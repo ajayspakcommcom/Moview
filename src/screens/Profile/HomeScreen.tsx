@@ -78,6 +78,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
+            console.log('follower', result)
 
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
@@ -173,7 +174,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         return () => {
             abortController.abort();
         }
-    }, [counter]);
+    }, [counter, route]);
 
     const editHandler = () => {
         setIsEditMode(true);

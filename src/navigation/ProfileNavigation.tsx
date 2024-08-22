@@ -21,12 +21,10 @@ const ProfileNavigation: React.FC = () => {
         contentStyle: { backgroundColor: Colors.darkBackgroudColor }
     };
 
-
     const screenOptions: NativeStackNavigationOptions = {
         contentStyle: { backgroundColor: Colors.darkBackgroudColor },
         animation: 'slide_from_right'
     };
-
 
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>

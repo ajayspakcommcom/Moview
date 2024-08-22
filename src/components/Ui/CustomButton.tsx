@@ -6,7 +6,7 @@ import Fonts from '../../styles/Fonts';
 
 interface CustomButtonProps {
     text: string;
-    onPressHandler: () => void;
+    onPressHandler?: () => void;
     textSize?: number;
     style?: any; //Adjust type as per your specific styles
     isDisabled?: boolean;

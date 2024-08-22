@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../../styles/Colors';
+import CustomButton from '../Ui/CustomButton';
 
 
 type User = {
@@ -33,25 +34,45 @@ interface FollowingItemProps {
 
 const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
     return (
-        <View style={styles.container}>
-            <View style={styles.user}>
-                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                </LinearGradient>
+        <>
+            <View style={styles.mainWrapper}>
+                <View style={styles.container}>
+                    <View style={styles.user}>
+                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                            <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                        </LinearGradient>
+                    </View>
+                    <Text style={styles.name}>{following.followingId?.firstname}</Text>
+                </View>
+                <View style={styles.rightWrapper}>
+                    <CustomButton text='Unfollow' style={styles.btnStyle} />
+                </View>
             </View>
-            <Text style={styles.name}>{following.followingId?.firstname}</Text>
-        </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    mainWrapper: {
+        flex: 1,
         paddingVertical: 20,
         paddingHorizontal: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: Colors.borderColor,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    btnStyle: {
+        paddingHorizontal: 15,
+        height: 'auto',
+        paddingVertical: 5
+    },
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    rightWrapper: {
+        justifyContent: 'center'
     },
     profilePicture: {
         width: 50,

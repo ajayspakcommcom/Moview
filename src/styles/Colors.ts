@@ -14,7 +14,8 @@ const Colors = {
     tabActiveOpacityColor: '#efd243',
     transparentColor: 'transparent',
     textInputDisabled: 'rgba(128, 128, 128, 0.9)',
-    categoryRedColor: '#982B1C'
+    categoryRedColor: '#982B1C',
+    borderColor: '#ccc'
 };
 
 export default Colors;

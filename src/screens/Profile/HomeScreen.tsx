@@ -9,11 +9,9 @@ import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
 
-
 const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
-
 
 type Props = {
     navigation: any;
@@ -78,7 +76,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
-            console.log('follower', result)
+            // console.log('follower', result.data.length)
 
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
@@ -115,6 +113,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
+            console.log('following', result.data.length);
 
             if (result.status === 'success') {
                 setFollowData((prevState) => ({

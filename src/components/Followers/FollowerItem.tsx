@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../../styles/Colors';
+import CustomButton from '../Ui/CustomButton';
 
 
 type User = {
@@ -35,25 +36,44 @@ interface FollowerItemProps {
 const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.user}>
-                    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                    </LinearGradient>
+            <View style={styles.mainWrapper}>
+                <View style={styles.container}>
+                    <View style={styles.user}>
+                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                            <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                        </LinearGradient>
+                    </View>
+                    <Text style={styles.name}>{follower.followerId?.firstname}</Text>
                 </View>
-                <Text style={styles.name}>{follower.followerId?.firstname}</Text>
+                <View style={styles.rightWrapper}>
+                    <CustomButton text='Follow' style={styles.btnStyle} />
+                </View>
             </View>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    mainWrapper: {
+        flex: 1,
+        paddingVertical: 20,
+        paddingHorizontal: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.borderColor,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    btnStyle: {
+        paddingHorizontal: 15,
+        height: 'auto',
+        paddingVertical: 5
+    },
     container: {
         flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        alignItems: 'center'
+    },
+    rightWrapper: {
+        justifyContent: 'center'
     },
     profilePicture: {
         width: 50,

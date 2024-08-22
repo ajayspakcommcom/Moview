@@ -56,12 +56,12 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
     const headerHandler = () => {
         navigation.setOptions({
-            title: ``,
+            title: `Follower`,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },
             headerRight: () => {
-                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
+                return `` //<Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
             }
         });
     };

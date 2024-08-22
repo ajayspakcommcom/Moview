@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, StyleSheet, Text } from 'react-native';
 import FollowingList from '../../components/Followings/FollowingList';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -83,12 +82,12 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 
     const headerHandler = () => {
         navigation.setOptions({
-            title: ``,
+            title: `Following`,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },
             headerRight: () => {
-                return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
+                return '' //<Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
             }
         });
     };

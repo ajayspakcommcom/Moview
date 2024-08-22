@@ -151,7 +151,7 @@ const ShowDetailScreen: React.FC = () => {
             abortController.abort();
         };
 
-    }, []);
+    }, [activeTab]);
 
     const handleTabClick = (tabName: string) => {
         setActiveTab(tabName);
@@ -247,14 +247,24 @@ const ShowDetailScreen: React.FC = () => {
                 {activeTab === 'reviews' &&
                     <>
 
-                        <FlatList
-                            ListHeaderComponent={() => (
-                                headerContent()
-                            )}
-                            data={reviewData}
-                            renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} /></View>}
-                            keyExtractor={(item) => item._id}
-                        />
+                        {reviewData.length > 0 &&
+                            <FlatList
+                                ListHeaderComponent={() => (
+                                    headerContent()
+                                )}
+                                data={reviewData}
+                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} /></View>}
+                                keyExtractor={(item) => item._id}
+                            />
+                        }
+
+                        {reviewData.length === 0 &&
+                            <View style={styles.noReviewWrapper}>
+                                {headerContent()}
+                                <Text style={styles.reviewText}>No Review found</Text>
+                            </View>
+                        }
+
 
                     </>
                 }
@@ -267,7 +277,6 @@ const ShowDetailScreen: React.FC = () => {
                         </ScrollView>
                     </React.Suspense>
                 }
-
             </KeyboardAvoidingView>
         </>
     );
@@ -279,6 +288,13 @@ const styles = StyleSheet.create({
     },
     reviewListContainer: {
         paddingHorizontal: 20
+    },
+    noReviewWrapper: {
+        flex: 1,
+    },
+    reviewText: {
+        color: Colors.whiteColor,
+        textAlign: 'center'
     },
     ratingTextWrapper: {
         flexDirection: 'row',

@@ -149,7 +149,7 @@ const DetailScreen: React.FC = () => {
             abortController.abort();
         };
 
-    }, []);
+    }, [activeTab]);
 
     const handleTabClick = (tabName: string) => {
         setActiveTab(tabName);
@@ -244,15 +244,27 @@ const DetailScreen: React.FC = () => {
 
                 {activeTab === 'reviews' &&
                     <>
-                        <FlatList
-                            ListHeaderComponent={() => (
-                                headerContent()
-                            )}
-                            data={reviewData}
-                            renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
-                            keyExtractor={(item) => item._id}
-                        />
+                        {reviewData.length > 0 &&
+                            <FlatList
+                                ListHeaderComponent={() => (
+                                    headerContent()
+                                )}
+                                data={reviewData}
+                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
+                                keyExtractor={(item) => item._id}
+                            />
+                        }
+
+                        {reviewData.length === 0 &&
+                            <View style={styles.noReviewWrapper}>
+                                {headerContent()}
+                                <Text style={styles.reviewText}>No Review found</Text>
+                            </View>
+                        }
+
                     </>
+
+
                 }
 
                 {activeTab === 'writeReview' &&
@@ -274,6 +286,13 @@ const styles = StyleSheet.create({
     },
     reviewListContainer: {
         paddingHorizontal: 20
+    },
+    noReviewWrapper: {
+        flex: 1,
+    },
+    reviewText: {
+        color: Colors.whiteColor,
+        textAlign: 'center'
     },
     ratingTextWrapper: {
         flexDirection: 'row',

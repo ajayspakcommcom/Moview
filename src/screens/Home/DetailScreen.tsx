@@ -11,6 +11,8 @@ import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
+import { Review } from '../../models/Review';
+import ReviewItem from '../../components/ReviewList/ReviewItem';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
@@ -31,6 +33,8 @@ const DetailScreen: React.FC = () => {
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
     const [activeTab, setActiveTab] = React.useState('reviews');
     const [rating, setRating] = React.useState(0);
+
+    const [reviewData, setReviewData] = React.useState<Review[]>([]);
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -85,6 +89,42 @@ const DetailScreen: React.FC = () => {
         });
     };
 
+    const getReviewListByMovie = async () => {
+
+        const url = `${API_URL}review/movie/${route.params.movie._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+
+            if (result.status === 'success') {
+                setReviewData(result.data.reviews);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+            throw error; // Re-throw the error to be handled by the caller if necessary
+        }
+    };
+
+
     React.useLayoutEffect(() => {
 
         setDetailData(prevState => ({
@@ -103,6 +143,7 @@ const DetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
+        getReviewListByMovie();
 
         return () => {
             abortController.abort();
@@ -202,16 +243,16 @@ const DetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'reviews' &&
-                    <React.Suspense fallback={<Loading />}>
+                    <>
                         <FlatList
                             ListHeaderComponent={() => (
                                 headerContent()
                             )}
-                            data={detailData.cast}
-                            renderItem={({ item }) => <ReviewList movieItem={route.params.movie} />}
+                            data={reviewData}
+                            renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
                             keyExtractor={(item) => item._id}
                         />
-                    </React.Suspense>
+                    </>
                 }
 
                 {activeTab === 'writeReview' &&
@@ -230,6 +271,9 @@ const DetailScreen: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    reviewListContainer: {
+        paddingHorizontal: 20
     },
     ratingTextWrapper: {
         flexDirection: 'row',

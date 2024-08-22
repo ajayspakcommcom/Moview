@@ -86,7 +86,15 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
     };
 
     const navigateToDetails = (latestMovieShowItem: LastesMovieShowItem) => {
-        navigation.navigate('DetailScreen', { movie: latestMovieShowItem });
+        console.log('latestMovieShowItem', latestMovieShowItem);
+
+        if (latestMovieShowItem.isShow) {
+            navigation.navigate('ShowDetail', { showItem: latestMovieShowItem });
+        } else {
+            navigation.navigate('DetailScreen', { movie: latestMovieShowItem });
+        }
+
+
     };
 
     const renderItem = ({ item }: { item: LastesMovieShowItem }) => (

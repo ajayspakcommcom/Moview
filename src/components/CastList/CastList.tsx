@@ -13,8 +13,6 @@ const keyExtractor = (item: Cast) => item._id;
 
 const CastList: React.FC<ListProps> = ({ castList }) => {
 
-
-
     React.useLayoutEffect(() => {
 
         return () => {

@@ -13,6 +13,8 @@ import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { ShowItem } from '../../types/Show';
 import ShowImageMap from '../../utils/ShowImageMap';
+import { Review } from '../../models/Review';
+import ShowReviewItem from '../../components/ReviewList/ShowReviewItem';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ShowReviewList = React.lazy(() => import('../../components/ReviewList/ShowReviewList'));
@@ -33,6 +35,8 @@ const ShowDetailScreen: React.FC = () => {
     const [detailData, setDetailData] = React.useState<Partial<ShowItem>>({});
     const [activeTab, setActiveTab] = React.useState('synopsis');
     const [rating, setRating] = React.useState(0);
+
+    const [reviewData, setReviewData] = React.useState<Review[]>([]);
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -88,6 +92,42 @@ const ShowDetailScreen: React.FC = () => {
         });
     };
 
+    const getReviewListByShow = async () => {
+
+        const url = `${API_URL}review-show/show/${route.params.showItem._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            console.log('Result', result);
+
+            if (result.status === 'success') {
+                setReviewData(result.data.reviews);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+            throw error; // Re-throw the error to be handled by the caller if necessary
+        }
+    };
+
     React.useLayoutEffect(() => {
         setDetailData(prevState => ({
             ...prevState,
@@ -105,6 +145,7 @@ const ShowDetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
+        getReviewListByShow();
 
         return () => {
             abortController.abort();
@@ -205,19 +246,15 @@ const ShowDetailScreen: React.FC = () => {
 
                 {activeTab === 'reviews' &&
                     <>
-                        {/* <React.Suspense fallback={<Loading />}>
-                            <FlatList
-                                ListHeaderComponent={() => (
-                                    headerContent()
-                                )}
-                                data={detailData.cast}
-                                renderItem={({ item }) => <ShowReviewList showItem={route.params.showItem} />}
-                                keyExtractor={(item) => item._id}
-                            />
-                        </React.Suspense> */}
-                        <Text style={{ color: '#fff' }}>{JSON.stringify(route.params.showItem)}</Text>
-                        <Text style={{ color: '#fff' }}>=============================================</Text>
-                        <Text style={{ color: '#fff' }}>{JSON.stringify(route.params.showItem)}</Text>
+
+                        <FlatList
+                            ListHeaderComponent={() => (
+                                headerContent()
+                            )}
+                            data={reviewData}
+                            renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} /></View>}
+                            keyExtractor={(item) => item._id}
+                        />
 
                     </>
                 }
@@ -239,6 +276,9 @@ const ShowDetailScreen: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    reviewListContainer: {
+        paddingHorizontal: 20
     },
     ratingTextWrapper: {
         flexDirection: 'row',

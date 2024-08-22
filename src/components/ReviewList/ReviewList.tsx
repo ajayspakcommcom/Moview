@@ -8,6 +8,8 @@ import { MovieItem } from '../../types/Movie';
 import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
 
+const Loading = React.lazy(() => import('../Loading/Loading'));
+
 interface ListProps {
     movieItem?: MovieItem;
     userItem?: UserItem;

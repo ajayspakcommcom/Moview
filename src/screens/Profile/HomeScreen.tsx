@@ -134,35 +134,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
-    // const getReviewListByUser = async () => {
-
-    //     const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
-    //     const token = user;
-
-    //     try {
-    //         const response = await fetch(movieUrl, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Authorization': `Bearer ${token?.token}`,
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             signal: signal
-    //         });
-
-    //         const result = await response.json();
-
-    //         if (result.status === 'success') {
-    //             setMoviesReviewed(result.data.reviews.length);
-    //         }
-    //     } catch (error) {
-    //         if (error instanceof Error) {
-    //             if (error.name === 'AbortError') {
-    //                 //
-    //             }
-    //         }
-    //     }
-    // };
-
     const getReviewListByUser = async () => {
 
         const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
@@ -194,8 +165,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             if (movieData.status === 'success' && showData.status === 'success') {
                 const movieCount = movieData.data.reviews.length;
                 const showCount = showData.data.reviews.length;
-                console.log('movieData', movieData.data.reviews.length);
-                console.log('showData', showData.data.reviews.length);
                 setMoviesReviewed((movieCount + showCount));
             }
 

@@ -21,26 +21,68 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
     const signal = abortController.signal;
     const [reviewData, setReviewData] = React.useState<Review[]>([]);
 
+    // const getReviewListByUser = async () => {
+
+    //     const url = `${API_URL}review/user/${userItem?._id}`;
+    //     const token = user;
+
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Authorization': `Bearer ${token?.token}`,
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             signal: signal
+    //         });
+
+    //         const result = await response.json();
+
+    //         if (result.status === 'success') {
+    //             setReviewData(result.data.reviews);
+    //         }
+    //     } catch (error) {
+    //         if (error instanceof Error) {
+    //             if (error.name === 'AbortError') {
+    //                 //
+    //             }
+    //         }
+    //     }
+    // };
+
     const getReviewListByUser = async () => {
 
-        const url = `${API_URL}review/user/${userItem?._id}`;
+        const movieUrl = `${API_URL}review/user/${userItem?._id}`;
+        const showUrl = `${API_URL}review-show/user/${userItem?._id}`;
         const token = user;
+        const headers = {
+            'Authorization': `Bearer ${token?.token}`,
+            'Content-Type': 'application/json'
+        }
 
         try {
-            const response = await fetch(url, {
+
+            const response = await fetch(movieUrl, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
+                    ...headers
                 },
                 signal: signal
             });
 
-            const result = await response.json();
+            const [movieResponse, showResponse] = await Promise.all([
+                fetch(movieUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
+                fetch(showUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
+            ]);
 
-            if (result.status === 'success') {
-                setReviewData(result.data.reviews);
+            const movieData = await movieResponse.json();
+            const showData = await showResponse.json();
+
+            if (movieData.status === 'success' && showData.status === 'success') {
+                setReviewData([...movieData.data.reviews, ...showData.data.reviews]);
             }
+
+
         } catch (error) {
             if (error instanceof Error) {
                 if (error.name === 'AbortError') {

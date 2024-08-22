@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, LayoutChangeEvent } from 'react-native';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
@@ -34,7 +34,6 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
         }
 
     }, []);
-
 
     return (
         <>
@@ -81,10 +80,10 @@ const styles = StyleSheet.create({
     logoWrapper: {
         flex: 2,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     logoImg: {
-        width: 60,
+        width: 80,
         height: 35
     },
     contentWrapper: {
@@ -105,8 +104,10 @@ const styles = StyleSheet.create({
         fontSize: Fonts.Size.Medium + 5
     },
     contentText: {
+        fontSize: Fonts.Size.Medium,
         color: Colors.whiteColor,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        fontWeight: '500'
     },
     pressable: {
     },

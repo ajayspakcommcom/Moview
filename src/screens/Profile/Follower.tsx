@@ -56,7 +56,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
     const headerHandler = () => {
         navigation.setOptions({
-            title: `Follower`,
+            title: `Followers`,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             },

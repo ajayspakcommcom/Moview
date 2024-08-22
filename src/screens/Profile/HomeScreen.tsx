@@ -134,26 +134,72 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
+    // const getReviewListByUser = async () => {
+
+    //     const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
+    //     const token = user;
+
+    //     try {
+    //         const response = await fetch(movieUrl, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Authorization': `Bearer ${token?.token}`,
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             signal: signal
+    //         });
+
+    //         const result = await response.json();
+
+    //         if (result.status === 'success') {
+    //             setMoviesReviewed(result.data.reviews.length);
+    //         }
+    //     } catch (error) {
+    //         if (error instanceof Error) {
+    //             if (error.name === 'AbortError') {
+    //                 //
+    //             }
+    //         }
+    //     }
+    // };
+
     const getReviewListByUser = async () => {
 
-        const url = `${API_URL}review/user/${userDetail?._id}`;
+        const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
+        const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
         const token = user;
+        const headers = {
+            'Authorization': `Bearer ${token?.token}`,
+            'Content-Type': 'application/json'
+        }
 
         try {
-            const response = await fetch(url, {
+
+            const response = await fetch(movieUrl, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
+                    ...headers
                 },
                 signal: signal
             });
 
-            const result = await response.json();
+            const [movieResponse, showResponse] = await Promise.all([
+                fetch(movieUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
+                fetch(showUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
+            ]);
 
-            if (result.status === 'success') {
-                setMoviesReviewed(result.data.reviews.length);
+            const movieData = await movieResponse.json();
+            const showData = await showResponse.json();
+
+            if (movieData.status === 'success' && showData.status === 'success') {
+                const movieCount = movieData.data.reviews.length;
+                const showCount = showData.data.reviews.length;
+                console.log('movieData', movieData.data.reviews.length);
+                console.log('showData', showData.data.reviews.length);
+                setMoviesReviewed((movieCount + showCount));
             }
+
+
         } catch (error) {
             if (error instanceof Error) {
                 if (error.name === 'AbortError') {
@@ -211,7 +257,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                             <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                                 <View style={styles.movies}>
                                     <Text style={styles.follText}>{moviesReviewed}</Text>
-                                    <Text style={styles.follText}>Movies</Text>
+                                    <Text style={styles.follText}>Reviews</Text>
                                 </View>
                             </Pressable>
 
@@ -225,7 +271,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                             <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
                                 <View style={styles.following}>
                                     <Text style={styles.follText}>{followData.following}</Text>
-                                    <Text style={styles.follText}>Following</Text>
+                                    <Text style={styles.follText}>Followings</Text>
                                 </View>
                             </Pressable>
 
@@ -341,6 +387,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'center',
+        flexWrap: 'wrap'
     },
     movies: {
         marginRight: 15,

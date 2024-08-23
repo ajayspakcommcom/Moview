@@ -41,11 +41,18 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     const { userDetail, user, appCounter } = useAuth();
 
-    const onPressHandler = async (id: string) => {
+    const followHandler = async (id: string) => {
         const followerId = id;
         const userId = userDetail._id;
 
-        checkAlreadyFollowing(followerId);
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+
+        console.log('follow');
+        console.log('userId', userId);
+        console.log('followerId', followerId);
 
         // try {
         //     const response = await fetch(`${API_URL}follow`, {
@@ -74,13 +81,12 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     };
 
-    const checkAlreadyFollowing = async (id: string) => {
+    const unFollowHandler = async (id: string) => {
         const followerId = id;
         const userId = userDetail._id;
 
         try {
-
-            const response = await fetch(`${API_URL}check-if-following`, {
+            const response = await fetch(`${API_URL}unfollow`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,24 +100,18 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
             const result = await response.json();
 
-            // console.log('');
-            // console.log('');
-            // console.log('');
-            // console.log('');
-
-            // console.log('Result', result);
-
-            // if (result.status === 'success') {
-            //     Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
-            // } else {
-            //
-            // }
+            if (result.status === 'success') {
+                Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
+            } else {
+                //
+            }
 
         } catch (error) {
             Alert.alert(`Error: ${error}`);
         }
 
     };
+
 
     return (
         <>
@@ -128,13 +128,13 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                 <View style={styles.rightWrapper}>
 
                     {follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={onPressHandler.bind(this, follower.followerId._id)}>
+                        <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
                             <Text style={styles.text}>Unfollow</Text>
                         </Pressable>
                     }
 
                     {!follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={onPressHandler.bind(this, follower.followerId._id)}>
+                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followerId._id)}>
                             <Text style={styles.text}>Follow</Text>
                         </Pressable>
                     }
@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
     button: {
         display: 'flex',
         paddingVertical: 10,
-        width: '100%',
         height: 40,
         backgroundColor: Colors.tabActiveColor,
         borderRadius: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        width: 100
     },
     text: {
         fontSize: Fonts.Size.Medium - 1,

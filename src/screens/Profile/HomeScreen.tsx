@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-n
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
@@ -262,17 +263,24 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     <Text style={styles.footerText}>Want to Watch</Text>
                                 </Pressable>
 
+                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+
                                 {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
                                     <MaterialIcon name={'logout'} style={styles.footerIcon} />
                                     <Text style={styles.footerText}>Logout</Text>
                                 </Pressable> */}
 
                                 {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                                    <MaterialIcon name={'logout'} style={styles.footerIcon} />
+                                    <AntDesign name={'logout'} style={styles.footerIcon} />
                                     <Text style={styles.footerText}>Test</Text>
                                 </Pressable> */}
 
-                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+                                <View style={styles.spacer}></View>
+
+                                <Pressable style={styles.footerItem} onPress={() => navigation.navigate('TestScreen')}>
+                                    <AntDesign name={'logout'} style={styles.footerIcon} />
+                                    <Text style={styles.footerText}>Test</Text>
+                                </Pressable>
 
 
                             </View>
@@ -416,6 +424,9 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         paddingLeft: 15,
         paddingTop: 5
+    },
+    spacer: {
+        padding: 15
     }
 
 });

@@ -23,6 +23,7 @@ type FollowerType = {
     userId: string;
     followerId: User;
     createdAt: string;
+    isFollowing: boolean;
     __v: number;
 };
 
@@ -45,7 +46,7 @@ const FollowersList: React.FC<FollowersListProps> = ({ followers }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
 });
 

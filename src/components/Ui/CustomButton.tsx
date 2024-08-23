@@ -41,8 +41,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
         color: Colors.tabActiveOpacityColor
     };
 
+    const pressHandler = () => {
+
+        if (onPressHandler) {
+            onPressHandler();
+        }
+    };
+
     return (
-        <Pressable style={[styles.button, style]} android_ripple={androidRippleConfig} onPress={onPressHandler} disabled={isDisabled}>
+        <Pressable style={[styles.button, style]} android_ripple={androidRippleConfig} onPress={pressHandler} disabled={isDisabled}>
             <Text style={[styles.text, textStyle]}>{text}</Text>
         </Pressable>
     );

@@ -275,11 +275,11 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 </View>
                 <View style={styles.following}>
                     <Text style={styles.follText}>{followData.following}</Text>
-                    <Text style={styles.follText}>Following</Text>
+                    <Text style={styles.follText}>Followings</Text>
                 </View>
                 <View style={styles.movies}>
                     <Text style={styles.follText}>{moviesReviewed}</Text>
-                    <Text style={styles.follText}>Movies Reviewed</Text>
+                    <Text style={styles.follText}>Reviewed</Text>
                 </View>
             </View>
 

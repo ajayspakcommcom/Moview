@@ -34,6 +34,7 @@ type FollowerType = {
     userId: string;
     followerId: User;
     createdAt: string;
+    isFollowing: boolean;
     __v: number;
 };
 
@@ -82,6 +83,8 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
+
+            console.log('result', result);
 
             if (result.status === 'success') {
                 setFollowerData(result.data)

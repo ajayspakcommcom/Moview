@@ -32,15 +32,13 @@ type User = {
 type FollowerType = {
     _id: string;
     userId: string;
-    followerId: User;
+    // followerId: User;
+    followingId: User;
     createdAt: string;
     isFollowing: boolean;
     __v: number;
 };
 
-const followers: any[] = [
-    { "id": "1", "name": "Jane Doe", "profilePicture": "https://randomuser.me/api/portraits/men/1.jpg" },
-];
 
 
 const Follower: React.FC<Props> = ({ navigation, route }) => {
@@ -69,7 +67,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowerList = async () => {
 
-        const url = `${API_URL}follower/${userDetail._id}`;
+        const url = `${API_URL}following/${userDetail._id}`;
         const token = user;
 
         try {

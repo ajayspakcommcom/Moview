@@ -61,7 +61,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const onBookmarkHandler = (event: PressableProps) => {
     };
 
-    const getFollowerCount = async () => {
+    const getFollowingCount = async () => {
 
         const url = `${API_URL}follower/${userDetail._id}`;
         const token = user;
@@ -82,7 +82,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
                     ...prevState,
-                    followers: result.data.length
+                    following: result.data.length
                 }));
             }
         } catch (error) {
@@ -98,7 +98,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
-    const getFollowingCount = async () => {
+    const getFollowerCount = async () => {
 
         const url = `${API_URL}following/${userDetail._id}`;
         const token = user;
@@ -119,7 +119,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
                     ...prevState,
-                    following: result.data.length
+                    followers: result.data.length
                 }));
             }
         } catch (error) {
@@ -275,12 +275,12 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     <Text style={styles.footerText}>Test</Text>
                                 </Pressable> */}
 
-                                <View style={styles.spacer}></View>
+                                {/* <View style={styles.spacer}></View>
 
                                 <Pressable style={styles.footerItem} onPress={() => navigation.navigate('TestScreen')}>
                                     <AntDesign name={'logout'} style={styles.footerIcon} />
                                     <Text style={styles.footerText}>Test</Text>
-                                </Pressable>
+                                </Pressable> */}
 
 
                             </View>

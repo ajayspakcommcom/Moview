@@ -29,7 +29,8 @@ type User = {
 type FollowingType = {
     _id: string;
     userId: string;
-    followingId: User;
+    // followingId: User;
+    followerId: User;
     createdAt: string;
     __v: number;
 };
@@ -52,7 +53,7 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowingList = async () => {
 
-        const url = `${API_URL}following/${userDetail._id}`;
+        const url = `${API_URL}follower/${userDetail._id}`;
         const token = user;
 
         try {
@@ -65,10 +66,10 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
                 signal: signal
             });
 
-            const result = await response.json();
+            const respData = await response.json();
 
-            if (result.status === 'success') {
-                setFollowingData(result.data)
+            if (respData.status === 'success') {
+                setFollowingData(respData.data);
             }
 
         } catch (error) {

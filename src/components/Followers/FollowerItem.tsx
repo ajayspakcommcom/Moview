@@ -27,7 +27,8 @@ type User = {
 type FollowerType = {
     _id: string;
     userId: string;
-    followerId: User;
+    // followerId: User;
+    followingId: User;
     createdAt: string;
     isFollowing: boolean;
     __v: number;
@@ -123,24 +124,23 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                             <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                         </LinearGradient>
                     </View>
-                    <Text style={styles.name}>{follower.followerId?.firstname}</Text>
+                    <Text style={styles.name}>{follower.followingId?.firstname}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
-
                     {follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
+                        <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followingId._id)}>
                             <Text style={styles.text}>Unfollow</Text>
                         </Pressable>
                     }
 
                     {!follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followerId._id)}>
+                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followingId._id)}>
                             <Text style={styles.text}>Follow</Text>
                         </Pressable>
                     }
-
                 </View>
             </View>
+
         </>
     );
 };

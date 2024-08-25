@@ -2,6 +2,7 @@
 import React from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import FollowingItem from './FollowingItem';
+import { Text } from 'react-native-paper';
 
 
 type User = {
@@ -21,7 +22,8 @@ type User = {
 type FollowingType = {
     _id: string;
     userId: string;
-    followingId: User;
+    // followingId: User;
+    followerId: User;
     createdAt: string;
     __v: number;
 };
@@ -33,13 +35,16 @@ interface FollowingListProps {
 
 const FollowingList: React.FC<FollowingListProps> = ({ following }) => {
     return (
-        <View style={styles.container}>
-            <FlatList
-                data={following}
-                keyExtractor={(item) => item._id}
-                renderItem={({ item }) => <FollowingItem following={item} />}
-            />
-        </View>
+        <>
+            <View style={styles.container}>
+                <FlatList
+                    data={following}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({ item }) => <FollowingItem following={item} />}
+                />
+            </View>
+        </>
+
     );
 };
 

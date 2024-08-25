@@ -4,7 +4,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import Colors from '../styles/Colors';
 import HomeScreen from '../screens/Profile/HomeScreen';
 import { TextAlign } from '../styles/TextAlignmentUtils';
-import TestScreen from '../screens/Test/TestScreen-23-08-2024';
+import TestScreen from '../screens/Test/TestScreen';
 import Follower from '../screens/Profile/Follower';
 import Following from '../screens/Profile/Following';
 import Notification from '../screens/Notification/HomeScreen';

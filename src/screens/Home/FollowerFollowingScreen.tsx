@@ -42,10 +42,10 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
                     signal: signal
                 });
 
-                const result = await response.json();
+                const respData = await response.json();
 
-                if (result.status === 'success') {
-                    setUserDetail(result.data.user)
+                if (respData.status === 'success') {
+                    setUserDetail(respData.data.user)
                 }
             } catch (error) {
                 if (error instanceof Error) {

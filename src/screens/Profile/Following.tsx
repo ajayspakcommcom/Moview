@@ -38,7 +38,7 @@ type FollowingType = {
 
 const Following: React.FC<Props> = ({ navigation, route }) => {
 
-    const { user, userDetail } = useAuth();
+    const { user, userDetail, counter } = useAuth();
 
     const [followingData, setFollowingData] = React.useState<FollowingType[]>([]);
 
@@ -99,10 +99,12 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         headerHandler();
         getFollowingList();
 
+        console.log('counter increamented', counter);
+
         return () => {
 
         }
-    }, []);
+    }, [counter]);
 
 
 

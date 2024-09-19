@@ -63,7 +63,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowingCount = async () => {
 
-        const url = `${API_URL}follower/${userDetail._id}`;
+
+        const url = `${API_URL}following/${userDetail._id}`; // logged user id
         const token = user;
 
         try {
@@ -77,8 +78,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
-            // console.log('follower', result.data.length)
-
+            
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
                     ...prevState,
@@ -100,7 +100,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowerCount = async () => {
 
-        const url = `${API_URL}following/${userDetail._id}`;
+        const url = `${API_URL}follower/${userDetail._id}`;
         const token = user;
 
         try {
@@ -114,8 +114,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
-            console.log('following', result.data.length);
-
+            
             if (result.status === 'success') {
                 setFollowData((prevState) => ({
                     ...prevState,

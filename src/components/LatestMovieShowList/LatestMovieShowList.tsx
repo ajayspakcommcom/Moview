@@ -59,10 +59,10 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
                 if (error.name === 'AbortError') {
 
                 } else {
-
+                    //
                 }
             } else {
-
+                //
             }
             throw error;
         }
@@ -85,9 +85,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
         }, 2000);
     };
 
-    const navigateToDetails = (latestMovieShowItem: LastesMovieShowItem) => {
-        console.log('latestMovieShowItem', latestMovieShowItem);
-
+    const navigateToDetails = (latestMovieShowItem: LastesMovieShowItem) => {        
         if (latestMovieShowItem.isShow) {
             navigation.navigate('ShowDetail', { showItem: latestMovieShowItem });
         } else {
@@ -102,9 +100,9 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
                     <FastImage
-                        style={styles.image}
-                        source={LatestMovieShowImageMap[item.poster_url]}
-                        resizeMode={FastImage.resizeMode.cover}
+                        style={styles.image} // Styles for the image
+                        source={LatestMovieShowImageMap[item.poster_url]} // Source of the image
+                        resizeMode={FastImage.resizeMode.cover} // Resize mode to cover the container
                     />
                 </Pressable>
                 <View style={styles.category}>

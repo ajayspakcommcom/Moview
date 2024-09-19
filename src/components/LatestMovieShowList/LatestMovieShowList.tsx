@@ -10,7 +10,6 @@ import { Text } from 'react-native-paper';
 import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
 
 interface LatestMovieShowListProps {
-
 }
 
 const screenWidth = Dimensions.get('window').width;
@@ -91,8 +90,6 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
         } else {
             navigation.navigate('DetailScreen', { movie: latestMovieShowItem });
         }
-
-
     };
 
     const renderItem = ({ item }: { item: LastesMovieShowItem }) => (

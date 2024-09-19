@@ -139,8 +139,6 @@ const DetailScreen: React.FC = () => {
             rating: route.params.movie?.rating,
         }));
 
-
-
         loadHeaderContent();
         getReviewListByUser();
         getReviewListByMovie();

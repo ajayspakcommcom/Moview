@@ -25,7 +25,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
     const getFollowerCount = async () => {
 
-        const url = `${API_URL}following/${userData?._id}`;
+        const url = `${API_URL}follower/${userData?._id}`;
         const token = user;
 
         try {
@@ -62,7 +62,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
     const getFollowingCount = async () => {
 
-        const url = `${API_URL}follower/${userData?._id}`;
+        const url = `${API_URL}following/${userData?._id}`;
         const token = user;
 
         try {
@@ -98,9 +98,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
     const checkIfFollowing = async () => {
         try {
-
-            //console.log("userId", userData?._id);
-            //console.log("followerId", userDetail?._id);
 
             const response = await fetch(`${API_URL}check-if-following`, {
                 method: 'POST',

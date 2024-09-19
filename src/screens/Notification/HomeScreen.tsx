@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 
-
 const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 

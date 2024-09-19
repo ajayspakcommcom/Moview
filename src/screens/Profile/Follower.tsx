@@ -82,10 +82,6 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
             const result = await response.json();
 
-            console.log('=============================================================');
-            console.log('result', result);
-            console.log('userDetail._id...', userDetail._id);
-
             if (result.status === 'success') {
                 setFollowerData(result.data)
             }

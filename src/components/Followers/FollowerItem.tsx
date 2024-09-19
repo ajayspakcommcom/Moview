@@ -47,14 +47,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         const followerId = id;
         const userId = userDetail._id;
 
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-
-        console.log('follow');
-        console.log('userId', userId);
         console.log('followerId', followerId);
+        console.log('userId', userId);
 
         // try {
         //     const response = await fetch(`${API_URL}follow`, {
@@ -85,7 +79,10 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     const unFollowHandler = async (id: string) => {
         const followerId = id;
-        const userId = userDetail._id;
+        const userId = userDetail._id; //logged in user id
+
+        console.log('followerId', followerId);
+        console.log('userId', userId);
 
         try {
             const response = await fetch(`${API_URL}unfollow`, {
@@ -99,15 +96,12 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                     "followerId": followerId,
                 }),
             });
-
             const result = await response.json();
-
             if (result.status === 'success') {
                 Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
             } else {
                 //
             }
-
         } catch (error) {
             Alert.alert(`Error: ${error}`);
         }
@@ -117,7 +111,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     return (
         <>
-
+            <Text>{JSON.stringify(follower.followerId)}</Text>
             <View style={styles.mainWrapper}>
                 <View style={styles.container}>
                     <View style={styles.user}>
@@ -134,7 +128,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable> */}
                             
-                            <Pressable style={styles.button}>
+                            <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable>
                         </>

@@ -67,7 +67,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowerList = async () => {
 
-        const url = `${API_URL}following/${userDetail._id}`;
+        const url = `${API_URL}follower/${userDetail._id}`;
         const token = user;
 
         try {
@@ -82,7 +82,9 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
             const result = await response.json();
 
+            console.log('=============================================================');
             console.log('result', result);
+            console.log('userDetail._id...', userDetail._id);
 
             if (result.status === 'success') {
                 setFollowerData(result.data)

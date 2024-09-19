@@ -124,13 +124,19 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                             <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                         </LinearGradient>
                     </View>
-                    <Text style={styles.name}>{follower.followingId?.firstname}</Text>
+                    <Text style={styles.name}>{'Name'}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
                     {follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followingId._id)}>
-                            <Text style={styles.text}>Unfollow</Text>
-                        </Pressable>
+                        <>
+                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followingId._id)}>
+                                <Text style={styles.text}>Unfollow</Text>
+                            </Pressable> */}
+                            
+                            <Pressable style={styles.button}>
+                                <Text style={styles.text}>Unfollow</Text>
+                            </Pressable>
+                        </>
                     }
 
                     {!follower.isFollowing &&

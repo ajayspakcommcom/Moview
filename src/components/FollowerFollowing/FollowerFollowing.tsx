@@ -20,8 +20,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
-
-
     const abortController = new AbortController();
     const signal = abortController.signal;
 
@@ -29,7 +27,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
         const url = `${API_URL}following/${userData?._id}`;
         const token = user;
-
 
         try {
             const response = await fetch(url, {
@@ -102,8 +99,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     const checkIfFollowing = async () => {
         try {
 
-            console.log("userId", userData?._id);
-            console.log("followerId", userDetail?._id);
+            //console.log("userId", userData?._id);
+            //console.log("followerId", userDetail?._id);
 
             const response = await fetch(`${API_URL}check-if-following`, {
                 method: 'POST',
@@ -113,7 +110,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 },
                 body: JSON.stringify({
                     "userId": userData?._id,
-                    "followerId": userDetail?._id,
+                    "followerId": userDetail?._id, //logged in user id
                 }),
                 signal: signal
             });

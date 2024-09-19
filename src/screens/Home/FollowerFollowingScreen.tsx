@@ -23,8 +23,6 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('userId', userId);
-
         navigation.setOptions({title: ``});
 
         const fetchUserDetail = async () => {

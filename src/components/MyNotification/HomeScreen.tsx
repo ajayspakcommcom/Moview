@@ -13,57 +13,57 @@ type Props = {
 };
 
 const movieList: MovieItem[] = [
-    {
-        _id: "64b841e2f3f2f4c2a5d9b9c1",
-        title: "Inception",
-        description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
-        release_date: "2010-07-16",
-        genre: "Sci-Fi",
-        director: "Christopher Nolan",
-        rating: 8.8,
-        cast: [
-            { _id: "1", actor: "Leonardo DiCaprio", role: "Dom Cobb" },
-            { _id: "2", actor: "Joseph Gordon-Levitt", role: "Arthur" },
-            { _id: "3", actor: "Elliot Page", role: "Ariadne" }
-        ],
-        poster_url: "https://example.com/inception.jpg",
-        is_deleted: false,
-        __v: 1
-    },
-    {
-        _id: "64b841e2f3f2f4c2a5d9b9c2",
-        title: "The Dark Knight",
-        description: "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
-        release_date: "2008-07-18",
-        genre: "Action",
-        director: "Christopher Nolan",
-        rating: 9.0,
-        cast: [
-            { _id: "1", actor: "Christian Bale", role: "Bruce Wayne / Batman" },
-            { _id: "2", actor: "Heath Ledger", role: "Joker" },
-            { _id: "3", actor: "Aaron Eckhart", role: "Harvey Dent" }
-        ],
-        poster_url: "https://example.com/dark_knight.jpg",
-        is_deleted: false,
-        __v: 1
-    },
-    {
-        _id: "64b841e2f3f2f4c2a5d9b9c3",
-        title: "Interstellar",
-        description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-        release_date: "2014-11-07",
-        genre: "Sci-Fi",
-        director: "Christopher Nolan",
-        rating: 8.6,
-        cast: [
-            { _id: "1", actor: "Matthew McConaughey", role: "Cooper" },
-            { _id: "2", actor: "Anne Hathaway", role: "Brand" },
-            { _id: "3", actor: "Jessica Chastain", role: "Murph" }
-        ],
-        poster_url: "https://example.com/interstellar.jpg",
-        is_deleted: false,
-        __v: 1
-    }
+    //{
+    //    _id: "64b841e2f3f2f4c2a5d9b9c1",
+    //    title: "Inception",
+    //    description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+    //    release_date: "2010-07-16",
+    //    genre: "Sci-Fi",
+    //    director: "Christopher Nolan",
+    //    rating: 8.8,
+    //    cast: [
+    //        { _id: "1", actor: "Leonardo DiCaprio", role: "Dom Cobb" },
+    //        { _id: "2", actor: "Joseph Gordon-Levitt", role: "Arthur" },
+    //        { _id: "3", actor: "Elliot Page", role: "Ariadne" }
+    //    ],
+    //    poster_url: "https://example.com/inception.jpg",
+    //    is_deleted: false,
+    //    __v: 1
+    //},
+    //{
+    //    _id: "64b841e2f3f2f4c2a5d9b9c2",
+    //    title: "The Dark Knight",
+    //    description: "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    //    release_date: "2008-07-18",
+    //    genre: "Action",
+    //    director: "Christopher Nolan",
+    //    rating: 9.0,
+    //    cast: [
+    //        { _id: "1", actor: "Christian Bale", role: "Bruce Wayne / Batman" },
+    //        { _id: "2", actor: "Heath Ledger", role: "Joker" },
+    //        { _id: "3", actor: "Aaron Eckhart", role: "Harvey Dent" }
+    //    ],
+    //    poster_url: "https://example.com/dark_knight.jpg",
+    //    is_deleted: false,
+    //    __v: 1
+    //},
+    //{
+    //    _id: "64b841e2f3f2f4c2a5d9b9c3",
+    //    title: "Interstellar",
+    //    description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    //    release_date: "2014-11-07",
+    //    genre: "Sci-Fi",
+    //    director: "Christopher Nolan",
+    //    rating: 8.6,
+    //    cast: [
+    //        { _id: "1", actor: "Matthew McConaughey", role: "Cooper" },
+    //        { _id: "2", actor: "Anne Hathaway", role: "Brand" },
+    //        { _id: "3", actor: "Jessica Chastain", role: "Murph" }
+    //    ],
+    //    poster_url: "https://example.com/interstellar.jpg",
+    //    is_deleted: false,
+    //    __v: 1
+    //}
 ];
 
 const MyNotification: React.FC<Props> = () => {
@@ -77,8 +77,6 @@ const MyNotification: React.FC<Props> = () => {
     const signal = abortController.signal;
 
     const getNotificationCount = async () => {
-
-
 
         const url = `${API_URL}notification/follower/${userDetail._id}`;
         const token = user;

@@ -175,8 +175,10 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     }, [userData]);
 
     const followHandler = async () => {
-        try {
 
+       
+
+        try {
             const response = await fetch(`${API_URL}follow`, {
                 method: 'POST',
                 headers: {
@@ -184,13 +186,11 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     'Authorization': `Bearer ${user?.token}`,
                 },
                 body: JSON.stringify({
-                    "userId": userData?._id,
-                    "followerId": userDetail?._id,
+                    "userId": userData?._id, 
+                    "followerId": userDetail?._id, //logged in user id
                 }),
             });
-
             const result = await response.json();
-
             if (result.status === 'success') {
                 Alert.alert('Successfully', 'Thank you for following.', [
                     {
@@ -206,8 +206,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 //     { text: 'OK', onPress: () => { } }
                 // ]);
             }
-
-
         } catch (error) {
             Alert.alert(`Error: ${error}`);
         }
@@ -225,7 +223,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 },
                 body: JSON.stringify({
                     "userId": userData?._id,
-                    "followerId": userDetail?._id,
+                    "followerId": userDetail?._id, //logged in user id
                 }),
             });
 

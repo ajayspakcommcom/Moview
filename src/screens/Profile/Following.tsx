@@ -53,7 +53,7 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowingList = async () => {
 
-        const url = `${API_URL}follower/${userDetail._id}`;
+        const url = `${API_URL}following/${userDetail._id}`;
         const token = user;
 
         try {

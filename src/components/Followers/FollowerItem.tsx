@@ -27,11 +27,12 @@ type User = {
 type FollowerType = {
     _id: string;
     userId: string;
-    // followerId: User;
+    followerId: User;
     followingId: User;
     createdAt: string;
     isFollowing: boolean;
     __v: number;
+    //followerId: any;
 };
 
 interface FollowerItemProps {
@@ -123,8 +124,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                         <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
                             <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                         </LinearGradient>
-                    </View>
-                    <Text style={styles.name}>{'Name'}</Text>
+                    </View>                    
+                    <Text style={styles.name}>{follower.followerId.firstname}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
                     {follower.isFollowing &&

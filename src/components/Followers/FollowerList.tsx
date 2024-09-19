@@ -22,7 +22,7 @@ type FollowerType = {
     _id: string;
     userId: string;
     // followerId: User;
-    followingId: User;
+    followingId: Partial<User>;
     createdAt: string;
     isFollowing: boolean;
     __v: number;

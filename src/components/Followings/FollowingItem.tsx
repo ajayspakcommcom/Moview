@@ -27,7 +27,7 @@ type User = {
 type FollowingType = {
     _id: string;
     userId: string;
-    // followingId: User;
+    followingId: User;
     followerId: User;
     createdAt: string;
     __v: number;
@@ -95,8 +95,7 @@ const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
 
 
     return (
-        <>
-            <Text style={{ color: '#fff' }}>{JSON.stringify(following)}</Text>
+        <>            
             <View style={styles.mainWrapper}>
                 <View style={styles.container}>
                     <View style={styles.user}>
@@ -104,12 +103,19 @@ const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
                             <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                         </LinearGradient>
                     </View>
-                    <Text style={styles.name}>{following.followerId?.firstname}</Text>
+                    <Text style={styles.name}>{following.followingId.firstname}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
-                    <Pressable style={styles.button} onPress={unFollowHandler.bind(this, following.followerId._id)}>
+                    
+                    {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, following.followerId._id)}>
                         <Text style={styles.text}>Unfollow</Text>
+                    </Pressable> */}
+
+
+                    <Pressable style={styles.button}>
+                        <Text style={styles.text}>Pending</Text>
                     </Pressable>
+                    
                 </View>
             </View>
         </>

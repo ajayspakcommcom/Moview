@@ -78,14 +78,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     };
 
     const unFollowHandler = async (id: string) => {
-        const followerId = id;
-        const userId = userDetail._id; //logged in user id
-
-        console.log('');
-        console.log('');
-
-        console.log('followerId', followerId);
-        console.log('userId', userId);
+        const  userId = id;
+        const followerId = userDetail._id; //logged in user id
 
         try {
             const response = await fetch(`${API_URL}unfollow`, {
@@ -102,12 +96,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
             const result = await response.json();
             if (result.status === 'success') {
                 appCounter();
-                console.log('');
-                console.log('');
-                console.log('');
-                console.log('');
-                console.log('ajay');
-                //Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
+                Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
             } else {
                 //
             }

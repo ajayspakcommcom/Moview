@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, Text, Button } from 'react-native';
+import { FlatList, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import MyShowReviewItem from './MyShowReviewItem';
 import { Review } from '../../models/Review';
 import { API_URL } from '../../configure/config.android';
@@ -9,6 +9,7 @@ import { UserItem } from '../../types/User';
 import { MovieReviewResponse, ShowReviewResponse } from '../../models/MyReview';
 import Fonts from '../../styles/Fonts';
 import MyMoviewReviewItem from './MyMoviewReviewItem';
+import { hitSlops } from '../../utils/Common';
 
 
 interface ListProps {
@@ -24,6 +25,8 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
     const { user, counter, appCounter} = useAuth();
     const abortController = new AbortController();
     const signal = abortController.signal;
+
+    const [activeTab, setActiveTab] = React.useState('movies');
 
     const [showReviewData, setShowReviewData] = React.useState<ShowReviewResponse[]>([]);
     const [movieReviewData, setMovieReviewData] = React.useState<MovieReviewResponse[]>([]);
@@ -66,6 +69,10 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
         }
     };
 
+     const handleTabClick = (tabName: string) => {
+        setActiveTab(tabName);
+    };
+
     React.useLayoutEffect(() => {
 
         if (userItem) {
@@ -78,58 +85,80 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
     }, [userItem, counter]);
 
     return (
-        <>             
-            {showReviewData.length > 0 &&
-                <>
-                    <View style={styles.headingWrapper}>
-                        <Text style={styles.heading}>Show Review</Text>                        
-                    </View>
-                    <FlatList
-                        style={styles.container}
-                        data={showReviewData}
-                        renderItem={({ item }) => <MyShowReviewItem item={item} isUser={isUser} />}
-                        keyExtractor={showKeyExtractor}
-                    />
-                </>
-            }
-            
-            {movieReviewData.length > 0 &&
-                <>
-                    <View style={styles.headingWrapper}>
-                        <Text style={styles.heading}>Movie Review</Text>                        
-                    </View>
+        <> 
+
+
+            <View style={styles.castReviewBtnWrapper}>
+                <TouchableOpacity hitSlop={hitSlops()} onPress={handleTabClick.bind(null, 'movies')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'movies' && styles.crTextActive]}>Movies</Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleTabClick.bind(null, 'shows')}>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'shows' && styles.crTextActive]}>Shows</Text></View>
+                </TouchableOpacity>               
+            </View>
+
+            {activeTab === 'movies' && 
+                <>                   
+                {movieReviewData.length > 0 && 
                     <FlatList
                         style={styles.container}
                         data={movieReviewData}
                         renderItem={({ item }) => <MyMoviewReviewItem item={item} isUser={isUser} />}
                         keyExtractor={moviewKeyExtractor}
                     />
+                }
                 </>
             }
-            {
+
+            {activeTab === 'shows' &&
+                <>
+                {showReviewData.length > 0 && 
+                    <FlatList
+                        style={styles.container}
+                        data={showReviewData}
+                        renderItem={({ item }) => <MyShowReviewItem item={item} isUser={isUser} />}
+                        keyExtractor={showKeyExtractor}
+                    />
+                }
+                </>
+            }
+            
+                    
+
+
+            {/* This section is commented out as per instructions */}
+            {/* 
                 movieReviewData.length === 0 && showReviewData.length === 0 &&
                 <View style={styles.noReviewWrapper}>
                     <Text style={styles.reviewText}>No Review found</Text>
                 </View>
-            }
+            */}
             
         </>
     );
 };
 
-const styles = StyleSheet.create({
-    headingWrapper: {
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between',
-        marginHorizontal:15,        
+const styles = StyleSheet.create({    
+    castReviewBtnWrapper: {
+        paddingHorizontal: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginBottom: 10,
     },
-    heading: {
-        fontFamily:Fonts.Family.Bold,
-        fontSize:Fonts.Size.Medium,
-        color:Colors.whiteColor,
-        marginHorizontal:15,
-        marginVertical:10
+    castReviewText: {
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 50
+    },
+     crText: {
+        fontSize: Fonts.Size.Medium,
+        color: Colors.tabBgColor,
+        fontWeight: '500'
+    },
+
+    crTextActive: {
+        color: Colors.whiteColor,
     },
     container: {
         flex: 1,

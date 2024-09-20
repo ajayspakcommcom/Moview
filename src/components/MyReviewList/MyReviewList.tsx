@@ -124,15 +124,11 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
             }
             
                     
-
-
-            {/* This section is commented out as per instructions */}
-            {/* 
-                movieReviewData.length === 0 && showReviewData.length === 0 &&
+            {  movieReviewData.length === 0 && showReviewData.length === 0 &&
                 <View style={styles.noReviewWrapper}>
                     <Text style={styles.reviewText}>No Review found</Text>
                 </View>
-            */}
+            }
             
         </>
     );

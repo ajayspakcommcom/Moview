@@ -9,6 +9,7 @@ import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
+import FastImage from 'react-native-fast-image';
 
 const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertDialog'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
@@ -290,11 +291,28 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
                 <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
             </View>
+
+            <View style={styles.logoWrapper}>
+                <FastImage
+                        style={styles.logoImg}
+                        source={require('../../assets/images/small-logo.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+            </View>
+            
+
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
+    logoWrapper: {
+        alignItems: 'center'
+    },
+    logoImg: {        
+        width: 80,
+        height: 35
+    },
     container: {
         flex: 1,
     },

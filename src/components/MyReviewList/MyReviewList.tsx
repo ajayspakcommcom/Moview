@@ -1,11 +1,14 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, Text } from 'react-native';
-import ReviewItem from './MyReviewItem';
+import { FlatList, StyleSheet, View, Text, Button } from 'react-native';
+import MyShowReviewItem from './MyShowReviewItem';
 import { Review } from '../../models/Review';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
+import { MovieReviewResponse, ShowReviewResponse } from '../../models/MyReview';
+import Fonts from '../../styles/Fonts';
+import MyMoviewReviewItem from './MyMoviewReviewItem';
 
 
 interface ListProps {
@@ -13,43 +16,18 @@ interface ListProps {
     isUser?: boolean;      
 }
 
-const keyExtractor = (item: Review) => item._id;
+const showKeyExtractor = (item: ShowReviewResponse) => item._id;
+const moviewKeyExtractor = (item: MovieReviewResponse) => item._id;
 
 const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
 
-    const { user, counter} = useAuth();
+    const { user, counter, appCounter} = useAuth();
     const abortController = new AbortController();
     const signal = abortController.signal;
-    const [reviewData, setReviewData] = React.useState<Review[]>([]);
 
-    // const getReviewListByUser = async () => {
+    const [showReviewData, setShowReviewData] = React.useState<ShowReviewResponse[]>([]);
+    const [movieReviewData, setMovieReviewData] = React.useState<MovieReviewResponse[]>([]);
 
-    //     const url = `${API_URL}review/user/${userItem?._id}`;
-    //     const token = user;
-
-    //     try {
-    //         const response = await fetch(url, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Authorization': `Bearer ${token?.token}`,
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             signal: signal
-    //         });
-
-    //         const result = await response.json();
-
-    //         if (result.status === 'success') {
-    //             setReviewData(result.data.reviews);
-    //         }
-    //     } catch (error) {
-    //         if (error instanceof Error) {
-    //             if (error.name === 'AbortError') {
-    //                 //
-    //             }
-    //         }
-    //     }
-    // };
 
     const getReviewListByUser = async () => {
 
@@ -63,14 +41,6 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
 
         try {
 
-            const response = await fetch(movieUrl, {
-                method: 'GET',
-                headers: {
-                    ...headers
-                },
-                signal: signal
-            });
-
             const [movieResponse, showResponse] = await Promise.all([
                 fetch(movieUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
                 fetch(showUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
@@ -79,10 +49,13 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
             const movieData = await movieResponse.json();
             const showData = await showResponse.json();
 
-            if (movieData.status === 'success' && showData.status === 'success') {
-                setReviewData([...movieData.data.reviews, ...showData.data.reviews]);
+            if (movieData.status === 'success') { 
+                setMovieReviewData(movieData.data.reviews);
             }
 
+            if (showData.status === 'success') { 
+                setShowReviewData(showData.data.reviews);
+            }
 
         } catch (error) {
             if (error instanceof Error) {
@@ -105,29 +78,65 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
     }, [userItem, counter]);
 
     return (
-        <>
-            <Text>{ counter }</Text>
-            {reviewData.length > 0 &&
-                <FlatList
-                    style={styles.container}
-                    data={reviewData}
-                    renderItem={({ item }) => <ReviewItem item={item} isUser={isUser} />}
-                    keyExtractor={keyExtractor}
-                />
+        <>             
+            {showReviewData.length > 0 &&
+                <>
+                    <View style={styles.headingWrapper}>
+                        <Text style={styles.heading}>Show Review</Text>                        
+                    </View>
+                    <FlatList
+                        style={styles.container}
+                        data={showReviewData}
+                        renderItem={({ item }) => <MyShowReviewItem item={item} isUser={isUser} />}
+                        keyExtractor={showKeyExtractor}
+                    />
+                </>
             }
-
             {
-                reviewData.length === 0 &&
+                showReviewData.length === 0 &&
                 <View style={styles.noReviewWrapper}>
                     <Text style={styles.reviewText}>No Review found</Text>
                 </View>
             }
 
+            {movieReviewData.length > 0 &&
+                <>
+                    <View style={styles.headingWrapper}>
+                        <Text style={styles.heading}>Movie Review</Text>                        
+                    </View>
+                    <FlatList
+                        style={styles.container}
+                        data={movieReviewData}
+                        renderItem={({ item }) => <MyMoviewReviewItem item={item} isUser={isUser} />}
+                        keyExtractor={moviewKeyExtractor}
+                    />
+                </>
+            }
+            {
+                movieReviewData.length === 0 &&
+                <View style={styles.noReviewWrapper}>
+                    <Text style={styles.reviewText}>No Review found</Text>
+                </View>
+            }
+            
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    headingWrapper: {
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        marginHorizontal:15,        
+    },
+    heading: {
+        fontFamily:Fonts.Family.Bold,
+        fontSize:Fonts.Size.Medium,
+        color:Colors.whiteColor,
+        marginHorizontal:15,
+        marginVertical:10
+    },
     container: {
         flex: 1,
         paddingHorizontal: 20

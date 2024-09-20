@@ -43,7 +43,7 @@ type FollowerType = {
 
 const Follower: React.FC<Props> = ({ navigation, route }) => {
 
-    const { user, userDetail } = useAuth();
+    const { user, userDetail, counter } = useAuth();
     const [followerData, setFollowerData] = React.useState<FollowerType[]>([]);
 
     const abortController = new AbortController();
@@ -104,7 +104,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 
         }
 
-    }, []);
+    }, [counter]);
 
 
 

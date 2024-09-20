@@ -81,6 +81,9 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         const followerId = id;
         const userId = userDetail._id; //logged in user id
 
+        console.log('');
+        console.log('');
+
         console.log('followerId', followerId);
         console.log('userId', userId);
 
@@ -98,7 +101,13 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
             });
             const result = await response.json();
             if (result.status === 'success') {
-                Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
+                appCounter();
+                console.log('');
+                console.log('');
+                console.log('');
+                console.log('');
+                console.log('ajay');
+                //Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
             } else {
                 //
             }
@@ -110,8 +119,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
 
     return (
-        <>
-            <Text>{JSON.stringify(follower.followerId)}</Text>
+        <>            
             <View style={styles.mainWrapper}>
                 <View style={styles.container}>
                     <View style={styles.user}>

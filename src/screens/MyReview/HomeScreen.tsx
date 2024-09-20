@@ -6,7 +6,7 @@ const MyReviewList = React.lazy(() => import('../../components/MyReviewList/MyRe
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
-
+    
 };
 
 const HomeScreen: React.FC<Props> = () => {

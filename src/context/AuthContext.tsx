@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [responseError, setResponseError] = useState<ResponseError | null>(null);
     const [userDetail, setUserDetail] = useState<any>(null);
-    const [counter, setCounter] = useState<any>(null);
+    const [counter, setCounter] = useState<any>(0);
 
 
     useLayoutEffect(() => {
@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const appCounter = () => {
-        setCounter(counter + 1);
+        setCounter(counter + 1);        
     };
 
     const logout = async () => {

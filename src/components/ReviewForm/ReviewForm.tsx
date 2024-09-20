@@ -52,7 +52,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
             }
 
             try {
-                setLoader(true);
+                setLoader(true);                
                 const response = await fetch(`${API_URL}review`, {
                     method: 'POST',
                     headers: {
@@ -96,7 +96,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                                 setComment('');
                                 setRating(0);
                                 if (onPress) {
-                                    onPress('reviews');
+                                    onPress('reviews');     
                                     appCounter();
                                 }
                             }
@@ -124,7 +124,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     };
 
     return (
-        <>
+        <>            
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating

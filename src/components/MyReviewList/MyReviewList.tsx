@@ -7,16 +7,17 @@ import { useAuth } from '../../context/AuthContext';
 import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
 
+
 interface ListProps {
     userItem?: UserItem;
-    isUser?: boolean;    
+    isUser?: boolean;      
 }
 
 const keyExtractor = (item: Review) => item._id;
 
 const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
 
-    const { user, counter } = useAuth();
+    const { user, counter} = useAuth();
     const abortController = new AbortController();
     const signal = abortController.signal;
     const [reviewData, setReviewData] = React.useState<Review[]>([]);
@@ -101,11 +102,11 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
         return () => {
             abortController.abort();
         };
-    }, [userItem]);
+    }, [userItem, counter]);
 
     return (
         <>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{counter}</Text>
+            <Text>{ counter }</Text>
             {reviewData.length > 0 &&
                 <FlatList
                     style={styles.container}

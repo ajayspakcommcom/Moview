@@ -25,7 +25,7 @@ const HomeScreen: React.FC<Props> = () => {
         <>
             <View style={styles.container}>
                 <React.Suspense fallback={<Loading />}>
-                    <MyReviewList userItem={userDetail} isUser={false} />
+                    <MyReviewList userItem={userDetail} isUser={false}  />
                 </React.Suspense>
             </View>
         </>

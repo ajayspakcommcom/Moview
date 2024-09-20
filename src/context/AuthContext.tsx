@@ -81,6 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const logout = async () => {
+        setCounter(0);
         setUser(null);
     };
 

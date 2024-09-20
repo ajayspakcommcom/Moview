@@ -15,7 +15,7 @@ interface ItemProps {
 
 const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
 
-    const { userDetail, user } = useAuth();
+    const { userDetail, user, appCounter } = useAuth();
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
@@ -105,6 +105,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                                 setRating(0);
                                 if (onPress) {
                                     onPress('reviews');
+                                    appCounter();
                                 }
                             }
                         },

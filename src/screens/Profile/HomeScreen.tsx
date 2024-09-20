@@ -188,7 +188,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         return () => {
             abortController.abort();
         }
-    }, [counter, route]);
+    }, [counter, route, navigation]);
 
     const editHandler = () => {
         setIsEditMode(true);

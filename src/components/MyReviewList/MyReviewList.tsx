@@ -94,8 +94,6 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('userItem', userItem);
-
         if (userItem) {
             getReviewListByUser();
         }
@@ -108,7 +106,7 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
     return (
         <>
 
-
+            <Text>{JSON.stringify(reviewData.length)}</Text>
 
             {reviewData.length > 0 &&
                 <FlatList

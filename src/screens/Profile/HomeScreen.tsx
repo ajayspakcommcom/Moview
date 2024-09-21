@@ -78,7 +78,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const result = await response.json();
-            
+
             setFollowData((prevState) => ({
                      ...prevState,
                      following: 0       
@@ -251,11 +251,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                 </View>
                             </Pressable>
 
-                            
-
                         </View>
-
-                        <Button onPress={getFollowingCount}>{counter}</Button>
 
                         <View style={styles.myMoviesWrapper}>
                             <View style={styles.hr}></View>
@@ -291,7 +287,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     <AntDesign name={'logout'} style={styles.footerIcon} />
                                     <Text style={styles.footerText}>Test</Text>
                                 </Pressable> */}
-
 
                             </View>
                         </View>

@@ -81,28 +81,36 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         const  userId = id;
         const followerId = userDetail._id; //logged in user id
 
-        try {
-            const response = await fetch(`${API_URL}unfollow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userId,
-                    "followerId": followerId,
-                }),
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                appCounter();
-                Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
-            } else {
-                //
-            }
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
-        }
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+
+        console.log('userId', userId);
+        console.log('followerId', followerId);
+
+        // try {
+        //     const response = await fetch(`${API_URL}unfollow`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer ${user?.token}`,
+        //         },
+        //         body: JSON.stringify({
+        //             "userId": userId,
+        //             "followerId": followerId,
+        //         }),
+        //     });
+        //     const result = await response.json();
+        //     if (result.status === 'success') {
+        //         appCounter();
+        //         Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
+        //     } else {
+        //         //
+        //     }
+        // } catch (error) {
+        //     Alert.alert(`Error: ${error}`);
+        // }
 
     };
 
@@ -125,9 +133,9 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable> */}
                             
-                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
+                            <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
-                            </Pressable> */}
+                            </Pressable>
                         </>
                     }
 

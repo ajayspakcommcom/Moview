@@ -5,6 +5,7 @@ import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
+import Fonts from '../../styles/Fonts';
 
 
 type Props = {
@@ -49,8 +50,6 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         navigation.navigate('HomeScreen');
     };
 
-
-
     const getFollowingList = async () => {
 
         const url = `${API_URL}following/${userDetail._id}`;
@@ -67,6 +66,8 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
             });
 
             const respData = await response.json();
+
+            setFollowingData([]);
 
             if (respData.status === 'success') {
                 setFollowingData(respData.data);
@@ -110,7 +111,13 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 
     return (
         <>
-            <FollowingList following={followingData} />
+            {followingData.length > 0 && <FollowingList following={followingData} />}
+            {
+                followingData.length === 0 &&
+                <View style={styles.container}>
+                        <Text style={styles.text}>No data found</Text>
+                </View>
+            }            
         </>
     );
 };
@@ -118,8 +125,15 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
     },
-
+    text: {
+        fontSize: Fonts.Size.Medium,
+        fontFamily: Fonts.Family.Bold,
+        color: Colors.whiteColor,
+        textAlign: 'center',
+        marginTop: 20
+    }
 });
 
 export default React.memo(Following);

@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
-import { Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
 import FastImage from 'react-native-fast-image';
 
@@ -64,7 +64,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowingCount = async () => {
 
-
         const url = `${API_URL}following/${userDetail._id}`; // logged user id
         const token = user;
 
@@ -80,11 +79,17 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
             const result = await response.json();
             
+            setFollowData((prevState) => ({
+                     ...prevState,
+                     following: 0       
+                 }));
+
+            
             if (result.status === 'success') {
-                setFollowData((prevState) => ({
-                    ...prevState,
-                    following: result.data.length
-                }));
+                 setFollowData((prevState) => ({
+                     ...prevState,
+                     following: result.data.length    
+                 }));
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -182,8 +187,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('Ram...');
-
         getFollowerCount();
         getFollowingCount();
         getReviewListByUser();
@@ -204,6 +207,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.innerContainer}>
+
                 {
                     !isEditMode &&
                     <>
@@ -242,12 +246,16 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                             <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
                                 <View style={styles.following}>
-                                    <Text style={styles.follText}>{followData.following}</Text>
+                                    <Text style={styles.follText}>{followData.following}</Text>                                    
                                     <Text style={styles.follText}>Followings</Text>
                                 </View>
                             </Pressable>
 
+                            
+
                         </View>
+
+                        <Button onPress={getFollowingCount}>{counter}</Button>
 
                         <View style={styles.myMoviesWrapper}>
                             <View style={styles.hr}></View>
@@ -302,7 +310,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                     />
             </View>
             
-
         </ScrollView>
     );
 };

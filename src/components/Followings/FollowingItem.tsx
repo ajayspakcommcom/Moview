@@ -1,6 +1,6 @@
 // FollowerItem.tsx
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable, Alert } from 'react-native';
+import { View,  Image, StyleSheet, Pressable, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../../styles/Colors';
@@ -8,6 +8,7 @@ import CustomButton from '../Ui/CustomButton';
 import { useAuth } from '../../context/AuthContext';
 import Fonts from '../../styles/Fonts';
 import { API_URL } from '../../configure/config.android';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
 
 
 type User = {
@@ -38,64 +39,63 @@ interface FollowingItemProps {
 
 const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
 
-    const { user, userDetail, appCounter } = useAuth();
+    const { user, userDetail, appCounter, counter } = useAuth();
+    const [isDialog, setIsDialog] = React.useState(false);
+    const [userId, setUserId] = React.useState('');
 
-    // const userId = following.followerId._id;
-    // const followerId = userDetail._id;
+    const showDialog = async (id: string) => {
+        setIsDialog(true);
+        setUserId(id);        
+    };
 
-    const unFollowHandler = async (id: string) => {
+    const hideDialog = () => setIsDialog(false);
+
+
+    const unFollowHandler = async () => {
 
         const followerId = userDetail._id;
-        const userId = id;
+       
+        try {
+            const response = await fetch(`${API_URL}unfollow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token}`,
+                },
+                body: JSON.stringify({
+                    "userId": userId,
+                    "followerId": followerId, //logged in user id
+                }),
+            });
 
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('userId', userId);
-        console.log('followerId', followerId);
+            const respData = await response.json();
+            console.log('Result', respData);
 
+            if (respData.status === 'success') {
+                setIsDialog(false);  
+                appCounter();
+            } else {
 
-        // try {
-        //     const response = await fetch(`${API_URL}unfollow`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${user?.token}`,
-        //         },
-        //         body: JSON.stringify({
-        //             "userId": userId,
-        //             "followerId": followerId,
-        //         }),
-        //     });
+            }
 
-        //     const respData = await response.json();
-        //     console.log('Result', respData);
-
-        //     if (respData.status === 'success') {
-        //         Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
-        //     } else {
-
-        //     }
-
-        // } catch (error) {
-        //     Alert.alert(`Error: ${error}`);
-        // }
+        } catch (error) {
+            Alert.alert(`Error: ${error}`);
+        }
 
     };
 
     React.useLayoutEffect(() => {
 
-
-
         return () => {
 
         };
-    }, []);
+    }, [counter]);
 
 
     return (
-        <>            
+        <>  
+            
+           
             <View style={styles.mainWrapper}>
                 <View style={styles.container}>
                     <View style={styles.user}>
@@ -106,23 +106,36 @@ const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
                     <Text style={styles.name}>{following.followingId.firstname}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
-                    
-                    {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, following.followerId._id)}>
+                    {/*<Pressable style={styles.button} onPress={unFollowHandler.bind(this, following.followingId?._id)}>
                         <Text style={styles.text}>Unfollow</Text>
-                    </Pressable> */}
+                    </Pressable>*/}
 
-
-                    <Pressable style={styles.button}>
-                        <Text style={styles.text}>Pending</Text>
+                    <Pressable style={styles.button} onPress={showDialog.bind(this, following.followingId?._id)}>
+                        <Text style={styles.text}>Unfollow</Text>
                     </Pressable>
-                    
+
                 </View>
             </View>
+
+            <Portal>
+            <Dialog visible={isDialog} onDismiss={hideDialog}>
+                <Dialog.Title><Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text></Dialog.Title>
+                <Dialog.Actions>
+                    <Button onPress={hideDialog}>Cancel</Button>
+                    <Button onPress={unFollowHandler}>Ok</Button>
+                </Dialog.Actions>
+            </Dialog>
+            </Portal>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    dialogueHeading: {
+        fontSize:Fonts.Size.Medium,
+        fontFamily: Fonts.Family.Bold,
+        lineHeight: 20
+    },
     button: {
         display: 'flex',
         paddingVertical: 10,

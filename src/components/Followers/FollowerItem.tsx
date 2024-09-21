@@ -125,17 +125,24 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable> */}
                             
-                            <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
+                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
-                            </Pressable>
+                            </Pressable> */}
                         </>
                     }
 
-                    {!follower.isFollowing &&
+                    {/* {!follower.isFollowing &&
                         <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followingId._id)}>
                             <Text style={styles.text}>Follow</Text>
                         </Pressable>
+                    } */}
+
+                    {!follower.isFollowing &&
+                        <Pressable style={styles.button}>
+                            <Text style={styles.text}>Follow</Text>
+                        </Pressable>
                     }
+
                 </View>
             </View>
 

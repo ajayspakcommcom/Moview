@@ -182,6 +182,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log('Ram...');
+
         getFollowerCount();
         getFollowingCount();
         getReviewListByUser();

@@ -166,7 +166,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
         return () => {
             abortController.abort();
         };
-    }, [userData]);
+    }, [userData, counter]);
 
     const followHandler = async () => {
 

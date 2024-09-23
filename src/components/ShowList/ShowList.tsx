@@ -34,7 +34,7 @@ const ShowList: React.FC<ShowListProps> = () => {
             if (user) {
                 try {
                     const resp = await fetchShows(user.token!, signal);
-                    console.log('Resp', resp);
+                    
                     setTimeout(() => {
                         setShowList(resp.data.shows);
                         setLoading(false);

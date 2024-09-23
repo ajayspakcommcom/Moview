@@ -100,8 +100,6 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         headerHandler();
         getFollowingList();
 
-        console.log('counter increamented', counter);
-
         return () => {
 
         }

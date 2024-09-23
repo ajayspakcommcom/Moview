@@ -51,7 +51,7 @@ const TestScreen = () => {
                 setUserProfile(respData.data);
             }
         } catch (error) {
-            console.log('Error', error);
+            
         }
     };
 

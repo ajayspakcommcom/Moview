@@ -47,9 +47,6 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         const followerId = id;
         const userId = userDetail._id;
 
-        console.log('followerId', followerId);
-        console.log('userId', userId);
-
         // try {
         //     const response = await fetch(`${API_URL}follow`, {
         //         method: 'POST',
@@ -80,14 +77,6 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     const unFollowHandler = async (id: string) => {
         const  userId = id;
         const followerId = userDetail._id; //logged in user id
-
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-
-        console.log('userId', userId);
-        console.log('followerId', followerId);
 
         // try {
         //     const response = await fetch(`${API_URL}unfollow`, {

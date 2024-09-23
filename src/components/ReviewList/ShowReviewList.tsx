@@ -24,7 +24,6 @@ const ShowReviewList: React.FC<ListProps> = ({ showItem, userItem }) => {
 
     React.useLayoutEffect(() => {
 
-        console.log('showItem', showItem);
 
         const getReviewListByShow = async () => {
 
@@ -43,7 +42,6 @@ const ShowReviewList: React.FC<ListProps> = ({ showItem, userItem }) => {
 
                 const result = await response.json();
 
-                console.log('Result', result);
 
                 if (result.status === 'success') {
                     setReviewData(result.data.reviews);

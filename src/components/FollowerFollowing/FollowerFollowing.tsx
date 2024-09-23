@@ -114,8 +114,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
             const respData = await response.json();
 
-            console.log('respData...', respData);
-
             if (respData.status === 'success') {
                 if (respData.isFollowing === 1) {
                     setIsFollowing(true);

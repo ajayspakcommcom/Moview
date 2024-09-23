@@ -69,7 +69,7 @@ const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
             });
 
             const respData = await response.json();
-            console.log('Result', respData);
+            
 
             if (respData.status === 'success') {
                 setIsDialog(false);  

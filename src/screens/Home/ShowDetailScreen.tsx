@@ -57,7 +57,7 @@ const ShowDetailScreen: React.FC = () => {
             });
 
             const result = await response.json();
-            console.log('result', result)
+            
 
             if (result.status === 'success') {
                 setRating(+result.data.toFixed(1))
@@ -109,7 +109,6 @@ const ShowDetailScreen: React.FC = () => {
 
             const result = await response.json();
 
-            console.log('Result', result);
 
             if (result.status === 'success') {
                 setReviewData(result.data.reviews);

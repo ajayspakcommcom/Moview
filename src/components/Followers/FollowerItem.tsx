@@ -176,7 +176,11 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
             <Portal>
             <Dialog visible={isDialog} onDismiss={hideDialog}>
-                <Dialog.Title><Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text></Dialog.Title>
+                
+                    <Dialog.Title>
+                        {follower.isFollowing &&<Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text>}
+                        {!follower.isFollowing &&<Text style={styles.dialogueHeading}>Are you sure you want to follow this user?</Text>}
+                    </Dialog.Title>
                 <Dialog.Actions>
                     <Button onPress={hideDialog}>Cancel</Button>                     
                     {follower.isFollowing && <Button onPress={unFollowHandler}>Ok</Button>}

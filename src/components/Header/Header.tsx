@@ -102,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
                     <Pressable hitSlop={hitSlops()} onPress={notificationHandler} style={styles.notificationBtn}>
                         <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
-                        <Text style={styles.notificationText}>{countNotification}</Text>
+                        {countNotification > 0 && <Text style={styles.notificationText}>{countNotification}</Text>}
                     </Pressable>
                 </View>
             </View>

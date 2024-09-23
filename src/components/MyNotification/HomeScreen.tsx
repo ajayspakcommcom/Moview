@@ -137,7 +137,10 @@ const MyNotification: React.FC<Props> = () => {
         <>
             <View style={[styles.item]}>
 
-                <View style={styles.type}><Text style={styles.typeText}>M</Text></View>
+                <View style={styles.type}>
+                    {item.type.trim().toLowerCase() === 'movie' && <Text style={styles.typeText}>M</Text>}
+                    {item.type.trim().toLowerCase() === 'show' && <Text style={styles.typeText}>S</Text>}
+                </View>
 
                 <View style={styles.userIcon} onLayout={onLayout}>
                     <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
@@ -201,8 +204,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         flexDirection: 'row',
         marginBottom: 15,
-        backgroundColor: Colors.reviewBgColor,
-        //backgroundColor: '#921A40',
+        backgroundColor: Colors.reviewBgColor,        
         alignItems: 'center',
         borderRadius: 5,
     },

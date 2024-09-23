@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/Notification';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type Props = {
 
@@ -68,10 +69,11 @@ const movieList: MovieItem[] = [
 
 const MyNotification: React.FC<Props> = () => {
 
-    const { user, userDetail, counter } = useAuth();
+    const { user, userDetail, counter, appCounter } = useAuth();
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
+    
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -96,6 +98,7 @@ const MyNotification: React.FC<Props> = () => {
             if (result.status === 'success') {
                 setData(result.data.notification);
             }
+
         } catch (error) {
             if (error instanceof Error) {
                 if (error.name === 'AbortError') {
@@ -117,7 +120,7 @@ const MyNotification: React.FC<Props> = () => {
         return () => {
             abortController.abort();
         };
-    }, []);
+    }, [counter]);
 
     const onRefresh = () => {
         setTimeout(() => {
@@ -133,13 +136,53 @@ const MyNotification: React.FC<Props> = () => {
         //const { width } = event.nativeEvent.layout;
     };
 
+    const onClose = async (id: string) => {
+
+        const url = `${API_URL}notification/${id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                console.log('success');
+                appCounter();
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+                    
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+
+    }
+
     const renderItem = ({ item }: { item: Notification }) => (
         <>
             <View style={[styles.item]}>
 
-                <View style={styles.type}>
+                {/* <View style={styles.type}>
                     {item.type.trim().toLowerCase() === 'movie' && <Text style={styles.typeText}>M</Text>}
                     {item.type.trim().toLowerCase() === 'show' && <Text style={styles.typeText}>S</Text>}
+                </View> */}
+
+                <View style={styles.actionWrapper}>
+                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item._id)}  />
                 </View>
 
                 <View style={styles.userIcon} onLayout={onLayout}>
@@ -180,6 +223,16 @@ const styles = StyleSheet.create({
     flatListWrapper: {
         paddingTop: 15,
         padding: 20,
+    },
+    actionWrapper: {        
+        width: 30,
+        height: 30,        
+        position: 'absolute',
+        top: 1,
+        right: 1,
+        zIndex: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     type: {
         backgroundColor: Colors.tabActiveColor,

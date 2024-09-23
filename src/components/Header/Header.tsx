@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
+import { useAuth } from '../../context/AuthContext';
+import { API_URL } from '../../configure/config.android';
+import { Notification } from '../../types/Notification';
 
 interface HeaderProps {
     message?: string;
@@ -14,7 +17,45 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }) => {
 
+    const { userDetail, user, appCounter, counter } = useAuth();
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
+    const [countNotification, setCountNotification] = React.useState<number>(0);
+    
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const getNotificationCount = async () => {
+
+        const url = `${API_URL}notification/follower/${userDetail._id}`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setCountNotification(result.data.notification.length);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.name === 'AbortError') {
+
+                } else {
+
+                }
+            } else {
+
+            }
+        }
+    };
 
     const handlePress = (item: string) => {
         setSelectedItem(item);
@@ -29,11 +70,13 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
 
     React.useLayoutEffect(() => {
 
+        getNotificationCount();
+
         return () => {
+            abortController.abort();
+        };
 
-        }
-
-    }, []);
+    }, [counter]);
 
     return (
         <>
@@ -57,8 +100,9 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
                     </Pressable>
                 </View>
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
-                    <Pressable hitSlop={hitSlops()} onPress={notificationHandler}>
+                    <Pressable hitSlop={hitSlops()} onPress={notificationHandler} style={styles.notificationBtn}>
                         <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
+                        <Text style={styles.notificationText}>{countNotification}</Text>
                     </Pressable>
                 </View>
             </View>
@@ -97,6 +141,22 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         flex: 1,
+        position: 'relative'
+    },
+    notificationBtn: {        
+        position: 'relative'
+    },
+    notificationText: {
+        position: 'absolute',
+        bottom: 15,
+        left: 12,        
+        width: 20,
+        height: 20,
+        borderRadius: 50,
+        textAlign: 'center',
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Bold,
+        fontSize: Fonts.Size.X_Small
     },
     logo: {
         color: Colors.whiteColor,

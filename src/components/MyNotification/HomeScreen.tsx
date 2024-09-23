@@ -137,6 +137,8 @@ const MyNotification: React.FC<Props> = () => {
         <>
             <View style={[styles.item]}>
 
+                <View style={styles.type}><Text style={styles.typeText}>M</Text></View>
+
                 <View style={styles.userIcon} onLayout={onLayout}>
                     <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                 </View>
@@ -176,12 +178,31 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         padding: 20,
     },
-    item: {
+    type: {
+        backgroundColor: Colors.tabActiveColor,
+        width: 25,
+        height: 25,
+        borderRadius: 50,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        zIndex: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    typeText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Light,
+        fontSize: Fonts.Size.Small,
+        textTransform: 'uppercase'
+    },
+    item: {        
         width: '100%',
         position: 'relative',
         flexDirection: 'row',
         marginBottom: 15,
         backgroundColor: Colors.reviewBgColor,
+        //backgroundColor: '#921A40',
         alignItems: 'center',
         borderRadius: 5,
     },

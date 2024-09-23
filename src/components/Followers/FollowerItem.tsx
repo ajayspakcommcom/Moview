@@ -8,6 +8,7 @@ import CustomButton from '../Ui/CustomButton';
 import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
+import { Button, Dialog, Portal } from 'react-native-paper';
 
 
 type User = {
@@ -43,9 +44,23 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     const { userDetail, user, appCounter } = useAuth();
 
+    const [isDialog, setIsDialog] = React.useState(false);
+    const [userId, setUserId] = React.useState('');
+
+    const showDialog = async (id: string) => {
+        setIsDialog(true);
+        setUserId(id);        
+    };
+
+    const hideDialog = () => setIsDialog(false);
+
     const followHandler = async (id: string) => {
         const followerId = id;
-        const userId = userDetail._id;
+        const userId = userDetail._id; //logged in user id
+
+        console.log('followerId', followerId);
+        console.log('userId', userId);
+
 
         // try {
         //     const response = await fetch(`${API_URL}follow`, {
@@ -74,32 +89,32 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     };
 
-    const unFollowHandler = async (id: string) => {
-        const  userId = id;
+    const unFollowHandler = async () => {
+        
         const followerId = userDetail._id; //logged in user id
 
-        // try {
-        //     const response = await fetch(`${API_URL}unfollow`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${user?.token}`,
-        //         },
-        //         body: JSON.stringify({
-        //             "userId": userId,
-        //             "followerId": followerId,
-        //         }),
-        //     });
-        //     const result = await response.json();
-        //     if (result.status === 'success') {
-        //         appCounter();
-        //         Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK' }]);
-        //     } else {
-        //         //
-        //     }
-        // } catch (error) {
-        //     Alert.alert(`Error: ${error}`);
-        // }
+        try {
+            const response = await fetch(`${API_URL}unfollow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token}`,
+                },
+                body: JSON.stringify({
+                    "userId": userId,
+                    "followerId": followerId,
+                }),
+            });
+            const result = await response.json();
+            if (result.status === 'success') {
+                appCounter();
+                setIsDialog(false);  
+            } else {
+                
+            }
+        } catch (error) {
+            Alert.alert(`Error: ${error}`);
+        }
 
     };
 
@@ -122,9 +137,14 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable> */}
                             
-                            <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
+                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
+                                <Text style={styles.text}>Unfollow</Text>
+                            </Pressable> */}
+                        
+                             <Pressable style={styles.button} onPress={showDialog.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable>
+
                         </>
                     }
 
@@ -143,11 +163,26 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                 </View>
             </View>
 
+            <Portal>
+            <Dialog visible={isDialog} onDismiss={hideDialog}>
+                <Dialog.Title><Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text></Dialog.Title>
+                <Dialog.Actions>
+                    <Button onPress={hideDialog}>Cancel</Button>                     
+                    <Button onPress={unFollowHandler}>Ok</Button>
+                </Dialog.Actions>
+            </Dialog>
+            </Portal>
+
         </>
     );
 };
 
 const styles = StyleSheet.create({
+     dialogueHeading: {
+        fontSize:Fonts.Size.Medium,
+        fontFamily: Fonts.Family.Bold,
+        lineHeight: 20
+    },
     button: {
         display: 'flex',
         paddingVertical: 10,

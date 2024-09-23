@@ -47,45 +47,56 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     const [isDialog, setIsDialog] = React.useState(false);
     const [userId, setUserId] = React.useState('');
 
-    const showDialog = async (id: string) => {
+    const showUnfollowDialog = async (id: string) => {
         setIsDialog(true);
         setUserId(id);        
     };
 
+    const showFollowDialog = async (id: string) => {
+        setIsDialog(true); 
+        setUserId(id); 
+    };
+
     const hideDialog = () => setIsDialog(false);
 
-    const followHandler = async (id: string) => {
-        const followerId = id;
-        const userId = userDetail._id; //logged in user id
+    const followHandler = async () => {
+        
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
 
-        console.log('followerId', followerId);
         console.log('userId', userId);
+        console.log('followerId', userDetail._id);
 
+        const followerId = userDetail._id;
+        
 
-        // try {
-        //     const response = await fetch(`${API_URL}follow`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${user?.token}`,
-        //         },
-        //         body: JSON.stringify({
-        //             "userId": userId,
-        //             "followerId": followerId,
-        //         }),
-        //     });
+        try {
+            const response = await fetch(`${API_URL}follow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token}`,
+                },
+                body: JSON.stringify({
+                    "userId": userId,
+                    "followerId": followerId,
+                }),
+            });
 
-        //     const result = await response.json();
+            const result = await response.json();
 
-        //     if (result.status === 'success') {
-        //         Alert.alert('Successfully', 'Thank you for following.', [{ text: 'OK', onPress: () => appCounter() }]);
-        //     } else {
-        //         //
-        //     }
+            if (result.status === 'success') {
+                 appCounter();
+                setIsDialog(false);  
+            } else {
+                //
+            }
 
-        // } catch (error) {
-        //     Alert.alert(`Error: ${error}`);
-        // }
+        } catch (error) {
+            Alert.alert(`Error: ${error}`);
+        }
 
     };
 
@@ -141,7 +152,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable> */}
                         
-                             <Pressable style={styles.button} onPress={showDialog.bind(this, follower.followerId._id)}>
+                             <Pressable style={styles.button} onPress={showUnfollowDialog.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable>
 
@@ -149,13 +160,13 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                     }
 
                     {/* {!follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followingId._id)}>
+                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followingId?._id)}>
                             <Text style={styles.text}>Follow</Text>
                         </Pressable>
                     } */}
 
-                    {!follower.isFollowing &&
-                        <Pressable style={styles.button}>
+                   {!follower.isFollowing &&
+                        <Pressable style={styles.button} onPress={showFollowDialog.bind(this, follower.followerId?._id)}>
                             <Text style={styles.text}>Follow</Text>
                         </Pressable>
                     }
@@ -168,7 +179,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                 <Dialog.Title><Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text></Dialog.Title>
                 <Dialog.Actions>
                     <Button onPress={hideDialog}>Cancel</Button>                     
-                    <Button onPress={unFollowHandler}>Ok</Button>
+                    {follower.isFollowing && <Button onPress={unFollowHandler}>Ok</Button>}
+                    {!follower.isFollowing && <Button onPress={followHandler}>Ok</Button>}
                 </Dialog.Actions>
             </Dialog>
             </Portal>

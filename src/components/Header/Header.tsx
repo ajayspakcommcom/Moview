@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
             abortController.abort();
         };
 
-    }, [counter]);
+    }, [navigation, counter]);
 
     return (
         <>

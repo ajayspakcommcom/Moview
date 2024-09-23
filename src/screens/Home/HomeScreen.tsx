@@ -26,7 +26,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         return () => {
 
         };
-    }, []);
+    }, [navigation]);
 
     const handlePress = () => {
 

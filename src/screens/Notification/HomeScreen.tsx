@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
+import { useAuth } from '../../context/AuthContext';
 
 const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -12,13 +13,15 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ navigation }) => {
 
+     const { counter } = useAuth();
+
     const backButtonHandler = () => {
         navigation.goBack();
     };
 
     const loadHeaderContent = () => {
         navigation.setOptions({
-            title: ``,
+            title: `Notification`,
             headerLeft: () => {
                 return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
             }
@@ -32,7 +35,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         return () => {
 
         };
-    }, [navigation]);
+    }, [navigation, counter]);
 
 
     return (

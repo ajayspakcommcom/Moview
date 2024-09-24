@@ -12,82 +12,47 @@ import MyMoviewReviewItem from './MyMoviewReviewItem';
 import { hitSlops } from '../../utils/Common';
 
 
+
+
 interface ListProps {
     userItem?: UserItem;
     isUser?: boolean;      
+    movies: MovieReviewResponse[];
+    shows: ShowReviewResponse[];
 }
 
 const showKeyExtractor = (item: ShowReviewResponse) => item._id;
 const moviewKeyExtractor = (item: MovieReviewResponse) => item._id;
 
-const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true }) => {
-
-    const { user, counter, appCounter} = useAuth();
-    const abortController = new AbortController();
-    const signal = abortController.signal;
+const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true, movies, shows }) => {
 
     const [activeTab, setActiveTab] = React.useState('movies');
-
     const [showReviewData, setShowReviewData] = React.useState<ShowReviewResponse[]>([]);
     const [movieReviewData, setMovieReviewData] = React.useState<MovieReviewResponse[]>([]);
 
 
     const getReviewListByUser = async () => {
-
-        const movieUrl = `${API_URL}review/user/${userItem?._id}`;
-        const showUrl = `${API_URL}review-show/user/${userItem?._id}`;
-        const token = user;
-        const headers = {
-            'Authorization': `Bearer ${token?.token}`,
-            'Content-Type': 'application/json'
-        }
-
-        try {
-
-            const [movieResponse, showResponse] = await Promise.all([
-                fetch(movieUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
-                fetch(showUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
-            ]);
-
-            const movieData = await movieResponse.json();
-            const showData = await showResponse.json();
-
-            if (movieData.status === 'success') { 
-                setMovieReviewData(movieData.data.reviews);
-            }
-
-            if (showData.status === 'success') { 
-                setShowReviewData(showData.data.reviews);
-            }
-
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-                    //
-                }
-            }
-        }
+        setMovieReviewData(movies);
+        setShowReviewData(shows);
     };
 
      const handleTabClick = (tabName: string) => {
         setActiveTab(tabName);
     };
 
+    
+
     React.useLayoutEffect(() => {
 
-        if (userItem) {
-            getReviewListByUser();
-        }
+        getReviewListByUser();
 
         return () => {
-            abortController.abort();
+            
         };
-    }, [userItem, counter]);
+    }, []);
 
     return (
-        <> 
-
-
+        <>                
             <View style={styles.castReviewBtnWrapper}>
                 <TouchableOpacity hitSlop={hitSlops()} onPress={handleTabClick.bind(null, 'movies')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'movies' && styles.crTextActive]}>Movies</Text></View>

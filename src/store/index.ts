@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import counterReducer from './slices/counterSlice';
-
+import myMovieReviewReducer from './slices/myMovieReviewSlice';
+import myShowReviewReducer from './slices/myShowReviewSlice';
 
 const store = configureStore({
     reducer: {
-        counter: counterReducer
+        counter: counterReducer,
+        myMovieReview: myMovieReviewReducer,
+        myShowReview: myShowReviewReducer,
     },
 });
 

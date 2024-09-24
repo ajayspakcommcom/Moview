@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
-import Counter from '../../components/Counter/Counter';
+
 
 
 const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
@@ -44,8 +44,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         <View style={styles.container}>
             <React.Suspense fallback={<Loading />}>
                 <MyNotification />
-            </React.Suspense>  
-            <Counter />
+            </React.Suspense>              
         </View>
     );
 };

@@ -1,13 +1,17 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
-
-
+import { useFocusEffect } from '@react-navigation/native';
 
 const MyNotification = React.lazy(() => import('../../components/MyNotification/HomeScreen'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
+
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { fetchNotificationsByUserId } from '../../store/slices/notificationSlice';
+import { API_URL } from '../../configure/config.android';
 
 type Props = {
     navigation: any;
@@ -15,7 +19,11 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ navigation }) => {
 
-     const { counter } = useAuth();
+    const { user, userDetail} = useAuth();
+    const { data: notificationData } = useSelector((state: RootState) => state.notification);
+    const dispatch = useAppDispatch();
+    
+    
 
     const backButtonHandler = () => {
         navigation.goBack();
@@ -30,21 +38,29 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         });
     };
 
-    React.useLayoutEffect(() => {
+    const getNotificationData = () => {        
+            loadHeaderContent();
 
-        loadHeaderContent();
+            const url = `${API_URL}notification/follower/${userDetail._id}`;            
+            dispatch(fetchNotificationsByUserId({ url: url, token: user?.token! }));
+    }
 
-        return () => {
+    useFocusEffect(
+        React.useCallback(() => {
+            
+            getNotificationData();
 
-        };
-    }, [navigation, counter]);
+            return () => {            
+            };
+        }, []) 
+    );
 
 
     return (
-        <View style={styles.container}>
-            <React.Suspense fallback={<Loading />}>
-                <MyNotification />
-            </React.Suspense>              
+        <View style={styles.container}>          
+            <React.Suspense fallback={<Loading />}>                
+                <MyNotification notificationData={notificationData} />
+            </React.Suspense>
         </View>
     );
 };

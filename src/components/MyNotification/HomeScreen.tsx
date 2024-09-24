@@ -10,7 +10,7 @@ import { Notification } from '../../types/Notification';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type Props = {
-
+    notificationData: Notification[];
 };
 
 const movieList: MovieItem[] = [
@@ -67,9 +67,9 @@ const movieList: MovieItem[] = [
     //}
 ];
 
-const MyNotification: React.FC<Props> = () => {
+const MyNotification: React.FC<Props> = ({notificationData}) => {
 
-    const { user, userDetail, counter, appCounter } = useAuth();
+    const { user, appCounter } = useAuth();
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
@@ -78,49 +78,16 @@ const MyNotification: React.FC<Props> = () => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    const getNotificationCount = async () => {
-
-        const url = `${API_URL}notification/follower/${userDetail._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                setData(result.data.notification);
-            }
-
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-        }
-    };
 
 
     React.useLayoutEffect(() => {
 
-        getNotificationCount();
+        setData(notificationData);
 
         return () => {
             abortController.abort();
         };
-    }, [counter]);
+    }, []);
 
     const onRefresh = () => {
         setTimeout(() => {
@@ -173,7 +140,7 @@ const MyNotification: React.FC<Props> = () => {
     }
 
     const renderItem = ({ item }: { item: Notification }) => (
-        <>
+        <>            
             <View style={[styles.item]}>
 
                 {/* <View style={styles.type}>

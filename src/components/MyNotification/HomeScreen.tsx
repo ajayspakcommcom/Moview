@@ -73,7 +73,7 @@ const MyNotification: React.FC<Props> = () => {
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
-    
+
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -152,7 +152,7 @@ const MyNotification: React.FC<Props> = () => {
             });
 
             const result = await response.json();
-            
+
             if (result.status === 'success') {
                 console.log('success');
                 appCounter();
@@ -161,7 +161,7 @@ const MyNotification: React.FC<Props> = () => {
         } catch (error) {
             if (error instanceof Error) {
                 if (error.name === 'AbortError') {
-                    
+
                 } else {
 
                 }
@@ -182,7 +182,7 @@ const MyNotification: React.FC<Props> = () => {
                 </View> */}
 
                 <View style={styles.actionWrapper}>
-                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item._id)}  />
+                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item._id)} />
                 </View>
 
                 <View style={styles.userIcon} onLayout={onLayout}>
@@ -224,9 +224,9 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         padding: 20,
     },
-    actionWrapper: {        
+    actionWrapper: {
         width: 30,
-        height: 30,        
+        height: 30,
         position: 'absolute',
         top: 1,
         right: 1,
@@ -252,12 +252,12 @@ const styles = StyleSheet.create({
         fontSize: Fonts.Size.Small,
         textTransform: 'uppercase'
     },
-    item: {        
+    item: {
         width: '100%',
         position: 'relative',
         flexDirection: 'row',
         marginBottom: 15,
-        backgroundColor: Colors.reviewBgColor,        
+        backgroundColor: Colors.reviewBgColor,
         alignItems: 'center',
         borderRadius: 5,
     },

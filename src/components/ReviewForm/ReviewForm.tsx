@@ -82,7 +82,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                                 "user_id": userDetail._id,
                                 "title": userDetail.firstname,
                                 "message": comment,
-                                "type": "review"
+                                "type": "movie"
                             }),
                         });
                     } catch (error) {

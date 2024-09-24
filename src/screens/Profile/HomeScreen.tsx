@@ -302,8 +302,10 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                         style={styles.logoImg}
                         source={require('../../assets/images/small-logo.png')}
                         resizeMode={FastImage.resizeMode.contain}
-                    />
+                />                
             </View>
+
+
             
         </ScrollView>
     );

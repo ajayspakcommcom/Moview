@@ -47,9 +47,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            
             getNotificationData();
-
             return () => {            
             };
         }, []) 

@@ -81,7 +81,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                 if (result.status === 'success') {
 
                     try {
-                        const response = await fetch(`${API_URL}notification-show`, {
+                        const response = await fetch(`${API_URL}notification`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                                 "user_id": userDetail._id,
                                 "title": userDetail.firstname,
                                 "message": comment,
-                                "type": "review"
+                                "type": "show"
                             }),
                         });
                     } catch (error) {

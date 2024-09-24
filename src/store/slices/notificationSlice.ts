@@ -69,6 +69,7 @@ export const deleteNotification = createAsyncThunk('notification/deleteNotificat
     }); //Replace with your API endpoint
 
     const resp = await response.json();
+    console.log('deleteNotification.fulfilled', resp);
     return _id;
 });
 
@@ -113,12 +114,7 @@ const notificationSlice = createSlice({
                 }
             })
             .addCase(deleteNotification.fulfilled, (state, action) => {
-                console.log('');
-                console.log('');
-                console.log('');
-                console.log('');
                 state.data = state.data.filter(notification => notification._id !== action.payload);
-                console.log('deleteNotification.fulfilled', action.payload);
             });
     },
 });

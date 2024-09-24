@@ -59,12 +59,18 @@ export const updateNotification = createAsyncThunk('notification/updateNotificat
     return resp;
 });
 
-// export const deleteNotification = createAsyncThunk('reviews/deleteNotification', async (id) => {
-//     await fetch(`/api/reviews/${id}`, {
-//         method: 'DELETE',
-//     });
-//     return id;
-// });
+export const deleteNotification = createAsyncThunk('notification/deleteNotification', async ({ url, token, _id }: { url: string, token: string, _id: string }) => {
+    const response = await fetch(`${url}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    }); //Replace with your API endpoint
+
+    const resp = await response.json();
+    return _id;
+});
 
 
 const notificationSlice = createSlice({
@@ -106,9 +112,14 @@ const notificationSlice = createSlice({
                     state.data[index] = action.payload;
                 }
             })
-        // .addCase(deleteReview.fulfilled, (state, action) => {
-        //     state.reviews = state.reviews.filter(review => review._id !== action.payload);
-        // });
+            .addCase(deleteNotification.fulfilled, (state, action) => {
+                console.log('');
+                console.log('');
+                console.log('');
+                console.log('');
+                state.data = state.data.filter(notification => notification._id !== action.payload);
+                console.log('deleteNotification.fulfilled', action.payload);
+            });
     },
 });
 

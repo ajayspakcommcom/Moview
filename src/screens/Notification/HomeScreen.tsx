@@ -10,7 +10,7 @@ const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
-import { fetchNotificationsByUserId } from '../../store/slices/notificationSlice';
+import { fetchNotificationsByUserId, deleteNotification } from '../../store/slices/notificationSlice';
 import { API_URL } from '../../configure/config.android';
 
 type Props = {
@@ -23,6 +23,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
     const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const dispatch = useAppDispatch();
     
+    const url = `${API_URL}notification/follower/${userDetail._id}`;
     
 
     const backButtonHandler = () => {
@@ -40,9 +41,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
 
     const getNotificationData = () => {        
             loadHeaderContent();
-
-            const url = `${API_URL}notification/follower/${userDetail._id}`;            
             dispatch(fetchNotificationsByUserId({ url: url, token: user?.token! }));
+    }
+
+    const deleteNotificationHandler = (id: string) => {
+        dispatch(deleteNotification({ url: url, token: user?.token!, _id: id }));
+        getNotificationData();
     }
 
     useFocusEffect(
@@ -54,10 +58,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
     );
 
 
+
+
     return (
         <View style={styles.container}>          
             <React.Suspense fallback={<Loading />}>                
-                <MyNotification notificationData={notificationData} />
+                <MyNotification notificationData={notificationData} onClick={deleteNotificationHandler} />
             </React.Suspense>
         </View>
     );

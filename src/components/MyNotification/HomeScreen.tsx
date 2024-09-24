@@ -11,6 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type Props = {
     notificationData: Notification[];
+    onClick?: (id: string) => void;
 };
 
 const movieList: MovieItem[] = [
@@ -67,7 +68,7 @@ const movieList: MovieItem[] = [
     //}
 ];
 
-const MyNotification: React.FC<Props> = ({notificationData}) => {
+const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
     const { user, appCounter } = useAuth();
     const flatListRef = React.useRef<FlatList<any>>(null);
@@ -95,47 +96,44 @@ const MyNotification: React.FC<Props> = ({notificationData}) => {
         }, 2000);
     };
 
-    const navigateToDetails = (itemId: string) => {
-        //navigation.navigate('DetailScreen', { id: itemId });
-    };
 
-    const onLayout = (event: LayoutChangeEvent) => {
-        //const { width } = event.nativeEvent.layout;
-    };
 
-    const onClose = async (id: string) => {
+    const onClose = async (obj: any) => {
 
-        const url = `${API_URL}notification/${id}`;
-        const token = user;
+        console.log('onClose', obj);
+        onClick && onClick(obj._id);
 
-        try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
+        // const url = `${API_URL}notification/${id}`;
+        // const token = user;
 
-            const result = await response.json();
+        // try {
+        //     const response = await fetch(url, {
+        //         method: 'DELETE',
+        //         headers: {
+        //             'Authorization': `Bearer ${token?.token}`,
+        //             'Content-Type': 'application/json'
+        //         },
+        //         signal: signal
+        //     });
 
-            if (result.status === 'success') {
-                console.log('success');
-                appCounter();
-            }
+        //     const result = await response.json();
 
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
+        //     if (result.status === 'success') {
+        //         console.log('success');
+        //         appCounter();
+        //     }
 
-                } else {
+        // } catch (error) {
+        //     if (error instanceof Error) {
+        //         if (error.name === 'AbortError') {
 
-                }
-            } else {
+        //         } else {
 
-            }
-        }
+        //         }
+        //     } else {
+
+        //     }
+        // }
 
     }
 
@@ -143,16 +141,16 @@ const MyNotification: React.FC<Props> = ({notificationData}) => {
         <>            
             <View style={[styles.item]}>
 
-                {/* <View style={styles.type}>
+                {/*<View style={styles.type}>
                     {item.type.trim().toLowerCase() === 'movie' && <Text style={styles.typeText}>M</Text>}
                     {item.type.trim().toLowerCase() === 'show' && <Text style={styles.typeText}>S</Text>}
-                </View> */}
+                </View>*/}
 
                 <View style={styles.actionWrapper}>
-                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item._id)} />
+                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />
                 </View>
 
-                <View style={styles.userIcon} onLayout={onLayout}>
+                <View style={styles.userIcon}>
                     <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
                 </View>
 

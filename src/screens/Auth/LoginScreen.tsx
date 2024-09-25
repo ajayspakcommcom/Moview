@@ -10,6 +10,7 @@ import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 import { hitSlops } from '../../utils/Common';
 
+
 type Props = {
 
 };
@@ -17,12 +18,13 @@ type Props = {
 const LoginScreen: React.FC<Props> = () => {
 
     const { login, responseError } = useAuth();
-    const [username, setUsername] = React.useState('hariom@gmail.com'); //omkar@gmail.com // hariom@gmail.com
+    const [username, setUsername] = React.useState('omkar@gmail.com'); //omkar@gmail.com // hariom@gmail.com
     const [password, setPassword] = React.useState('12345'); //12345
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
+    
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
@@ -41,6 +43,7 @@ const LoginScreen: React.FC<Props> = () => {
             }
             await login(username, password);
             setLoader(false);
+
         } catch (error) {
             console.error('Login error:', error);
             Alert.alert('Error', 'Login failed. Please try again.');

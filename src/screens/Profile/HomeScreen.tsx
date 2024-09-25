@@ -17,6 +17,10 @@ const UserProfileForm = React.lazy(() => import('../../components/UserProfileFor
 
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
+import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
 
 type Props = {
     navigation: any;
@@ -35,7 +39,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
 
     const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);    
-    const { data: showReviews} = useSelector((state: RootState) => state.myShowReview);  
+    const { data: showReviews } = useSelector((state: RootState) => state.myShowReview);  
+    const dispatch = useAppDispatch();
 
     const signOutDialog = () => {
         logout();
@@ -147,20 +152,39 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const getReviewListByUser = async () => {
+
+        const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
+        const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
+
+        dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
+        dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
+
         setMoviesReviewed((moviewReviews.length + showReviews.length));
     };
 
 
-    React.useLayoutEffect(() => {
+    // React.useLayoutEffect(() => {
 
-        getFollowerCount();
-        getFollowingCount();
-        getReviewListByUser();
+    //     getFollowerCount();
+    //     getFollowingCount();
+    //     getReviewListByUser();
 
-        return () => {
-            abortController.abort();
-        }
-    }, [showReviews, moviewReviews]);
+    //     return () => {
+    //         abortController.abort();
+    //     }
+    // }, [showReviews, moviewReviews]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+
+            getFollowerCount();
+            getFollowingCount();
+            getReviewListByUser();
+
+            return () => {            
+            };
+        }, [moviewReviews, showReviews]) 
+    );
 
     const editHandler = () => {
         setIsEditMode(true);

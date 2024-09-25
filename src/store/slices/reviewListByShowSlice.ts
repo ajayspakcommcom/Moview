@@ -2,19 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Review } from '../../models/Review';
 
 
-interface ReviewListByMovieState {
+interface ReviewListByShowState {
     data: Review[]; //Adjust type as necessary
     loading: boolean;
     error: string | null;
 }
 
-const initialState: ReviewListByMovieState = {
+const initialState: ReviewListByShowState = {
     data: [],
     loading: false,
     error: null,
 };
 
-export const fetchReviewListByMovie = createAsyncThunk('reviewListByMovie/fetchReviewListByMovie', async ({ url, token }: { url: string, token: string }) => {
+export const fetchReviewListByShow = createAsyncThunk('reviewListByShow/fetchReviewListByShow', async ({ url, token }: { url: string, token: string }) => {
 
     const response = await fetch(`${url}`, {
         method: 'GET',
@@ -30,20 +30,20 @@ export const fetchReviewListByMovie = createAsyncThunk('reviewListByMovie/fetchR
 
 
 
-const reviewListByMoviewSlice = createSlice({
-    name: 'reviewListByMovie',
+const reviewListByShowSlice = createSlice({
+    name: 'reviewListByShow',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchReviewListByMovie.pending, (state) => {
+            .addCase(fetchReviewListByShow.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(fetchReviewListByMovie.fulfilled, (state, action) => {
+            .addCase(fetchReviewListByShow.fulfilled, (state, action) => {
                 state.loading = false;
                 state.data = action.payload;
             })
-            .addCase(fetchReviewListByMovie.rejected, (state, action) => {
+            .addCase(fetchReviewListByShow.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
             })
@@ -51,4 +51,4 @@ const reviewListByMoviewSlice = createSlice({
 });
 
 
-export default reviewListByMoviewSlice.reducer;
+export default reviewListByShowSlice.reducer;

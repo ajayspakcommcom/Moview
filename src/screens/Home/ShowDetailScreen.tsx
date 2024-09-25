@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
@@ -21,6 +21,10 @@ const ShowReviewList = React.lazy(() => import('../../components/ReviewList/Show
 const ShowReviewForm = React.lazy(() => import('../../components/ReviewForm/ShowReviewForm'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { fetchReviewListByShow } from '../../store/slices/reviewListByShowSlice';
+
 interface ListItem {
     id: string;
     name: string;
@@ -37,6 +41,9 @@ const ShowDetailScreen: React.FC = () => {
     const [rating, setRating] = React.useState(0);
 
     const [reviewData, setReviewData] = React.useState<Review[]>([]);
+
+     const { data: reviewListByShow } = useSelector((state: RootState) => state.reviewListByShow);   
+    const dispatch = useAppDispatch();
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -93,39 +100,16 @@ const ShowDetailScreen: React.FC = () => {
     };
 
     const getReviewListByShow = async () => {
-
-        const url = `${API_URL}review-show/show/${route.params.showItem._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-
-
-            if (result.status === 'success') {
-                setReviewData(result.data.reviews);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-            throw error; // Re-throw the error to be handled by the caller if necessary
-        }
+        dispatch(fetchReviewListByShow({ url: `${API_URL}review-show/show/${route.params.showItem._id}`, token: user?.token! }));   
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getReviewListByShow();
+            return () => {            
+            };
+        }, []) 
+    );
 
     React.useLayoutEffect(() => {
         setDetailData(prevState => ({
@@ -144,7 +128,7 @@ const ShowDetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
-        getReviewListByShow();
+        //getReviewListByShow();
 
         return () => {
             abortController.abort();
@@ -243,21 +227,22 @@ const ShowDetailScreen: React.FC = () => {
                     </React.Suspense>
                 }
 
+
                 {activeTab === 'reviews' &&
                     <>
 
-                        {reviewData.length > 0 &&
+                        {reviewListByShow.length > 0 &&
                             <FlatList
                                 ListHeaderComponent={() => (
                                     headerContent()
                                 )}
-                                data={reviewData}
+                                data={reviewListByShow}
                                 renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} /></View>}
                                 keyExtractor={(item) => item._id}
                             />
                         }
 
-                        {reviewData.length === 0 &&
+                        {reviewListByShow.length === 0 &&
                             <View style={styles.noReviewWrapper}>
                                 {headerContent()}
                                 <Text style={styles.reviewText}>No Review found</Text>

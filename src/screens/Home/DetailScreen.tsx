@@ -38,8 +38,6 @@ const DetailScreen: React.FC = () => {
     const [activeTab, setActiveTab] = React.useState('reviews');
     const [rating, setRating] = React.useState(0);
 
-    const [reviewData, setReviewData] = React.useState<Review[]>([]);
-
     const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);   
     const dispatch = useAppDispatch();
 

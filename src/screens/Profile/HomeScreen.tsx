@@ -16,6 +16,7 @@ const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton')
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
 
 import { useSelector } from 'react-redux';
+
 import { RootState, useAppDispatch } from '../../store/index';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -155,24 +156,11 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
         const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
         const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
-
         dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
         dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
-
         setMoviesReviewed((moviewReviews.length + showReviews.length));
     };
 
-
-    // React.useLayoutEffect(() => {
-
-    //     getFollowerCount();
-    //     getFollowingCount();
-    //     getReviewListByUser();
-
-    //     return () => {
-    //         abortController.abort();
-    //     }
-    // }, [showReviews, moviewReviews]);
 
     useFocusEffect(
         React.useCallback(() => {

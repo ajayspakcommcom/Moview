@@ -7,6 +7,9 @@ import CustomButton from '../Ui/CustomButton';
 import { MovieItem } from '../../types/Movie';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { createReview } from '../../store/slices/myMovieReviewSlice';
 
 interface ItemProps {
     movieItem: MovieItem,
@@ -21,6 +24,9 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
 
+    const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);  
+    const dispatch = useAppDispatch();
+    
     React.useLayoutEffect(() => {
 
         return () => {
@@ -39,87 +45,90 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
     const onSaveHandler = async () => {
 
-        try {
+        //console.log('onSaveHandler', { url: `${API_URL}review`, moview: movieItem._id, user: userDetail._id, rating: rating, comment: comment });
 
-            if (rating === 0) {
-                Alert.alert('Error', 'Please give a rate.');
-                return;
-            }
+        dispatch(createReview({ url: `${API_URL}review`, token: user?.token!, movieId: movieItem._id, userId: userDetail._id, rating, comment }));       
 
-            if (comment.trim() === '') {
-                Alert.alert('Error', 'Please provide a review.');
-                return;
-            }
+        // try {
+        //     if (rating === 0) {
+        //         Alert.alert('Error', 'Please give a rate.');
+        //         return;
+        //     }
 
-            try {
-                setLoader(true);                
-                const response = await fetch(`${API_URL}review`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user?.token}`,
-                    },
-                    body: JSON.stringify({
-                        "movie": movieItem._id,
-                        "user": userDetail._id,
-                        "rating": rating,
-                        "review_text": comment,
-                    }),
-                });
+        //     if (comment.trim() === '') {
+        //         Alert.alert('Error', 'Please provide a review.');
+        //         return;
+        //     }
 
-                const result = await response.json();
+        //     try {
+        //         setLoader(true);                
+        //         const response = await fetch(`${API_URL}review`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'Authorization': `Bearer ${user?.token}`,
+        //             },
+        //             body: JSON.stringify({
+        //                 "movie": movieItem._id,
+        //                 "user": userDetail._id,
+        //                 "rating": rating,
+        //                 "review_text": comment,
+        //             }),
+        //         });
 
-                if (result.status === 'success') {
+        //         const result = await response.json();
 
-                    try {
-                        const response = await fetch(`${API_URL}notification`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${user?.token}`,
-                            },
-                            body: JSON.stringify({
-                                "user_id": userDetail._id,
-                                "title": userDetail.firstname,
-                                "message": comment,
-                                "type": "movie"
-                            }),
-                        });
-                    } catch (error) {
-                        //
-                    }
+        //         if (result.status === 'success') {
 
-                    setLoader(false);
-                    Alert.alert('Review Successfully', 'Thank you for your review.', [
-                        {
-                            text: 'OK', onPress: () => {
-                                setComment('');
-                                setRating(0);
-                                if (onPress) {
-                                    onPress('reviews');     
-                                    appCounter();
-                                }
-                            }
-                        },
-                    ]);
-                } else {
-                    Alert.alert('Error', `${result.message}`, [
-                        { text: 'OK', onPress: () => { } }
-                    ]);
-                }
+        //             try {
+        //                 const response = await fetch(`${API_URL}notification`, {
+        //                     method: 'POST',
+        //                     headers: {
+        //                         'Content-Type': 'application/json',
+        //                         'Authorization': `Bearer ${user?.token}`,
+        //                     },
+        //                     body: JSON.stringify({
+        //                         "user_id": userDetail._id,
+        //                         "title": userDetail.firstname,
+        //                         "message": comment,
+        //                         "type": "movie"
+        //                     }),
+        //                 });
+        //             } catch (error) {
+        //                 //
+        //             }
 
-
-            } catch (error) {
-                console.error('Error submitting review:', error);
-                Alert.alert(`Error: ${error}`);
-                throw error;
-            }
+        //             setLoader(false);
+        //             Alert.alert('Review Successfully', 'Thank you for your review.', [
+        //                 {
+        //                     text: 'OK', onPress: () => {
+        //                         setComment('');
+        //                         setRating(0);
+        //                         if (onPress) {
+        //                             onPress('reviews');     
+        //                             appCounter();
+        //                         }
+        //                     }
+        //                 },
+        //             ]);
+        //         } else {
+        //             Alert.alert('Error', `${result.message}`, [
+        //                 { text: 'OK', onPress: () => { } }
+        //             ]);
+        //         }
 
 
-        } catch (error) {
-            console.error('error:', error);
-            Alert.alert('Error', 'Error');
-        }
+        //     } catch (error) {
+        //         console.error('Error submitting review:', error);
+        //         Alert.alert(`Error: ${error}`);
+        //         throw error;
+        //     }
+
+
+        // } catch (error) {
+        //     console.error('error:', error);
+        //     Alert.alert('Error', 'Error');
+        // }
 
     };
 

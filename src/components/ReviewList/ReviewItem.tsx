@@ -30,6 +30,8 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     React.useLayoutEffect(() => {
 
+        console.log('item', item);
+
         return () => {
 
         }

@@ -133,8 +133,7 @@ const DetailScreen: React.FC = () => {
     };
 
     const headerContent = () => {
-        return <>
-
+        return <>            
             <View style={styles.header}>
                 {detailData.poster_url &&
                     <FastImage
@@ -220,7 +219,7 @@ const DetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'reviews' &&
-                    <>
+                    <>                    
                         {reviewListByMovie.length > 0 &&
                             <FlatList
                                 ListHeaderComponent={() => (

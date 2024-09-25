@@ -26,7 +26,7 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
-    const { user, logout, userDetail, counter } = useAuth();
+    const { user, logout, userDetail } = useAuth();
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
@@ -160,7 +160,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         return () => {
             abortController.abort();
         }
-    }, [counter, route, navigation]);
+    }, [showReviews, moviewReviews]);
 
     const editHandler = () => {
         setIsEditMode(true);

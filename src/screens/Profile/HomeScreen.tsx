@@ -15,6 +15,9 @@ const AlertDialog = React.lazy(() => import('../../components/AlertDialog/AlertD
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
 
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+
 type Props = {
     navigation: any;
     route: any;
@@ -30,6 +33,9 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
     const cancelDialog = () => setDialogVisible(false);
     const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
+
+    const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);    
+    const { data: showReviews} = useSelector((state: RootState) => state.myShowReview);  
 
     const signOutDialog = () => {
         logout();
@@ -141,47 +147,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const getReviewListByUser = async () => {
-
-        const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
-        const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
-        const token = user;
-        const headers = {
-            'Authorization': `Bearer ${token?.token}`,
-            'Content-Type': 'application/json'
-        }
-
-        try {
-
-            const response = await fetch(movieUrl, {
-                method: 'GET',
-                headers: {
-                    ...headers
-                },
-                signal: signal
-            });
-
-            const [movieResponse, showResponse] = await Promise.all([
-                fetch(movieUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
-                fetch(showUrl, { method: 'GET', headers: { ...headers }, signal: signal }),
-            ]);
-
-            const movieData = await movieResponse.json();
-            const showData = await showResponse.json();
-
-            if (movieData.status === 'success' && showData.status === 'success') {
-                const movieCount = movieData.data.reviews.length;
-                const showCount = showData.data.reviews.length;
-                setMoviesReviewed((movieCount + showCount));
-            }
-
-
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-                    //
-                }
-            }
-        }
+        setMoviesReviewed((moviewReviews.length + showReviews.length));
     };
 
 

@@ -26,12 +26,8 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     const dispatch = useAppDispatch();
      
       useFocusEffect(
-        React.useCallback(() => {
-            const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
-            const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
-
-            dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
-            dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
+          React.useCallback(() => {
+            // this function called when user on the current screen
             return () => {            
             };
         }, []) 

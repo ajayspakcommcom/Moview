@@ -19,7 +19,6 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
-const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
 const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 

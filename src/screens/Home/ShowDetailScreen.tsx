@@ -40,9 +40,7 @@ const ShowDetailScreen: React.FC = () => {
     const [activeTab, setActiveTab] = React.useState('synopsis');
     const [rating, setRating] = React.useState(0);
 
-    const [reviewData, setReviewData] = React.useState<Review[]>([]);
-
-     const { data: reviewListByShow } = useSelector((state: RootState) => state.reviewListByShow);   
+    const { data: reviewListByShow } = useSelector((state: RootState) => state.reviewListByShow);   
     const dispatch = useAppDispatch();
 
     const abortController = new AbortController();

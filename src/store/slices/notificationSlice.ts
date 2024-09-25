@@ -60,6 +60,7 @@ export const updateNotification = createAsyncThunk('notification/updateNotificat
 });
 
 export const deleteNotification = createAsyncThunk('notification/deleteNotification', async ({ url, token, _id }: { url: string, token: string, _id: string }) => {
+    console.log('deleteNotification...', { url, token, _id });
     const response = await fetch(`${url}`, {
         method: 'DELETE',
         headers: {
@@ -69,8 +70,7 @@ export const deleteNotification = createAsyncThunk('notification/deleteNotificat
     }); //Replace with your API endpoint
 
     const resp = await response.json();
-    console.log('deleteNotification.fulfilled', resp);
-    return _id;
+    return resp.data._id;
 });
 
 
@@ -107,12 +107,16 @@ const notificationSlice = createSlice({
             .addCase(createNotification.fulfilled, (state, action) => {
                 state.data.push(action.payload);
             })
+
+
             .addCase(updateNotification.fulfilled, (state, action) => {
                 const index = state.data.findIndex(notification => notification._id === action.payload._id);
                 if (index !== -1) {
                     state.data[index] = action.payload;
                 }
             })
+
+
             .addCase(deleteNotification.fulfilled, (state, action) => {
                 state.data = state.data.filter(notification => notification._id !== action.payload);
             });

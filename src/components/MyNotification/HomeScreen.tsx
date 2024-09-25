@@ -76,19 +76,15 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     const [data, setData] = React.useState<Notification[]>([]);
 
 
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-
 
     React.useLayoutEffect(() => {
 
         setData(notificationData);
 
         return () => {
-            abortController.abort();
+            
         };
-    }, []);
+    }, [notificationData]);
 
     const onRefresh = () => {
         setTimeout(() => {
@@ -99,42 +95,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
 
     const onClose = async (obj: any) => {
-
-        console.log('onClose', obj);
         onClick && onClick(obj._id);
-
-        // const url = `${API_URL}notification/${id}`;
-        // const token = user;
-
-        // try {
-        //     const response = await fetch(url, {
-        //         method: 'DELETE',
-        //         headers: {
-        //             'Authorization': `Bearer ${token?.token}`,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         signal: signal
-        //     });
-
-        //     const result = await response.json();
-
-        //     if (result.status === 'success') {
-        //         console.log('success');
-        //         appCounter();
-        //     }
-
-        // } catch (error) {
-        //     if (error instanceof Error) {
-        //         if (error.name === 'AbortError') {
-
-        //         } else {
-
-        //         }
-        //     } else {
-
-        //     }
-        // }
-
     }
 
     const renderItem = ({ item }: { item: Notification }) => (

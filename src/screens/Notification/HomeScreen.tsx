@@ -45,7 +45,13 @@ const Notification: React.FC<Props> = ({ navigation }) => {
     }
 
     const deleteNotificationHandler = (id: string) => {
-        dispatch(deleteNotification({ url: url, token: user?.token!, _id: id }));        
+        //console.log('deleteNotificationHandler', { url: url, token: user?.token!, _id: id });
+        dispatch(deleteNotification({ url: `${API_URL}notification/${id}`, token: user?.token!, _id: id })); 
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('notificationData', notificationData);
     }
 
     useFocusEffect(

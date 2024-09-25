@@ -7,7 +7,8 @@ import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
-import { Notification } from '../../types/Notification';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/index';
 
 interface HeaderProps {
     message?: string;
@@ -18,6 +19,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }) => {
 
     const { userDetail, user, appCounter, counter } = useAuth();
+    const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
     const [countNotification, setCountNotification] = React.useState<number>(0);
     
@@ -102,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
                     <Pressable hitSlop={hitSlops()} onPress={notificationHandler} style={styles.notificationBtn}>
                         <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
-                        {countNotification > 0 && <Text style={styles.notificationText}>{countNotification}</Text>}
+                        {notificationData.length > 0 && <Text style={styles.notificationText}>{notificationData.length}</Text>}
                     </Pressable>
                 </View>
             </View>

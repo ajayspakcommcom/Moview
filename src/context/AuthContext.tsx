@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode, useLayoutEffect } from 'react';
 import { API_URL } from '../configure/config.android';
 
+import { RootState, useAppDispatch } from '../store/index';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../store/slices/myMovieReviewSlice';
+import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../store/slices/myShowReviewSlice';
+
+
 interface User {
     username: string;
     password: string;
@@ -43,6 +50,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [responseError, setResponseError] = useState<ResponseError | null>(null);
     const [userDetail, setUserDetail] = useState<any>(null);
     const [counter, setCounter] = useState<any>(0);
+
+    const dispatch = useAppDispatch();
     
 
 
@@ -66,6 +75,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setUser({ username: result.userDetail.firstname, token: result.token } as User);
                 setResponseError(null);
                 setUserDetail(result.userDetail);
+
+                const movieUrl = `${API_URL}review/user/${result.userDetail?._id}`;
+                const showUrl = `${API_URL}review-show/user/${result.userDetail?._id}`;
+                dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: result.token }));
+                dispatch(fetchShowReviewsByUserId({ url: showUrl, token: result.token }));
+
             }
             else {
                 setResponseError({ message: result.message, status: result.status });

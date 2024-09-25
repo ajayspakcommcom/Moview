@@ -153,11 +153,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const getReviewListByUser = async () => {
-
-        const movieUrl = `${API_URL}review/user/${userDetail?._id}`;
-        const showUrl = `${API_URL}review-show/user/${userDetail?._id}`;
-        dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
-        dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
         setMoviesReviewed((moviewReviews.length + showReviews.length));
     };
 

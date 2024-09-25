@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
-import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
+import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
@@ -13,6 +13,10 @@ import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { Review } from '../../models/Review';
 import ReviewItem from '../../components/ReviewList/ReviewItem';
+
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewList = React.lazy(() => import('../../components/ReviewList/ReviewList'));
@@ -35,6 +39,9 @@ const DetailScreen: React.FC = () => {
     const [rating, setRating] = React.useState(0);
 
     const [reviewData, setReviewData] = React.useState<Review[]>([]);
+
+    const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);   
+    const dispatch = useAppDispatch();
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -90,40 +97,16 @@ const DetailScreen: React.FC = () => {
     };
 
     const getReviewListByMovie = async () => {
-
-        const url = `${API_URL}review/movie/${route.params.movie._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-
-
-            if (result.status === 'success') {
-                setReviewData(result.data.reviews);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-            throw error; // Re-throw the error to be handled by the caller if necessary
-        }
+        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/${route.params.movie._id}`, token: user?.token! }));       
     };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            getReviewListByMovie();
+            return () => {            
+            };
+        }, []) 
+    );
 
     React.useLayoutEffect(() => {
 
@@ -141,8 +124,7 @@ const DetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
-        getReviewListByMovie();
-
+        
         return () => {
             abortController.abort();
         };
@@ -242,27 +224,24 @@ const DetailScreen: React.FC = () => {
 
                 {activeTab === 'reviews' &&
                     <>
-                        {reviewData.length > 0 &&
+                        {reviewListByMovie.length > 0 &&
                             <FlatList
                                 ListHeaderComponent={() => (
                                     headerContent()
                                 )}
-                                data={reviewData}
+                                data={reviewListByMovie}
                                 renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
                                 keyExtractor={(item) => item._id}
                             />
                         }
 
-                        {reviewData.length === 0 &&
+                        {reviewListByMovie.length === 0 &&
                             <View style={styles.noReviewWrapper}>
                                 {headerContent()}
                                 <Text style={styles.reviewText}>No Review found</Text>
                             </View>
                         }
-
                     </>
-
-
                 }
 
                 {activeTab === 'writeReview' &&

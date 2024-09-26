@@ -33,26 +33,6 @@ export const fetchReviewsByUserId = createAsyncThunk('moviewReviews/fetchReviews
     return resp.data.reviews;
 });
 
-export const createReview = createAsyncThunk('moviewReviews/createReview', async ({ url, token, movieId, userId, rating, comment }: { url: string, token: string, movieId: string, userId: string, rating: number, comment: string }) => {
-
-    const response = await fetch(`${url}review`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            "movie": movieId,
-            "user": userId,
-            "rating": rating,
-            "review_text": comment
-        }),
-    });
-
-    const resp = await response.json();
-    return resp.data.notification;
-});
-
 export const updateReview = createAsyncThunk('moviewReviews/updateReview', async ({ id, review }: { id: string, review: Review }) => {
     const response = await fetch(`/api/reviews/${id}`, {
         method: 'PUT',
@@ -102,20 +82,6 @@ const myMovieReviewSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || null;
             })
-
-            .addCase(createReview.pending, (state) => {
-                state.loading = true;
-                console.log('createReview', state.data);
-            })
-            .addCase(createReview.fulfilled, (state, action) => {
-                state.loading = false;
-                state.data.push(action.payload);
-            })
-            .addCase(createReview.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message || null;
-            })
-
             .addCase(updateReview.fulfilled, (state, action) => {
                 const index = state.data.findIndex(review => review._id === action.payload._id);
                 if (index !== -1) {

@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
-import { createReview } from '../../store/slices/myMovieReviewSlice';
+import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 
 interface ItemProps {
     movieItem: MovieItem,
@@ -24,7 +24,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
 
-    const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);  
+    const { data: reviewListDataByMovie } = useSelector((state: RootState) => state.reviewListByMovie);  
     const dispatch = useAppDispatch();
     
     React.useLayoutEffect(() => {
@@ -45,9 +45,10 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
     const onSaveHandler = async () => {
 
+        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/66a2074a519ff3d289917c02`, token: user?.token! }));  
+        
         //console.log('onSaveHandler', { url: `${API_URL}review`, moview: movieItem._id, user: userDetail._id, rating: rating, comment: comment });
-
-        dispatch(createReview({ url: `${API_URL}review`, token: user?.token!, movieId: movieItem._id, userId: userDetail._id, rating, comment }));       
+        dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment }));       
 
         // try {
         //     if (rating === 0) {
@@ -77,6 +78,10 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         //         });
 
         //         const result = await response.json();
+        //         console.log('');
+        //         console.log('');
+        //         console.log('');
+        //         console.log('result', result);
 
         //         if (result.status === 'success') {
 
@@ -133,7 +138,9 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     };
 
     return (
-        <>            
+        <>   
+            <Text>{JSON.stringify(reviewListDataByMovie)}</Text>
+            <Text>{reviewListDataByMovie.length}</Text>
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating

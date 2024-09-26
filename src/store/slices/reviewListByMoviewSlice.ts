@@ -73,14 +73,11 @@ const reviewListByMoviewSlice = createSlice({
             })
             .addCase(createReviewListByMovie.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("createReview.fulfilled", action.payload);
-                console.log("state.data", state.data);
                 state.data = [...state.data, action.payload];
             })
             .addCase(createReviewListByMovie.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
-                console.log("createReview.rejected", action.error.message);
             })
     },
 });

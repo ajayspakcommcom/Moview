@@ -3,7 +3,7 @@ import { Review } from '../../models/Review';
 
 
 interface ReviewListByMovieState {
-    data: Review[]; //Adjust type as necessary
+    data: any[]; //Adjust type as necessary
     loading: boolean;
     error: string | null;
 }
@@ -25,43 +25,37 @@ export const fetchReviewListByMovie = createAsyncThunk('reviewListByMovie/fetchR
     });
 
     const resp = await response.json();
-    return resp.data.reviews;
+    return resp.data.reviews as any[];
 });
 
-export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/createReviewListByMovie', async ({ url, token, movie, user, rating, comment }: { url: string, token: string, movie: string, user: string, rating: number, comment: string }) => {
+export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/createReviewListByMovie', async ({ url, token, movie, user, rating, comment }: { url: string, token: string, movie: string, user: string, rating: number, comment: string }, { rejectWithValue }) => {
 
-    // const response = await fetch(`${url}review`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`,
-    //     },
-    //     body: JSON.stringify({
-    //         "movie": movie,
-    //         "user": user,
-    //         "rating": rating,
-    //         "review_text": comment
-    //     }),
-    // });
-
-    // const resp = await response.json();
-    // return resp.data.reviews as Review;
-
-    return {
-        "_id": "66f5228aa6642108d7ecd1ea",
-        "movie": "66a2074a519ff3d289917c02",
-        "user": {
-            "_id": "66a367ee470675a3aa79ccb3",
-            "firstname": "omkar"
+    const response = await fetch(`${url}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
-        "rating": 5,
-        "review_text": "api sujeet",
-        "is_deleted": false,
-        "created_at": "2024-09-26T08:59:54.961Z",
-        "__v": 0
-    }
+        body: JSON.stringify({
+            "movie": movie,
+            "user": user,
+            "rating": rating,
+            "review_text": comment
+        }),
+    });
 
-});
+    if (response.status === 200) {
+        console.log("response", response);
+        const resp = await response.json();
+        return resp.data.reviews as Review;
+    } else {
+        console.log("response", response);
+        const errorText = await response.text();
+        console.log('Response Error:', errorText);  // Log the error response
+        return rejectWithValue('Failed to create review: ' + errorText);
+    }
+}
+);
 
 
 
@@ -84,12 +78,12 @@ const reviewListByMoviewSlice = createSlice({
             })
             .addCase(createReviewListByMovie.pending, (state) => {
                 state.loading = true;
-                //console.log("movie list:", JSON.stringify(state.data, null, 2));
             })
             .addCase(createReviewListByMovie.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data.push(action.payload);
-                console.log("createReview.fulfilled");
+                console.log("createReview.fulfilled", action.payload);
+                console.log("state.data", state.data);
+                state.data = [...state.data, action.payload];
             })
             .addCase(createReviewListByMovie.rejected, (state, action) => {
                 state.loading = false;

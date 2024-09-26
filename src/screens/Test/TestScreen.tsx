@@ -1,76 +1,40 @@
 import React from 'react';
-import { View, StyleSheet, ListRenderItem, Image, Text, FlatList } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { View, StyleSheet } from 'react-native';
 import { API_URL } from '../../configure/config.android';
+import { Text } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
-const Tab = createMaterialTopTabNavigator();
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
+import { useAuth } from '../../context/AuthContext';
 
-interface Profile {
-    id: string;
-    name: string;
-    profilePicture: string;
-}
 
-interface UserProfile {
-    __v: number;
-    _id: string;
-    created_at: string;
-    deleted_at: string;
-    is_deleted: boolean;
-    name: string;
-    profilePicture: string;
-    updated_at: string;
-}
-
-const renderItem: ListRenderItem<UserProfile> = ({ item }) => (
-    <View style={styles.itemContainer}>
-        <Image source={{ uri: item.profilePicture }} style={styles.img} />
-        <Text style={styles.text}>{item.name}</Text>
-    </View>
-);
 
 const TestScreen = () => {
 
-    const [userProfile, setUserProfile] = React.useState<UserProfile[]>();
+    const { user } = useAuth();
 
-    const getTestData = async () => {
+     const { data: reviewListDataByMovie } = useSelector((state: RootState) => state.reviewListByMovie);  
+    const dispatch = useAppDispatch();
 
-        const url = `${API_URL}test`;
 
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+    const showConsole = (message: string) => {
 
-            const respData = await response.json();
+        //dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/66a2074a519ff3d289917c02`, token: user?.token! }));  
+        dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: '66a2074a519ff3d289917c02', user: '66a367ee470675a3aa79ccb3', rating: 5, comment: 'api sujeet' }));       
 
-            if (respData.status === 'success') {
-                setUserProfile(respData.data);
-            }
-        } catch (error) {
-            
-        }
+        console.log(message);
     };
 
-    React.useLayoutEffect(() => {
-
-        getTestData();
-
-        return () => {
-
-        }
+    React.useEffect(() => {
+        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/66a2074a519ff3d289917c02`, token: user?.token! }));  
     }, []);
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={userProfile}
-                renderItem={renderItem}
-                keyExtractor={item => item._id}
-            />
+            <Text style={{ color: 'white' }}>{JSON.stringify(reviewListDataByMovie)}</Text>
+           <Button onPress={() => showConsole('button pressed')}>Button</Button>
         </View>
     );
 };
@@ -79,34 +43,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#021526'
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical: 15,
-        alignItems: 'center'
-    },
-    img: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 15
-    },
-    text: {
-        color: '#fff',
-        fontWeight: '700'
-    },
-    buttonWrapper: {
-        marginTop: 15,
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    button: {
-        width: 150,
-        marginRight: 15,
-        marginBottom: 15
     }
-
 });
 
 export default TestScreen;

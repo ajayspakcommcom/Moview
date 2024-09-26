@@ -28,7 +28,7 @@ export const fetchReviewListByMovie = createAsyncThunk('reviewListByMovie/fetchR
     return resp.data.reviews as any[];
 });
 
-export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/createReviewListByMovie', async ({ url, token, movie, user, rating, comment }: { url: string, token: string, movie: string, user: string, rating: number, comment: string }, { rejectWithValue }) => {
+export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/createReviewListByMovie', async ({ url, token, movie, user, rating, comment }: { url: string, token: string, movie: string, user: string, rating: number, comment: string }) => {
 
     const response = await fetch(`${url}`, {
         method: 'POST',
@@ -44,16 +44,8 @@ export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/creat
         }),
     });
 
-    if (response.status === 200) {
-        console.log("response", response);
-        const resp = await response.json();
-        return resp.data.reviews as Review;
-    } else {
-        console.log("response", response);
-        const errorText = await response.text();
-        console.log('Response Error:', errorText);  // Log the error response
-        return rejectWithValue('Failed to create review: ' + errorText);
-    }
+    const resp = await response.json();
+    return resp.data.reviews as Review;
 }
 );
 

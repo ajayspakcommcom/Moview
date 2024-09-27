@@ -8,7 +8,9 @@ import { hitSlops } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/index';
+import { RootState, useAppDispatch } from '../../store/index';
+import { fetchNotificationsByUserId } from '../../store/slices/notificationSlice';
+
 
 interface HeaderProps {
     message?: string;
@@ -18,47 +20,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }) => {
 
-    const { userDetail, user, appCounter, counter } = useAuth();
+    const { userDetail, user } = useAuth();
     const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
-    const [countNotification, setCountNotification] = React.useState<number>(0);
+    const [notificationCount, setNotificationCount] = React.useState<number>(0);
+    const dispatch = useAppDispatch();
     
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    const getNotificationCount = async () => {
-
-        const url = `${API_URL}notification/follower/${userDetail._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                setCountNotification(result.data.notification.length);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-        }
-    };
-
     const handlePress = (item: string) => {
         setSelectedItem(item);
         if (onPressedHandler) {
@@ -70,15 +37,20 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
         navigation.navigate("Notification");
     };
 
+    const getNotificationCount = () => {
+        const notificationUrl = `${API_URL}notification/follower/${userDetail?._id}`;
+        dispatch(fetchNotificationsByUserId({ url: notificationUrl, token: user?.token! }));
+        const count = notificationData.filter((item: any) => item.user_id === userDetail?._id).length;
+        setNotificationCount(count);
+    };
+
+
+
     React.useLayoutEffect(() => {
-
-        getNotificationCount();
-
+       getNotificationCount();
         return () => {
-            abortController.abort();
         };
-
-    }, [navigation, counter]);
+    }, []);
 
     return (
         <>
@@ -104,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
                     <Pressable hitSlop={hitSlops()} onPress={notificationHandler} style={styles.notificationBtn}>
                         <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
-                        {notificationData && notificationData.length > 0 && <Text style={styles.notificationText}>{notificationData.length}</Text>}
+                        {notificationCount > 0 && <Text style={styles.notificationText}>{notificationCount}</Text>}                        
                     </Pressable>
                 </View>
             </View>

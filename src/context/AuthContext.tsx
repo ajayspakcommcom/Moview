@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode, useLayoutEffect } from 'react';
 import { API_URL } from '../configure/config.android';
 
-import { RootState, useAppDispatch } from '../store/index';
-import { useFocusEffect } from '@react-navigation/native';
+import { useAppDispatch } from '../store/index';
+
 
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../store/slices/myShowReviewSlice';
+
 
 
 interface User {
@@ -80,7 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 const showUrl = `${API_URL}review-show/user/${result.userDetail?._id}`;
                 dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: result.token }));
                 dispatch(fetchShowReviewsByUserId({ url: showUrl, token: result.token }));
-
+                
             }
             else {
                 setResponseError({ message: result.message, status: result.status });

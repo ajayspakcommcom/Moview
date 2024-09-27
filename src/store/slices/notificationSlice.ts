@@ -12,7 +12,7 @@ interface NotificationState {
 const initialState: NotificationState = {
     data: [],
     loading: false,
-    error: null,
+    error: null
 };
 
 export const fetchNotifications = createAsyncThunk('notification/fetchNotifications', async ({ url, token }: { url: string, token: string }) => {
@@ -30,6 +30,9 @@ export const fetchNotifications = createAsyncThunk('notification/fetchNotificati
 });
 
 export const fetchNotificationsByUserId = createAsyncThunk('notification/fetchNotificationsByUserId', async ({ url, token }: { url: string, token: string }) => {
+
+    console.log('Suresh');
+
     const response = await fetch(`${url}`, {
         method: 'GET',
         headers: {

@@ -67,7 +67,7 @@ export const deleteNotification = createAsyncThunk('notification/deleteNotificat
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
-    }); //Replace with your API endpoint
+    });
 
     const resp = await response.json();
     return resp.data._id;

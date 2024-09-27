@@ -25,7 +25,7 @@ export const fetchReviewListByMovie = createAsyncThunk('reviewListByMovie/fetchR
     });
 
     const resp = await response.json();
-    return resp.data.reviews as any[];
+    return resp.data.reviews as Review[];
 });
 
 export const createReviewListByMovie = createAsyncThunk('reviewListByMovie/createReviewListByMovie', async ({ url, token, movie, user, rating, comment }: { url: string, token: string, movie: string, user: string, rating: number, comment: string }) => {

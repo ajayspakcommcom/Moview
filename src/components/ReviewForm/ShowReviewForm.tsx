@@ -39,15 +39,6 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
 
     const onSaveHandler = async () => {
 
-        // console.log({
-        //     show: showItem._id,
-        //     user: userDetail._id,
-        //     rating: rating,
-        //     review_text: comment,
-        //     created_at: new Date().toISOString(), // Optional, if you want to manually add the date
-        //     is_deleted: false // Optional, defaults to false in your schema
-        // });
-
         try {
 
             if (rating === 0) {

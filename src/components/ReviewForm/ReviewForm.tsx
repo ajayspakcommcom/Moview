@@ -34,7 +34,6 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         onPress && onPress('reviews');
         setIsDialog(false);
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie' }));
-
     };
     
     React.useLayoutEffect(() => {

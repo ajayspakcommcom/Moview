@@ -7,6 +7,10 @@ import CustomButton from '../Ui/CustomButton';
 import { ShowItem } from '../../types/Show';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
+import { useAppDispatch } from '../../store';
+import { createReviewListByShow } from '../../store/slices/reviewListByShowSlice';
+import { createNotification } from '../../store/slices/notificationSlice';
+import { Button, Dialog, Portal } from 'react-native-paper';
 
 interface ItemProps {
     showItem: ShowItem,
@@ -20,6 +24,9 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
+    const [isDialog, setIsDialog] = React.useState(false);
+
+    const dispatch = useAppDispatch();
 
     React.useLayoutEffect(() => {
 
@@ -36,90 +43,20 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
         setComment(text);
     };
 
+    const hideDialog = () => {
+        onPress && onPress('reviews');
+        setIsDialog(false);
+        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show' }));
+    };
+
 
     const onSaveHandler = async () => {
-
-        try {
-
-            if (rating === 0) {
-                Alert.alert('Error', 'Please give a rate.');
-                return;
-            }
-
-            if (comment.trim() === '') {
-                Alert.alert('Error', 'Please provide a review.');
-                return;
-            }
-
-            try {
-                setLoader(true);
-                const response = await fetch(`${API_URL}review-show`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user?.token}`,
-                    },
-                    body: JSON.stringify({
-                        "show": showItem._id,
-                        "user": userDetail._id,
-                        "rating": rating,
-                        "review_text": comment,
-                    }),
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-
-                    try {
-                        const response = await fetch(`${API_URL}notification`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${user?.token}`,
-                            },
-                            body: JSON.stringify({
-                                "user_id": userDetail._id,
-                                "title": userDetail.firstname,
-                                "message": comment,
-                                "type": "show"
-                            }),
-                        });
-                    } catch (error) {
-                    }
-
-                    setLoader(false);
-                    Alert.alert('Review Successfully', 'Thank you for your review.', [
-                        {
-                            text: 'OK', onPress: () => {
-                                setComment('');
-                                setRating(0);
-                                if (onPress) {
-                                    onPress('reviews');
-                                    appCounter();
-                                }
-                            }
-                        },
-                    ]);
-                } else {
-                    Alert.alert('Error', `${result.message}`, [
-                        { text: 'OK', onPress: () => { } }
-                    ]);
-                }
-
-
-            } catch (error) {
-                console.error('Error submitting review:', error);
-                Alert.alert(`Error: ${error}`);
-                throw error;
-            }
-
-
-        } catch (error) {
-            console.error('error:', error);
-            Alert.alert('Error', 'Error');
+        const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
+        if (createdReview.meta.requestStatus === 'fulfilled') {         
+            setIsDialog(true);
+        } else {
+            Alert.alert('Error', 'Failed to create review.');
         }
-
     };
 
     return (
@@ -164,6 +101,18 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                     isDisabled={loader ? true : false}
                 />
             </View>
+
+            <Portal>
+            <Dialog visible={isDialog} onDismiss={hideDialog}>
+                    <Dialog.Title>
+                        <Text>Review created successfully</Text> 
+                    </Dialog.Title>
+                <Dialog.Actions>                    
+                    <Button onPress={hideDialog}>Ok</Button>                    
+                </Dialog.Actions>
+            </Dialog>
+            </Portal>
+
         </>
     );
 };

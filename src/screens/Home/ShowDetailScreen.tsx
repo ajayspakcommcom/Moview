@@ -228,7 +228,6 @@ const ShowDetailScreen: React.FC = () => {
 
                 {activeTab === 'reviews' &&
                     <>
-
                         {reviewListByShow.length > 0 &&
                             <FlatList
                                 ListHeaderComponent={() => (
@@ -246,8 +245,6 @@ const ShowDetailScreen: React.FC = () => {
                                 <Text style={styles.reviewText}>No Review found</Text>
                             </View>
                         }
-
-
                     </>
                 }
 
@@ -259,6 +256,7 @@ const ShowDetailScreen: React.FC = () => {
                         </ScrollView>
                     </React.Suspense>
                 }
+                
             </KeyboardAvoidingView>
         </>
     );

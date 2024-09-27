@@ -25,8 +25,31 @@ export const fetchReviewListByShow = createAsyncThunk('reviewListByShow/fetchRev
     }); //Replace with your API endpoint
 
     const resp = await response.json();
-    return resp.data.reviews;
+    console.log('resp', resp);
+    return resp.data.reviews as Review[];
 });
+
+export const createReviewListByShow = createAsyncThunk('reviewListByShow/createReviewListByShow', async ({ url, token, show, user, rating, comment }: { url: string, token: string, show: string, user: string, rating: number, comment: string }) => {
+
+    const response = await fetch(`${url}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            "show": show,
+            "user": user,
+            "rating": rating,
+            "review_text": comment
+        }),
+    });
+
+
+    const resp = await response.json();
+    return resp.data.reviews as Review;
+}
+);
 
 
 
@@ -44,6 +67,18 @@ const reviewListByShowSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchReviewListByShow.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || null;
+            })
+
+            .addCase(createReviewListByShow.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createReviewListByShow.fulfilled, (state, action) => {
+                state.loading = false;
+                state.data = [...state.data, action.payload];
+            })
+            .addCase(createReviewListByShow.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
             })

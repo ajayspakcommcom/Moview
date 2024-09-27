@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import { Button } from 'react-native-paper';
@@ -9,6 +9,10 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import { useAuth } from '../../context/AuthContext';
 import { fetchNotifications, createNotification } from '../../store/slices/notificationSlice';
+import { fetchReviewListByShow,createReviewListByShow } from '../../store/slices/reviewListByShowSlice';
+import Fonts from '../../styles/Fonts';
+import Colors from '../../styles/Colors';
+
 
 
 
@@ -16,25 +20,29 @@ const TestScreen = () => {
 
     const { user } = useAuth();
 
-     const { data: notificationData } = useSelector((state: RootState) => state.notification);  
+     const { data: reviewListByShow } = useSelector((state: RootState) => state.reviewListByShow);  
     const dispatch = useAppDispatch();
 
-    const showConsole = (message: string) => {
-        //dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: '66a2074a519ff3d289917c02', user: '66a367ee470675a3aa79ccb3', rating: 5, comment: 'api sujeet' }));       
-        //console.log('message', message);
-        //dispatch(fetchNotifications({ url: `${API_URL}notification`, token: user?.token! }));
-        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: '66a368f4470675a3aa79ccb4', title: 'test title', message: 'test message', type: 'test type' }));
+    const addReviewHandler =  async () => {
+        const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: '66c08bfb763c6c06a7372276', user: '66a368f4470675a3aa79ccb4', rating: 5, comment: 'api sujeet' }));           
+        console.log('createdReview', createdReview);
     };
 
-    React.useEffect(() => {
-        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/66a2074a519ff3d289917c02`, token: user?.token! }));  
-    }, []);
+    const fetchReviewHandler =  () => {        
+        dispatch(fetchReviewListByShow({ url: `${API_URL}review-show/show/66c08bfb763c6c06a7372276`, token: user?.token! }));
+    };
 
+    
     return (
-        <View style={styles.container}>     
-            <Text style={{ color: 'white' }}>{JSON.stringify(notificationData)}</Text>
-           <Button onPress={() => showConsole('button pressed')}>Button</Button>
-        </View>
+        <ScrollView style={styles.container}>            
+            <Text style={styles.heading}>Test</Text>    
+            <Text style={styles.whiteText}>{reviewListByShow.length}</Text>
+            <Text style={{ color: 'white' }}>{JSON.stringify(reviewListByShow)}</Text>
+            <View style={styles.centerBtn}>
+                <Button mode='contained' onPress={() => fetchReviewHandler()}>Fetch Review Button</Button>
+                <Button mode='contained' onPress={() => addReviewHandler()}>Add Button</Button>
+            </View>        
+        </ScrollView>
     );
 };
 
@@ -42,6 +50,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#021526'
+    },
+    whiteText: {
+        color: Colors.whiteColor
+    },
+    heading: {
+        fontFamily:Fonts.Family.Bold,
+        fontSize:Fonts.Size.XXX_Large,
+        color:Colors.whiteColor
+    },
+    centerBtn: {
+        flexDirection: 'row',
+        justifyContent: 'center'
     }
 });
 

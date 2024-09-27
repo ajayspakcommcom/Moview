@@ -46,7 +46,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     const hideDialog = () => {
         onPress && onPress('reviews');
         setIsDialog(false);
-        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show' }));
+        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show' }));        
     };
 
 

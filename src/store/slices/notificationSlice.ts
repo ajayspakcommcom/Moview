@@ -26,7 +26,6 @@ export const fetchNotifications = createAsyncThunk('notification/fetchNotificati
     }); //Replace with your API endpoint
 
     const resp = await response.json();
-    console.log('resp', resp);
     return resp.data.notifications as Notification[];
 });
 
@@ -40,35 +39,74 @@ export const fetchNotificationsByUserId = createAsyncThunk('notification/fetchNo
     }); //Replace with your API endpoint
 
     const resp = await response.json();
-    return resp.data.notification as Notification[];
+    return resp.data.notifications as Notification[];
 });
 
-export const createNotification = createAsyncThunk('notification/createNotification', async ({ url, token, user_id, title, message, type }: { url: string, token: string, user_id: string, title: string, message: string, type: string }) => {
+// export const createNotification = createAsyncThunk('notification/createNotification', async ({ url, token, user_id, title, message, type }: { url: string, token: string, user_id: string, title: string, message: string, type: string }) => {
+//     const response = await fetch(`${url}`, {
+//         method: 'POST',
+//         headers: {
+//             'Authorization': `Bearer ${token}`,
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ user_id, title, message, type })
+//     });
 
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+//     const resp = await response.json();
+//     return resp.data.notifications as Notification[];
+// });
 
-    console.log('createNotification', { url, token, user_id, title, message, type });
 
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+export const createNotification = createAsyncThunk('notification/createNotification', async ({ url, token, user_id, title, message, type }: { url: string; token: string; user_id: string; title: string; message: string; type: string }, { rejectWithValue }) => {
+    console.log('user_id', user_id);
+    try {
+        const response = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id, title, message, type }),
+        });
 
-    const response = await fetch(`${url}`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id, title, message, type })
-    });
+        // Log response to see what's being returned
+        const textResponse = await response.text();
+        console.log('Raw Response:', textResponse); // Logs raw response
 
-    const resp = await response.json();
-    return resp.data.notification as Notification;
-});
+        // Check if response is not 200
+        if (response.status !== 200) {
+            // Attempt to parse as JSON only if content type is JSON
+            const contentType = response.headers.get('Content-Type');
+            if (contentType && contentType.includes('application/json')) {
+                const errorDetails = JSON.parse(textResponse); // Parse only if JSON
+                return rejectWithValue(errorDetails);
+            } else {
+                return rejectWithValue('Non-JSON error response: ' + textResponse);
+            }
+        }
+
+        // Ensure the response is JSON
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+            const resp = JSON.parse(textResponse); // Parse as JSON if it's JSON
+
+            if (resp && resp.data && resp.data.notifications) {
+                return resp.data.notifications as Notification[];
+            } else {
+                return rejectWithValue('Unexpected response structure');
+            }
+        } else {
+            return rejectWithValue('Non-JSON success response: ' + textResponse);
+        }
+    } catch (error) {
+        console.log('Error creating notification:', error); // Detailed logging
+        return rejectWithValue('Failed to create notification');
+    }
+}
+);
+
+
+
 
 export const updateNotification = createAsyncThunk('notification/updateNotification', async ({ id, notification }: { id: string, notification: Notification }) => {
     const response = await fetch(`/api/notification/${id}`, {
@@ -130,17 +168,14 @@ const notificationSlice = createSlice({
 
             .addCase(createNotification.pending, (state, action) => {
                 state.loading = true;
-                console.log('createNotification.pending', state, action);
             })
             .addCase(createNotification.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = [...state.data];
-                console.log('createNotification.fulfilled', state, action);
+                state.data = [...state.data, ...action.payload];
             })
             .addCase(createNotification.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
-                console.log('createNotification.rejected', state, action);
             })
 
             .addCase(updateNotification.fulfilled, (state, action) => {

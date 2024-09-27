@@ -18,29 +18,28 @@ import Colors from '../../styles/Colors';
 
 const TestScreen = () => {
 
-    const { user } = useAuth();
+    const { user, userDetail } = useAuth();
 
-     const { data: reviewListByShow } = useSelector((state: RootState) => state.reviewListByShow);  
+    const { data: notificationData } = useSelector((state: RootState) => state.notification);  
     const dispatch = useAppDispatch();
 
-    const addReviewHandler =  async () => {
-        const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: '66c08bfb763c6c06a7372276', user: '66a368f4470675a3aa79ccb4', rating: 5, comment: 'api sujeet' }));           
-        console.log('createdReview', createdReview);
+    const addNotificationHandler = async () => {        
+       dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: 'hariom', message: 'app', type: 'show' }));       
     };
 
-    const fetchReviewHandler =  () => {        
-        dispatch(fetchReviewListByShow({ url: `${API_URL}review-show/show/66c08bfb763c6c06a7372276`, token: user?.token! }));
+    const fetchNotificationHandler =  () => {        
+        dispatch(fetchNotifications({ url: `${API_URL}notification`, token: user?.token! }));
     };
 
     
     return (
         <ScrollView style={styles.container}>            
             <Text style={styles.heading}>Test</Text>    
-            <Text style={styles.whiteText}>{reviewListByShow.length}</Text>
-            <Text style={{ color: 'white' }}>{JSON.stringify(reviewListByShow)}</Text>
+            <Text style={styles.whiteText}>{notificationData.length}</Text>
+            <Text style={{ color: 'white' }}>{JSON.stringify(notificationData)}</Text>
             <View style={styles.centerBtn}>
-                <Button mode='contained' onPress={() => fetchReviewHandler()}>Fetch Review Button</Button>
-                <Button mode='contained' onPress={() => addReviewHandler()}>Add Button</Button>
+                <Button mode='contained' onPress={() => fetchNotificationHandler()}>Fetch Notification Button</Button>
+                <Button mode='contained' onPress={() => addNotificationHandler()}>Add Notification Button</Button>
             </View>        
         </ScrollView>
     );

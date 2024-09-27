@@ -10,6 +10,7 @@ import { API_URL } from '../../configure/config.android';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
+import { Button, Dialog, Portal } from 'react-native-paper';
 
 interface ItemProps {
     movieItem: MovieItem,
@@ -24,8 +25,13 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
 
-    const { data: reviewListDataByMovie } = useSelector((state: RootState) => state.reviewListByMovie);  
+    const [isDialog, setIsDialog] = React.useState(false);
     const dispatch = useAppDispatch();
+
+    const hideDialog = () => {
+        onPress && onPress('reviews');
+        setIsDialog(false)
+    };
     
     React.useLayoutEffect(() => {
 
@@ -45,10 +51,14 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
     const onSaveHandler = async () => {
 
-        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/66a2074a519ff3d289917c02`, token: user?.token! }));  
+        const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
         
-        //console.log('onSaveHandler', { url: `${API_URL}review`, moview: movieItem._id, user: userDetail._id, rating: rating, comment: comment });
-        dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment }));       
+        if (createdReview.meta.requestStatus === 'fulfilled') {            
+            setIsDialog(true);
+        } else {
+            Alert.alert('Error', 'Failed to create review.');
+        }
+        
 
         // try {
         //     if (rating === 0) {
@@ -138,9 +148,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     };
 
     return (
-        <>   
-            <Text>{JSON.stringify(reviewListDataByMovie)}</Text>
-            <Text>{reviewListDataByMovie.length}</Text>
+        <>               
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating
@@ -182,6 +190,18 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                     isDisabled={loader ? true : false}
                 />
             </View>
+
+            <Portal>
+            <Dialog visible={isDialog} onDismiss={hideDialog}>
+                    <Dialog.Title>
+                        <Text>Review created successfully</Text> 
+                    </Dialog.Title>
+                <Dialog.Actions>                    
+                    <Button onPress={hideDialog}>Ok</Button>                    
+                </Dialog.Actions>
+            </Dialog>
+            </Portal>
+
         </>
     );
 };

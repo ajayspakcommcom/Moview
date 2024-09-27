@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import { Button, Dialog, Portal } from 'react-native-paper';
+import {  createNotification } from '../../store/slices/notificationSlice';
 
 interface ItemProps {
     movieItem: MovieItem,
@@ -24,13 +25,16 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
+    
 
     const [isDialog, setIsDialog] = React.useState(false);
     const dispatch = useAppDispatch();
 
     const hideDialog = () => {
         onPress && onPress('reviews');
-        setIsDialog(false)
+        setIsDialog(false);
+        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie' }));
+
     };
     
     React.useLayoutEffect(() => {
@@ -50,101 +54,12 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
 
     const onSaveHandler = async () => {
-
         const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
-        
-        if (createdReview.meta.requestStatus === 'fulfilled') {            
+        if (createdReview.meta.requestStatus === 'fulfilled') {         
             setIsDialog(true);
         } else {
             Alert.alert('Error', 'Failed to create review.');
         }
-        
-
-        // try {
-        //     if (rating === 0) {
-        //         Alert.alert('Error', 'Please give a rate.');
-        //         return;
-        //     }
-
-        //     if (comment.trim() === '') {
-        //         Alert.alert('Error', 'Please provide a review.');
-        //         return;
-        //     }
-
-        //     try {
-        //         setLoader(true);                
-        //         const response = await fetch(`${API_URL}review`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'Authorization': `Bearer ${user?.token}`,
-        //             },
-        //             body: JSON.stringify({
-        //                 "movie": movieItem._id,
-        //                 "user": userDetail._id,
-        //                 "rating": rating,
-        //                 "review_text": comment,
-        //             }),
-        //         });
-
-        //         const result = await response.json();
-        //         console.log('');
-        //         console.log('');
-        //         console.log('');
-        //         console.log('result', result);
-
-        //         if (result.status === 'success') {
-
-        //             try {
-        //                 const response = await fetch(`${API_URL}notification`, {
-        //                     method: 'POST',
-        //                     headers: {
-        //                         'Content-Type': 'application/json',
-        //                         'Authorization': `Bearer ${user?.token}`,
-        //                     },
-        //                     body: JSON.stringify({
-        //                         "user_id": userDetail._id,
-        //                         "title": userDetail.firstname,
-        //                         "message": comment,
-        //                         "type": "movie"
-        //                     }),
-        //                 });
-        //             } catch (error) {
-        //                 //
-        //             }
-
-        //             setLoader(false);
-        //             Alert.alert('Review Successfully', 'Thank you for your review.', [
-        //                 {
-        //                     text: 'OK', onPress: () => {
-        //                         setComment('');
-        //                         setRating(0);
-        //                         if (onPress) {
-        //                             onPress('reviews');     
-        //                             appCounter();
-        //                         }
-        //                     }
-        //                 },
-        //             ]);
-        //         } else {
-        //             Alert.alert('Error', `${result.message}`, [
-        //                 { text: 'OK', onPress: () => { } }
-        //             ]);
-        //         }
-
-
-        //     } catch (error) {
-        //         console.error('Error submitting review:', error);
-        //         Alert.alert(`Error: ${error}`);
-        //         throw error;
-        //     }
-
-
-        // } catch (error) {
-        //     console.error('error:', error);
-        //     Alert.alert('Error', 'Error');
-        // }
-
     };
 
     return (

@@ -3,7 +3,6 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import { Button } from 'react-native-paper';
-
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { useAuth } from '../../context/AuthContext';
@@ -11,13 +10,10 @@ import Fonts from '../../styles/Fonts';
 import Colors from '../../styles/Colors';
 import { createFollower, fetchFollowers } from '../../store/slices/followerSlice';
 
-
-
-
 const TestScreen = () => {
 
     const { user, userDetail } = useAuth();
-    const { data: followerData } = useSelector((state: RootState) => state.myFollower);  
+    const { data: followerData, error } = useSelector((state: RootState) => state.myFollower);  
     
     const dispatch = useAppDispatch();
 
@@ -29,16 +25,23 @@ const TestScreen = () => {
     const fetchFollowerHandler =  () => {                
         dispatch(fetchFollowers({ url: `${API_URL}follower/${userDetail._id}`, token: user?.token! }));
     };
+
+    const checkStateHandler = () => {
+        console.log('followerData', followerData);
+    }
     
     return (
-        <ScrollView style={styles.container}>            
-            <Text style={styles.heading}>Test</Text>    
-            <Text style={styles.whiteText}>{followerData?.length}</Text>
-            <Text style={{ color: 'white' }}>{JSON.stringify(followerData)}</Text>
-            <View style={styles.centerBtn}>
-                <Button mode='contained' onPress={() => fetchFollowerHandler()}>Fetch Follower Button</Button>
-                <Button mode='contained' onPress={() => addFollowerHandler()}>Add Follower Button</Button>
-            </View>        
+        <ScrollView style={styles.container}>                 
+            <Text style={styles.heading}>Test</Text>  
+                <Text style={styles.whiteText}>{error}</Text>
+                <Text style={styles.whiteText}> State : {JSON.stringify(followerData)}</Text>
+                <Text style={styles.whiteText}> Json :  {JSON.stringify(followerData)}</Text>
+                <Text style={styles.whiteText}> Json :  {JSON.stringify(followerData)}</Text>
+                <View style={styles.centerBtn}>
+                    <Button style={styles.btn} mode='contained' onPress={() => checkStateHandler()}>Check State Button</Button>
+                    <Button style={styles.btn} mode='contained' onPress={() => fetchFollowerHandler()}>Fetch Follower Button</Button>
+                    <Button style={styles.btn} mode='contained' onPress={() => addFollowerHandler()}>Add Follower Button</Button>
+                </View>                
         </ScrollView>
     );
 };
@@ -58,7 +61,11 @@ const styles = StyleSheet.create({
     },
     centerBtn: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+    },
+    btn: {
+        margin: 10
     }
 });
 

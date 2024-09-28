@@ -14,40 +14,53 @@ const initialState: FollowerState = {
 };
 
 export const fetchFollowers = createAsyncThunk('follower/fetchFollowers', async ({ url, token }: { url: string, token: string }) => {
-    console.log('fetchFollowers', { url, token });
     const response = await fetch(`${url}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
-    }); //Replace with your API endpoint
+    });
 
     const resp = await response.json();
     return resp.data as FollowerType[];
 });
 
 
-export const createFollower = createAsyncThunk('follower/createFollower', async ({ url, token, userId, followerId }: { url: string, token: string, userId: string, followerId: string }, { rejectWithValue }) => {
+export const createFollower = createAsyncThunk('follower/createFollower', async ({ url, token, userId, followerId }: { url: string; token: string; userId: string; followerId: string }, { rejectWithValue }) => {
+    try {
+        const response = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                userId,
+                followerId,
+            }),
+        });
 
-    const response = await fetch(`${url}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            userId,
-            followerId
-        }),
-    });
+        const resp = await response.json();
 
-    const resp = await response.json();
-    return resp.data as FollowerType;
-
+        if (!response.ok) {
+            // Extract error message from the response or set a default one
+            const errorMessage = resp.error || 'Failed to create follower';
+            return rejectWithValue(errorMessage);
+        } else {
+            // Return success message and data
+            return {
+                data: resp.data as FollowerType, // Adjust based on your actual data structure
+                message: resp.message || 'Follower created successfully',
+            };
+        }
+    } catch (error) {
+        // Log the error for debugging purposes
+        console.error('Error creating follower:', error);
+        return rejectWithValue('An unexpected error occurred while creating follower');
+    }
 }
 );
-
 
 
 
@@ -68,6 +81,7 @@ const followerSlice = createSlice({
             .addCase(fetchFollowers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
+                console.log('data', state.data);
             })
 
             .addCase(createFollower.pending, (state) => {
@@ -76,7 +90,7 @@ const followerSlice = createSlice({
             })
             .addCase(createFollower.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = [...state.data, action.payload];
+                state.data = [...state.data, action.payload.data];
                 console.log('createFollower.fulfilled');
             })
             .addCase(createFollower.rejected, (state, action) => {

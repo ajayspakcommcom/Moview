@@ -31,8 +31,6 @@ export const fetchNotifications = createAsyncThunk('notification/fetchNotificati
 
 export const fetchNotificationsByUserId = createAsyncThunk('notification/fetchNotificationsByUserId', async ({ url, token }: { url: string, token: string }) => {
 
-    console.log('Suresh');
-
     const response = await fetch(`${url}`, {
         method: 'GET',
         headers: {

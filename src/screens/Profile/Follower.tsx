@@ -8,37 +8,13 @@ import FollowerList from '../../components/Followers/FollowerList';
 import Colors from '../../styles/Colors';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
+import { FollowerType } from '../../models/Follower';
 
 
 type Props = {
     navigation: any;
     route: any;
 };
-
-type User = {
-    _id: string;
-    firstname: string;
-    username: string;
-    email: string;
-    phone: string;
-    password_hash: string;
-    is_deleted: boolean;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string;
-    __v: number;
-};
-
-type FollowerType = {
-    _id: string;
-    userId: string;
-    // followerId: User;
-    followingId: User;
-    createdAt: string;
-    isFollowing: boolean;
-    __v: number;
-};
-
 
 
 const Follower: React.FC<Props> = ({ navigation, route }) => {
@@ -107,7 +83,6 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
     }, [counter]);
 
 
-
     return (
         <>
             <FollowerList followers={followerData} />
@@ -116,9 +91,7 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
+   
 });
 
 export default React.memo(Follower);

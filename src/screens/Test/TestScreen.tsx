@@ -6,12 +6,10 @@ import { Button } from 'react-native-paper';
 
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
-import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import { useAuth } from '../../context/AuthContext';
-import { fetchNotifications, createNotification } from '../../store/slices/notificationSlice';
-import { fetchReviewListByShow,createReviewListByShow } from '../../store/slices/reviewListByShowSlice';
 import Fonts from '../../styles/Fonts';
 import Colors from '../../styles/Colors';
+import { createFollower, fetchFollowers } from '../../store/slices/followerSlice';
 
 
 
@@ -19,27 +17,27 @@ import Colors from '../../styles/Colors';
 const TestScreen = () => {
 
     const { user, userDetail } = useAuth();
-
-    const { data: notificationData } = useSelector((state: RootState) => state.notification);  
+    const { data: followerData } = useSelector((state: RootState) => state.myFollower);  
+    
     const dispatch = useAppDispatch();
 
-    const addNotificationHandler = async () => {        
-       dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: 'hariom', message: 'app', type: 'show' }));       
+    const addFollowerHandler = async () => {   
+        
+       dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: '66a368f4470675a3aa79ccb4', followerId:userDetail._id }));       
     };
 
-    const fetchNotificationHandler =  () => {        
-        dispatch(fetchNotifications({ url: `${API_URL}notification`, token: user?.token! }));
+    const fetchFollowerHandler =  () => {                
+        dispatch(fetchFollowers({ url: `${API_URL}follower/${userDetail._id}`, token: user?.token! }));
     };
-
     
     return (
         <ScrollView style={styles.container}>            
             <Text style={styles.heading}>Test</Text>    
-            <Text style={styles.whiteText}>{notificationData.length}</Text>
-            <Text style={{ color: 'white' }}>{JSON.stringify(notificationData)}</Text>
+            <Text style={styles.whiteText}>{followerData?.length}</Text>
+            <Text style={{ color: 'white' }}>{JSON.stringify(followerData)}</Text>
             <View style={styles.centerBtn}>
-                <Button mode='contained' onPress={() => fetchNotificationHandler()}>Fetch Notification Button</Button>
-                <Button mode='contained' onPress={() => addNotificationHandler()}>Add Notification Button</Button>
+                <Button mode='contained' onPress={() => fetchFollowerHandler()}>Fetch Follower Button</Button>
+                <Button mode='contained' onPress={() => addFollowerHandler()}>Add Follower Button</Button>
             </View>        
         </ScrollView>
     );

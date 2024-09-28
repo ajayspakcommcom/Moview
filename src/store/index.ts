@@ -6,6 +6,8 @@ import myShowReviewReducer from './slices/myShowReviewSlice';
 import notificationReducer from './slices/notificationSlice';
 import reviewListByMovieReducer from './slices/reviewListByMoviewSlice';
 import reviewListByShowReducer from './slices/reviewListByShowSlice';
+import followerReducer from './slices/followerSlice';
+
 const store = configureStore({
     reducer: {
         counter: counterReducer,
@@ -14,6 +16,7 @@ const store = configureStore({
         notification: notificationReducer,
         reviewListByMovie: reviewListByMovieReducer,
         reviewListByShow: reviewListByShowReducer,
+        myFollower: followerReducer,
     },
 });
 

@@ -1,0 +1,73 @@
+your-project/
+├── android/
+├── ios/
+├── src/
+│   ├── assets/
+│   │   ├── fonts/
+│   │   ├── images/
+│   │   └── icons/
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   └── index.ts
+│   │   ├── layouts/
+│   │   │   └── ...
+│   │   └── widgets/
+│   │       └── ...
+│   ├── navigation/
+│   │   ├── AppNavigator.tsx
+│   │   └── routes.ts
+│   ├── screens/
+│   │   ├── HomeScreen/
+│   │   │   ├── HomeScreen.tsx
+│   │   │   ├── styles.ts
+│   │   │   └── index.ts
+│   │   ├── ProfileScreen/
+│   │   │   └── ...
+│   │   └── ...
+│   ├── services/
+│   │   ├── api/
+│   │   │   ├── apiClient.ts
+│   │   │   └── endpoints.ts
+│   │   └── storage/
+│   │       └── storageService.ts
+│   ├── store/
+│   │   ├── actions/
+│   │   │   ├── userActions.ts
+│   │   │   └── index.ts
+│   │   ├── reducers/
+│   │   │   ├── userReducer.ts
+│   │   │   └── index.ts
+│   │   ├── sagas/
+│   │   │   ├── userSaga.ts
+│   │   │   └── index.ts
+│   │   ├── selectors/
+│   │   │   ├── userSelectors.ts
+│   │   │   └── index.ts
+│   │   ├── types/
+│   │   │   ├── userTypes.ts
+│   │   │   └── index.ts
+│   │   └── index.ts
+│   ├── styles/
+│   │   ├── colors.ts
+│   │   ├── fonts.ts
+│   │   └── metrics.ts
+│   ├── utils/
+│   │   ├── helpers.ts
+│   │   └── validation.ts
+│   ├── App.tsx
+│   └── index.js
+├── tests/
+│   ├── components/
+│   ├── screens/
+│   └── utils/
+├── .babelrc
+├── .editorconfig
+├── .eslintrc.js
+├── .gitignore
+├── .prettierrc
+├── package.json
+├── tsconfig.json
+├── README.md
+└── yarn.lock / package-lock.json

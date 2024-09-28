@@ -65,7 +65,6 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         console.log('');
         console.log('');
         console.log('');
-        
         console.log('userId', userId);
         console.log('followerId', userDetail._id);
 

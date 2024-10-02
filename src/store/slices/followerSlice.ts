@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { FollowerType } from '../../models/Follower';
 
 interface FollowerState {
-    data: FollowerType[]; //Adjust type as necessary
+    data: FollowerType[];
     loading: boolean;
     error: string | null;
     count: number;
@@ -59,6 +59,35 @@ export const createFollower = createAsyncThunk('follower/createFollower', async 
 }
 );
 
+export const removeFollower = createAsyncThunk('follower/removeFollower', async ({ url, token, userId, followerId }: { url: string; token: string; userId: string; followerId: string }, { rejectWithValue }) => {
+
+    try {
+        const response = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                userId,
+                followerId,
+            }),
+        });
+
+        const resp = await response.json();
+
+        return {
+            data: resp.data as FollowerType,
+            message: resp.message || 'Follower removed successfully',
+        };
+
+    } catch (error: any) {
+        console.error('Error removing follower:', error);
+        return rejectWithValue('An unexpected error occurred while removing follower');
+    }
+}
+);
+
 
 
 
@@ -91,6 +120,21 @@ const followerSlice = createSlice({
                 }
             })
             .addCase(createFollower.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || null;
+            })
+
+            .addCase(removeFollower.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(removeFollower.fulfilled, (state, action) => {
+                state.loading = false;
+                const index = state.data.findIndex(item => item.followerId._id === action.payload.data.followerId._id);
+                if (index !== -1) {
+                    state.data[index] = action.payload.data;
+                }
+            })
+            .addCase(removeFollower.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
             })

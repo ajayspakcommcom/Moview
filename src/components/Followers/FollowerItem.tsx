@@ -9,9 +9,8 @@ import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { Button, Dialog, Portal } from 'react-native-paper';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../store/index';
-import { createFollower, fetchFollowers } from '../../store/slices/followerSlice';
+import { useAppDispatch } from '../../store/index';
+import { createFollower,  removeFollower } from '../../store/slices/followerSlice';
 
 type User = {
     _id: string;
@@ -67,8 +66,7 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         
         console.log('userId', userId);
         console.log('followerId', userDetail._id);
-        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userId, followerId:userDetail._id }));  
-        console.log('response', response);
+        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userId, followerId:userDetail._id }));          
         if(response.meta.requestStatus === 'fulfilled'){            
             setIsDialog(false);  
         }
@@ -78,28 +76,30 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         
         const followerId = userDetail._id; //logged in user id
 
-        try {
-            const response = await fetch(`${API_URL}unfollow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userId,
-                    "followerId": followerId,
-                }),
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                appCounter();
-                setIsDialog(false);  
-            } else {
+        const response = await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userId, followerId:followerId }));  
+
+        // try {
+        //     const response = await fetch(`${API_URL}unfollow`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer ${user?.token}`,
+        //         },
+        //         body: JSON.stringify({
+        //             "userId": userId,
+        //             "followerId": followerId,
+        //         }),
+        //     });
+        //     const result = await response.json();
+        //     if (result.status === 'success') {
+        //         appCounter();
+        //         setIsDialog(false);  
+        //     } else {
                 
-            }
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
-        }
+        //     }
+        // } catch (error) {
+        //     Alert.alert(`Error: ${error}`);
+        // }
 
     };
 

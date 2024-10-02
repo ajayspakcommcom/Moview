@@ -9,6 +9,11 @@ import { UserItem } from '../../types/User';
 import CustomButton from '../Ui/CustomButton';
 import { API_URL } from '../../configure/config.android';
 
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { userFetchFollowers } from '../../store/slices/userFollowerSlice';
+import { userFetchFollowings } from '../../store/slices/userFollowingSlice';
+
 type Props = {
     userData?: UserItem
 };
@@ -23,77 +28,50 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
+    const { count: followerCount } = useSelector((state: RootState) => state.userFollower);           
+    const { count: followingCount } = useSelector((state: RootState) => state.userFollowing);
+    const dispatch = useAppDispatch();
+
     const getFollowerCount = async () => {
-
-        const url = `${API_URL}follower/${userData?._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-
-
-            if (result.status === 'success') {
-                setFollowData((prevState) => ({
-                    ...prevState,
-                    followers: result.data.length
-                }));
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-        }
+        dispatch(userFetchFollowers({ url: `${API_URL}follower/${userData?._id}`, token: user?.token! }));                
     };
 
     const getFollowingCount = async () => {
 
-        const url = `${API_URL}following/${userData?._id}`;
-        const token = user;
+        dispatch(userFetchFollowings({ url: `${API_URL}following/${userData?._id}`, token: user?.token! }));     
 
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
+        // const url = `${API_URL}following/${userData?._id}`;
+        // const token = user;
 
-            const result = await response.json();
+        // try {
+        //     const response = await fetch(url, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Authorization': `Bearer ${token?.token}`,
+        //             'Content-Type': 'application/json'
+        //         },
+        //         signal: signal
+        //     });
 
-            if (result.status === 'success') {
-                setFollowData((prevState) => ({
-                    ...prevState,
-                    following: result.data.length
-                }));
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
+        //     const result = await response.json();
 
-                } else {
+        //     if (result.status === 'success') {
+        //         setFollowData((prevState) => ({
+        //             ...prevState,
+        //             following: result.data.length
+        //         }));
+        //     }
+        // } catch (error) {
+        //     if (error instanceof Error) {
+        //         if (error.name === 'AbortError') {
 
-                }
-            } else {
+        //         } else {
 
-            }
-        }
+        //         }
+        //     } else {
+
+        //     }
+        // }
     };
 
     const checkIfFollowing = async () => {
@@ -167,9 +145,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     }, [userData, counter]);
 
     const followHandler = async () => {
-
-       
-
         try {
             const response = await fetch(`${API_URL}follow`, {
                 method: 'POST',
@@ -264,12 +239,12 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
             </View>
 
             <View style={styles.followerWrapper}>
-                <View style={styles.followers}>
-                    <Text style={styles.follText}>{followData.followers}</Text>
+                <View style={styles.followers}>                    
+                    <Text style={styles.follText}>{followerCount}</Text>
                     <Text style={styles.follText}>Followers</Text>
                 </View>
                 <View style={styles.following}>
-                    <Text style={styles.follText}>{followData.following}</Text>
+                    <Text style={styles.follText}>{followingCount}</Text>
                     <Text style={styles.follText}>Followings</Text>
                 </View>
                 <View style={styles.movies}>

@@ -129,10 +129,11 @@ const followerSlice = createSlice({
             })
             .addCase(removeFollower.fulfilled, (state, action) => {
                 state.loading = false;
-                const index = state.data.findIndex(item => item.followerId._id === action.payload.data.followerId._id);
-                if (index !== -1) {
-                    state.data[index] = action.payload.data;
-                }
+                // const index = state.data.findIndex(item => item.followerId._id === action.payload.data.followerId._id);
+                // if (index !== -1) {
+                //     state.data[index] = action.payload.data;
+                // }
+                state.data = state.data.filter(item => item.followerId._id !== action.payload.data.followerId._id);
             })
             .addCase(removeFollower.rejected, (state, action) => {
                 state.loading = false;

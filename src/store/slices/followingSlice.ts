@@ -5,12 +5,14 @@ interface FollowingState {
     data: FollowingType[]; //Adjust type as necessary
     loading: boolean;
     error: string | null;
+    count: number;
 }
 
 const initialState: FollowingState = {
     data: [],
     loading: false,
-    error: null
+    error: null,
+    count: 0
 };
 
 export const fetchFollowings = createAsyncThunk('following/fetchFollowings', async ({ url, token }: { url: string, token: string }) => {
@@ -39,6 +41,7 @@ const followingSlice = createSlice({
             .addCase(fetchFollowings.fulfilled, (state, action) => {
                 state.loading = false;
                 state.data = action.payload;
+                state.count = state.data.length;
             })
             .addCase(fetchFollowings.rejected, (state, action) => {
                 state.loading = false;

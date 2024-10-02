@@ -5,12 +5,14 @@ interface FollowerState {
     data: FollowerType[]; //Adjust type as necessary
     loading: boolean;
     error: string | null;
+    count: number;
 }
 
 const initialState: FollowerState = {
     data: [],
     loading: false,
-    error: null
+    error: null,
+    count: 0
 };
 
 export const fetchFollowers = createAsyncThunk('follower/fetchFollowers', async ({ url, token }: { url: string, token: string }) => {
@@ -72,12 +74,11 @@ const followerSlice = createSlice({
             .addCase(fetchFollowers.fulfilled, (state, action) => {
                 state.loading = false;
                 state.data = action.payload;
-                console.log('data', state.data);
+                state.count = state.data.length;
             })
             .addCase(fetchFollowers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
-                console.log('data', state.data);
             })
             .addCase(createFollower.pending, (state) => {
                 state.loading = true;

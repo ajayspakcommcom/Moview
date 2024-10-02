@@ -22,6 +22,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
 import { fetchFollowings } from '../../store/slices/followingSlice';
+import { fetchFollowers } from '../../store/slices/followerSlice';
 
 type Props = {
     navigation: any;
@@ -41,6 +42,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);    
     const { data: showReviews } = useSelector((state: RootState) => state.myShowReview);  
+    const { count: followerCount } = useSelector((state: RootState) => state.myFollower);  
+    const { count: followingCount } = useSelector((state: RootState) => state.myFollowing);  
     const dispatch = useAppDispatch();
 
     const signOutDialog = () => {
@@ -63,85 +66,14 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         setDialogVisible(true);
     };
 
-    const onRatingReviewHandler = (event: PressableProps) => {
-
-    };
-
-    const onFavouriteHandler = (event: PressableProps) => {
-
-    };
-
-    const onBookmarkHandler = (event: PressableProps) => {
-    };
-
     const getFollowingCount = async () => {
-
-        const url = `${API_URL}following/${userDetail._id}`; // logged user id
-        const token = user;
-        console.log('url', url);
-
-        
-        //dispatch(fetchFollowings({ url, token: token?.token! }));
-
-        // try {
-        //     const response = await fetch(url, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Authorization': `Bearer ${token?.token}`,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         signal: signal
-        //     });
-
-        //     const result = await response.json();
-
-        //     setFollowData((prevState) => ({...prevState,following: 0 }));
-
-        //     if (result.status === 'success') {
-        //          setFollowData((prevState) => ({
-        //              ...prevState,
-        //              following: result.data.length    
-        //          }));
-        //     }
-        // } catch (error) {
-        //     error instanceof Error ? error.name === 'AbortError' ? console.log('AbortError') : console.log('') : console.log('error');
-        // }
+        const url = `${API_URL}following/${userDetail._id}`; // logged user id        
+        dispatch(fetchFollowings({ url, token: user?.token! }));        
     };
 
     const getFollowerCount = async () => {
-
         const url = `${API_URL}follower/${userDetail._id}`;
-        const token = user;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
-
-            const result = await response.json();
-            
-            if (result.status === 'success') {
-                setFollowData((prevState) => ({
-                    ...prevState,
-                    followers: result.data.length
-                }));
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-
-                }
-            } else {
-
-            }
-        }
+        dispatch(fetchFollowers({ url: url, token: user?.token! }));         
     };
 
     const getReviewListByUser = async () => {
@@ -153,8 +85,9 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         React.useCallback(() => {
 
             getFollowerCount();
-            //getFollowingCount();
+            getFollowingCount();
             getReviewListByUser();
+            console.log('profile home screen');
 
             return () => {            
             };
@@ -203,14 +136,14 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                             <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
                                 <View style={styles.followers}>
-                                    <Text style={styles.follText}>{followData.followers}</Text>
+                                    <Text style={styles.follText}>{followerCount}</Text>
                                     <Text style={styles.follText}>Followers</Text>
                                 </View>
                             </Pressable>
 
                             <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
                                 <View style={styles.following}>
-                                    <Text style={styles.follText}>{followData.following}</Text>                                    
+                                    <Text style={styles.follText}>{followingCount}</Text>                                    
                                     <Text style={styles.follText}>Followings</Text>
                                 </View>
                             </Pressable>
@@ -219,39 +152,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                         <View style={styles.myMoviesWrapper}>
                             <View style={styles.hr}></View>
-                            <View style={styles.footerWrapper}>
-                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onRatingReviewHandler}>
-                                    <Icon name={'star'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Ratings and Reviews</Text>
-                                </Pressable>
-                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onFavouriteHandler}>
-                                    <Icon name={'heart'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Favorite Films</Text>
-                                </Pressable>
-                                <Pressable style={[styles.footerItem, { display: 'none' }]} onPress={onBookmarkHandler}>
-                                    <Icon name={'bookmark'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Want to Watch</Text>
-                                </Pressable>
-
+                            <View style={styles.footerWrapper}>                                
                                 <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
-
-                                {/* <Pressable style={styles.footerItem} onPress={onLogoutHandler}>
-                                    <MaterialIcon name={'logout'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Logout</Text>
-                                </Pressable> */}
-
-                                {/* <Pressable style={styles.footerItem} onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                                    <AntDesign name={'logout'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Test</Text>
-                                </Pressable> */}
-
-                                {/* <View style={styles.spacer}></View>
-
-                                <Pressable style={styles.footerItem} onPress={() => navigation.navigate('TestScreen')}>
-                                    <AntDesign name={'logout'} style={styles.footerIcon} />
-                                    <Text style={styles.footerText}>Test</Text>
-                                </Pressable> */}
-
                             </View>
                         </View>
                     </>

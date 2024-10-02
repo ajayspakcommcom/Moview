@@ -45,7 +45,6 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         });
     };
 
-
     React.useLayoutEffect(() => {
 
         headerHandler();

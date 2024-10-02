@@ -23,7 +23,6 @@ export const fetchFollowings = createAsyncThunk('following/fetchFollowings', asy
     });
 
     const resp = await response.json();
-    console.log('resp', resp);
     return resp.data as FollowingType[];
 });
 

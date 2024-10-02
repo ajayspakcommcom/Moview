@@ -85,10 +85,9 @@ const followerSlice = createSlice({
             })
             .addCase(createFollower.fulfilled, (state, action) => {
                 state.loading = false;
-                if (Array.isArray(action.payload.data) && action.payload.data.length > 0) {
-                    state.data = [...state.data, ...action.payload.data];
-                } else {
-                    state.data = [...state.data, action.payload.data];
+                const index = state.data.findIndex(item => item.followerId._id === action.payload.data.followerId._id);
+                if (index !== -1) {
+                    state.data[index] = action.payload.data;
                 }
             })
             .addCase(createFollower.rejected, (state, action) => {

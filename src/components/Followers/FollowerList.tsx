@@ -1,33 +1,7 @@
-// FollowersList.tsx
 import React from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import FollowerItem from './FollowerItem';
-
-
-type User = {
-    _id: string;
-    firstname: string;
-    username: string;
-    email: string;
-    phone: string;
-    password_hash: string;
-    is_deleted: boolean;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string;
-    __v: number;
-};
-
-type FollowerType = {
-    _id: string;
-    userId: string;
-    // followerId: User;
-    followingId: Partial<User>;
-    createdAt: string;
-    isFollowing: boolean;
-    __v: number;
-};
-
+import { FollowerType } from '../../models/Follower';
 
 interface FollowersListProps {
     followers: FollowerType[];

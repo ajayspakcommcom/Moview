@@ -9,7 +9,9 @@ import Fonts from '../../styles/Fonts';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { Button, Dialog, Portal } from 'react-native-paper';
-
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/index';
+import { createFollower, fetchFollowers } from '../../store/slices/followerSlice';
 
 type User = {
     _id: string;
@@ -45,7 +47,9 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     const { userDetail, user, appCounter } = useAuth();
 
     const [isDialog, setIsDialog] = React.useState(false);
-    const [userId, setUserId] = React.useState('');
+    const [userId, setUserId] = React.useState(''); 
+    const dispatch = useAppDispatch();
+    
 
     const showUnfollowDialog = async (id: string) => {
         setIsDialog(true);
@@ -61,41 +65,13 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     const followHandler = async () => {
         
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
         console.log('userId', userId);
         console.log('followerId', userDetail._id);
-
-        const followerId = userDetail._id;
-        
-        try {
-            const response = await fetch(`${API_URL}follow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userId,
-                    "followerId": followerId,
-                }),
-            });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                 appCounter();
-                setIsDialog(false);  
-            } else {
-                //
-            }
-
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
+        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userId, followerId:userDetail._id }));  
+        console.log('response', response);
+        if(response.meta.requestStatus === 'fulfilled'){            
+            setIsDialog(false);  
         }
-
     };
 
     const unFollowHandler = async () => {
@@ -141,27 +117,13 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                 </View>
                 <View style={styles.rightWrapper}>
                     {follower.isFollowing &&
-                        <>
-                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followingId._id)}>
-                                <Text style={styles.text}>Unfollow</Text>
-                            </Pressable> */}
-                            
-                            {/* <Pressable style={styles.button} onPress={unFollowHandler.bind(this, follower.followerId._id)}>
-                                <Text style={styles.text}>Unfollow</Text>
-                            </Pressable> */}
-                        
+                        <>                            
                              <Pressable style={styles.button} onPress={showUnfollowDialog.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
                             </Pressable>
 
                         </>
                     }
-
-                    {/* {!follower.isFollowing &&
-                        <Pressable style={styles.button} onPress={followHandler.bind(this, follower.followingId?._id)}>
-                            <Text style={styles.text}>Follow</Text>
-                        </Pressable>
-                    } */}
 
                    {!follower.isFollowing &&
                         <Pressable style={styles.button} onPress={showFollowDialog.bind(this, follower.followerId?._id)}>
@@ -174,7 +136,6 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
             <Portal>
             <Dialog visible={isDialog} onDismiss={hideDialog}>
-                
                     <Dialog.Title>
                         {follower.isFollowing &&<Text style={styles.dialogueHeading}>Are you sure you want to unfollow this user?</Text>}
                         {!follower.isFollowing &&<Text style={styles.dialogueHeading}>Are you sure you want to follow this user?</Text>}

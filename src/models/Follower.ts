@@ -15,7 +15,7 @@ type User = {
 export type FollowerType = {
     _id: string;
     userId: string;
-    // followerId: User;
+    followerId: User;
     followingId: User;
     createdAt: string;
     isFollowing: boolean;

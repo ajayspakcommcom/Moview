@@ -25,7 +25,6 @@ export const userFetchFollowers = createAsyncThunk('follower/userFetchFollowers'
     });
 
     const resp = await response.json();
-    console.log('resp', resp);
     return resp.data as FollowerType[];
 });
 

@@ -20,7 +20,7 @@ type Props = {
 
 const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
-    const { userDetail, user, appCounter, counter } = useAuth();
+    const { userDetail, user, appCounter } = useAuth();
     const [isFollowing, setIsFollowing] = React.useState(false);
     const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
@@ -28,8 +28,9 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    const { count: followerCount } = useSelector((state: RootState) => state.userFollower);           
-    const { count: followingCount } = useSelector((state: RootState) => state.userFollowing);
+    const { count: followerCount, data: followerData } = useSelector((state: RootState) => state.userFollower);           
+    const { count: followingCount } = useSelector((state: RootState) => state.userFollowing);    
+    const { data: myFollowing } = useSelector((state: RootState) => state.myFollowing);
     const dispatch = useAppDispatch();
 
     const getFollowerCount = async () => {
@@ -37,69 +38,16 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     };
 
     const getFollowingCount = async () => {
-
-        dispatch(userFetchFollowings({ url: `${API_URL}following/${userData?._id}`, token: user?.token! }));     
-
-        // const url = `${API_URL}following/${userData?._id}`;
-        // const token = user;
-
-        // try {
-        //     const response = await fetch(url, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Authorization': `Bearer ${token?.token}`,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         signal: signal
-        //     });
-
-        //     const result = await response.json();
-
-        //     if (result.status === 'success') {
-        //         setFollowData((prevState) => ({
-        //             ...prevState,
-        //             following: result.data.length
-        //         }));
-        //     }
-        // } catch (error) {
-        //     if (error instanceof Error) {
-        //         if (error.name === 'AbortError') {
-
-        //         } else {
-
-        //         }
-        //     } else {
-
-        //     }
-        // }
+        dispatch(userFetchFollowings({ url: `${API_URL}following/${userData?._id}`, token: user?.token! }));             
     };
 
     const checkIfFollowing = async () => {
-        try {
 
-            const response = await fetch(`${API_URL}check-if-following`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userData?._id,
-                    "followerId": userDetail?._id, //logged in user id
-                }),
-                signal: signal
-            });
+        const isFollowing = myFollowing.find((item: any) => item.followerId._id === userDetail?._id)?.isFollowing;
+        console.log('isFollowing...', isFollowing);
 
-            const respData = await response.json();
-
-            if (respData.status === 'success') {
-                if (respData.isFollowing === 1) {
-                    setIsFollowing(true);
-                }
-            }
-
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
+        if(isFollowing){
+            setIsFollowing(true);
         }
     };
 
@@ -138,11 +86,11 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
         getFollowerCount();
         getFollowingCount();
         getReviewListByUser();
-
+        
         return () => {
             abortController.abort();
         };
-    }, [userData, counter]);
+    }, [userData]);
 
     const followHandler = async () => {
         try {
@@ -253,6 +201,26 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 </View>
             </View>
 
+
+            {/* {!isFollowing &&
+                <CustomButton
+                    text={'Follow'}
+                    onPressHandler={followHandler}
+                    textSize={20}
+                    isDisabled={false}
+                />
+            }
+
+            {isFollowing &&
+                <CustomButton
+                    text={'Unfollow'}
+                    onPressHandler={UnFollowHandler}
+                    textSize={20}
+                    isDisabled={false}
+                />
+            } */}
+
+            <Text style={{color: Colors.whiteColor}}>{isFollowing ? 'Following' : 'Not Following'}</Text>
 
             {!isFollowing &&
                 <CustomButton

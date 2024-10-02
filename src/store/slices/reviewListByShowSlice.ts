@@ -25,7 +25,6 @@ export const fetchReviewListByShow = createAsyncThunk('reviewListByShow/fetchRev
     }); //Replace with your API endpoint
 
     const resp = await response.json();
-    console.log('resp', resp);
     return resp.data.reviews as Review[];
 });
 

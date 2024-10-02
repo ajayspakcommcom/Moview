@@ -16,12 +16,12 @@ const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton')
 const UserProfileForm = React.lazy(() => import('../../components/UserProfileForm/UserProfileForm'));
 
 import { useSelector } from 'react-redux';
-
 import { RootState, useAppDispatch } from '../../store/index';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
+import { fetchFollowings } from '../../store/slices/followingSlice';
 
 type Props = {
     navigation: any;
@@ -78,42 +78,34 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
         const url = `${API_URL}following/${userDetail._id}`; // logged user id
         const token = user;
+        console.log('url', url);
 
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token?.token}`,
-                    'Content-Type': 'application/json'
-                },
-                signal: signal
-            });
+        
+        //dispatch(fetchFollowings({ url, token: token?.token! }));
 
-            const result = await response.json();
+        // try {
+        //     const response = await fetch(url, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Authorization': `Bearer ${token?.token}`,
+        //             'Content-Type': 'application/json'
+        //         },
+        //         signal: signal
+        //     });
 
-            setFollowData((prevState) => ({
-                     ...prevState,
-                     following: 0       
-                 }));
+        //     const result = await response.json();
 
-            
-            if (result.status === 'success') {
-                 setFollowData((prevState) => ({
-                     ...prevState,
-                     following: result.data.length    
-                 }));
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
+        //     setFollowData((prevState) => ({...prevState,following: 0 }));
 
-                } else {
-
-                }
-            } else {
-
-            }
-        }
+        //     if (result.status === 'success') {
+        //          setFollowData((prevState) => ({
+        //              ...prevState,
+        //              following: result.data.length    
+        //          }));
+        //     }
+        // } catch (error) {
+        //     error instanceof Error ? error.name === 'AbortError' ? console.log('AbortError') : console.log('') : console.log('error');
+        // }
     };
 
     const getFollowerCount = async () => {
@@ -161,7 +153,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         React.useCallback(() => {
 
             getFollowerCount();
-            getFollowingCount();
+            //getFollowingCount();
             getReviewListByUser();
 
             return () => {            
@@ -180,7 +172,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.innerContainer}>
-
                 {
                     !isEditMode &&
                     <>

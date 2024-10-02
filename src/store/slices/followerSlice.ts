@@ -23,11 +23,13 @@ export const fetchFollowers = createAsyncThunk('follower/fetchFollowers', async 
     });
 
     const resp = await response.json();
+    console.log('resp', resp);
     return resp.data as FollowerType[];
 });
 
 
 export const createFollower = createAsyncThunk('follower/createFollower', async ({ url, token, userId, followerId }: { url: string; token: string; userId: string; followerId: string }, { rejectWithValue }) => {
+
     try {
         const response = await fetch(`${url}`, {
             method: 'POST',
@@ -43,24 +45,18 @@ export const createFollower = createAsyncThunk('follower/createFollower', async 
 
         const resp = await response.json();
 
-        if (!response.ok) {
-            // Extract error message from the response or set a default one
-            const errorMessage = resp.error || 'Failed to create follower';
-            return rejectWithValue(errorMessage);
-        } else {
-            // Return success message and data
-            return {
-                data: resp.data as FollowerType, // Adjust based on your actual data structure
-                message: resp.message || 'Follower created successfully',
-            };
-        }
-    } catch (error) {
-        // Log the error for debugging purposes
+        return {
+            data: resp.data as FollowerType,
+            message: resp.message || 'Follower created successfully',
+        };
+
+    } catch (error: any) {
         console.error('Error creating follower:', error);
         return rejectWithValue('An unexpected error occurred while creating follower');
     }
 }
 );
+
 
 
 
@@ -83,20 +79,20 @@ const followerSlice = createSlice({
                 state.error = action.error.message || null;
                 console.log('data', state.data);
             })
-
             .addCase(createFollower.pending, (state) => {
                 state.loading = true;
-                console.log('createFollower.pending');
             })
             .addCase(createFollower.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = [...state.data, action.payload.data];
-                console.log('createFollower.fulfilled');
+                if (Array.isArray(action.payload.data) && action.payload.data.length > 0) {
+                    state.data = [...state.data, ...action.payload.data];
+                } else {
+                    state.data = [...state.data, action.payload.data];
+                }
             })
             .addCase(createFollower.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
-                console.log('createFollower.rejected', state.error);
             })
     },
 });

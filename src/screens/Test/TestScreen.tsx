@@ -17,8 +17,7 @@ const TestScreen = () => {
     
     const dispatch = useAppDispatch();
 
-    const addFollowerHandler = async () => {   
-        
+    const addFollowerHandler = async () => {          
        dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: '66a368f4470675a3aa79ccb4', followerId:userDetail._id }));       
     };
 
@@ -29,6 +28,11 @@ const TestScreen = () => {
     const checkStateHandler = () => {
         console.log('followerData', followerData);
     }
+
+
+   
+
+
     
     return (
         <ScrollView style={styles.container}>                 
@@ -40,7 +44,7 @@ const TestScreen = () => {
                 <View style={styles.centerBtn}>
                     <Button style={styles.btn} mode='contained' onPress={() => checkStateHandler()}>Check State Button</Button>
                     <Button style={styles.btn} mode='contained' onPress={() => fetchFollowerHandler()}>Fetch Follower Button</Button>
-                    <Button style={styles.btn} mode='contained' onPress={() => addFollowerHandler()}>Add Follower Button</Button>
+                    <Button style={styles.btn} mode='contained' onPress={() => addFollowerHandler()}>Add Follower Button</Button>                    
                 </View>                
         </ScrollView>
     );

@@ -1,14 +1,10 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Attach to packager",
-            "cwd": "${workspaceFolder}",
-            "type": "reactnative",
-            "request": "attach"
-        }
-    ]
+  "configurations": [
+    {
+      "type": "chrome",
+      "name": "http://localhost:8081/",
+      "request": "launch",
+      "url": "http://localhost:8081/"
+    }
+  ]
 }

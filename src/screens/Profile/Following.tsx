@@ -50,7 +50,6 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 
         headerHandler();
         getFollowingList();
-
         return () => {
 
         }

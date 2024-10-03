@@ -64,8 +64,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
     const followHandler = async () => {
         
-        console.log('userId', userId);
-        console.log('followerId', userDetail._id);
+        // console.log('userId', userId);
+        // console.log('followerId', userDetail._id);
         const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userId, followerId:userDetail._id }));          
         if(response.meta.requestStatus === 'fulfilled'){            
             setIsDialog(false);  

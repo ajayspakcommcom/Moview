@@ -33,7 +33,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
     const { user, logout, userDetail } = useAuth();
-    const [followData, setFollowData] = React.useState({ followers: 0, following: 0 });
     const [moviesReviewed, setMoviesReviewed] = React.useState(0);
 
     const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
@@ -50,9 +49,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         logout();
         setDialogVisible(false)
     };
-
-    const abortController = new AbortController();
-    const signal = abortController.signal;
 
     const gotoScreen = (screen: string) => {
         navigation.navigate(screen);
@@ -87,8 +83,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             getFollowerCount();
             getFollowingCount();
             getReviewListByUser();
-            console.log('profile home screen');
-
+            
             return () => {            
             };
         }, [moviewReviews, showReviews]) 

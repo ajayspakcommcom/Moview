@@ -20,7 +20,8 @@ import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TestScreen from './src/screens/Test/TestScreen';
-import { CommonActions } from '@react-navigation/native';
+
+
 
 
 const Stack = createStackNavigator();
@@ -92,13 +93,42 @@ function App(): React.JSX.Element {
 
       {isLoggedIn &&
         <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor } }} >
-          <Tab.Screen name="Home" component={HomeNavigation} options={{ ...TabNavigationOptions.Home }} />
+          <Tab.Screen
+            name="Home"
+            component={HomeNavigation}
+            options={{ ...TabNavigationOptions.Home }}
+            listeners={({ navigation }) => ({
+              tabPress: (e) => {                
+                navigation.navigate('Home', { screen: 'HomeScreen' });
+              }
+            })}            
+          />
           
           {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
           {/* <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} /> */}
           
-          <Tab.Screen name="MyReview" component={MyReviewNavigation} options={{ ...TabNavigationOptions.MyReview }} />
-          <Tab.Screen name="Profile" component={ProfileNavigation} options={{ ...TabNavigationOptions.Profile }} />
+          <Tab.Screen
+            name="MyReview"
+            component={MyReviewNavigation}
+            options={{ ...TabNavigationOptions.MyReview }}
+            listeners={({ navigation }) => ({
+              tabPress: (e) => {                
+                navigation.navigate('MyReview', { screen: 'HomeScreen' });
+              }
+            })} 
+          />
+
+          <Tab.Screen
+            name="Profile"
+            component={ProfileNavigation}
+            options={{ ...TabNavigationOptions.Profile }}
+            listeners={({ navigation }) => ({
+              tabPress: (e) => {                
+                navigation.navigate('Profile', { screen: 'HomeScreen' });
+              }
+            })} 
+          />
+          
         </Tab.Navigator>
       }
 

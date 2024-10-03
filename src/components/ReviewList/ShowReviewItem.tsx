@@ -12,12 +12,15 @@ import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-
 import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { ShowReview } from '../../models/ShowReview';
+import { useAuth } from '../../context/AuthContext';
 
 interface ItemProps {
     item: ShowReview;
 }
 
 const ShowReviewItem: React.FC<ItemProps> = ({ item }) => {
+
+    const { userDetail } = useAuth();
 
     const [isExpanded, setIsExpanded] = React.useState(false);
     const navigation = useNavigation<any>();
@@ -60,7 +63,9 @@ const ShowReviewItem: React.FC<ItemProps> = ({ item }) => {
                                 </LinearGradient>
                             </View>
                             <View style={styles.content}>
-                                <Text style={styles.name} onPress={gotoUserProfile.bind(null, item.user._id)}>{item.user.firstname}</Text>
+                                
+                                {/* <Text style={styles.name} onPress={gotoUserProfile.bind(null, item.user._id)}>{item.user.firstname}</Text> */}
+                                <Text style={styles.name} onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)}>{item.user.firstname}</Text>
                                 <View style={styles.rating}>
                                     <AirbnbRating
                                         count={5}

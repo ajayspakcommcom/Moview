@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { userFetchFollowers } from '../../store/slices/userFollowerSlice';
 import { userFetchFollowings } from '../../store/slices/userFollowingSlice';
+import { Button } from 'react-native-paper';
 
 type Props = {
     userData?: UserItem
@@ -28,9 +29,12 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    const { count: followerCount, data: followerData } = useSelector((state: RootState) => state.userFollower);           
+    const { count: followerCount } = useSelector((state: RootState) => state.userFollower);           
     const { count: followingCount } = useSelector((state: RootState) => state.userFollowing);    
     const { data: myFollowing } = useSelector((state: RootState) => state.myFollowing);
+    const { data: myFollower } = useSelector((state: RootState) => state.myFollower);
+
+
     const dispatch = useAppDispatch();
 
     const getFollowerCount = async () => {
@@ -42,13 +46,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     };
 
     const checkIfFollowing = async () => {
-
-        const isFollowing = myFollowing.find((item: any) => item.followerId._id === userDetail?._id)?.isFollowing;
-        console.log('isFollowing...', isFollowing);
-
-        if(isFollowing){
-            setIsFollowing(true);
-        }
+        const isFollowing = myFollower.find(item => item.followerId._id === userData?._id)?.isFollowing        
+        setIsFollowing(isFollowing!);
     };
 
     const getReviewListByUser = async () => {
@@ -81,7 +80,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     };
 
     React.useLayoutEffect(() => {
-
+        
+        console.log('FollowerFollowing...');
         checkIfFollowing();
         getFollowerCount();
         getFollowingCount();
@@ -91,6 +91,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
             abortController.abort();
         };
     }, [userData]);
+
+ 
 
     const followHandler = async () => {
         try {
@@ -220,21 +222,10 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 />
             } */}
 
-            <Text style={{color: Colors.whiteColor}}>{isFollowing ? 'Following' : 'Not Following'}</Text>
-
             {!isFollowing &&
                 <CustomButton
                     text={'Follow'}
                     onPressHandler={followHandler}
-                    textSize={20}
-                    isDisabled={false}
-                />
-            }
-
-            {isFollowing &&
-                <CustomButton
-                    text={'Unfollow'}
-                    onPressHandler={UnFollowHandler}
                     textSize={20}
                     isDisabled={false}
                 />

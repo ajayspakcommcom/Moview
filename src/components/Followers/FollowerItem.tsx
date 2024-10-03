@@ -73,34 +73,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
     };
 
     const unFollowHandler = async () => {
-        
         const followerId = userDetail._id; //logged in user id
-
-        const response = await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userId, followerId:followerId }));  
-
-        // try {
-        //     const response = await fetch(`${API_URL}unfollow`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${user?.token}`,
-        //         },
-        //         body: JSON.stringify({
-        //             "userId": userId,
-        //             "followerId": followerId,
-        //         }),
-        //     });
-        //     const result = await response.json();
-        //     if (result.status === 'success') {
-        //         appCounter();
-        //         setIsDialog(false);  
-        //     } else {
-                
-        //     }
-        // } catch (error) {
-        //     Alert.alert(`Error: ${error}`);
-        // }
-
+        await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userId, followerId:followerId }));  
     };
 
 

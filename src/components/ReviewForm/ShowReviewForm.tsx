@@ -12,6 +12,9 @@ import { createReviewListByShow } from '../../store/slices/reviewListByShowSlice
 import { createNotification } from '../../store/slices/notificationSlice';
 import { Button, Dialog, Portal } from 'react-native-paper';
 
+import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
+import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
+
 interface ItemProps {
     showItem: ShowItem,
     onPress?: (bool: string) => void;
@@ -49,11 +52,18 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show' }));        
     };
 
+    const setMovieShowReview = async () => {
+        const movieUrl = `${API_URL}review/user/${userDetail._id}`;
+        const showUrl = `${API_URL}review-show/user/${userDetail._id}`;
+        dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
+        dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
+    };
 
     const onSaveHandler = async () => {
         const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
         if (createdReview.meta.requestStatus === 'fulfilled') {         
             setIsDialog(true);
+            setMovieShowReview();
         } else {
             Alert.alert('Error', 'Failed to create review.');
         }

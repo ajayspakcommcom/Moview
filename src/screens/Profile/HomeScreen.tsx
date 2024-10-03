@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, Pressable, PressableProps } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { API_URL } from '../../configure/config.android';
-import { Button, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
 import FastImage from 'react-native-fast-image';
 
@@ -18,9 +17,6 @@ const UserProfileForm = React.lazy(() => import('../../components/UserProfileFor
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { useFocusEffect } from '@react-navigation/native';
-
-import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
-import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
 import { fetchFollowings } from '../../store/slices/followingSlice';
 import { fetchFollowers } from '../../store/slices/followerSlice';
 
@@ -33,7 +29,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
     const { user, logout, userDetail } = useAuth();
-    const [moviesReviewed, setMoviesReviewed] = React.useState(0);
+    const [myReviews, setMyReviews] = React.useState(0);
 
     const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
     const cancelDialog = () => setDialogVisible(false);
@@ -72,8 +68,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         dispatch(fetchFollowers({ url: url, token: user?.token! }));         
     };
 
-    const getReviewListByUser = async () => {
-        setMoviesReviewed((moviewReviews.length + showReviews.length));
+    const getReviewListByUser = async () => {        
+        setMyReviews((moviewReviews.length + showReviews.length));
     };
 
 
@@ -112,8 +108,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     <View style={styles.userIcon}>
                                         <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
                                     </View>
-                                    <View style={styles.userTextWrapper}>
-                                        {/* <Text style={styles.name}>{capitalizeFirstLetter(user?.username!)}</Text> */}
+                                    <View style={styles.userTextWrapper}>                                        
                                         <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
                                         {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
                                     </View>
@@ -124,7 +119,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                         <View style={styles.followerWrapper}>
                             <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                                 <View style={styles.movies}>
-                                    <Text style={styles.follText}>{moviesReviewed}</Text>
+                                    <Text style={styles.follText}>{myReviews}</Text>
                                     <Text style={styles.follText}>Reviews</Text>
                                 </View>
                             </Pressable>
@@ -166,8 +161,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                 />                
             </View>
 
-
-            
         </ScrollView>
     );
 };

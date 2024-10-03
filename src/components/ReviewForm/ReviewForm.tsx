@@ -11,7 +11,11 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import { Button, Dialog, Portal } from 'react-native-paper';
-import {  createNotification } from '../../store/slices/notificationSlice';
+import { createNotification } from '../../store/slices/notificationSlice';
+
+import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
+import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
+
 
 interface ItemProps {
     movieItem: MovieItem,
@@ -20,7 +24,7 @@ interface ItemProps {
 
 const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
-    const { userDetail, user, appCounter } = useAuth();
+    const { userDetail, user } = useAuth();
     const [comment, setComment] = React.useState<string>('');
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
@@ -51,11 +55,18 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         setComment(text);
     };
 
+    const setMovieShowReview = async () => {
+        const movieUrl = `${API_URL}review/user/${userDetail._id}`;
+        const showUrl = `${API_URL}review-show/user/${userDetail._id}`;
+        dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
+        dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
+    };
 
-    const onSaveHandler = async () => {
+    const onSaveHandler = async () => {                
         const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
         if (createdReview.meta.requestStatus === 'fulfilled') {         
             setIsDialog(true);
+            setMovieShowReview();
         } else {
             Alert.alert('Error', 'Failed to create review.');
         }

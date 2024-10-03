@@ -20,14 +20,13 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({navigation}) => {
 
     const { userDetail, user } = useAuth();
-    
     const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);    
     const { data: showReviews} = useSelector((state: RootState) => state.myShowReview);    
     const dispatch = useAppDispatch();
-     
+ 
       useFocusEffect(
           React.useCallback(() => {
-            // this function called when user on the current screen
+              
             return () => {            
             };
         }, []) 

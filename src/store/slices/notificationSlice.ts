@@ -1,6 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Review } from '../../models/Review';
-import { ShowReviewResponse } from '../../models/MyReview';
 import { Notification } from '../../types/Notification';
 
 interface NotificationState {
@@ -120,7 +118,6 @@ export const updateNotification = createAsyncThunk('notification/updateNotificat
 });
 
 export const deleteNotification = createAsyncThunk('notification/deleteNotification', async ({ url, token, _id }: { url: string, token: string, _id: string }) => {
-    console.log('deleteNotification...', { url, token, _id });
     const response = await fetch(`${url}`, {
         method: 'DELETE',
         headers: {
@@ -184,10 +181,16 @@ const notificationSlice = createSlice({
                 }
             })
 
-
+            .addCase(deleteNotification.pending, (state) => {
+                state.loading = true;
+            })
             .addCase(deleteNotification.fulfilled, (state, action) => {
                 state.data = state.data.filter(notification => notification._id !== action.payload);
-            });
+            })
+            .addCase(deleteNotification.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || null;
+            })
     },
 });
 

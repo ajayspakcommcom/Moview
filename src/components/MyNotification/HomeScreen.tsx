@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
 import Fonts from '../../styles/Fonts';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/Notification';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -70,7 +69,7 @@ const movieList: MovieItem[] = [
 
 const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
-    const { user, appCounter } = useAuth();
+    const { user } = useAuth();
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
@@ -78,18 +77,12 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
 
     React.useLayoutEffect(() => {
-
         setData(notificationData);
-
-        return () => {
-            
-        };
+        return () => { };
     }, [notificationData]);
 
     const onRefresh = () => {
-        setTimeout(() => {
-
-        }, 2000);
+        
     };
 
 
@@ -98,8 +91,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
         onClick && onClick(obj._id);
     }
 
-    const renderItem = ({ item }: { item: Notification }) => (
-        <>            
+    const renderItem = ({ item }: { item: Notification }) => (                
             <View style={[styles.item]}>
 
                 {/*<View style={styles.type}>
@@ -120,12 +112,10 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
                     <Text style={styles.desc}>{item.message}</Text>
                 </View>
 
-            </View>
-        </>
+            </View>        
     );
 
     return (
-        <>
             <FlatList
                 ref={flatListRef}
                 data={data}
@@ -140,8 +130,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
                     progressBackgroundColor={Colors.tabActiveColor}
                 />}
                 extraData={movieList}
-            />
-        </>
+            />        
     );
 };
 

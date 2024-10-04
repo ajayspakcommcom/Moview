@@ -40,17 +40,24 @@ const Notification: React.FC<Props> = ({ navigation }) => {
     };
 
     const getNotificationData = () => {        
-            loadHeaderContent();
-            dispatch(fetchNotificationsByUserId({ url: url, token: user?.token! }));
+        loadHeaderContent();
+        dispatch(fetchNotificationsByUserId({ url: url, token: user?.token! }));
     }
 
-    const deleteNotificationHandler = (id: string) => {        
-        dispatch(deleteNotification({ url: `${API_URL}notification/${id}`, token: user?.token!, _id: id }));  
+    const deleteNotificationHandler = async (id: string) => {                
+        console.log('before notificationData', notificationData.length);
+        const respData = await dispatch(deleteNotification({ url: `${API_URL}notification/${id}`, token: user?.token!, _id: id }));
+        console.log('respData', respData);
+        console.log('after notificationData', notificationData.length);
     }
+
+    const notificationDataHandler = React.useCallback(() => {
+        console.log('notificationData', notificationData.length);
+    }, [notificationData]);
 
     useFocusEffect(
         React.useCallback(() => {
-            getNotificationData();
+            getNotificationData();            
             return () => {            
             };
         }, []) 

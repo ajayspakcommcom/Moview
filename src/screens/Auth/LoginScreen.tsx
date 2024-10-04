@@ -10,7 +10,6 @@ import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 import { hitSlops } from '../../utils/Common';
 
-
 type Props = {
 
 };

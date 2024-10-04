@@ -5,26 +5,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
-import { useAuth } from '../../context/AuthContext';
-import { API_URL } from '../../configure/config.android';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../store/index';
-import { fetchNotificationsByUserId } from '../../store/slices/notificationSlice';
+
 
 
 interface HeaderProps {
     message?: string;
     onPressedHandler?: (selectedTab: string) => void;
-    navigation: any
+    navigation: any,
+    notificationCount: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }) => {
-
-    const { userDetail, user } = useAuth();
-    const { data: notificationData } = useSelector((state: RootState) => state.notification);
+const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation, notificationCount }) => {
+  
     const [selectedItem, setSelectedItem] = React.useState<string | null>('Latest');
-    const [notificationCount, setNotificationCount] = React.useState<number>(0);
-    const dispatch = useAppDispatch();
     
     const handlePress = (item: string) => {
         setSelectedItem(item);
@@ -37,23 +30,13 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
         navigation.navigate("Notification");
     };
 
-    const getNotificationCount = () => {
-        const notificationUrl = `${API_URL}notification/follower/${userDetail?._id}`;
-        dispatch(fetchNotificationsByUserId({ url: notificationUrl, token: user?.token! }));
-        const count = notificationData.filter((item: any) => item.user_id === userDetail?._id).length;
-        setNotificationCount(count);
-    };
-
-
-
     React.useLayoutEffect(() => {
-       getNotificationCount();
+       
         return () => {
         };
     }, []);
 
     return (
-        <>
             <View style={styles.headerWrapper}>
                 <View style={[styles.childWrapper, styles.logoWrapper]}>
                     <FastImage
@@ -79,8 +62,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation }
                         {notificationCount > 0 && <Text style={styles.notificationText}>{notificationCount}</Text>}                        
                     </Pressable>
                 </View>
-            </View>
-        </>
+            </View>        
     );
 };
 

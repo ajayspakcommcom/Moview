@@ -6,6 +6,7 @@ import { useAppDispatch } from '../store/index';
 
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../store/slices/myShowReviewSlice';
+import { fetchNotificationsByUserId } from '../store/slices/notificationSlice';
 
 
 
@@ -81,7 +82,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 const showUrl = `${API_URL}review-show/user/${result.userDetail?._id}`;
                 dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: result.token }));
                 dispatch(fetchShowReviewsByUserId({ url: showUrl, token: result.token }));
-                
+                const notificationUrl = `${API_URL}notification/follower/${result.userDetail?._id}`;
+                dispatch(fetchNotificationsByUserId({ url: notificationUrl, token: result.token }));
             }
             else {
                 setResponseError({ message: result.message, status: result.status });

@@ -4,6 +4,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
 import { Text } from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/native';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
 
 const LatestMovieShowList = React.lazy(() => import('../../components/LatestMovieShowList/LatestMovieShowList'));
 const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
@@ -19,19 +22,19 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
+    const { data: notificationData } = useSelector((state: RootState) => state.notification);
+    const [notificationCount, setNotificationCount] = React.useState<number>(0);
 
     React.useLayoutEffect(() => {
-
         setTransparentHeader(navigation, '', 'notifications');
-
-        return () => {
-
-        };
+        return () => {};
     }, [navigation]);
 
-    const handlePress = () => {
-
-    };
+    useFocusEffect(
+        React.useCallback(() => {            
+            setNotificationCount(notificationData.length);
+        }, [notificationData])
+    );
 
     const onHeaderPressedHandler = (tab: string) => {
         setSelectedTab(tab)
@@ -39,7 +42,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>                
-                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} /> 
+                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} /> 
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList />}

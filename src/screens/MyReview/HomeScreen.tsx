@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
-import { Button } from 'react-native-paper';
+import { StyleSheet, View} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useSelector } from 'react-redux';
@@ -11,9 +10,6 @@ import { useAuth } from '../../context/AuthContext';
 
 const MyReviewList = React.lazy(() => import('../../components/MyReviewList/MyReviewList'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
-
-
-
 
 type Props = {
     navigation: any;

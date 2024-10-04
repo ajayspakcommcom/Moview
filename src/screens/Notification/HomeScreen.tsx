@@ -56,13 +56,11 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         }, []) 
     );
 
-
-
-
     return (
         <View style={styles.container}>          
             <React.Suspense fallback={<Loading />}>                
-                <MyNotification notificationData={notificationData} onClick={deleteNotificationHandler} />
+                {notificationData.length > 0 && <MyNotification notificationData={notificationData} onClick={deleteNotificationHandler} />}
+                {notificationData.length === 0 && <View style={styles.noNotification}><Text style={styles.whiteText}>No Notifications</Text></View>}
             </React.Suspense>
         </View>
     );
@@ -75,6 +73,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 15,
         flexGrow: 1
+    },
+    noNotification: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    whiteText: {
+        color: Colors.whiteColor,
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 
 });

@@ -34,7 +34,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [isDialog, setIsDialog] = React.useState(false);
     const dispatch = useAppDispatch();
 
-    const hideDialog = () => {
+    const hideDialog = () => {        
         onPress && onPress('reviews');
         setIsDialog(false);
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie' }));            
@@ -55,18 +55,11 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         setComment(text);
     };
 
-    const setMovieShowReview = async () => {
-        const movieUrl = `${API_URL}review/user/${userDetail._id}`;
-        const showUrl = `${API_URL}review-show/user/${userDetail._id}`;
-        dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
-        dispatch(fetchShowReviewsByUserId({ url: showUrl, token: user?.token! }));
-    };
-
-    const onSaveHandler = async () => {                
+    
+    const onSaveHandler = async () => {   
         const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
-        if (createdReview.meta.requestStatus === 'fulfilled') {         
-            setIsDialog(true);
-            setMovieShowReview();
+        if (createdReview.meta.requestStatus === 'fulfilled') {                         
+            setIsDialog(true);            
         } else {
             Alert.alert('Error', 'Failed to create review.');
         }

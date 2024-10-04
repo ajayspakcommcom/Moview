@@ -3,6 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
+import { Text } from 'react-native-paper';
 
 const LatestMovieShowList = React.lazy(() => import('../../components/LatestMovieShowList/LatestMovieShowList'));
 const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
@@ -37,9 +38,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     return (
-        <>
-            <View style={styles.container}>
-                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} />
+        <View style={styles.container}>                
+                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} /> 
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList />}
@@ -47,8 +47,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>
-            </View>
-        </>
+            <Text style={styles.text}>Home Screen</Text>
+        </View>
     );
 };
 

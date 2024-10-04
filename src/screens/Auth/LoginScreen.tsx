@@ -33,7 +33,7 @@ const LoginScreen: React.FC<Props> = () => {
         setPassword(text);
     };
 
-    const handleLogin = async () => {
+    const handleLogin = async () => {        
         setLoader(true);
         try {
             if (username.trim() === '' || password.trim() === '') {

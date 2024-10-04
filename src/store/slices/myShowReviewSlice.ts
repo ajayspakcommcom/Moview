@@ -14,7 +14,7 @@ const initialState: MyShowReviewState = {
     error: null,
 };
 
-export const fetchReviews = createAsyncThunk('reviews/fetchReviews', async () => {
+export const fetchReviews = createAsyncThunk('showreviews/fetchReviews', async () => {
     const response = await fetch('/api/reviews'); // Replace with your API endpoint
     const resp = await response.json();
     return resp.data.reviews;
@@ -33,7 +33,7 @@ export const fetchReviewsByUserId = createAsyncThunk('showreviews/fetchReviewsBy
     return resp.data.reviews;
 });
 
-export const createReview = createAsyncThunk('reviews/createReview', async (review: Review) => {
+export const createReview = createAsyncThunk('showreviews/createReview', async (review: Review) => {
     const response = await fetch('/api/reviews', {
         method: 'POST',
         headers: {
@@ -46,7 +46,7 @@ export const createReview = createAsyncThunk('reviews/createReview', async (revi
     return resp;
 });
 
-export const updateReview = createAsyncThunk('reviews/updateReview', async ({ id, review }: { id: string, review: Review }) => {
+export const updateReview = createAsyncThunk('showreviews/updateReview', async ({ id, review }: { id: string, review: Review }) => {
     const response = await fetch(`/api/reviews/${id}`, {
         method: 'PUT',
         headers: {

@@ -72,8 +72,6 @@ export const createNotification = createAsyncThunk('notification/createNotificat
 
         // Log response to see what's being returned
         const textResponse = await response.text();
-        console.log('Raw Response:', textResponse); // Logs raw response
-
         // Check if response is not 200
         if (response.status !== 200) {
             // Attempt to parse as JSON only if content type is JSON

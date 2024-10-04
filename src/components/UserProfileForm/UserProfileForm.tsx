@@ -4,6 +4,7 @@ import Colors from '../../styles/Colors';
 import { API_URL } from '../../configure/config.android';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../context/AuthContext';
+import { TextInput } from 'react-native-paper';
 
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
@@ -25,6 +26,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
     const [biography, setBiography] = React.useState('');
 
     const [loader, setLoader] = React.useState(false);
+    
 
 
     React.useLayoutEffect(() => {
@@ -35,9 +37,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
         setPassword(userDetail.password_hash);
         setBiography(userDetail.biography);
 
-        return () => {
-
-        }
+        return () => {}
 
     }, []);
 
@@ -126,10 +126,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
         setBiography(text);
     };
 
-    const skipHandler = (event: GestureResponderEvent) => {
-
-    };
-
     const cancelHandler = () => {
         onCancel(false);
     };
@@ -170,6 +166,9 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 secureTextEntry
                 editable={true}
             />
+
+
+           
 
             <CustomTextTextarea
                 style={styles.textArea}

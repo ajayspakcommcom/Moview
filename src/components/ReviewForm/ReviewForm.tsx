@@ -59,7 +59,9 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const onSaveHandler = async () => {   
         const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
         if (createdReview.meta.requestStatus === 'fulfilled') {                         
-            setIsDialog(true);            
+            setIsDialog(true); 
+            const movieUrl = `${API_URL}review/user/${userDetail._id}`;
+            await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));       
         } else {
             Alert.alert('Error', 'Failed to create review.');
         }

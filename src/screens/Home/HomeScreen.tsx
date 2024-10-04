@@ -46,8 +46,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Movies' && <MovieList />}
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
-                </View>
-            <Text style={styles.text}>Home Screen</Text>
+                </View>            
         </View>
     );
 };

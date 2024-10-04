@@ -49,7 +49,7 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true, movies, sh
         return () => {
             
         };
-    }, []);
+    }, [movies, shows]);
 
     return (
         <>                

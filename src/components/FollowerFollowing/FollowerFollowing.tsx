@@ -93,16 +93,21 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     }, [userData]);
 
  
-    const followHandler = async () => {
-        console.log('followHandler');
+    const followHandler = async () => {        
         const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userData?._id!, followerId: userDetail._id }));          
-        console.log('response', response);
+        console.log('followHandler', response);
+         if (response.meta.requestStatus === 'fulfilled') { 
+            setIsFollowing(true);
+        }
     };
 
-    const UnFollowHandler = async () => {
-        console.log('UnFollowHandler');
+    const unFollowHandler = async () => {        
         const followerId = userDetail._id; //logged in user id
-        await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userData?._id!, followerId:followerId }));  
+        const response = await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userData?._id!, followerId: followerId })); 
+        console.log('UnFollowHandler', response);
+        if (response.meta.requestStatus === 'fulfilled') { 
+            setIsFollowing(false);
+        }
     };
 
     return (
@@ -137,29 +142,10 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 </View>
             </View>
 
-
-            {/* {!isFollowing &&
-                <CustomButton
-                    text={'Follow'}
-                    onPressHandler={followHandler}
-                    textSize={20}
-                    isDisabled={false}
-                />
-            }
-
             {isFollowing &&
                 <CustomButton
                     text={'Unfollow'}
-                    onPressHandler={UnFollowHandler}
-                    textSize={20}
-                    isDisabled={false}
-                />
-            } */}
-
-            {isFollowing &&
-                <CustomButton
-                    text={'Unfollow'}
-                    onPressHandler={UnFollowHandler}
+                    onPressHandler={unFollowHandler}
                     textSize={20}
                     isDisabled={false}
                 />

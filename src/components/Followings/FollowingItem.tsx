@@ -55,38 +55,9 @@ const FollowingItem: React.FC<FollowingItemProps> = ({ following }) => {
 
 
     const unFollowHandler = async () => {
-        
-        //console.log('unFollowHandler');
-        //console.log('userId', userId);
         const followerId = userDetail._id; //logged in user id
         const resp = await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userId, followerId: followerId }));          
         console.log('resp', resp);
-
-        // const followerId = userDetail._id;
-        // try {
-        //     const response = await fetch(`${API_URL}unfollow`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${user?.token}`,
-        //         },
-        //         body: JSON.stringify({
-        //             "userId": userId,
-        //             "followerId": followerId, //logged in user id
-        //         }),
-        //     });
-
-        //     const respData = await response.json();
-            
-        //     if (respData.status === 'success') {
-        //         setIsDialog(false);  
-        //         appCounter();
-        //     } else {
-        //     }
-
-        // } catch (error) {
-        //     Alert.alert(`Error: ${error}`);
-        // }
     };
 
     React.useLayoutEffect(() => {

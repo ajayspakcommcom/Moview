@@ -128,7 +128,9 @@ const followerSlice = createSlice({
             })
             .addCase(removeFollower.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = state.data.filter(item => item.followerId._id !== action.payload.data.followerId._id);
+                const respData = state.data.filter(item => item.followerId._id !== action.payload.data.followerId._id);
+                //state.data = respData.length > 0 ? respData : [...respData];
+                state.data = respData;
             })
             .addCase(removeFollower.rejected, (state, action) => {
                 state.loading = false;

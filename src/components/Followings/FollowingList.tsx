@@ -35,7 +35,6 @@ interface FollowingListProps {
 
 const FollowingList: React.FC<FollowingListProps> = ({ following }) => {
     return (
-        <>
             <View style={styles.container}>
                 <FlatList
                     data={following}
@@ -43,8 +42,6 @@ const FollowingList: React.FC<FollowingListProps> = ({ following }) => {
                     renderItem={({ item }) => <FollowingItem following={item} />}
                 />
             </View>
-        </>
-
     );
 };
 

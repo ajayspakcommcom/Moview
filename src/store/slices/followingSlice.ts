@@ -40,7 +40,7 @@ const followingSlice = createSlice({
             })
             .addCase(fetchFollowings.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload;
+                state.data = Array.isArray(action.payload) ? action.payload : [];
                 state.count = state.data.length;
             })
             .addCase(fetchFollowings.rejected, (state, action) => {

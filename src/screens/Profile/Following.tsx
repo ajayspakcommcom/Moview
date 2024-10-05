@@ -19,7 +19,7 @@ type Props = {
 
 const Following: React.FC<Props> = ({ navigation, route }) => {
 
-    const { user, userDetail, counter } = useAuth();
+    const { user, userDetail } = useAuth();
 
     const { data: followingData } = useSelector((state: RootState) => state.myFollowing);         
     const dispatch = useAppDispatch();
@@ -49,8 +49,7 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         getFollowingList();
 
         return () => {}
-    }, [counter]);
-
+    }, [followingData]);
 
 
     return (

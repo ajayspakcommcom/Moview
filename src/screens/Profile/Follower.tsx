@@ -53,10 +53,8 @@ const Follower: React.FC<Props> = ({ navigation, route }) => {
     }, []);
 
 
-    return (
-        <>            
+    return (                
             <FollowerList followers={followerData} />
-        </>
     );
 };
 

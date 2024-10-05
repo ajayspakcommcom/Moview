@@ -13,7 +13,8 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { userFetchFollowers } from '../../store/slices/userFollowerSlice';
 import { userFetchFollowings } from '../../store/slices/userFollowingSlice';
-import { Button } from 'react-native-paper';
+import { createFollower,  removeFollower } from '../../store/slices/followerSlice';
+
 
 type Props = {
     userData?: UserItem
@@ -81,7 +82,6 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
     React.useLayoutEffect(() => {
         
-        console.log('FollowerFollowing...');
         checkIfFollowing();
         getFollowerCount();
         getFollowingCount();
@@ -93,82 +93,16 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
     }, [userData]);
 
  
-
     const followHandler = async () => {
-        try {
-            const response = await fetch(`${API_URL}follow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userData?._id, 
-                    "followerId": userDetail?._id, //logged in user id
-                }),
-            });
-            const result = await response.json();
-            if (result.status === 'success') {
-                Alert.alert('Successfully', 'Thank you for following.', [
-                    {
-                        text: 'OK', onPress: () => {
-                            setIsFollowing(true);
-                            appCounter();
-                            getFollowerCount();
-                        }
-                    },
-                ]);
-            } else {
-                // Alert.alert('Error', `${result.message}`, [
-                //     { text: 'OK', onPress: () => { } }
-                // ]);
-            }
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
-        }
+        console.log('followHandler');
+        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userData?._id!, followerId: userDetail._id }));          
+        console.log('response', response);
     };
 
     const UnFollowHandler = async () => {
-
-        try {
-
-            const response = await fetch(`${API_URL}unfollow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user?.token}`,
-                },
-                body: JSON.stringify({
-                    "userId": userData?._id,
-                    "followerId": userDetail?._id, //logged in user id
-                }),
-            });
-
-            const result = await response.json();
-
-
-
-            if (result.status === 'success') {
-                Alert.alert('Successfully', 'Unfollow', [
-                    {
-                        text: 'OK', onPress: () => {
-                            setIsFollowing(false);
-                            appCounter();
-                            setFollowData((prevState) => ({
-                                ...prevState,
-                                followers: followData.followers - 1
-                            }));
-                        }
-                    },
-                ]);
-            } else {
-
-            }
-
-
-        } catch (error) {
-            Alert.alert(`Error: ${error}`);
-        }
+        console.log('UnFollowHandler');
+        const followerId = userDetail._id; //logged in user id
+        await dispatch(removeFollower({ url: `${API_URL}unfollow`, token: user?.token!, userId: userData?._id!, followerId:followerId }));  
     };
 
     return (
@@ -222,6 +156,15 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 />
             } */}
 
+            {isFollowing &&
+                <CustomButton
+                    text={'Unfollow'}
+                    onPressHandler={UnFollowHandler}
+                    textSize={20}
+                    isDisabled={false}
+                />
+            }
+            
             {!isFollowing &&
                 <CustomButton
                     text={'Follow'}

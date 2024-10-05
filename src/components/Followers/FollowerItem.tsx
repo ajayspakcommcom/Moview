@@ -90,13 +90,10 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
                     <Text style={styles.name}>{follower.followerId.firstname}</Text>
                 </View>
                 <View style={styles.rightWrapper}>
-                    {follower.isFollowing &&
-                        <>                            
+                    {follower.isFollowing &&                                      
                              <Pressable style={styles.button} onPress={showUnfollowDialog.bind(this, follower.followerId._id)}>
                                 <Text style={styles.text}>Unfollow</Text>
-                            </Pressable>
-
-                        </>
+                            </Pressable>                        
                     }
 
                    {!follower.isFollowing &&

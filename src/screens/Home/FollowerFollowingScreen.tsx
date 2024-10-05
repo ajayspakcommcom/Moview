@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { UserItem } from '../../types/User';
-import { useIsFocused } from '@react-navigation/native';
+
 
 const FollowerFollowing = React.lazy(() => import('../../components/FollowerFollowing/FollowerFollowing'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -66,11 +66,9 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
     }, []);
 
     return (
-        <>
-            <React.Suspense fallback={<Loading />}>
-                <FollowerFollowing userData={userDetail} />
-            </React.Suspense>
-        </>
+        <React.Suspense fallback={<Loading />}>
+            <FollowerFollowing userData={userDetail} />
+        </React.Suspense>
     );
 };
 

@@ -97,7 +97,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
         const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userData?._id!, followerId: userDetail._id }));          
         console.log('followHandler', response);
          if (response.meta.requestStatus === 'fulfilled') { 
-            setIsFollowing(true);
+             setIsFollowing(true);
+             getFollowerCount();
         }
     };
 
@@ -107,6 +108,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
         console.log('UnFollowHandler', response);
         if (response.meta.requestStatus === 'fulfilled') { 
             setIsFollowing(false);
+            getFollowerCount();
         }
     };
 

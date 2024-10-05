@@ -7,7 +7,6 @@ import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import Fonts from '../../styles/Fonts';
 import { RootState, useAppDispatch } from '../../store/index';
-import { fetchFollowers } from '../../store/slices/followerSlice';
 import { useSelector } from 'react-redux';
 import { fetchFollowings } from '../../store/slices/followingSlice';
 
@@ -46,12 +45,10 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
     };
 
     React.useLayoutEffect(() => {
-
         headerHandler();
         getFollowingList();
-        return () => {
 
-        }
+        return () => {}
     }, [counter]);
 
 
@@ -74,6 +71,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
+
     text: {
         fontSize: Fonts.Size.Medium,
         fontFamily: Fonts.Family.Bold,

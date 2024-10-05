@@ -1,9 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import MyShowReviewItem from './MyShowReviewItem';
-import { Review } from '../../models/Review';
-import { API_URL } from '../../configure/config.android';
-import { useAuth } from '../../context/AuthContext';
 import Colors from '../../styles/Colors';
 import { UserItem } from '../../types/User';
 import { MovieReviewResponse, ShowReviewResponse } from '../../models/MyReview';
@@ -89,9 +86,9 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true, movies, sh
             }
             
                     
-            {  movieReviewData.length === 0 && showReviewData.length === 0 &&
+            { movieReviewData.length === 0 && showReviewData.length === 0 &&
                 <View style={styles.noReviewWrapper}>
-                    <Text style={styles.reviewText}>No Review found</Text>
+                    <Text style={styles.reviewText}>No Review found</Text>                    
                 </View>
             }
             
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 10         
     },
     castReviewText: {
         paddingVertical: 5,
@@ -128,7 +125,9 @@ const styles = StyleSheet.create({
     noReviewWrapper: {
         marginHorizontal: 15,
         marginVertical: 15,
-        padding: 50
+        padding: 50,        
+        height: Dimensions.get('window').height - 120,
+        justifyContent: 'center'    
     },
     reviewText: {
         color: Colors.whiteColor,

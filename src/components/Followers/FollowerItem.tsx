@@ -43,7 +43,7 @@ interface FollowerItemProps {
 
 const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 
-    const { userDetail, user, appCounter } = useAuth();
+    const { userDetail, user } = useAuth();
 
     const [isDialog, setIsDialog] = React.useState(false);
     const [userId, setUserId] = React.useState(''); 

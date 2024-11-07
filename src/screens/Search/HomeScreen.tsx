@@ -4,7 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
-import { MovieDataList } from '../../utils/Data';
+import debounce from 'lodash.debounce';
+
 
 const FilteredMovieList = React.lazy(() => import('../../components/MovieList/FilteredMovieList'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -16,21 +17,26 @@ type Props = {
 const HomeScreen: React.FC<Props> = () => {
 
     const [searchQuery, setSearchQuery] = React.useState<string>('');
-    const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>(MovieDataList);
+    const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>([]);
+
+    const debouncedSearch = React.useCallback(
+        debounce((query) => {            
+            console.log("Searching for:", query);
+        }, 3000), 
+        []
+    );
 
     const onChangeSearch = (query: string) => {
-        setSearchQuery(query);
-        setFilteredMovies(MovieDataList.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase())));
+        setSearchQuery(query);    
+        debouncedSearch(query)
     };
 
     const onClearHandler = () => {
-        setFilteredMovies(MovieDataList);
+        //setFilteredMovies(MovieDataList);
     };
 
 
     React.useLayoutEffect(() => {
-
-
 
         return () => {
 

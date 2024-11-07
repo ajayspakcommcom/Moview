@@ -24,7 +24,7 @@ const SearchNavigation: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
-            <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
+            {/* <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} /> */}
         </Stack.Navigator>
     );
 };

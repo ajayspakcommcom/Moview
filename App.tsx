@@ -101,7 +101,7 @@ function App(): React.JSX.Element {
           />
           
           {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
-          {/* <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} /> */}
+          <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
           
           <Tab.Screen
             name="MyReview"

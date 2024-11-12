@@ -5,6 +5,10 @@ import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
 import { MovieItem } from '../../types/Movie';
 import debounce from 'lodash.debounce';
+import { API_URL } from '../../configure/config.android';
+import { useAuth } from '../../context/AuthContext';
+import { fetchMoviesShowsByKeword } from '../../utils/Common';
+
 
 
 const FilteredMovieList = React.lazy(() => import('../../components/MovieList/FilteredMovieList'));
@@ -18,11 +22,27 @@ const HomeScreen: React.FC<Props> = () => {
 
     const [searchQuery, setSearchQuery] = React.useState<string>('');
     const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>([]);
+    const { user } = useAuth();
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
     const debouncedSearch = React.useCallback(
-        debounce((query) => {            
-            console.log("Searching for:", query);
-        }, 3000), 
+        debounce((query) => {     
+
+            async function fetchFilteredShowsMovies () {
+                try 
+                {
+                    const resp = await fetchMoviesShowsByKeword(user?.token!, signal, query);
+                    console.log('resp', resp);
+                } catch(error) {
+                    console.log(`Error : `, error);
+                }
+            }
+
+            fetchFilteredShowsMovies();            
+
+        }, 500), 
         []
     );
 

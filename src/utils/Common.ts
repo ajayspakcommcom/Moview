@@ -133,3 +133,75 @@ export const hitSlops = (top: number = 0, bottom: number = 0, left: number = 0, 
 };
 
 
+export const fetchMoviesShowsByKeword = async (userToken: string, signal: AbortSignal, title: string) => {
+    
+    const url = `${API_URL}latest/movie-show/search`;
+    const token = userToken;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title            
+            }),
+            signal: signal // Pass the signal to the fetch request
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+
+            } else {
+                console.error('Error fetching movies:', error);
+            }
+        } else {
+            console.error('Unknown error', error);
+        }
+        throw error; // Re-throw the error to be handled by the caller if necessary
+    }
+};
+
+export const fetchShowsByKewords = async (userToken: string, signal: AbortSignal, keyword: string) => {
+    const url = `${API_URL}show/search`;
+    const token = userToken;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                keyword            
+            }),
+            signal: signal // Pass the signal to the fetch request
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.name === 'AbortError') {
+
+            } else {
+                console.error('Error fetching movies:', error);
+            }
+        } else {
+            console.error('Unknown error', error);
+        }
+        throw error; // Re-throw the error to be handled by the caller if necessary
+    }
+};

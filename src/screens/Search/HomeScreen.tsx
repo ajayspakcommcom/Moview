@@ -9,7 +9,8 @@ import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { fetchMoviesShowsByKeword } from '../../utils/Common';
 
-
+import { FilteredLatestMovieShow } from '../../types/FilteredLatestMovieShow';
+const FilteredLatestMovieShowList = React.lazy(() => import('../../components/FilteredLatestMovieShowList/FilteredLatestMovieShowList'));
 
 const FilteredMovieList = React.lazy(() => import('../../components/MovieList/FilteredMovieList'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -20,10 +21,10 @@ type Props = {
 
 const HomeScreen: React.FC<Props> = () => {
 
-    const [searchQuery, setSearchQuery] = React.useState<string>('');
-    const [filteredMovies, setFilteredMovies] = React.useState<MovieItem[]>([]);
     const { user } = useAuth();
-
+    const [searchQuery, setSearchQuery] = React.useState<string>('');
+    const [filteredData, setFilteredData] = React.useState<FilteredLatestMovieShow[]>([]);
+    
     const abortController = new AbortController();
     const signal = abortController.signal;
 
@@ -33,8 +34,10 @@ const HomeScreen: React.FC<Props> = () => {
             async function fetchFilteredShowsMovies () {
                 try 
                 {
-                    const resp = await fetchMoviesShowsByKeword(user?.token!, signal, query);
-                    console.log('resp', resp);
+                    const resp = await fetchMoviesShowsByKeword(user?.token!, signal, query);                                       
+                    if(resp.data.length > 0) {
+                        setFilteredData(resp.data);
+                    }
                 } catch(error) {
                     console.log(`Error : `, error);
                 }
@@ -52,7 +55,7 @@ const HomeScreen: React.FC<Props> = () => {
     };
 
     const onClearHandler = () => {
-        //setFilteredMovies(MovieDataList);
+        //setFilteredData(MovieDataList);
     };
 
 
@@ -71,10 +74,10 @@ const HomeScreen: React.FC<Props> = () => {
                 <Searchbar placeholder="Search Movie" onChangeText={onChangeSearch} value={searchQuery} onClearIconPress={onClearHandler} />
             </View>
 
-            <View style={styles.movieList}>
-                <Text style={{ color: '#fff' }}>{searchQuery}</Text>
-                {filteredMovies.length >= 0 && <React.Suspense fallback={<Loading />}><FilteredMovieList movies={filteredMovies} /></React.Suspense>}
-                {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>}
+            <View style={styles.movieList}>                
+                <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />                
+                {/* {filteredMovies.length >= 0 && <React.Suspense fallback={<Loading />}><FilteredMovieList movies={filteredMovies} /></React.Suspense>}
+                {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>} */}
             </View>
 
         </View>

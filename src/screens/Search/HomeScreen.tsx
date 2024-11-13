@@ -49,13 +49,23 @@ const HomeScreen: React.FC<Props> = () => {
         []
     );
 
-    const onChangeSearch = (query: string) => {
-        setSearchQuery(query);    
-        debouncedSearch(query)
-    };
+    // const onChangeSearch = (query: string) => {
+    //     setSearchQuery(query);    
+    //     debouncedSearch(query)
+    // };
+
+    const onChangeSearch = React.useCallback((query: string) => {
+          setSearchQuery(query);    
+          debouncedSearch(query);
+        },
+        [setSearchQuery] 
+      );
 
     const onClearHandler = () => {
         //setFilteredData(MovieDataList);
+        //setFilteredData([]);
+        //console.clear();
+        //console.log('Ram....', filteredData.length);
     };
 
 
@@ -75,7 +85,7 @@ const HomeScreen: React.FC<Props> = () => {
             </View>
 
             <View style={styles.movieList}>                
-                <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />                
+                {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />} 
                 {/* {filteredMovies.length >= 0 && <React.Suspense fallback={<Loading />}><FilteredMovieList movies={filteredMovies} /></React.Suspense>}
                 {filteredMovies.length <= 0 && <Text style={styles.text}>Not found any movie</Text>} */}
             </View>

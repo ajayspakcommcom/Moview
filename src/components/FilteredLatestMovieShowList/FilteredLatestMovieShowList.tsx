@@ -77,9 +77,6 @@ const FilteredLatestMovieShowList: React.FC<FilteredLatestMovieShowListProps> = 
 
         setFilteredLatestMovieShowList(sortedData);
         setLoading(false);
-        console.clear();
-        console.log('filteredLatestMovieShows', filteredLatestMovieShows);
-
         return () => {
             abortController.abort();
         };

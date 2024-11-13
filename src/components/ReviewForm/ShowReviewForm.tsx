@@ -34,7 +34,6 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     React.useLayoutEffect(() => {
 
         return () => {
-
         };
     }, [showItem._id]);
 

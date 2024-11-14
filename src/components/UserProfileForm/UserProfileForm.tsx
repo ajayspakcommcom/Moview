@@ -34,7 +34,8 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
         setFirstname(userDetail.firstname);
         setUsername(userDetail.username);
         setPhone(userDetail.phone);
-        setPassword(userDetail.password_hash);
+        //setPassword(userDetail.password_hash);
+        setPassword('12345');
         setBiography(userDetail.biography);
 
         return () => {}
@@ -167,8 +168,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 editable={true}
             />
 
-
-           
 
             <CustomTextTextarea
                 style={styles.textArea}

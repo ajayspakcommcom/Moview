@@ -133,7 +133,7 @@ export const hitSlops = (top: number = 0, bottom: number = 0, left: number = 0, 
 };
 
 
-export const fetchMoviesShowsByKeword = async (userToken: string, signal: AbortSignal, title: string) => {
+export const fetchMoviesShowsByKeyword = async (userToken: string, signal: AbortSignal, title: string) => {
     
     const url = `${API_URL}latest/movie-show/search`;
     const token = userToken;

@@ -3,6 +3,9 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import Colors from '../styles/Colors';
 import HomeScreen from '../screens/Search/HomeScreen';
 import Notification from '../screens/Notification/HomeScreen';
+import DetailScreen from '../screens/Search/DetailScreen';
+import FollowerFollowingScreen from '../screens/Search/FollowerFollowingScreen';
+import ShowDetailScreen from '../screens/Search/ShowDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +27,10 @@ const SearchNavigation: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={navigatorOptions}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions }} />
-            {/* <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} /> */}
+            <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions, headerShown: true }} />
+            <Stack.Screen name="FollowerFollowing" component={FollowerFollowingScreen} options={{ ...screenOptions, headerShown: true }} />
+            <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />
+            <Stack.Screen name="ShowDetail" component={ShowDetailScreen} options={{ ...screenOptions, headerShown: true }} />
         </Stack.Navigator>
     );
 };

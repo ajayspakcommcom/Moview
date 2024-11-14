@@ -1,18 +1,15 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
-import { MovieItem } from '../../types/Movie';
 import debounce from 'lodash.debounce';
-import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { fetchMoviesShowsByKeyword } from '../../utils/Common';
 
 import { FilteredLatestMovieShow } from '../../types/FilteredLatestMovieShow';
 const FilteredLatestMovieShowList = React.lazy(() => import('../../components/FilteredLatestMovieShowList/FilteredLatestMovieShowList'));
 
-const FilteredMovieList = React.lazy(() => import('../../components/MovieList/FilteredMovieList'));
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
@@ -50,11 +47,6 @@ const HomeScreen: React.FC<Props> = () => {
         []
     );
 
-    // const onChangeSearch = (query: string) => {
-    //     setSearchQuery(query);    
-    //     debouncedSearch(query)
-    // };
-
     const onChangeSearch = React.useCallback((query: string) => {
           setSearchQuery(query);    
           debouncedSearch(query);              
@@ -82,8 +74,7 @@ const HomeScreen: React.FC<Props> = () => {
             </View>
 
             <View style={styles.movieList}>                
-                {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />} 
-                {/* {filteredMovies.length >= 0 && <React.Suspense fallback={<Loading />}><FilteredMovieList movies={filteredMovies} /></React.Suspense>} */}
+                {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}                 
                 {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie</Text>} 
             </View>
 

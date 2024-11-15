@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
-import { Text } from 'react-native-paper';
 import { useFocusEffect } from '@react-navigation/native';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { createPadding } from '../../styles/Common';
+import { Text } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
 
 const LatestMovieShowList = React.lazy(() => import('../../components/LatestMovieShowList/LatestMovieShowList'));
 const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
@@ -14,6 +17,7 @@ const ShowList = React.lazy(() => import('../../components/ShowList/ShowList'));
 
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 const Header = React.lazy(() => import('../../components/Header/Header'));
+const LanguageDrawer = React.lazy(() => import('../../components/LanguageDrawer/LanguageDrawer'));
 
 type Props = {
     navigation: StackNavigationProp<any>;
@@ -24,6 +28,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
     const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const [notificationCount, setNotificationCount] = React.useState<number>(0);
+    const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);
 
     React.useLayoutEffect(() => {
         setTransparentHeader(navigation, '', 'notifications');
@@ -40,9 +45,24 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setSelectedTab(tab)
     };
 
-    return (
-        <View style={styles.container}>                
+    const showDrawerHandler = () => {
+        setIsVisibleDrawer(true);               
+    };
+
+    const closeDrawerHandler = () => {
+        setIsVisibleDrawer(false);          
+    };
+
+    return (        
+          <View style={styles.container}>                
                 <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} /> 
+                <LanguageDrawer visible={isVisibleDrawer} onPressToggleHandler={closeDrawerHandler} />       
+                <View style={styles.filterWrapper}>
+                    <View><Text style={styles.textFilter}>Fiter</Text></View>
+                    <View>
+                        <Icon name={'filter'} size={25} color={Colors.tabActiveColor} onPress={showDrawerHandler} />
+                    </View>
+                </View>         
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList />}
@@ -50,7 +70,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>            
-        </View>
+        </View>        
     );
 };
 
@@ -67,6 +87,17 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 50
+    },
+    filterWrapper: {        
+        display:'flex',              
+        flexDirection: 'row',
+        alignItems: 'center',   
+        justifyContent: 'space-between', 
+        ...createPadding(10,15,10,15)
+    },
+    textFilter: {
+        color:Colors.whiteColor,
+        fontFamily:Fonts.Family.Bold
     }
 });
 

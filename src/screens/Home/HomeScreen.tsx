@@ -63,11 +63,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           <View style={styles.container}>                
                 <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} /> 
                 <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />       
-                <View style={styles.filterWrapper}>
-                    <View><Text style={styles.textFilter}>Fiter</Text></View>
-                    <View>
-                        <Icon name={'filter'} size={25} color={Colors.tabActiveColor} onPress={showDrawerHandler} />
-                    </View>
+                <View style={styles.filterWrapper}>                                        
+                    <Icon name={'filter'} size={25} color={Colors.tabActiveColor} onPress={showDrawerHandler} />                                 
                 </View>         
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
@@ -83,7 +80,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%'
+        width: '100%', 
+        position:'relative'
     },
     movieList: {
         flex: 1,
@@ -95,16 +93,17 @@ const styles = StyleSheet.create({
         fontSize: 50
     },
     filterWrapper: {        
+        position:'absolute',        
         display:'flex',              
         flexDirection: 'row',
         alignItems: 'center',   
-        justifyContent: 'space-between', 
-        ...createPadding(10,15,10,15)
-    },
-    textFilter: {
-        color:Colors.whiteColor,
-        fontFamily:Fonts.Family.Bold
-    }
+        justifyContent: 'space-between',         
+        zIndex:1,
+        bottom:15,
+        right:15, 
+        width:40,
+        height:40,
+    }    
 });
 
 export default HomeScreen;

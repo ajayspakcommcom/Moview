@@ -13,7 +13,7 @@ interface LanguageDrawerProps {
 }
 
 type LanguageCheckboxesProps = {
-  languages: string[]; // Prop to accept an array of languages
+  languages: string[]; 
 };
 
 const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler, onApplyHandler}) => {

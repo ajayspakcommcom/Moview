@@ -53,10 +53,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setIsVisibleDrawer(false);          
     };
 
+    const applyHandler = (data:any) => {        
+        const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());          
+        console.log(lowerCaseKeys);
+        closeDrawerHandler();
+    };
+
     return (        
           <View style={styles.container}>                
                 <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} /> 
-                <LanguageDrawer visible={isVisibleDrawer} onPressToggleHandler={closeDrawerHandler} />       
+                <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />       
                 <View style={styles.filterWrapper}>
                     <View><Text style={styles.textFilter}>Fiter</Text></View>
                     <View>

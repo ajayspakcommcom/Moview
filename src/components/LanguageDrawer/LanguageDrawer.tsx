@@ -1,70 +1,63 @@
 import * as React from 'react';
 import {StyleSheet, View, ScrollView, Pressable} from 'react-native';
-import {Button, Drawer, Text} from 'react-native-paper';
+import {Button, Drawer, Text, Checkbox } from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Fonts from '../../styles/Fonts';
+import { LANGUAGES } from '../../utils/Data';
 
 interface LanguageDrawerProps {
   visible?: boolean;
-  onPressToggleHandler?: () => void;
+  onCancelHandler?: () => void;
+  onApplyHandler?:(data:any) => void;
 }
 
-const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onPressToggleHandler}) => {
+type LanguageCheckboxesProps = {
+  languages: string[]; // Prop to accept an array of languages
+};
+
+const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler, onApplyHandler}) => {
+
+  const [selected, setSelected] = React.useState<Record<string, boolean>>({}); 
+  const languages = [...LANGUAGES];
+
+  const toggleCheckbox = (language: string) => {    
+    setSelected((prevState) => ({      
+      ...prevState,
+      [language]: !prevState[language], 
+    }));    
+  };
+
+
+  const getSelectedDataHandler = () => {
+      onApplyHandler?.(selected);
+  };
   
-  React.useLayoutEffect(() => {
-    console.log('visible', visible);
-  }, [visible]);
 
   return (
-    <View
-      style={[
-        styles.drawerWrapperOpened,
-        !visible && styles.drawerWrapperClosed,
-      ]}>
+    <View style={[styles.drawerWrapperOpened, !visible && styles.drawerWrapperClosed]}>
       <View style={[styles.drawerContentWrapper]}>
         <View style={styles.closeWrapperBtn}>
-          <Icon
-            name={'close-circle'}
-            size={40}
-            color={Colors.redColor}
-            onPress={onPressToggleHandler}
-          />
+          <Icon name={'close-circle'} size={40} color={Colors.redColor} onPress={onCancelHandler} />
         </View>
 
         <ScrollView>
           <Drawer.Section title="Select Langauage">
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Second Item" />
-            <Drawer.Item label="First Item" />
-            <Drawer.Item label="Last Item" />
-            <Drawer.Item label="Last Item" />
+          {languages.map((language, index) => (
+              <View key={index} style={styles.checkboxWrapper}>
+                <Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />
+                <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
+              </View>
+          ))}
           </Drawer.Section>
         </ScrollView>
         <View style={styles.footerWrapper}>
-           <Pressable><Text>sdfsdf</Text></Pressable>
-           <Pressable><Text>sdfsdf</Text></Pressable>
+          <View style={[styles.footerWrapperInside, styles.footerWrapperInsideRightBorder]}>
+            <Pressable style={styles.footerWrapper} onPress={onCancelHandler}><Text style={styles.footerText}>Cancel</Text></Pressable>
+          </View>
+          <View style={styles.footerWrapperInside}>
+            <Pressable style={styles.footerWrapper} onPress={getSelectedDataHandler}><Text style={styles.footerText}>Apply</Text></Pressable>
+          </View>           
         </View>
       </View>
     </View>
@@ -77,7 +70,7 @@ const styles = StyleSheet.create({
   drawerWrapperOpened: {
     position: 'absolute',
     zIndex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: Colors.backgroundColorShadow,
     left: '0%',
     height: '100%',
     top: 0,
@@ -98,7 +91,7 @@ const styles = StyleSheet.create({
     left: '-100%',
   },
   drawerContentWrapper: {
-    backgroundColor: '#fefafe',
+    backgroundColor: Colors.whiteColor,
     width: '70%',
     minHeight: '100%',
     overflow: 'scroll',
@@ -108,9 +101,40 @@ const styles = StyleSheet.create({
   footerWrapper: {
     height: 50,
     width: '100%',
-    backgroundColor: Colors.inputBackgroundColor,
+    backgroundColor: Colors.blackColor,
     position: 'absolute',
     left: 0,
     bottom: 0,
+    display:'flex',
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopWidth:1,
+    borderTopColor: Colors.whiteColor    
   },
+  footerWrapperInside: {
+    backgroundColor:Colors.inputBackgroundColor, 
+    width:'50%',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    minHeight:50    
+  }, 
+  footerWrapperInsideRightBorder: {
+    borderRightWidth:1,
+    borderRightColor: Colors.whiteColor
+  },
+  footerText: {
+    fontFamily:Fonts.Family.Bold,
+    color:Colors.whiteColor
+  },
+  checkboxLabel: {
+    marginLeft: 5,  
+    fontSize: Fonts.Size.Medium,   
+  },
+  checkboxWrapper: {
+    display: 'flex',
+    flexDirection:'row',
+    alignItems:'center'
+  }
 });

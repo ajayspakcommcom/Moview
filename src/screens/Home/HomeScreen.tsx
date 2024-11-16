@@ -44,7 +44,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setSelectedTab(tab)
     };
 
-    const showDrawerHandler = () => {
+    const toggleDrawerHandler = () => {
         setIsVisibleDrawer(!isVisibleDrawer); 
         console.log('isVisibleDrawer',!isVisibleDrawer);
     };
@@ -74,9 +74,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     </React.Suspense>
                 </View>            
                 
-                <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />
+                {isVisibleDrawer && <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />}
                 <View style={styles.filterWrapper}>                                        
-                    <Pressable style={styles.filteredBtnWrapper} onPress={showDrawerHandler}>
+                    <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
                         <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />
                     </Pressable>                                                  
                 </View>

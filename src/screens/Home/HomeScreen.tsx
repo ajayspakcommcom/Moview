@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, Pressable,  } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
@@ -7,9 +7,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { createPadding } from '../../styles/Common';
-import { Text } from 'react-native-paper';
-import Fonts from '../../styles/Fonts';
+
+
 
 const LatestMovieShowList = React.lazy(() => import('../../components/LatestMovieShowList/LatestMovieShowList'));
 const MovieList = React.lazy(() => import('../../components/MovieList/MovieList'));
@@ -46,7 +45,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const showDrawerHandler = () => {
-        setIsVisibleDrawer(true);               
+        setIsVisibleDrawer(!isVisibleDrawer); 
+        console.log('isVisibleDrawer',!isVisibleDrawer);
     };
 
     const closeDrawerHandler = () => {
@@ -55,17 +55,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     const applyHandler = (data:any) => {        
         const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());          
-        console.log(lowerCaseKeys);
         closeDrawerHandler();
+        console.log(lowerCaseKeys);
+    };
+
+    const checkHandler = (val: string) => {
+        console.log('Val', val);
     };
 
     return (        
           <View style={styles.container}>                
-                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} /> 
-                <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />       
-                <View style={styles.filterWrapper}>                                        
-                    <Icon name={'filter'} size={25} color={Colors.tabActiveColor} onPress={showDrawerHandler} />                                 
-                </View>         
+                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} />          
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList />}
@@ -73,11 +73,46 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>            
+                
+                <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />
+                <View style={styles.filterWrapper}>                                        
+                    <Pressable style={styles.filteredBtnWrapper} onPress={showDrawerHandler}>
+                        <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />
+                    </Pressable>                                                  
+                </View>
+
         </View>        
     );
 };
 
 const styles = StyleSheet.create({
+    filteredBtnWrapper: {
+        width:40,
+        height:40,
+        backgroundColor:Colors.whiteColor,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:10,
+        shadowColor: Colors.blackColor,
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.25, 
+        shadowRadius: 3.5, 
+        elevation: 5, 
+    },
+    filteredPopWrapper: {
+        width: 300,
+        height: 300,
+        backgroundColor: 'red',
+        position: 'absolute',
+        bottom: '100%',
+        right: '100%',                        
+        shadowColor: Colors.blackColor,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 4,                        
+        elevation: 5
+    },
     container: {
         flex: 1,
         width: '100%', 
@@ -86,23 +121,25 @@ const styles = StyleSheet.create({
     movieList: {
         flex: 1,
         backgroundColor: Colors.blackColor,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position:'relative',
+        zIndex:0
     },
     text: {
-        color: 'white',
+        color: Colors.whiteColor,
         fontSize: 50
     },
-    filterWrapper: {        
+    filterWrapper: {               
         position:'absolute',        
         display:'flex',              
         flexDirection: 'row',
         alignItems: 'center',   
         justifyContent: 'space-between',         
-        zIndex:1,
+        zIndex:9,
         bottom:15,
         right:15, 
         width:40,
-        height:40,
+        height:40        
     }    
 });
 

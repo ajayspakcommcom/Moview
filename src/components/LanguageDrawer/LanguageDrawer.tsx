@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {StyleSheet, View, ScrollView, Pressable} from 'react-native';
-import {Button, Drawer, Text, Checkbox } from 'react-native-paper';
+import {StyleSheet, View, ScrollView, Pressable, Dimensions} from 'react-native';
+import { Drawer, Text, Checkbox } from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import { LANGUAGES } from '../../utils/Data';
+import {createPadding} from '../../styles/Common';
 
 interface LanguageDrawerProps {
   visible?: boolean;
@@ -19,7 +20,7 @@ type LanguageCheckboxesProps = {
 const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler, onApplyHandler}) => {
 
   const [selected, setSelected] = React.useState<Record<string, boolean>>({}); 
-  const languages = [...LANGUAGES];
+  const languages = [...LANGUAGES!];
 
   const toggleCheckbox = (language: string) => {    
     setSelected((prevState) => ({      
@@ -35,14 +36,14 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
   
 
   return (
-    <View style={[styles.drawerWrapperOpened, !visible && styles.drawerWrapperClosed]}>
+    <View style={[styles.drawerWrapperOpened]}>
       <View style={[styles.drawerContentWrapper]}>
         <View style={styles.closeWrapperBtn}>
-          <Icon name={'close-circle'} size={40} color={Colors.redColor} onPress={onCancelHandler} />
+          <Text style={styles.closeBtnText}>Select Language</Text>
+          <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
         </View>
-
         <ScrollView>
-          <Drawer.Section title="Select Langauage">
+          <Drawer.Section>
           {languages.map((language, index) => (
               <View key={index} style={styles.checkboxWrapper}>
                 <Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />
@@ -71,32 +72,48 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     backgroundColor: Colors.backgroundColorShadow,
-    left: '0%',
-    height: '100%',
-    top: 0,
-    width: '100%',
+    left: '50%',
+    height: '50%',
+    top: '50%',
+    width: 300,
+    transform: [{ translateX: -150 }, { translateY: -50 }],
+    borderRadius: 5,
+    overflow:'hidden'
   },
   closeWrapperBtn: {
+    backgroundColor:Colors.blackColor,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     position: 'absolute',
-    top: 10,
-    right: 15,
-    width: 45,
-    height: 45,
+    top: 0,
+    right: 0,
+    width: '100%',
+    height: 60,
     zIndex: 1,
     cursor: 'pointer',
+    display:'flex',
+    flexDirection:'row',   
+    paddingTop:10, 
+    paddingBottom:10, 
+    paddingRight:10,
+    paddingLeft:10,
+    borderBottomWidth:1,
+    borderBottomColor:Colors.inputBackgroundColor,
+    elevation:5    
   },
-  drawerWrapperClosed: {
-    left: '-100%',
+
+  closeBtnText: {
+    color: Colors.whiteColor,
+    fontFamily:Fonts.Family.Bold
   },
+
   drawerContentWrapper: {
     backgroundColor: Colors.whiteColor,
-    width: '70%',
-    minHeight: '100%',
+    width: '100%',
+    minHeight: '50%',
     overflow: 'scroll',
     paddingTop: 15,
-    paddingBottom: 45,
+    paddingBottom: 40,
   },
   footerWrapper: {
     height: 50,
@@ -131,10 +148,12 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     marginLeft: 5,  
     fontSize: Fonts.Size.Medium,   
-  },
+    color:Colors.whiteColor
+  },  
   checkboxWrapper: {
     display: 'flex',
     flexDirection:'row',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor:Colors.blackColor
   }
 });

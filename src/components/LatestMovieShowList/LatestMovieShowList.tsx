@@ -9,6 +9,7 @@ import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
 import { getFirstThreeChars } from '../../utils/Common';
+import Fonts from '../../styles/Fonts';
 
 interface LatestMovieShowListProps {
     filteredData?: LastesMovieShowItem[];
@@ -169,19 +170,31 @@ const styles = StyleSheet.create({
         paddingLeft:5
     },
     languageWrapper: {
-        backgroundColor: Colors.categoryRedColor, 
+        backgroundColor: Colors.tagBgColor, 
         paddingVertical: 1,
         paddingHorizontal: 10,
         textAlign: 'center',
-        borderRadius: 2,
-        marginRight:5
+        verticalAlign:'top',
+        borderRadius: 50,
+        marginRight:5,
+        fontFamily:Fonts.Family.Light,
+        elevation:5, 
+        borderWidth:1,
+        borderColor:Colors.tagBorderColor, 
+        paddingBottom:2
     },
     movieShowWrapper: {
-        backgroundColor: Colors.categoryRedColor, 
+        backgroundColor: Colors.tagBgColor, 
         paddingVertical: 1,
         paddingHorizontal: 10,
         textAlign: 'center',
-        borderRadius: 2,
+        verticalAlign:'top',
+        borderRadius: 50,
+        fontFamily:Fonts.Family.Light,
+        elevation:5,
+        borderWidth:1,
+        borderColor:Colors.tagBorderColor, 
+        paddingBottom:2
     },
     catergoryText: {
         color: Colors.whiteColor

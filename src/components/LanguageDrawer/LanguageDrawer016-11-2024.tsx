@@ -50,34 +50,49 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
 
 
   const renderHeader = () => (
-     <View style={styles.closeWrapperBtn}>
+    <View style={styles.closeWrapperBtn}>
         <Text style={styles.closeBtnText}>Filter by language</Text>
         <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
       </View>
   );
 
 
-  const renderFooter = () => (
+  const renderFooter = () => {
     <View style={styles.footerWrapper}>
       <View style={styles.footerWrapperInside}>
         <Pressable style={styles.footerWrapper} onPress={getSelectedDataHandler}>
           <Text style={styles.footerText}>Apply</Text>
         </Pressable>
       </View>
-    </View>
-  );
+    </View>;
+  };
 
 
   return (   
     <View style={styles.drawerWrapperOpenedRelative}>
+        <View style={[styles.drawerWrapperOpened]}>
+        <View style={[styles.drawerContentWrapper]}>
+          <View style={styles.closeWrapperBtn}>
+            <Text style={styles.closeBtnText}>Filter by language</Text>
+            <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
+           </View>
+
             <FlatList
                   data={languages} 
                   keyExtractor={(item, index) => index.toString()} 
-                  contentContainerStyle={styles.flatListStyle}
-                  renderItem={renderItem}                   
-                  ListHeaderComponent={renderHeader()}       
-                  ListFooterComponent={renderFooter()}                                 
+                  renderItem={renderItem} 
+                  contentContainerStyle={styles.listContainer}                                         
             />
+
+          <View style={styles.footerWrapper}>
+            <View style={styles.footerWrapperInside}>
+              <Pressable style={styles.footerWrapper} onPress={getSelectedDataHandler}>
+                <Text style={styles.footerText}>Apply</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </View>    
     </View> 
   );
 };
@@ -86,26 +101,35 @@ export default React.memo(LanguageDrawer);
 
 const styles = StyleSheet.create({
 
+  listContainer: {
+    marginTop:30,
+    paddingVertical: 10,    
+    elevation:5       
+  },
+
   drawerWrapperOpenedRelative: {
     position:'relative', 
     width:'100%',
     minHeight:'100%',    
-    flex:1,
-    //backgroundColor:Colors.backgroundColorShadow, 
-    backgroundColor:'red',
     display:'flex',
     justifyContent:'center', 
     alignItems:'center', 
+    backgroundColor:Colors.backgroundColorShadow, 
+    flex:1    
   },
-  flatListStyle: {
-    marginTop:100, 
-    width:300, 
-    borderRadius:10
+  drawerWrapperOpened: {
+    position: 'absolute',
+    zIndex: 1,
+    backgroundColor: Colors.backgroundColorShadow,    
+    width: 300,
+    borderRadius: 10,
+    overflow:'hidden'
   },
   closeWrapperBtn: {
     backgroundColor:Colors.blackColor,
     alignItems: 'center',
-    justifyContent: 'space-between',    
+    justifyContent: 'space-between',
+    position: 'absolute',
     top: 0,
     right: 0,
     width: '100%',
@@ -127,19 +151,20 @@ const styles = StyleSheet.create({
     color: Colors.whiteColor,
     fontFamily:Fonts.Family.Bold
   },
-  footerWrapperInside: {
-    backgroundColor:Colors.inputBackgroundColor, 
-    width:'50%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    minHeight:50    
-  },
 
+  drawerContentWrapper: {
+    backgroundColor: Colors.whiteColor,
+    width: '100%',
+    minHeight: '50%',
+    overflow: 'scroll',
+    paddingTop: 15,
+    paddingBottom: 40,
+  },
   footerWrapper: {
     height: 50,
     width: '100%',
-    backgroundColor: Colors.tabActiveColor,    
+    backgroundColor: Colors.tabActiveColor,
+    position: 'absolute',
     left: 0,
     bottom: 0,
     display:'flex',
@@ -147,7 +172,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'               
   },
-  
+  footerWrapperInside: {
+    backgroundColor:Colors.inputBackgroundColor, 
+    width:'50%',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    minHeight:50    
+  }, 
+  footerWrapperInsideRightBorder: {
+    borderRightWidth:1,
+    borderRightColor: Colors.whiteColor
+  },
   footerText: {
     fontFamily:Fonts.Family.Bold,
     color:Colors.whiteColor

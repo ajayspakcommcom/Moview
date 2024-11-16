@@ -218,5 +218,5 @@ export const getFirstThreeChars = (input: string): string | null => {
     }
     
     // Return the first three characters or the entire string if it's shorter than three
-    return input.slice(0, 3);
+    return input[0].toUpperCase() + input.slice(1, 3);
 }

@@ -4,27 +4,14 @@ export const MovieDataList: MovieItem[] = [];
 
 export const LANGUAGES = [
     'English',
-    'Hindi',   
+    'Hindi', 
     'Bengali', 
-    'Telugu',  
+    'Telugu', 
     'Marathi', 
-    'Tamil',   
-    'Urdu',    
+    'Tamil',
     'Gujarati',
-    'Malayalam',
-    'Kannada', 
-    'Odia',    
-    'Punjabi', 
-    'Assamese',
-    'Maithili',
-    'Sanskrit',
-    'Kashmiri',
-    'Sindhi',  
-    'Dogri',   
-    'Manipuri',
-    'Bodo',    
-    'Santali', 
-  ];
+    'Punjabi'    
+];
   
 
 

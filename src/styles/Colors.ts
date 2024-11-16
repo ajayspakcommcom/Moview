@@ -16,7 +16,9 @@ const Colors = {
     textInputDisabled: 'rgba(128, 128, 128, 0.9)',
     categoryRedColor: '#982B1C',
     borderColor: '#ccc',
-    backgroundColorShadow: 'rgba(0, 0, 0, 0.5)'
+    backgroundColorShadow: 'rgba(0, 0, 0, 0.5)',
+    tagBgColor: '#333132', 
+    tagBorderColor: '#A7A9AC'    
 };
 
 export default Colors;

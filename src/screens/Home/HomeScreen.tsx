@@ -49,8 +49,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const toggleDrawerHandler = () => {
-        setIsVisibleDrawer(!isVisibleDrawer); 
-        console.log('isVisibleDrawer',!isVisibleDrawer);
+        setIsVisibleDrawer(!isVisibleDrawer);         
     };
 
     const closeDrawerHandler = () => {
@@ -58,24 +57,22 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const applyHandler = async (data:any) => {        
-        const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());          
+        const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());                  
         closeDrawerHandler();
-
-        const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${user?.token}`,
-            },
-            body: JSON.stringify({
-              filterData:lowerCaseKeys            
-            })
-        });
-    
-        const resp = await response.json();
-        if(resp.data.length > 0) {
-            setFilteredData(resp.data);
-        }
+         const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json',
+                 Authorization: `Bearer ${user?.token}`,
+             },
+             body: JSON.stringify({
+               filterData:lowerCaseKeys            
+             })
+         });
+            const resp = await response.json();
+         if(resp.data.length > 0) {
+             setFilteredData(resp.data);
+         }
 
     };
 

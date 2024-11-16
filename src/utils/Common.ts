@@ -205,3 +205,18 @@ export const fetchShowsByKewords = async (userToken: string, signal: AbortSignal
         throw error; // Re-throw the error to be handled by the caller if necessary
     }
 };
+
+export const getFirstThreeChars = (input: string): string | null => {
+    // Validate the input is a non-empty string
+    if (typeof input !== "string") {
+        console.error("Invalid input: Expected a string.");
+        return null;
+    }
+    if (input.length === 0) {
+        console.error("Invalid input: String is empty.");
+        return null;
+    }
+    
+    // Return the first three characters or the entire string if it's shorter than three
+    return input.slice(0, 3);
+}

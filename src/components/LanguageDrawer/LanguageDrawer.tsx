@@ -40,7 +40,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
     <View style={[styles.drawerWrapperOpened]}>
       <View style={[styles.drawerContentWrapper]}>
         <View style={styles.closeWrapperBtn}>
-          <Text style={styles.closeBtnText}>Select Language</Text>
+          <Text style={styles.closeBtnText}>Filter by language</Text>
           <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
         </View>
         <ScrollView>

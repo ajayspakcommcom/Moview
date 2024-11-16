@@ -19,6 +19,7 @@ export type LastesMovieShowItem = {
     is_deleted: boolean;
     isMovie: boolean;
     isShow: boolean;
+    language: string;
     __v: number;
 };
 

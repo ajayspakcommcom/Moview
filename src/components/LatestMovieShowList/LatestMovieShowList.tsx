@@ -8,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
 import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
+import { getFirstThreeChars } from '../../utils/Common';
 
 interface LatestMovieShowListProps {
     filteredData?: LastesMovieShowItem[];
@@ -102,15 +103,16 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage
-                        style={styles.image} // Styles for the image
-                        source={LatestMovieShowImageMap[item.poster_url]} // Source of the image
-                        resizeMode={FastImage.resizeMode.cover} // Resize mode to cover the container
-                    />
-                </Pressable>
+                    <FastImage style={styles.image} source={LatestMovieShowImageMap[item.poster_url]}  resizeMode={FastImage.resizeMode.cover} />
+                </Pressable>                
                 <View style={styles.category}>
-                    {item.isMovie && <Text style={styles.catergoryText}>Movie</Text>}
-                    {item.isShow && <Text style={styles.catergoryText}>Show</Text>}
+                    <View style={styles.languageWrapper}>
+                        <Text style={[styles.catergoryText]}>{getFirstThreeChars(item.language)}</Text>
+                    </View>
+                    <View style={styles.movieShowWrapper}>
+                        {item.isMovie && <Text style={styles.catergoryText}>Movie</Text>}
+                        {item.isShow && <Text style={styles.catergoryText}>Show</Text>}
+                    </View>
                 </View>
             </View>
         </>
@@ -159,9 +161,23 @@ const styles = StyleSheet.create({
     },
     category: {
         position: 'absolute',
-        backgroundColor: Colors.categoryRedColor,
         left: 1,
         bottom: 0,
+        display:'flex',
+        flexDirection:'row', 
+        paddingBottom:5,
+        paddingLeft:5
+    },
+    languageWrapper: {
+        backgroundColor: Colors.categoryRedColor, 
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        borderRadius: 2,
+        marginRight:5
+    },
+    movieShowWrapper: {
+        backgroundColor: Colors.categoryRedColor, 
         paddingVertical: 1,
         paddingHorizontal: 10,
         textAlign: 'center',

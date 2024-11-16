@@ -5,7 +5,7 @@ import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import { LANGUAGES } from '../../utils/Data';
-import {createPadding} from '../../styles/Common';
+
 
 interface LanguageDrawerProps {
   visible?: boolean;
@@ -19,6 +19,7 @@ type LanguageCheckboxesProps = {
 
 const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler, onApplyHandler}) => {
 
+  
   const [selected, setSelected] = React.useState<Record<string, boolean>>({}); 
   const languages = [...LANGUAGES!];
 
@@ -30,7 +31,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
   };
 
 
-  const getSelectedDataHandler = () => {
+  const getSelectedDataHandler = async () => {     
       onApplyHandler?.(selected);
   };
   
@@ -53,9 +54,6 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
           </Drawer.Section>
         </ScrollView>
         <View style={styles.footerWrapper}>
-          <View style={[styles.footerWrapperInside, styles.footerWrapperInsideRightBorder]}>
-            <Pressable style={styles.footerWrapper} onPress={onCancelHandler}><Text style={styles.footerText}>Cancel</Text></Pressable>
-          </View>
           <View style={styles.footerWrapperInside}>
             <Pressable style={styles.footerWrapper} onPress={getSelectedDataHandler}><Text style={styles.footerText}>Apply</Text></Pressable>
           </View>           
@@ -75,9 +73,9 @@ const styles = StyleSheet.create({
     left: '50%',
     height: '50%',
     top: '50%',
-    width: 300,
-    transform: [{ translateX: -150 }, { translateY: -50 }],
-    borderRadius: 5,
+    width: 400,
+    transform: [{ translateX: -200 }, { translateY: -60 }],
+    borderRadius: 10,
     overflow:'hidden'
   },
   closeWrapperBtn: {
@@ -118,16 +116,14 @@ const styles = StyleSheet.create({
   footerWrapper: {
     height: 50,
     width: '100%',
-    backgroundColor: Colors.blackColor,
+    backgroundColor: Colors.tabActiveColor,
     position: 'absolute',
     left: 0,
     bottom: 0,
     display:'flex',
     flexDirection:'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderTopWidth:1,
-    borderTopColor: Colors.whiteColor    
+    justifyContent: 'center'               
   },
   footerWrapperInside: {
     backgroundColor:Colors.inputBackgroundColor, 
@@ -154,6 +150,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection:'row',
     alignItems:'center',
-    backgroundColor:Colors.blackColor
+    backgroundColor:Colors.blackColor, 
+    paddingTop:10, 
+    paddingLeft:10
   }
 });

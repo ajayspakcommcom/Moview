@@ -7,6 +7,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { API_URL } from "../../configure/config.android";
+import { useAuth } from '../../context/AuthContext';
 
 
 
@@ -24,10 +26,12 @@ type Props = {
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
+    const { user } = useAuth();
     const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
     const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const [notificationCount, setNotificationCount] = React.useState<number>(0);
     const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);
+    const [filteredData, setFilteredData] = React.useState([]);
 
     React.useLayoutEffect(() => {
         setTransparentHeader(navigation, '', 'notifications');
@@ -53,10 +57,26 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setIsVisibleDrawer(false);          
     };
 
-    const applyHandler = (data:any) => {        
+    const applyHandler = async (data:any) => {        
         const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());          
         closeDrawerHandler();
-        console.log(lowerCaseKeys);
+
+        const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${user?.token}`,
+            },
+            body: JSON.stringify({
+              filterData:lowerCaseKeys            
+            })
+        });
+    
+        const resp = await response.json();
+        if(resp.data.length > 0) {
+            setFilteredData(resp.data);
+        }
+
     };
 
     const checkHandler = (val: string) => {
@@ -68,7 +88,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} />          
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
-                        {selectedTab === 'Latest' && <LatestMovieShowList />}
+                        {selectedTab === 'Latest' && <LatestMovieShowList filteredData={filteredData} />}
                         {selectedTab === 'Movies' && <MovieList />}
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>

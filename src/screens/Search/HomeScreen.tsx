@@ -31,8 +31,7 @@ const HomeScreen: React.FC<Props> = () => {
             async function fetchFilteredShowsMovies () {
                 try 
                 {
-                    const resp = await fetchMoviesShowsByKeyword(user?.token!, signal, query.trim());
-                    console.log('resp.data', resp.data);                                       
+                    const resp = await fetchMoviesShowsByKeyword(user?.token!, signal, query.trim());                                                         
                     if(resp.data) {
                         setFilteredData(resp.data);
                     }

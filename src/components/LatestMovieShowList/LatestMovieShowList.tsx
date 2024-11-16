@@ -10,11 +10,12 @@ import { Text } from 'react-native-paper';
 import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
 
 interface LatestMovieShowListProps {
+    filteredData?: LastesMovieShowItem[];
 }
 
 const screenWidth = Dimensions.get('window').width;
 
-const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
+const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData}) => {
 
     const { user } = useAuth();
 
@@ -67,6 +68,11 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = () => {
         }
 
     };
+
+    useLayoutEffect(() => {
+        setLatestMovieShowList(filteredData as any)
+        return () => console.log('');
+    }, [filteredData]);
 
     useLayoutEffect(() => {
 

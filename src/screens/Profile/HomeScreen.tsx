@@ -154,11 +154,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             <View style={styles.logoWrapper}>
-                <FastImage
-                        style={styles.logoImg}
-                        source={require('../../assets/images/small-logo.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                />                
+                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />                
             </View>
 
         </ScrollView>
@@ -170,8 +166,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logoImg: {        
-        width: 80,
-        height: 35
+        width: 122,
+        height: 50
     },
     container: {
         flex: 1,
@@ -195,7 +191,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     headerContent: {
-        width: 200,
+        width: '80%', //200,
         minHeight: 200,
         justifyContent: 'center',
         alignContent: 'center',
@@ -220,7 +216,8 @@ const styles = StyleSheet.create({
     },
     userTextWrapper: {
         width: '100%',
-        height: 50,
+        minHeight: 50,
+        //backgroundColor:'red'
     },
     name: {
         marginTop: 10,
@@ -234,8 +231,9 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
         textAlign: 'center',
         fontFamily: Fonts.Family.Medium,
-        fontSize: Fonts.Size.Medium + 2,
-        lineHeight: 25
+        fontSize: Fonts.Size.Small,
+        lineHeight: 22, 
+        marginTop:5
     },
     followerWrapper: {
         width: '100%',

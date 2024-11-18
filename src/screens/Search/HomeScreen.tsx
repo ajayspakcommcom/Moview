@@ -54,27 +54,20 @@ const HomeScreen: React.FC<Props> = () => {
       );
 
     const onClearHandler = () => {
-
+     
     };
 
-    React.useLayoutEffect(() => {
-
-        return () => {
-
-        };
-
-    }, []);
 
     return (
         <View style={styles.container}>
 
             <View style={styles.searchWrapper}>
-                <Searchbar placeholder="Search Movie" onChangeText={onChangeSearch} value={searchQuery} onClearIconPress={onClearHandler} />
+                <Searchbar placeholder="Search Movie / Show" onChangeText={onChangeSearch} value={searchQuery} onClearIconPress={onClearHandler} />
             </View>
 
             <View style={styles.movieList}>                
                 {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}                 
-                {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie</Text>} 
+                {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie / show</Text>} 
             </View>
 
         </View>

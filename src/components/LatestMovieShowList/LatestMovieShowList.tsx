@@ -57,16 +57,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
             }
 
         } catch (error) {
-            if (error instanceof Error) {
-                if (error.name === 'AbortError') {
-
-                } else {
-                    //
-                }
-            } else {
-                //
-            }
-            throw error;
+            console.log('');
         }
 
     };

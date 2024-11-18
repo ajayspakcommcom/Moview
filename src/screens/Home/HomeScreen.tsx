@@ -33,6 +33,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);
     const [filteredData, setFilteredData] = React.useState([]);
     const [selectedCheckbox, setSelectedCheckbox] = React.useState<{[key: string]: any} | null>();
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
     React.useLayoutEffect(() => {
         setTransparentHeader(navigation, '', 'notifications');
@@ -57,30 +59,65 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setIsVisibleDrawer(false);          
     };
 
-    const applyHandler = async (data:any) => {    
+    const getLatestMovieShowList = async () => {
+
+        const url = `${API_URL}latest/movie-show`;
+        const token = user;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token?.token}`,
+                    'Content-Type': 'application/json'
+                },
+                signal: signal
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                const sortedData = result.data.sort((a: any, b: any) => {
+                    return a.title.localeCompare(b.title);
+                });
+                setFilteredData(sortedData);                
+            }
+
+        } catch (error) {
+            console.log('');
+        }
+
+    };
+
+    const applyHandler = async (data:any) => {
+        
         const lowerCaseKeys = Object.keys(data).filter(key => data[key]).map(item => item.trim().toLowerCase());        
         setSelectedCheckbox(data);
         closeDrawerHandler();
-         const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json',
-                 Authorization: `Bearer ${user?.token}`,
-             },
-             body: JSON.stringify({
-               filterData:lowerCaseKeys            
-             })
-         });
-            const resp = await response.json();
-         if(resp.data.length > 0) {
-             setFilteredData(resp.data);
-         }
 
+        if(lowerCaseKeys.length > 0) {
+            const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user?.token}`,
+                },
+                body: JSON.stringify({
+                  filterData:lowerCaseKeys            
+                })
+            });
+               const resp = await response.json();
+            if(resp.data.length > 0) {
+                setFilteredData(resp.data);
+            }
+            console.log('Hai');
+        } else {
+            console.log('NHai');
+            getLatestMovieShowList();
+        }
     };
 
-    const checkHandler = (val: string) => {
-        console.log('Val', val);
-    };
+   
 
     return (        
           <View style={styles.container}>                

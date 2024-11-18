@@ -10,8 +10,7 @@ export const LANGUAGES = [
     'Marathi', 
     'Tamil',
     'Gujarati',
-    'Punjabi', 
-    'Haryana'    
+    'Punjabi'        
 ];
   
 

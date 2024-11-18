@@ -1,135 +1,169 @@
 import * as React from 'react';
 import {StyleSheet, View, Pressable, FlatList} from 'react-native';
-import { Text, Checkbox } from 'react-native-paper';
+import {Text, Checkbox} from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
-import { LANGUAGES } from '../../utils/Data';
-
+import {LANGUAGES} from '../../utils/Data';
 
 interface LanguageDrawerProps {
   visible?: boolean;
   onCancelHandler?: () => void;
-  onApplyHandler?:(data:any) => void;
+  onApplyHandler?: (data: any) => void;
 }
 
 type LangugaeCheckboxesProps = {
-  languages: string[]; 
+  languages: string[];
 };
 
-const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler, onApplyHandler}) => {
+const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,onApplyHandler}) => {
 
-  
-  const [selected, setSelected] = React.useState<Record<string, boolean>>({}); 
+  const [selected, setSelected] = React.useState<Record<string, boolean>>({});
   const languages = [...LANGUAGES!];
 
-  const toggleCheckbox = (language: string) => {    
-    setSelected((prevState) => ({      
+  const toggleCheckbox = (language: string) => {
+    setSelected(prevState => ({
       ...prevState,
-      [language]: !prevState[language], 
-    }));    
+      [language]: !prevState[language],
+    }));
   };
 
-
-  const getSelectedDataHandler = async () => {     
-      onApplyHandler?.(selected);
+  const getSelectedDataHandler = async () => {
+    onApplyHandler?.(selected);
   };
-  
 
-  const renderItem = ({ item: language }: { item: string }) => (
+  const renderItem = ({item: language}: {item: string}) => (
     <View style={styles.flatItem}>
-      <Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />
-      <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
+      <Checkbox
+        status={selected[language] ? 'checked' : 'unchecked'}
+        onPress={() => toggleCheckbox(language)}
+      />
+      <Text
+        style={styles.checkboxLabel}
+        onPress={() => toggleCheckbox(language)}>
+        {language}
+      </Text>
     </View>
   );
 
 
-  const renderHeader = () => (
-     <View style={styles.flatHeader}>
+  return (
+    <View style={styles.container}>
+      
+      <View style={styles.flatHeader}>
         <Text style={styles.flateHeaderText}>Filter by language</Text>
-        <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
+        <Icon
+          name={'close-circle'}
+          size={40}
+          color={Colors.tabActiveColor}
+          onPress={onCancelHandler}
+        />
       </View>
-  );
 
+      <FlatList
+        data={languages}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.flatListStyle}
+        renderItem={renderItem}
+      />
 
-  const renderFooter = () => (
-        <Pressable style={styles.flatFooter} onPress={getSelectedDataHandler}>
-          <Text style={styles.footerText}>Apply</Text>
-        </Pressable>      
-  );
-
-
-  return (   
-        <FlatList
-              data={languages} 
-              keyExtractor={(item, index) => index.toString()} 
-              contentContainerStyle={styles.flatListStyle}
-              renderItem={renderItem}                   
-              ListHeaderComponent={renderHeader()}       
-              ListFooterComponent={renderFooter()}                                 
-        />    
+      <Pressable style={styles.flatFooter} onPress={getSelectedDataHandler}>
+        <Text style={styles.footerText}>Apply</Text>
+      </Pressable>
+      
+    </View>
   );
 };
 
-export default React.memo(LanguageDrawer);
-
 const styles = StyleSheet.create({
-  
-  flatListStyle: {
-    marginTop:100, 
-    width:300, 
-    borderRadius:10    
+  flatFooter: {
+    height: 50,
+    minWidth: '100%',
+    backgroundColor: Colors.tabActiveColor,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    top: 0,
+    right: 0,
+    zIndex: 1,
+    cursor: 'pointer',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.inputBackgroundColor,
+    elevation: 5,
+  },
+  footerText: {
+    fontFamily: Fonts.Family.Bold,
+    color: Colors.whiteColor,
   },
   flatHeader: {
-    backgroundColor:Colors.blackColor,
+    backgroundColor: Colors.blackColor,
     alignItems: 'center',
-    justifyContent: 'space-between',    
+    justifyContent: 'space-between',
     top: 0,
     right: 0,
     width: '100%',
     height: 60,
     zIndex: 1,
     cursor: 'pointer',
-    display:'flex',
-    flexDirection:'row',   
-    paddingTop:10, 
-    paddingBottom:10, 
-    paddingRight:10,
-    paddingLeft:10,
-    borderBottomWidth:1,
-    borderBottomColor:Colors.inputBackgroundColor,
-    elevation:5    
+    display: 'flex',
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.inputBackgroundColor,
+    elevation: 5,
   },
   flateHeaderText: {
     color: Colors.whiteColor,
-    fontFamily:Fonts.Family.Bold
+    fontFamily: Fonts.Family.Bold,
   },
-  flatFooter: {
-    height: 50,
-    width: '100%',
-    backgroundColor: Colors.tabActiveColor,    
-    left: 0,
-    bottom: 0,
-    display:'flex',
-    flexDirection:'row',
-    alignItems: 'center',
-    justifyContent: 'center'               
-  },
-  footerText: {
-    fontFamily:Fonts.Family.Bold,
-    color:Colors.whiteColor
+  flatListStyle: {    
+    borderRadius: 10,
   },
   checkboxLabel: {
-    marginLeft: 5,  
-    fontSize: Fonts.Size.Medium,   
-    color:Colors.whiteColor
-  },  
+    marginLeft: 5,
+    fontSize: Fonts.Size.Medium,
+    color: Colors.whiteColor,
+  },
   flatItem: {
     display: 'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    backgroundColor:Colors.blackColor, 
-    paddingTop:10, 
-    paddingLeft:10
-  }
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.blackColor,
+    paddingTop: 10,
+    paddingLeft: 10,
+  },
+  container: {
+    flex: 1, 
+    maxHeight:300    
+  },
+  flatList: {  
+    backgroundColor: '#f1f1f1',
+  },
+  headerFooter: {
+    backgroundColor: '#343a40',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  headerFooterText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  item: {
+    backgroundColor: '#e9ecef',
+    padding: 15,
+    marginVertical: 8,
+    borderRadius: 5,
+  },
+  title: {
+    fontSize: 16,
+  },
 });
+
+export default React.memo(LanguageDrawer);

@@ -92,6 +92,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     </React.Suspense>
                 </View>            
                                 
+                {/* {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>} */}
                 {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
@@ -113,6 +114,9 @@ const styles = StyleSheet.create({
         right:0, 
         width:'100%',
         height:'100%',
+        justifyContent:'center', 
+        alignItems:'center', 
+        paddingHorizontal:15               
     },
 
     filteredBtnWrapper: {

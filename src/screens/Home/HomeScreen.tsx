@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Button, Pressable,  } from 'react-native';
+import { View, StyleSheet, Button, Pressable, Text,  } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
@@ -82,7 +82,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     return (        
           <View style={styles.container}>                
-                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} />          
+                <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} />  
+
                 <View style={styles.movieList}>
                     <React.Suspense fallback={<Loading />}>
                         {selectedTab === 'Latest' && <LatestMovieShowList filteredData={filteredData} />}
@@ -90,19 +91,30 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>            
-                
-                {isVisibleDrawer && <LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} />}
+                                
+                {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
                         <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />
                     </Pressable>                                                  
-                </View>
-
+                </View>                
         </View>        
     );
 };
 
 const styles = StyleSheet.create({
+
+    drawerMainWrapper: {
+        position:'absolute',
+        backgroundColor:'rgba(0, 0, 0, 0.4)',         
+        top:0, 
+        left:0,
+        bottom:0, 
+        right:0, 
+        width:'100%',
+        height:'100%',
+    },
+
     filteredBtnWrapper: {
         width:40,
         height:40,

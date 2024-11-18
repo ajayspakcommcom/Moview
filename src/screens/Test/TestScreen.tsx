@@ -1,38 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Keyboard } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import Colors from '../../styles/Colors';
+import {FlatList, Text, View, StyleSheet} from 'react-native';
+import TestComponent from '../../components/TestComponent/TestComponent';
+import LanguageDrawer from '../../components/LanguageDrawer/LanguageDrawer';
 
 const TestScreen = () => {
 
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const togglePassword = () => {
-        setShowPassword(!showPassword);
-        Keyboard.dismiss();
-    }
-    
-    return (        
-            <View style={[styles.Wrapper]}>                
-                <TextInput label="Password" style={styles.input}  secureTextEntry={!showPassword} right={<TextInput.Icon icon="eye" onPress={togglePassword}  />} />
-            </View>        
-    );
+  return (
+    <View style={styles.container}>
+      {/* <TestComponent />  */}
+      <LanguageDrawer />
+    </View>
+  );
 };
 
-const styles = StyleSheet.create({   
-    Wrapper: {
-        flex: 1,  
-        backgroundColor: 'red', 
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    input: {        
-        margin: 10,
-        paddingHorizontal: 20
-    },
-    whiteText: {
-        color: Colors.whiteColor
-    }    
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'pink',
+        padding: 10,
+      }      
 });
 
 export default TestScreen;

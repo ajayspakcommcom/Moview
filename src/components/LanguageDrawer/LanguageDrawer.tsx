@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, View, ScrollView, Pressable, Dimensions, FlatList} from 'react-native';
-import { Drawer, Text, Checkbox } from 'react-native-paper';
+import {StyleSheet, View, Pressable, FlatList} from 'react-native';
+import { Text, Checkbox } from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
@@ -37,72 +37,50 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
   
 
   const renderItem = ({ item: language }: { item: string }) => (
-    <View style={styles.checkboxWrapper}>
-      <Checkbox
-        status={selected[language] ? 'checked' : 'unchecked'}
-        onPress={() => toggleCheckbox(language)}
-      />
-      <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>
-        {language}
-      </Text>
+    <View style={styles.flatItem}>
+      <Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />
+      <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
     </View>
   );
 
 
   const renderHeader = () => (
-     <View style={styles.closeWrapperBtn}>
-        <Text style={styles.closeBtnText}>Filter by language</Text>
+     <View style={styles.flatHeader}>
+        <Text style={styles.flateHeaderText}>Filter by language</Text>
         <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
       </View>
   );
 
 
   const renderFooter = () => (
-    <View style={styles.footerWrapper}>
-      <View style={styles.footerWrapperInside}>
-        <Pressable style={styles.footerWrapper} onPress={getSelectedDataHandler}>
+        <Pressable style={styles.flatFooter} onPress={getSelectedDataHandler}>
           <Text style={styles.footerText}>Apply</Text>
-        </Pressable>
-      </View>
-    </View>
+        </Pressable>      
   );
 
 
   return (   
-    <View style={styles.drawerWrapperOpenedRelative}>
-            <FlatList
-                  data={languages} 
-                  keyExtractor={(item, index) => index.toString()} 
-                  contentContainerStyle={styles.flatListStyle}
-                  renderItem={renderItem}                   
-                  ListHeaderComponent={renderHeader()}       
-                  ListFooterComponent={renderFooter()}                                 
-            />
-    </View> 
+        <FlatList
+              data={languages} 
+              keyExtractor={(item, index) => index.toString()} 
+              contentContainerStyle={styles.flatListStyle}
+              renderItem={renderItem}                   
+              ListHeaderComponent={renderHeader()}       
+              ListFooterComponent={renderFooter()}                                 
+        />    
   );
 };
 
 export default React.memo(LanguageDrawer);
 
 const styles = StyleSheet.create({
-
-  drawerWrapperOpenedRelative: {
-    position:'relative', 
-    width:'100%',
-    minHeight:'100%',    
-    flex:1,
-    //backgroundColor:Colors.backgroundColorShadow, 
-    backgroundColor:'red',
-    display:'flex',
-    justifyContent:'center', 
-    alignItems:'center', 
-  },
+  
   flatListStyle: {
     marginTop:100, 
     width:300, 
-    borderRadius:10
+    borderRadius:10    
   },
-  closeWrapperBtn: {
+  flatHeader: {
     backgroundColor:Colors.blackColor,
     alignItems: 'center',
     justifyContent: 'space-between',    
@@ -122,21 +100,11 @@ const styles = StyleSheet.create({
     borderBottomColor:Colors.inputBackgroundColor,
     elevation:5    
   },
-
-  closeBtnText: {
+  flateHeaderText: {
     color: Colors.whiteColor,
     fontFamily:Fonts.Family.Bold
   },
-  footerWrapperInside: {
-    backgroundColor:Colors.inputBackgroundColor, 
-    width:'50%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    minHeight:50    
-  },
-
-  footerWrapper: {
+  flatFooter: {
     height: 50,
     width: '100%',
     backgroundColor: Colors.tabActiveColor,    
@@ -147,7 +115,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'               
   },
-  
   footerText: {
     fontFamily:Fonts.Family.Bold,
     color:Colors.whiteColor
@@ -157,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.Size.Medium,   
     color:Colors.whiteColor
   },  
-  checkboxWrapper: {
+  flatItem: {
     display: 'flex',
     flexDirection:'row',
     alignItems:'center',

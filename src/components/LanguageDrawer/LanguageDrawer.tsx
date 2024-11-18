@@ -93,16 +93,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 10,
-    paddingLeft: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.inputBackgroundColor,
+    paddingLeft: 10,    
     elevation: 5,
+    borderBottomRightRadius:10,
+    borderBottomLeftRadius:10
   },
   footerText: {
     fontFamily: Fonts.Family.Bold,
     color: Colors.whiteColor,
   },
   flatHeader: {
+    borderTopRightRadius:10,
+    borderTopLeftRadius:10,
     backgroundColor: Colors.blackColor,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -144,7 +146,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1, 
-    maxHeight:300    
+    minHeight:300,
+    maxHeight:400    
   },
   flatList: {  
     backgroundColor: '#f1f1f1',

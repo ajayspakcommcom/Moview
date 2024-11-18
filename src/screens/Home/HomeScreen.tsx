@@ -93,8 +93,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                         {selectedTab === 'Shows' && <ShowList />}
                     </React.Suspense>
                 </View>            
-                                
-                {/* {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>} */}
+                                                
                 {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} getSelectedLanguage={selectedCheckbox} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>

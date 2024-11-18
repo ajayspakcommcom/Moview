@@ -226,8 +226,12 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     cancelBtn: {
-        backgroundColor: Colors.dullRedColor,
-        marginTop: 15
+        backgroundColor: Colors.darkBackgroudColor, //Colors.dullRedColor,
+        marginTop: 15, 
+        borderWidth:2,
+        borderColor: Colors.tabActiveColor, 
+        color: Colors.tabActiveColor, 
+        marginBottom:20
     },
     cancelText: {
         color: Colors.whiteColor

@@ -32,6 +32,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const [notificationCount, setNotificationCount] = React.useState<number>(0);
     const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);
     const [filteredData, setFilteredData] = React.useState([]);
+    const [selectedCheckbox, setSelectedCheckbox] = React.useState<{[key: string]: any} | null>();
 
     React.useLayoutEffect(() => {
         setTransparentHeader(navigation, '', 'notifications');
@@ -56,8 +57,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setIsVisibleDrawer(false);          
     };
 
-    const applyHandler = async (data:any) => {        
-        const lowerCaseKeys = Object.keys(data).map(item => item.trim().toLowerCase());                  
+    const applyHandler = async (data:any) => {    
+        const lowerCaseKeys = Object.keys(data).filter(key => data[key]).map(item => item.trim().toLowerCase());        
+        setSelectedCheckbox(data);
         closeDrawerHandler();
          const response = await fetch(`${API_URL}latest/movie-show/filtered`, {
              method: 'POST',
@@ -93,7 +95,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 </View>            
                                 
                 {/* {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>} */}
-                {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} /></View>}
+                {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} getSelectedLanguage={selectedCheckbox} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
                         <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />

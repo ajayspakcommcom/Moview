@@ -10,41 +10,45 @@ interface LanguageDrawerProps {
   visible?: boolean;
   onCancelHandler?: () => void;
   onApplyHandler?: (data: any) => void;
+  getSelectedLanguage?: { [key: string]: boolean } | null;
 }
 
 type LangugaeCheckboxesProps = {
   languages: string[];
 };
 
-const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,onApplyHandler}) => {
+const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,onApplyHandler, getSelectedLanguage}) => {
 
   const [selected, setSelected] = React.useState<Record<string, boolean>>({});
   const languages = [...LANGUAGES!];
 
-  const toggleCheckbox = (language: string) => {
+  const toggleCheckbox = React.useCallback((language: string) => {
     setSelected(prevState => ({
       ...prevState,
       [language]: !prevState[language],
     }));
-  };
+  }, []);
 
-  const getSelectedDataHandler = async () => {
+  const getSelectedDataHandler = React.useCallback(() => {
     onApplyHandler?.(selected);
-  };
+  }, [onApplyHandler, selected]);
+
+  const initialSelectedLanguages = React.useMemo(() => {
+    return getSelectedLanguage || {};
+  }, [getSelectedLanguage]);
+
+  React.useEffect(() => {    
+    setSelected(initialSelectedLanguages);
+  }, [initialSelectedLanguages]);
 
   const renderItem = ({item: language}: {item: string}) => (
     <View style={styles.flatItem}>
-      <Checkbox
-        status={selected[language] ? 'checked' : 'unchecked'}
-        onPress={() => toggleCheckbox(language)}
-      />
-      <Text
-        style={styles.checkboxLabel}
-        onPress={() => toggleCheckbox(language)}>
-        {language}
-      </Text>
+      <Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />
+      <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
     </View>
   );
+
+  React.useMemo
 
 
   return (

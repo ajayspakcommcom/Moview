@@ -1,35 +1,33 @@
 import React from 'react';
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import {Text, Checkbox} from 'react-native-paper';
-import Colors from '../../styles/Colors';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Fonts from '../../styles/Fonts';
 import {LANGUAGES} from '../../utils/Data';
+import Colors from '../../styles/Colors';
+import Fonts from '../../styles/Fonts';
 
-interface LanguageDrawerProps {
-  visible?: boolean;
-  onCancelHandler?: () => void;
-  onApplyHandler?: (data: any) => void;
-}
 
-type LangugaeCheckboxesProps = {
-  languages: string[];
-};
 
-const TestComponent : React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,onApplyHandler}) => {
+
+const TestComponent : React.FC = () => {
 
   const [selected, setSelected] = React.useState<Record<string, boolean>>({});
+
   const languages = [...LANGUAGES!];
 
+  React.useLayoutEffect(() => {
+
+    setSelected({"bengali": true, "marathi": true, "telugu": true});
+
+    return () => console.log('');
+  }, []);
+
+
   const toggleCheckbox = (language: string) => {
+    console.log('language', language);
     setSelected(prevState => ({
       ...prevState,
       [language]: !prevState[language],
     }));
-  };
-
-  const getSelectedDataHandler = async () => {
-    onApplyHandler?.(selected);
   };
 
   const renderItem = ({item: language}: {item: string}) => (
@@ -39,81 +37,25 @@ const TestComponent : React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
     </View>
   );
 
+  
+
   return (
     <View style={styles.container}>
-      
-      <View style={styles.flatHeader}>
-        <Text style={styles.flateHeaderText}>Filter by language</Text>
-        <Icon
-          name={'close-circle'}
-          size={40}
-          color={Colors.tabActiveColor}
-          onPress={onCancelHandler}
-        />
-      </View>
-
-      <FlatList
+       <FlatList
         data={languages}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.flatListStyle}
         renderItem={renderItem}
       />
-
-      <Pressable style={styles.flatFooter} onPress={getSelectedDataHandler}>
-        <Text style={styles.footerText}>Apply</Text>
-      </Pressable>
     </View>
   );
 };
 
 // Styles
 const styles = StyleSheet.create({
-  flatFooter: {
-    height: 50,
-    width: '100%',
-    backgroundColor: Colors.tabActiveColor,
-    left: 0,
-    bottom: 0,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  footerText: {
-    fontFamily: Fonts.Family.Bold,
-    color: Colors.whiteColor,
-  },
-  flatHeader: {
-    backgroundColor: Colors.blackColor,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    top: 0,
-    right: 0,
-    width: '100%',
-    height: 60,
-    zIndex: 1,
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.inputBackgroundColor,
-    elevation: 5,
-  },
-  flateHeaderText: {
-    color: Colors.whiteColor,
-    fontFamily: Fonts.Family.Bold,
-  },
-  flatListStyle: {    
-    borderRadius: 10,
-  },
-  checkboxLabel: {
-    marginLeft: 5,
-    fontSize: Fonts.Size.Medium,
-    color: Colors.whiteColor,
+  container: {
+    flex:1,
+    backgroundColor:'pink'
   },
   flatItem: {
     display: 'flex',
@@ -123,32 +65,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10,
   },
-  container: {
-    flex: 1, 
-    maxHeight:300    
+  checkboxLabel: {
+    marginLeft: 5,
+    fontSize: Fonts.Size.Medium,
+    color: Colors.whiteColor,
   },
-  flatList: {    
-    maxHeight:300,
-    backgroundColor: '#f1f1f1',
-  },
-  headerFooter: {
-    backgroundColor: '#343a40',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  headerFooterText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  item: {
-    backgroundColor: '#e9ecef',
-    padding: 15,
-    marginVertical: 8,
-    borderRadius: 5,
-  },
-  title: {
-    fontSize: 16,
+  flatListStyle: {    
+    borderRadius: 10,
   },
 });
 

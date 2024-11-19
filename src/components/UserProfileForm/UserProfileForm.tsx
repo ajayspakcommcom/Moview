@@ -176,6 +176,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
                 numberOfLines={4}
                 value={biography}
                 onChangeText={handleBioChange}
+                maxLength={100}
             />
 
             <CustomButton

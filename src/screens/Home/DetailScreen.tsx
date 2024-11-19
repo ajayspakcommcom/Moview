@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Pressable, Modal, Dimensions, Image } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -36,6 +36,8 @@ const DetailScreen: React.FC = () => {
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
     const [activeTab, setActiveTab] = React.useState('reviews');
     const [rating, setRating] = React.useState(0);
+    const [isModalVisible, setModalVisible] = React.useState(false);
+    const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
 
     const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);   
     const dispatch = useAppDispatch();
@@ -132,14 +134,192 @@ const DetailScreen: React.FC = () => {
         setActiveTab(tabName);
     };
 
+    const openModal = () => {                   
+        setModalVisible(true);
+        
+        const imageUri = `https://moviu.s3.us-east-1.amazonaws.com/movies/andhadhun-poster.jpg`;
+
+        if (imageUri) {
+            Image.getSize(imageUri,
+                (width, height) => {
+                    setImageSize({ width, height });                    
+                },
+                (error) => {
+                    console.error("Failed to get image size:", error);
+                }
+            );
+        } else {
+            Alert.alert("Error", "Image URI not found.");
+        }
+    };
+
+    const closeModal = () => {
+        setModalVisible(false);
+    };
+
+    const styles = StyleSheet.create({
+
+        modalContainer: {
+            flex: 1,
+            backgroundColor: Colors.backgroundColorShadow,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        closeArea: {
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        fullImage: {
+            width: imageSize.width,
+            height: imageSize.height        
+        },
+    
+        container: {
+            flex: 1,
+        },
+        reviewListContainer: {
+            paddingHorizontal: 20
+        },
+        noReviewWrapper: {
+            flex: 1,
+        },
+        reviewText: {
+            color: Colors.whiteColor,
+            textAlign: 'center'
+        },
+        ratingTextWrapper: {
+            flexDirection: 'row',
+            alignItems: 'flex-end'
+        },
+        ratingText: {
+            color: Colors.whiteColor,
+            fontSize: Fonts.Size.Medium + 5,
+            fontWeight: '600',
+            paddingLeft: 5
+        },
+        ratingSlash: {
+            color: Colors.whiteColor,
+            marginHorizontal: 2
+        },
+        totalRatingText: {
+            color: Colors.tabBgColor,
+            fontSize: Fonts.Size.Small,
+            fontWeight: '500'
+        },
+        header: {
+            width: '100%',
+            height: 200,
+            paddingHorizontal: 0
+        },
+        img: {
+            width: '100%',
+            height: 200,
+            flexGrow: 1
+        },
+        detailText: {
+            paddingVertical: 10,
+            paddingHorizontal: 15
+        },
+        detailHeading: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Bold,
+            fontSize: Fonts.Size.Medium + 1,
+            textTransform: 'uppercase'
+        },
+        ratingWrapper: {
+            paddingVertical: 0,
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        genreWrapper: {
+            flexDirection: 'row',
+            paddingHorizontal: 15
+        },
+        genreItem: {
+            paddingVertical: 1,
+            borderColor: Colors.whiteColor,
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        genreText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        releaseWrapper: {
+            paddingHorizontal: 15,
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start'
+        },
+        releaseItem: {
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        releaseText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        directorWrapper: {
+            marginTop: 0,
+            paddingHorizontal: 15,
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start'
+        },
+        directorItem: {
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        directorText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        editableRating: {
+            width: '100%',
+            paddingTop: 25
+        },
+        hrWrapper: {
+            paddingVertical: 10,
+            width: '100%',
+            paddingHorizontal: 15,
+        },
+        hr: {
+            minHeight: 2,
+            backgroundColor: Colors.tabBgColor,
+        },
+        castReviewBtnWrapper: {
+            paddingHorizontal: 15,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            marginBottom: 10,
+        },
+        castReviewText: {
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            borderRadius: 50
+        },
+        crText: {
+            fontSize: Fonts.Size.Medium,
+            color: Colors.tabBgColor,
+            fontWeight: '500'
+        },
+    
+        crTextActive: {
+            color: Colors.whiteColor,
+        }
+    });
+
     const headerContent = () => {
         return <>            
             <View style={styles.header}>
                 {detailData.poster_url &&
-                    <FastImage
-                        style={styles.img}
-                        source={MovieImageMap[detailData.poster_url]}
-                    />
+                    <Pressable onPress={openModal}>
+                        <FastImage
+                            style={styles.img}
+                            source={MovieImageMap[detailData.poster_url]}                            
+                        />
+                    </Pressable>
                 }
             </View>
 
@@ -193,6 +373,7 @@ const DetailScreen: React.FC = () => {
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
                 </TouchableOpacity>
             </View>
+
         </>
     }
 
@@ -249,143 +430,24 @@ const DetailScreen: React.FC = () => {
                     </React.Suspense>
                 }
             </KeyboardAvoidingView>
+
+            {detailData.poster_url &&
+                <Modal visible={isModalVisible} transparent={true}>
+                    <View style={styles.modalContainer}>
+                        <Pressable style={styles.closeArea} onPress={closeModal}>
+                            <FastImage
+                                style={styles.fullImage}
+                                source={MovieImageMap[detailData.poster_url]}
+                                resizeMode="cover"
+                            />
+                        </Pressable>
+                    </View>
+                </Modal>
+            }
         </>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    reviewListContainer: {
-        paddingHorizontal: 20
-    },
-    noReviewWrapper: {
-        flex: 1,
-    },
-    reviewText: {
-        color: Colors.whiteColor,
-        textAlign: 'center'
-    },
-    ratingTextWrapper: {
-        flexDirection: 'row',
-        alignItems: 'flex-end'
-    },
-    ratingText: {
-        color: Colors.whiteColor,
-        fontSize: Fonts.Size.Medium + 5,
-        fontWeight: '600',
-        paddingLeft: 5
-    },
-    ratingSlash: {
-        color: Colors.whiteColor,
-        marginHorizontal: 2
-    },
-    totalRatingText: {
-        color: Colors.tabBgColor,
-        fontSize: Fonts.Size.Small,
-        fontWeight: '500'
-    },
-    header: {
-        width: '100%',
-        height: 200,
-        paddingHorizontal: 0
-    },
-    img: {
-        width: '100%',
-        height: 200,
-        flexGrow: 1
-    },
-    detailText: {
-        paddingVertical: 10,
-        paddingHorizontal: 15
-    },
-    detailHeading: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium + 1,
-        textTransform: 'uppercase'
-    },
-    ratingWrapper: {
-        paddingVertical: 0,
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    genreWrapper: {
-        flexDirection: 'row',
-        paddingHorizontal: 15
-    },
-    genreItem: {
-        paddingVertical: 1,
-        borderColor: Colors.whiteColor,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    genreText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium
-    },
-    releaseWrapper: {
-        paddingHorizontal: 15,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start'
-    },
-    releaseItem: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    releaseText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium
-    },
-    directorWrapper: {
-        marginTop: 0,
-        paddingHorizontal: 15,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start'
-    },
-    directorItem: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    directorText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium
-    },
-    editableRating: {
-        width: '100%',
-        paddingTop: 25
-    },
-    hrWrapper: {
-        paddingVertical: 10,
-        width: '100%',
-        paddingHorizontal: 15,
-    },
-    hr: {
-        minHeight: 2,
-        backgroundColor: Colors.tabBgColor,
-    },
-    castReviewBtnWrapper: {
-        paddingHorizontal: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    castReviewText: {
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 50
-    },
-    crText: {
-        fontSize: Fonts.Size.Medium,
-        color: Colors.tabBgColor,
-        fontWeight: '500'
-    },
 
-    crTextActive: {
-        color: Colors.whiteColor,
-    }
-});
 
 export default DetailScreen;

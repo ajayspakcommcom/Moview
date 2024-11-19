@@ -134,23 +134,10 @@ const DetailScreen: React.FC = () => {
         setActiveTab(tabName);
     };
 
-    const openModal = () => {                   
+    const openModal = (url: string) => {                   
         setModalVisible(true);
-        
-        const imageUri = `https://moviu.s3.us-east-1.amazonaws.com/movies/andhadhun-poster.jpg`;
-
-        if (imageUri) {
-            Image.getSize(imageUri,
-                (width, height) => {
-                    setImageSize({ width, height });                    
-                },
-                (error) => {
-                    console.error("Failed to get image size:", error);
-                }
-            );
-        } else {
-            Alert.alert("Error", "Image URI not found.");
-        }
+        const imageUri = `https://moviu.s3.us-east-1.amazonaws.com/movies/andhadhun-poster.jpg`;        
+        imageUri ? Image.getSize(imageUri, (width, height) => setImageSize({ width, height }), (error) => console.error("Failed to get image size:", error)) : Alert.alert("Error", "Image URI not found.");
     };
 
     const closeModal = () => {
@@ -314,7 +301,7 @@ const DetailScreen: React.FC = () => {
         return <>            
             <View style={styles.header}>
                 {detailData.poster_url &&
-                    <Pressable onPress={openModal}>
+                    <Pressable onPress={() => openModal(detailData.poster_url!)}>
                         <FastImage
                             style={styles.img}
                             source={MovieImageMap[detailData.poster_url]}                            

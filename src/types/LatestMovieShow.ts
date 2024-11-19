@@ -20,6 +20,7 @@ export type LastesMovieShowItem = {
     isMovie: boolean;
     isShow: boolean;
     language: string;
+    test_poster_url: string;
     __v: number;
 };
 

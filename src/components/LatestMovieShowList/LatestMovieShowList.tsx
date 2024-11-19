@@ -46,7 +46,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
             });
 
             const result = await response.json();
-
+            
             if (result.status === 'success') {
                 const sortedData = result.data.sort((a: any, b: any) => {
                     return a.title.localeCompare(b.title);
@@ -95,7 +95,8 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage style={styles.image} source={LatestMovieShowImageMap[item.poster_url]}  resizeMode={FastImage.resizeMode.cover} />
+                    <FastImage style={styles.image} source={LatestMovieShowImageMap[item.poster_url]}  resizeMode={FastImage.resizeMode.cover} />                    
+                    <Text style={styles.catergoryText}>{item.test_poster_url}</Text>
                 </Pressable>                
                 <View style={styles.category}>
                     <View style={styles.languageWrapper}>

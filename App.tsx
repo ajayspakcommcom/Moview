@@ -16,6 +16,7 @@ import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import TestScreen from './src/screens/Test/TestScreen';
+import Test1 from './src/screens/Test/Test1';
 
 
 
@@ -100,7 +101,8 @@ function App(): React.JSX.Element {
             })}            
           />
           
-          <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} />
+          {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
+          <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} />
           <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
           
           <Tab.Screen

@@ -109,10 +109,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                const resp = await response.json();
             if(resp.data.length > 0) {
                 setFilteredData(resp.data);
-            }
-            console.log('Hai');
-        } else {
-            console.log('NHai');
+            }            
+        } else {            
             getLatestMovieShowList();
         }
     };

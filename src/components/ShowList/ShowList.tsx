@@ -6,7 +6,6 @@ import { ShowItem } from '../../types/Show';
 import { fetchMovies, fetchShows } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
-import ShowImageMap from '../../utils/ShowImageMap';
 import { Text } from 'react-native-paper';
 
 interface ShowListProps {

@@ -3,17 +3,14 @@ import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, Toucha
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
-import { MovieItem } from '../../types/Movie';
 import { formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
-import MovieImageMap from '../../utils/MovieImageMap';
+
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { ShowItem } from '../../types/Show';
-import ShowImageMap from '../../utils/ShowImageMap';
-import { Review } from '../../models/Review';
 import ShowReviewItem from '../../components/ReviewList/ShowReviewItem';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
@@ -144,8 +141,8 @@ const ShowDetailScreen: React.FC = () => {
             <View style={styles.header}>
                 {detailData.poster_url &&
                     <FastImage
-                        style={styles.img}
-                        source={ShowImageMap[detailData.poster_url]}
+                        style={styles.img}                        
+                        source={{uri:detailData.poster_url}}
                     />
                 }
             </View>

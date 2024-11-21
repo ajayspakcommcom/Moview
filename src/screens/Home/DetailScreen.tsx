@@ -301,11 +301,8 @@ const DetailScreen: React.FC = () => {
         return <>            
             <View style={styles.header}>
                 {detailData.poster_url &&
-                    <Pressable onPress={() => openModal(detailData.poster_url!)}>
-                        <FastImage
-                            style={styles.img}
-                            source={MovieImageMap[detailData.poster_url]}                            
-                        />
+                    <Pressable onPress={() => openModal(detailData.poster_url!)}>                        
+                        <FastImage style={styles.img} source={{uri: detailData.poster_url}} />
                     </Pressable>
                 }
             </View>

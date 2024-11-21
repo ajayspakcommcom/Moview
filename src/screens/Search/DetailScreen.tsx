@@ -100,8 +100,7 @@ const DetailScreen: React.FC = () => {
     useFocusEffect(
         React.useCallback(() => {
             getReviewListByMovie();
-            return () => {            
-            };
+            return () => console.log('');
         }, []) 
     );
 
@@ -135,11 +134,10 @@ const DetailScreen: React.FC = () => {
     const headerContent = () => {
         return <>            
             <View style={styles.header}>
-                {detailData.poster_url &&
-                    <FastImage
-                        style={styles.img}
-                        source={MovieImageMap[detailData.poster_url]}
-                    />
+                {detailData.poster_url && <>
+                        <FastImage style={styles.img} source={MovieImageMap[detailData.poster_url]} />
+                        {/* <FastImage style={styles.img} source={{uri:detailData.poster_url}} />                         */}
+                    </>
                 }
             </View>
 

@@ -100,11 +100,8 @@ const FilteredLatestMovieShowList: React.FC<FilteredLatestMovieShowListProps> = 
     const renderItem = ({ item }: { item: FilteredLatestMovieShow }) => (
         <>
             <View style={[styles.item]}>
-                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage
-                        style={styles.image} 
-                        source={LatestMovieShowImageMap[item.poster_url]} 
-                        resizeMode={FastImage.resizeMode.cover} 
+                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>                    
+                    <FastImage style={styles.image}  source={{uri:item.poster_url}} resizeMode={FastImage.resizeMode.cover} 
                     />
                 </Pressable>
                 <View style={styles.category}>

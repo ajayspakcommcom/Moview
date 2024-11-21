@@ -13,7 +13,6 @@ import FastImage from 'react-native-fast-image';
 const CustomButton = React.lazy(() => import('../../components/Ui/CustomButton'));
 
 type Props = {
-
 };
 
 const movieList: MovieItem[] = [...MovieDataList];

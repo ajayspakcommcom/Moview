@@ -54,6 +54,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
 
                 setLatestMovieShowList(sortedData);
                 setLoading(false);
+
             }
 
         } catch (error) {
@@ -94,8 +95,8 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
     const renderItem = ({ item }: { item: LastesMovieShowItem }) => (
         <>
             <View style={[styles.item]}>
-                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage style={styles.image} source={LatestMovieShowImageMap[item.poster_url]}  resizeMode={FastImage.resizeMode.cover} />                    
+                <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>                    
+                    <FastImage style={styles.image} source={{uri: item.poster_url}}  resizeMode={FastImage.resizeMode.cover} />                    
                     <Text style={styles.catergoryText}>{item.test_poster_url}</Text>
                 </Pressable>                
                 <View style={styles.category}>

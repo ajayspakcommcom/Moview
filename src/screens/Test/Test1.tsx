@@ -10,6 +10,7 @@ import {
 import {API_URL} from '../../configure/config.android';
 import {useAuth} from '../../context/AuthContext';
 import {LastesMovieShowItem} from '../../types/LatestMovieShow';
+import FastImage from 'react-native-fast-image';
 
 interface LoadingProps {
   message?: string;
@@ -18,9 +19,7 @@ interface LoadingProps {
 // Functional component with optional message prop
 const Test1: React.FC<LoadingProps> = ({message = 'Test1'}) => {
   const {user} = useAuth();
-  const [latestMovieShowList, setLatestMovieShowList] = React.useState<
-    LastesMovieShowItem[]
-  >([]);
+  const [latestMovieShowList, setLatestMovieShowList] = React.useState<LastesMovieShowItem[]>([]);
 
   const getLatestMovieShowList = async () => {
     const url = `${API_URL}latest/movie-show`;
@@ -52,18 +51,17 @@ const Test1: React.FC<LoadingProps> = ({message = 'Test1'}) => {
     getLatestMovieShowList();
   }, []);
 
-  const renderItem = ({item}: {item: any}) => (
+  const renderItem = ({item}: {item: LastesMovieShowItem}) => (
     <>
        <View style={styles.imageWrapper}>
-        {item.test_poster_url && <Image source={{uri: `https://moviu.s3.us-east-1.amazonaws.com/movies/${item.test_poster_url}`}} style={styles.image} />}   
-        <Text>{item.test_poster_url}</Text>      
+        {item.test_poster_url && item.isMovie && <Image source={{uri: `https://moviu.s3.us-east-1.amazonaws.com/movies/${item.test_poster_url}`}} style={styles.image} />}                            
        </View> 
     </>
   );
 
   return (
     <View style={styles.container}>
-      <FlatList data={latestMovieShowList} renderItem={renderItem} keyExtractor={(item, index) => index.toString()} numColumns={2} contentContainerStyle={styles.list} />
+      <FlatList data={latestMovieShowList} renderItem={renderItem} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.list} />
     </View>
   );
 };
@@ -82,8 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor:'red'
   },
   image: {
-    width: (Dimensions.get('window').width/2) - 20,
-    height: 100,
+    width: (Dimensions.get('window').width/1) - 20,
+    height: 300,
     margin: 10,
     borderRadius: 5,
   },

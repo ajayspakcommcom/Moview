@@ -78,11 +78,7 @@ const ShowList: React.FC<ShowListProps> = () => {
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage
-                        style={styles.image}
-                        source={ShowImageMap[item.poster_url]}
-                        resizeMode={FastImage.resizeMode.cover}
-                    />
+                    <FastImage style={styles.image} source={{uri: item.poster_url}} resizeMode={FastImage.resizeMode.cover} />
                     <Text>{item.title}</Text>
                 </Pressable>
             </View>

@@ -77,11 +77,7 @@ const MovieList: React.FC<MovieListProps> = () => {
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage
-                        style={styles.image}
-                        source={MovieImageMap[item.poster_url]}
-                        resizeMode={FastImage.resizeMode.cover}
-                    />
+                    <FastImage style={styles.image} source={{uri: item.poster_url}} resizeMode={FastImage.resizeMode.cover} />
                 </Pressable>
             </View>
         </>

@@ -1,6 +1,7 @@
 import { API_URL } from "../configure/config.android";
 import { MovieItem } from "../types/Movie";
 import { getData } from "./Storage";
+  
 
 export const findMovieById = (data: Partial<MovieItem>[], id: string): Partial<MovieItem> | undefined => {
     return data.find(item => item._id === id);
@@ -34,7 +35,6 @@ export const capitalizeFirstLetter = (str: string): string => {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
-
 
 export const fetchMovies = async (userToken: string, signal: AbortSignal) => {
     const url = `${API_URL}movie`;
@@ -104,7 +104,6 @@ export const fetchShows = async (userToken: string, signal: AbortSignal) => {
     }
 };
 
-
 export const formatDate = (date: Date, format: string): string => {
     // Helper function to add leading zeroes
     const addLeadingZero = (num: number): string => (num < 10 ? `0${num}` : num.toString());
@@ -131,7 +130,6 @@ export const hitSlops = (top: number = 0, bottom: number = 0, left: number = 0, 
         right,
     };
 };
-
 
 export const fetchMoviesShowsByKeyword = async (userToken: string, signal: AbortSignal, title: string) => {
     
@@ -220,3 +218,5 @@ export const getFirstThreeChars = (input: string): string | null => {
     // Return the first three characters or the entire string if it's shorter than three
     return input[0].toUpperCase() + input.slice(1, 3);
 }
+
+

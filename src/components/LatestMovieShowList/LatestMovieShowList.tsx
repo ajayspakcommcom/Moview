@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, StyleSheet, FlatList, RefreshControl, Dimensions, ActivityIndicator, Pressable } from 'react-native';
+import { View, StyleSheet, FlatList, RefreshControl, Dimensions, ActivityIndicator, Pressable, Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { LastesMovieShowItem } from '../../types/LatestMovieShow';
@@ -10,11 +10,12 @@ import { Text } from 'react-native-paper';
 import { getFirstThreeChars } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 
+
 interface LatestMovieShowListProps {
     filteredData?: LastesMovieShowItem[];
 }
 
-const screenWidth = Dimensions.get('window').width;
+const {width:SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData}) => {
 
@@ -25,6 +26,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
     const [refreshing, setRefreshing] = React.useState(false);
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [loading, setLoading] = React.useState(true);
+    
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -63,14 +65,12 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
     };
 
     useLayoutEffect(() => {
-        setLatestMovieShowList(filteredData as any)
+        setLatestMovieShowList(filteredData as any);           
         return () => console.log('');
     }, [filteredData]);
 
     useLayoutEffect(() => {
-
         getLatestMovieShowList();
-
         return () => {
             abortController.abort();
         };
@@ -99,12 +99,13 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
                     <Text style={styles.catergoryText}>{item.test_poster_url}</Text>
                 </Pressable>                
                 <View style={styles.category}>
+
                     <View style={styles.languageWrapper}>
                         <Text style={[styles.catergoryText]}>{getFirstThreeChars(item.language)}</Text>
                     </View>
-                    <View style={styles.movieShowWrapper}>
+                    <View style={styles.movieShowWrapper}>                        
                         {item.isMovie && <Text style={styles.catergoryText}>Movie</Text>}
-                        {item.isShow && <Text style={styles.catergoryText}>Show</Text>}
+                        {item.isShow && <Text style={styles.catergoryText}>Show</Text>}                        
                     </View>
                 </View>
             </View>
@@ -147,8 +148,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     item: {
-        width: ((screenWidth) / 2),
-        height: (screenWidth / 2) + 55,
+        width: ((SCREEN_WIDTH) / 2),
+        height: (SCREEN_WIDTH / 2) + 55,
         overflow: 'hidden',
         position: 'relative'
     },
@@ -195,8 +196,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     image: {
-        width: ((screenWidth - 6) / 2),
-        height: (screenWidth / 2) + 55,
+        width: ((SCREEN_WIDTH - 6) / 2),
+        height: (SCREEN_WIDTH / 2) + 55,
         alignSelf: 'center',
     },
     text: {

@@ -93,75 +93,105 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         setIsEditMode(bool);
     };
 
+    const navigationHandler = () => {
+        logout();
+    };
+
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.innerContainer}>
-                {
-                    !isEditMode &&
-                    <>
-                        <View style={styles.editWrapper}>
-                            <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />
-                        </View>
-                        <View style={styles.header}>
-                            <View style={styles.headerContent}>
-                                <View style={styles.userTextIcon}>
-                                    <View style={styles.userIcon}>
-                                        <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
+         <>
+            {userDetail.role !== 'guest' && 
+                <ScrollView style={styles.container}>
+                    
+                        
+                            <View style={styles.innerContainer}>
+                        {
+                            !isEditMode &&
+                            <>
+                                <View style={styles.editWrapper}>
+                                    <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />
+                                </View>
+                                <View style={styles.header}>
+                                    <View style={styles.headerContent}>
+                                        <View style={styles.userTextIcon}>
+                                            <View style={styles.userIcon}>
+                                                <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />
+                                            </View>
+                                            <View style={styles.userTextWrapper}>                                        
+                                                <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
+                                                {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
+                                            </View>
+                                        </View>
                                     </View>
-                                    <View style={styles.userTextWrapper}>                                        
-                                        <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
-                                        {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
+                                </View>
+
+                                <View style={styles.followerWrapper}>
+                                    <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                                        <View style={styles.movies}>
+                                            <Text style={styles.follText}>{myReviews}</Text>
+                                            <Text style={styles.follText}>Reviews</Text>
+                                        </View>
+                                    </Pressable>
+
+                                    <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
+                                        <View style={styles.followers}>
+                                            <Text style={styles.follText}>{followerCount}</Text>
+                                            <Text style={styles.follText}>Followers</Text>
+                                        </View>
+                                    </Pressable>
+
+                                    <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
+                                        <View style={styles.following}>
+                                            <Text style={styles.follText}>{followingCount}</Text>                                    
+                                            <Text style={styles.follText}>Followings</Text>
+                                        </View>
+                                    </Pressable>
+
+                                </View>
+
+                                <View style={styles.myMoviesWrapper}>
+                                    <View style={styles.hr}></View>
+                                    <View style={styles.footerWrapper}>                                
+                                        <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                     </View>
                                 </View>
+                            </>
+                        }
+
+                        {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
+                        <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
                             </View>
-                        </View>
 
-                        <View style={styles.followerWrapper}>
-                            <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                                <View style={styles.movies}>
-                                    <Text style={styles.follText}>{myReviews}</Text>
-                                    <Text style={styles.follText}>Reviews</Text>
-                                </View>
-                            </Pressable>
-
-                            <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
-                                <View style={styles.followers}>
-                                    <Text style={styles.follText}>{followerCount}</Text>
-                                    <Text style={styles.follText}>Followers</Text>
-                                </View>
-                            </Pressable>
-
-                            <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
-                                <View style={styles.following}>
-                                    <Text style={styles.follText}>{followingCount}</Text>                                    
-                                    <Text style={styles.follText}>Followings</Text>
-                                </View>
-                            </Pressable>
-
-                        </View>
-
-                        <View style={styles.myMoviesWrapper}>
-                            <View style={styles.hr}></View>
-                            <View style={styles.footerWrapper}>                                
-                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+                            <View style={styles.logoWrapper}>
+                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />                
                             </View>
-                        </View>
-                    </>
-                }
+                </ScrollView>
+            }
 
-                {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
-                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
+        {userDetail.role === 'guest' && 
+            <View style={styles.withoutLoginWrapper}>
+                <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
+                    <Text style={styles.pressableText}>Please Login</Text>
+                </Pressable>
             </View>
-
-            <View style={styles.logoWrapper}>
-                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />                
-            </View>
-
-        </ScrollView>
+        }
+         </>
     );
 };
 
 const styles = StyleSheet.create({
+    withoutLoginWrapper: {
+        flex: 1,        
+        justifyContent:'center', 
+        alignItems:'center'        
+    }, 
+    pressableBtn: {
+        
+    }, 
+    pressableText: {
+        color:Colors.whiteColor, 
+        fontFamily:Fonts.Family.Bold, 
+        fontSize:Fonts.Size.Medium
+    },
     logoWrapper: {
         alignItems: 'center'
     },

@@ -140,10 +140,7 @@ const ShowDetailScreen: React.FC = () => {
 
             <View style={styles.header}>
                 {detailData.poster_url &&
-                    <FastImage
-                        style={styles.img}                        
-                        source={{uri:detailData.poster_url}}
-                    />
+                    <FastImage style={styles.img} source={{uri:detailData.poster_url}} />
                 }
             </View>
 

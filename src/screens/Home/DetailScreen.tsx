@@ -8,10 +8,8 @@ import { formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
-import MovieImageMap from '../../utils/MovieImageMap';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
-import { Review } from '../../models/Review';
 import ReviewItem from '../../components/ReviewList/ReviewItem';
 
 import { useSelector } from 'react-redux';
@@ -420,8 +418,8 @@ const DetailScreen: React.FC = () => {
                     <View style={styles.modalContainer}>
                         <Pressable style={styles.closeArea} onPress={closeModal}>
                             <FastImage
-                                style={styles.fullImage}
-                                source={MovieImageMap[detailData.poster_url]}
+                                style={styles.fullImage}                                
+                                source={{uri:detailData.poster_url}}
                                 resizeMode="cover"
                             />
                         </Pressable>

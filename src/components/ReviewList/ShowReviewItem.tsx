@@ -15,7 +15,8 @@ import { ShowReview } from '../../models/ShowReview';
 import { useAuth } from '../../context/AuthContext';
 
 interface ItemProps {
-    item: ShowReview;
+    // item: ShowReview;
+    item: Review;
 }
 
 const ShowReviewItem: React.FC<ItemProps> = ({ item }) => {

@@ -8,7 +8,6 @@ import { formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
-import MovieImageMap from '../../utils/MovieImageMap';
 import { API_URL } from '../../configure/config.android';
 import { useAuth } from '../../context/AuthContext';
 import { Review } from '../../models/Review';
@@ -134,9 +133,8 @@ const DetailScreen: React.FC = () => {
     const headerContent = () => {
         return <>            
             <View style={styles.header}>
-                {detailData.poster_url && <>
-                        <FastImage style={styles.img} source={MovieImageMap[detailData.poster_url]} />
-                        {/* <FastImage style={styles.img} source={{uri:detailData.poster_url}} />                         */}
+                {detailData.poster_url && <>                        
+                        <FastImage style={styles.img} source={{uri:detailData.poster_url}} />                        
                     </>
                 }
             </View>

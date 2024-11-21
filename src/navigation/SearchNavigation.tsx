@@ -21,7 +21,7 @@ const SearchNavigation: React.FC = () => {
 
     const screenOptions: NativeStackNavigationOptions = {
         contentStyle: { backgroundColor: Colors.darkBackgroudColor },
-        animation: 'slide_from_left'
+        animation: 'fade'
     };
 
     return (

@@ -24,12 +24,12 @@ const HomeNavigation: React.FC = () => {
 
     const screenOptions: NativeStackNavigationOptions = {
         contentStyle: { backgroundColor: Colors.darkBackgroudColor },
-        animation: 'slide_from_left'
+        animation: 'fade'
     };
 
     return (
         <Stack.Navigator screenOptions={navigatorOptions} initialRouteName='HomeScreen'>            
-            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions, headerShown: false }} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ ...screenOptions, headerShown: false  }} />
             <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="FollowerFollowing" component={FollowerFollowingScreen} options={{ ...screenOptions, headerShown: true }} />
             <Stack.Screen name="Notification" component={Notification} options={{ ...screenOptions, headerShown: true }} />

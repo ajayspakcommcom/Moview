@@ -133,9 +133,8 @@ const DetailScreen: React.FC = () => {
     };
 
     const openModal = (url: string) => {                   
-        setModalVisible(true);
-        const imageUri = `https://moviu.s3.us-east-1.amazonaws.com/movies/andhadhun-poster.jpg`;        
-        imageUri ? Image.getSize(imageUri, (width, height) => setImageSize({ width, height }), (error) => console.error("Failed to get image size:", error)) : Alert.alert("Error", "Image URI not found.");
+        setModalVisible(true);              
+        url ? Image.getSize(url, (width, height) => setImageSize({ width, height }), (error) => console.error("Failed to get image size:", error)) : Alert.alert("Error", "Image URI not found.");
     };
 
     const closeModal = () => {

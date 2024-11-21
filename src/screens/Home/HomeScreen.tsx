@@ -37,7 +37,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const signal = abortController.signal;
 
     React.useLayoutEffect(() => {
-        setTransparentHeader(navigation, '', 'notifications');
+        setTransparentHeader(navigation, '', 'notifications');        
         return () => {};
     }, [navigation]);
 

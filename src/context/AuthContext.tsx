@@ -3,17 +3,15 @@ import { API_URL } from '../configure/config.android';
 
 import { useAppDispatch } from '../store/index';
 
-
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../store/slices/myShowReviewSlice';
 import { fetchNotificationsByUserId } from '../store/slices/notificationSlice';
-
-
 
 interface User {
     username: string;
     password: string;
     token?: string;
+    role?:string;
 }
 
 interface ResponseError {
@@ -74,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const result = await response.json();
 
             if (result.status === 'success') {
-                setUser({ username: result.userDetail.firstname, token: result.token } as User);
+                setUser({ username: result.userDetail.firstname, token: result.token, role: result.userDetail.role } as User);
                 setResponseError(null);
                 setUserDetail(result.userDetail);
 

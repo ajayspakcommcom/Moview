@@ -48,6 +48,16 @@ const LoginScreen: React.FC<Props> = () => {
         }
     };
 
+    const guestLogin = async () => {                
+        setLoader(true);
+        try {            
+            login('guest@gmail.com', '12345');
+            setLoader(false);
+        } catch (error) {
+            console.error('Login error:', error);
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
+    };
 
     const goto = (screen: string) => {
         navigation.navigate(screen);
@@ -55,9 +65,7 @@ const LoginScreen: React.FC<Props> = () => {
 
     React.useLayoutEffect(() => {
 
-        return () => {
-
-        };
+        return () => console.log('');
     }, [])
 
     return (
@@ -124,6 +132,12 @@ const LoginScreen: React.FC<Props> = () => {
             <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
                 <View style={styles.registerBtnWrapper}>
                     <Text style={styles.skipBottomText}>Register</Text>
+                </View>
+            </Pressable>
+
+            <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                <View style={styles.registerBtnWrapper}>
+                    <Text style={styles.skipBottomText}>Skip</Text>
                 </View>
             </Pressable>
 

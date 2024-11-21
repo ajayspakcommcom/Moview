@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent } from 'react-native';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
 import Fonts from '../../styles/Fonts';
@@ -13,59 +13,7 @@ type Props = {
     onClick?: (id: string) => void;
 };
 
-const movieList: MovieItem[] = [
-    //{
-    //    _id: "64b841e2f3f2f4c2a5d9b9c1",
-    //    title: "Inception",
-    //    description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
-    //    release_date: "2010-07-16",
-    //    genre: "Sci-Fi",
-    //    director: "Christopher Nolan",
-    //    rating: 8.8,
-    //    cast: [
-    //        { _id: "1", actor: "Leonardo DiCaprio", role: "Dom Cobb" },
-    //        { _id: "2", actor: "Joseph Gordon-Levitt", role: "Arthur" },
-    //        { _id: "3", actor: "Elliot Page", role: "Ariadne" }
-    //    ],
-    //    poster_url: "https://example.com/inception.jpg",
-    //    is_deleted: false,
-    //    __v: 1
-    //},
-    //{
-    //    _id: "64b841e2f3f2f4c2a5d9b9c2",
-    //    title: "The Dark Knight",
-    //    description: "When the menace known as The Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham. The Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
-    //    release_date: "2008-07-18",
-    //    genre: "Action",
-    //    director: "Christopher Nolan",
-    //    rating: 9.0,
-    //    cast: [
-    //        { _id: "1", actor: "Christian Bale", role: "Bruce Wayne / Batman" },
-    //        { _id: "2", actor: "Heath Ledger", role: "Joker" },
-    //        { _id: "3", actor: "Aaron Eckhart", role: "Harvey Dent" }
-    //    ],
-    //    poster_url: "https://example.com/dark_knight.jpg",
-    //    is_deleted: false,
-    //    __v: 1
-    //},
-    //{
-    //    _id: "64b841e2f3f2f4c2a5d9b9c3",
-    //    title: "Interstellar",
-    //    description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-    //    release_date: "2014-11-07",
-    //    genre: "Sci-Fi",
-    //    director: "Christopher Nolan",
-    //    rating: 8.6,
-    //    cast: [
-    //        { _id: "1", actor: "Matthew McConaughey", role: "Cooper" },
-    //        { _id: "2", actor: "Anne Hathaway", role: "Brand" },
-    //        { _id: "3", actor: "Jessica Chastain", role: "Murph" }
-    //    ],
-    //    poster_url: "https://example.com/interstellar.jpg",
-    //    is_deleted: false,
-    //    __v: 1
-    //}
-];
+const movieList: MovieItem[] = [];
 
 const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
@@ -73,6 +21,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
+    
 
 
 
@@ -86,21 +35,86 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     };
 
 
-
     const onClose = async (obj: any) => {
         onClick && onClick(obj._id);
     }
 
+    const styles = StyleSheet.create({
+        flatListWrapper: {
+            paddingTop: 15,
+            padding: 20,
+        },
+        actionWrapper: {
+            width: 30,
+            height: 30,
+            position: 'absolute',            
+            right: 10,
+            zIndex: 10,
+            alignItems: 'center',
+            justifyContent: 'center',                       
+        },
+        type: {
+            backgroundColor: Colors.tabActiveColor,
+            width: 25,
+            height: 25,
+            borderRadius: 50,
+            position: 'absolute',
+            top: 10,
+            right: 0,
+            zIndex: 10,
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        typeText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Light,
+            fontSize: Fonts.Size.Small,
+            textTransform: 'uppercase'
+        },
+        item: {
+            width: '100%',
+            position: 'relative',
+            flexDirection: 'row',
+            marginBottom: 15,
+            backgroundColor: Colors.reviewBgColor,
+            alignItems: 'center',
+            borderRadius: 5,
+        },
+        userIcon: {
+            paddingRight: 15,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            width: '15%'        
+        },
+        headingWrapper: {
+            paddingVertical: 10,
+            width: '85%'            
+        },
+        heading: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Bold,
+            fontSize: Fonts.Size.Medium,
+            textTransform: 'uppercase'
+        },
+        desc: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium,
+            width: 'auto'
+        },
+        testWrapper: {
+            backgroundColor: 'pink',
+            paddingVertical: 10,
+            height: 300,
+            paddingHorizontal: 50
+        },
+    });
+    
+
     const renderItem = ({ item }: { item: Notification }) => (                
             <View style={[styles.item]}>
 
-                {/*<View style={styles.type}>
-                    {item.type.trim().toLowerCase() === 'movie' && <Text style={styles.typeText}>M</Text>}
-                    {item.type.trim().toLowerCase() === 'show' && <Text style={styles.typeText}>S</Text>}
-                </View>*/}
-
                 <View style={styles.actionWrapper}>
-                    <AntDesign name={'closesquareo'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />
+                    <AntDesign name={'close'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />
                 </View>
 
                 <View style={styles.userIcon}>
@@ -114,6 +128,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
             </View>        
     );
+    
 
     return (
             <FlatList
@@ -134,75 +149,5 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     );
 };
 
-const styles = StyleSheet.create({
-    flatListWrapper: {
-        paddingTop: 15,
-        padding: 20,
-    },
-    actionWrapper: {
-        width: 30,
-        height: 30,
-        position: 'absolute',
-        top: 1,
-        right: 1,
-        zIndex: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    type: {
-        backgroundColor: Colors.tabActiveColor,
-        width: 25,
-        height: 25,
-        borderRadius: 50,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        zIndex: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    typeText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Light,
-        fontSize: Fonts.Size.Small,
-        textTransform: 'uppercase'
-    },
-    item: {
-        width: '100%',
-        position: 'relative',
-        flexDirection: 'row',
-        marginBottom: 15,
-        backgroundColor: Colors.reviewBgColor,
-        alignItems: 'center',
-        borderRadius: 5,
-    },
-    userIcon: {
-        paddingRight: 15,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        width: '20%'
-    },
-    headingWrapper: {
-        paddingVertical: 10,
-        width: '80%'
-    },
-    heading: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium,
-        textTransform: 'uppercase'
-    },
-    desc: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium,
-        width: 'auto'
-    },
-    testWrapper: {
-        backgroundColor: 'pink',
-        paddingVertical: 10,
-        height: 300,
-        paddingHorizontal: 50
-    },
-});
 
 export default React.memo(MyNotification);

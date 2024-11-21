@@ -30,8 +30,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         setShowReviews(showReviewsData);
     }, [moviewReviewsData, showReviewsData]); 
 
-
- 
       useFocusEffect(
           React.useCallback(() => {                            
               getMovieShowReview();

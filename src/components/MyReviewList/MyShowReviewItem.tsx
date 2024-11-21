@@ -63,13 +63,7 @@ const MyShowReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
                                     </LinearGradient>
                                 }
 
-                                {!isUser &&
-                                    <FastImage
-                                        style={styles.img}
-                                        source={LatestMovieShowImageMap[item.show?.poster_url!]}
-                                        resizeMode={FastImage.resizeMode.contain}
-                                    />
-                                }
+                                {!isUser && <FastImage style={styles.img} source={{uri:item.show?.poster_url!}} resizeMode={FastImage.resizeMode.contain} />}
 
                             </View>
                             <View style={styles.content}>                                

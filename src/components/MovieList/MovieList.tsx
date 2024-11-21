@@ -41,16 +41,7 @@ const MovieList: React.FC<MovieListProps> = () => {
 
 
                 } catch (error) {
-                    if (error instanceof Error) {
-                        if (error.name === 'AbortError') {
-
-                        } else {
-
-                        }
-                    } else {
-
-                    }
-                    throw error; // Re-throw the error to be handled by the caller if necessary
+                    console.log(error);
                 }
             }
         };
@@ -77,7 +68,7 @@ const MovieList: React.FC<MovieListProps> = () => {
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
-                    <FastImage style={styles.image} source={{uri: item.poster_url}} resizeMode={FastImage.resizeMode.cover} />
+                    <FastImage style={styles.image} source={{uri: item.poster_url}} resizeMode={FastImage.resizeMode.cover} />                    
                 </Pressable>
             </View>
         </>
@@ -121,7 +112,8 @@ const styles = StyleSheet.create({
     item: {
         width: ((screenWidth) / 2),
         height: (screenWidth / 2) + 55,
-        overflow: 'hidden'
+        overflow: 'hidden', 
+        position:'relative'
     },
     pressable: {
         flex: 1

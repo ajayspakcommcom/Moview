@@ -11,7 +11,6 @@ import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-
 import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
 import { MovieReviewResponse } from '../../models/MyReview';
 
 interface ItemProps {

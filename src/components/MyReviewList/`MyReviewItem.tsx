@@ -13,7 +13,7 @@ import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 're
 import { useNavigation } from '@react-navigation/native';
 import MovieImageMap from '../../utils/MovieImageMap';
 import FastImage from 'react-native-fast-image';
-import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
+
 
 interface ItemProps {
     item: Review;
@@ -64,11 +64,7 @@ const MyReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
                                 }
 
                                 {!isUser &&
-                                    <FastImage
-                                        style={styles.img}
-                                        source={LatestMovieShowImageMap[item.isMovie ? item.movie?.poster_url! : item.show?.poster_url!]}
-                                        resizeMode={FastImage.resizeMode.contain}
-                                    />
+                                    <FastImage style={styles.img} source={{uri: item.isMovie ? item.movie?.poster_url! : item.show?.poster_url!}} resizeMode={FastImage.resizeMode.contain} />
                                 }
 
                             </View>

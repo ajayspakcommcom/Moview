@@ -39,11 +39,7 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation, 
     return (
             <View style={styles.headerWrapper}>
                 <View style={[styles.childWrapper, styles.logoWrapper]}>
-                    <FastImage
-                        style={styles.logoImg}
-                        source={require('../../assets/images/small-logo.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                    />
+                    <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
                 </View>
                 <View style={[styles.childWrapper, styles.contentWrapper]}>
                     <Pressable onPress={handlePress.bind(null, 'Latest')} hitSlop={hitSlops()}>

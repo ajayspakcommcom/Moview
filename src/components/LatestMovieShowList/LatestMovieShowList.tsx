@@ -7,7 +7,6 @@ import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
-import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
 import { getFirstThreeChars } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 

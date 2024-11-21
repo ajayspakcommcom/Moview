@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import { API_URL } from '../../configure/config.android';
 import { Text } from 'react-native-paper';
-import LatestMovieShowImageMap from '../../utils/LatestMovieShowImageMap';
+
 
 interface FilteredLatestMovieShowListProps {
     filteredLatestMovieShows: FilteredLatestMovieShow[];
@@ -101,8 +101,7 @@ const FilteredLatestMovieShowList: React.FC<FilteredLatestMovieShowListProps> = 
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>                    
-                    <FastImage style={styles.image}  source={{uri:item.poster_url}} resizeMode={FastImage.resizeMode.cover} 
-                    />
+                    <FastImage style={styles.image}  source={{uri:item.poster_url}} resizeMode={FastImage.resizeMode.cover} />
                 </Pressable>
                 <View style={styles.category}>
                     {item.isMovie && <Text style={styles.catergoryText}>Movie</Text>}

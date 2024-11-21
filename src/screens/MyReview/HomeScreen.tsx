@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     pressableText: {
         color:Colors.whiteColor, 
         fontFamily:Fonts.Family.Bold, 
-        fontSize:Fonts.Size.Medium
+        fontSize:Fonts.Size.Medium + 2        
     }
 });
 

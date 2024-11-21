@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchNotificationsByUserId, deleteNotification } from '../../store/slices/notificationSlice';
 import { API_URL } from '../../configure/config.android';
+import Fonts from '../../styles/Fonts';
 
 type Props = {
     navigation: any;
@@ -19,7 +20,7 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ navigation }) => {
 
-    const { user, userDetail} = useAuth();
+    const { user, userDetail, logout} = useAuth();
     const { data: notificationData } = useSelector((state: RootState) => state.notification);
     const dispatch = useAppDispatch();
     
@@ -44,11 +45,8 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         dispatch(fetchNotificationsByUserId({ url: url, token: user?.token! }));
     }
 
-    const deleteNotificationHandler = async (id: string) => {                
-        console.log('before notificationData', notificationData.length);
+    const deleteNotificationHandler = async (id: string) => {                        
         const respData = await dispatch(deleteNotification({ url: `${API_URL}notification/${id}`, token: user?.token!, _id: id }));
-        console.log('respData', respData);
-        console.log('after notificationData', notificationData.length);
     }
 
     const notificationDataHandler = React.useCallback(() => {
@@ -63,17 +61,53 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         }, []) 
     );
 
+    const navigationHandler = () => {
+        logout();
+    };
+
     return (
-        <View style={styles.container}>          
-            <React.Suspense fallback={<Loading />}>                
-                {notificationData.length > 0 && <MyNotification notificationData={notificationData} onClick={deleteNotificationHandler} />}
-                {notificationData.length === 0 && <View style={styles.noNotification}><Text style={styles.whiteText}>No Notifications</Text></View>}
-            </React.Suspense>
-        </View>
+      <View style={styles.container}>
+        {userDetail.role !== 'guest' && (
+          <React.Suspense fallback={<Loading />}>
+            {notificationData.length > 0 && (
+              <MyNotification
+                notificationData={notificationData}
+                onClick={deleteNotificationHandler}
+              />
+            )}
+            {notificationData.length === 0 && (
+              <View style={styles.noNotification}>
+                <Text style={styles.whiteText}>No Notifications</Text>
+              </View>
+            )}
+          </React.Suspense>
+        )}
+
+        {userDetail.role === 'guest' && (
+          <View style={styles.withoutLoginWrapper}>
+            <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
+              <Text style={styles.pressableText}>Please Login</Text>
+            </Pressable>
+          </View>
+        )}
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
+    withoutLoginWrapper: {
+        flex: 1,        
+        justifyContent:'center', 
+        alignItems:'center'        
+    }, 
+    pressableBtn: {
+        
+    }, 
+    pressableText: {
+        color:Colors.whiteColor, 
+        fontFamily:Fonts.Family.Bold, 
+        fontSize:Fonts.Size.Medium + 2
+    },
     container: {
         width: '100%',
         position: 'relative',
@@ -89,7 +123,7 @@ const styles = StyleSheet.create({
     whiteText: {
         color: Colors.whiteColor,
         textAlign: 'center',
-        fontSize: 18,
+        fontSize:Fonts.Size.Medium + 2,
         fontWeight: 'bold'
     }
 

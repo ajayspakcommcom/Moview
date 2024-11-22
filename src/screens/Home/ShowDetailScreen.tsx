@@ -30,7 +30,7 @@ interface ListItem {
 
 const ShowDetailScreen: React.FC = () => {
 
-    const { user } = useAuth();
+    const { user, userDetail, logout } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { showItem: ShowItem } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<ShowItem>>({});
@@ -147,6 +147,22 @@ const ShowDetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+
+        withoutLoginWrapper: {
+            flex: 1,        
+            justifyContent:'center', 
+            alignItems:'center', 
+            marginTop:'20%'          
+        }, 
+        pressableBtn: {
+            
+        }, 
+        pressableText: {
+            color:Colors.whiteColor, 
+            fontFamily:Fonts.Family.Bold, 
+            fontSize:Fonts.Size.Medium + 2        
+        },
+
         modalContainer: {
             flex: 1,
             backgroundColor: Colors.backgroundColorShadow,
@@ -366,7 +382,9 @@ const ShowDetailScreen: React.FC = () => {
     };
 
     
-    
+    const navigationHandler = () => {
+        logout();
+    };
 
     return (
         <>
@@ -413,7 +431,15 @@ const ShowDetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            <ShowReviewForm showItem={route.params.showItem} onPress={onReviewPressHandler} />
+                            {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem} onPress={onReviewPressHandler} />}
+
+                            {userDetail.role === 'guest' && 
+                                <View style={[styles.withoutLoginWrapper]}>
+                                    <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
+                                        <Text style={styles.pressableText}>Please Login</Text>
+                                    </Pressable>
+                                </View>
+                            }
                         </ScrollView>
                     </React.Suspense>
                 }

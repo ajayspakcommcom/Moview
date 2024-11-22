@@ -29,7 +29,7 @@ interface ListItem {
 
 const DetailScreen: React.FC = () => {
 
-    const { user } = useAuth();
+    const { user, userDetail, logout } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { movie: MovieItem } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
@@ -134,156 +134,168 @@ const DetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+      withoutLoginWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '20%',
+      },
+      pressableBtn: {},
+      pressableText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Bold,
+        fontSize: Fonts.Size.Medium + 2,
+      },
 
-        modalContainer: {
-            flex: 1,
-            backgroundColor: Colors.backgroundColorShadow,
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        closeArea: {
-            flex: 1,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        fullImage: {
-            width: imageSize.width,
-            height: imageSize.height        
-        },
+      modalContainer: {
+        flex: 1,
+        backgroundColor: Colors.backgroundColorShadow,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      closeArea: {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      fullImage: {
+        width: imageSize.width,
+        height: imageSize.height,
+      },
 
-        container: {
-            flex: 1,
-        },
-        reviewListContainer: {
-            paddingHorizontal: 20
-        },
-        noReviewWrapper: {
-            flex: 1,
-        },
-        reviewText: {
-            color: Colors.whiteColor,
-            textAlign: 'center'
-        },
-        ratingTextWrapper: {
-            flexDirection: 'row',
-            alignItems: 'flex-end'
-        },
-        ratingText: {
-            color: Colors.whiteColor,
-            fontSize: Fonts.Size.Medium + 5,
-            fontWeight: '600',
-            paddingLeft: 5
-        },
-        ratingSlash: {
-            color: Colors.whiteColor,
-            marginHorizontal: 2
-        },
-        totalRatingText: {
-            color: Colors.tabBgColor,
-            fontSize: Fonts.Size.Small,
-            fontWeight: '500'
-        },
-        header: {
-            width: '100%',
-            height: 200,
-            paddingHorizontal: 0
-        },
-        img: {
-            width: '100%',
-            height: 200,
-            flexGrow: 1
-        },
-        detailText: {
-            paddingVertical: 10,
-            paddingHorizontal: 15
-        },
-        detailHeading: {
-            color: Colors.whiteColor,
-            fontFamily: Fonts.Family.Bold,
-            fontSize: Fonts.Size.Medium + 1,
-            textTransform: 'uppercase'
-        },
-        ratingWrapper: {
-            paddingVertical: 0,
-            alignItems: 'center',
-            flexDirection: 'row',
-        },
-        genreWrapper: {
-            flexDirection: 'row',
-            paddingHorizontal: 15
-        },
-        genreItem: {
-            paddingVertical: 1,
-            borderColor: Colors.whiteColor,
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        genreText: {
-            color: Colors.whiteColor,
-            fontFamily: Fonts.Family.Medium
-        },
-        releaseWrapper: {
-            paddingHorizontal: 15,
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start'
-        },
-        releaseItem: {
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        releaseText: {
-            color: Colors.whiteColor,
-            fontFamily: Fonts.Family.Medium
-        },
-        directorWrapper: {
-            marginTop: 0,
-            paddingHorizontal: 15,
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start'
-        },
-        directorItem: {
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        directorText: {
-            color: Colors.whiteColor,
-            fontFamily: Fonts.Family.Medium
-        },
-        editableRating: {
-            width: '100%',
-            paddingTop: 25
-        },
-        hrWrapper: {
-            paddingVertical: 10,
-            width: '100%',
-            paddingHorizontal: 15,
-        },
-        hr: {
-            minHeight: 2,
-            backgroundColor: Colors.tabBgColor,
-        },
-        castReviewBtnWrapper: {
-            paddingHorizontal: 15,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            marginBottom: 10,
-        },
-        castReviewText: {
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-            borderRadius: 50
-        },
-        crText: {
-            fontSize: Fonts.Size.Medium,
-            color: Colors.tabBgColor,
-            fontWeight: '500'
-        },
-    
-        crTextActive: {
-            color: Colors.whiteColor,
-        }
+      container: {
+        flex: 1,
+      },
+      reviewListContainer: {
+        paddingHorizontal: 20,
+      },
+      noReviewWrapper: {
+        flex: 1,
+      },
+      reviewText: {
+        color: Colors.whiteColor,
+        textAlign: 'center',
+      },
+      ratingTextWrapper: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+      },
+      ratingText: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Medium + 5,
+        fontWeight: '600',
+        paddingLeft: 5,
+      },
+      ratingSlash: {
+        color: Colors.whiteColor,
+        marginHorizontal: 2,
+      },
+      totalRatingText: {
+        color: Colors.tabBgColor,
+        fontSize: Fonts.Size.Small,
+        fontWeight: '500',
+      },
+      header: {
+        width: '100%',
+        height: 200,
+        paddingHorizontal: 0,
+      },
+      img: {
+        width: '100%',
+        height: 200,
+        flexGrow: 1,
+      },
+      detailText: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+      },
+      detailHeading: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Bold,
+        fontSize: Fonts.Size.Medium + 1,
+        textTransform: 'uppercase',
+      },
+      ratingWrapper: {
+        paddingVertical: 0,
+        alignItems: 'center',
+        flexDirection: 'row',
+      },
+      genreWrapper: {
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+      },
+      genreItem: {
+        paddingVertical: 1,
+        borderColor: Colors.whiteColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      genreText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium,
+      },
+      releaseWrapper: {
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+      },
+      releaseItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      releaseText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium,
+      },
+      directorWrapper: {
+        marginTop: 0,
+        paddingHorizontal: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+      },
+      directorItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      directorText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium,
+      },
+      editableRating: {
+        width: '100%',
+        paddingTop: 25,
+      },
+      hrWrapper: {
+        paddingVertical: 10,
+        width: '100%',
+        paddingHorizontal: 15,
+      },
+      hr: {
+        minHeight: 2,
+        backgroundColor: Colors.tabBgColor,
+      },
+      castReviewBtnWrapper: {
+        paddingHorizontal: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
+      castReviewText: {
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 50,
+      },
+      crText: {
+        fontSize: Fonts.Size.Medium,
+        color: Colors.tabBgColor,
+        fontWeight: '500',
+      },
+
+      crTextActive: {
+        color: Colors.whiteColor,
+      },
     });
 
     const openModal = (url: string) => {                   
@@ -362,6 +374,10 @@ const DetailScreen: React.FC = () => {
         setActiveTab(str);
     };
 
+    const navigationHandler = () => {
+        logout();
+    };
+
     return (
         <>
             <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
@@ -406,7 +422,14 @@ const DetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />
+                            {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                            {userDetail.role === 'guest' && 
+                                <View style={styles.withoutLoginWrapper}>
+                                    <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
+                                        <Text style={styles.pressableText}>Please Login</Text>
+                                    </Pressable>
+                                </View>
+                            }
                         </ScrollView>
                     </React.Suspense>
                 }

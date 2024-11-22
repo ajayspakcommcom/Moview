@@ -28,7 +28,7 @@ interface ListItem {
 
 const DetailScreen: React.FC = () => {
 
-    const { user } = useAuth();
+    const { user, userDetail, logout } = useAuth();
     const navigation: NavigationProp<ParamListBase> = useNavigation();
     const route: RouteProp<{ params: { movie: MovieItem } }> = useRoute();
     const [detailData, setDetailData] = React.useState<Partial<MovieItem>>({});
@@ -142,6 +142,21 @@ const DetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+
+        withoutLoginWrapper: {
+            flex: 1,        
+            justifyContent:'center', 
+            alignItems:'center', 
+            marginTop:'20%'          
+        }, 
+        pressableBtn: {
+            
+        }, 
+        pressableText: {
+            color:Colors.whiteColor, 
+            fontFamily:Fonts.Family.Bold, 
+            fontSize:Fonts.Size.Medium + 2        
+        },
 
         modalContainer: {
             flex: 1,
@@ -362,6 +377,10 @@ const DetailScreen: React.FC = () => {
         setActiveTab(str);
     };
 
+    const navigationHandler = () => {
+        logout();
+    };
+
     return (
         <>
             <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
@@ -406,7 +425,14 @@ const DetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />
+                            {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                            {userDetail.role === 'guest' && 
+                                <View style={[styles.withoutLoginWrapper]}>
+                                    <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
+                                        <Text style={styles.pressableText}>Please Login</Text>
+                                    </Pressable>
+                                </View>
+                            }
                         </ScrollView>
                     </React.Suspense>
                 }
@@ -428,7 +454,5 @@ const DetailScreen: React.FC = () => {
         </>
     );
 };
-
-
 
 export default DetailScreen;

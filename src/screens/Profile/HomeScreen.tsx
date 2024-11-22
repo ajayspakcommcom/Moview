@@ -162,7 +162,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                             </View>
 
                             <View style={styles.logoWrapper}>
-                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />                
+                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />       
+                                <Text style={styles.honest}>Honest Movie Reviews</Text>         
                             </View>
                 </ScrollView>
             }
@@ -193,6 +194,11 @@ const styles = StyleSheet.create({
     logoImg: {        
         width: 122,
         height: 50
+    },
+    honest: {
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small - 2,
+        color: Colors.whiteColor,
     },
     container: {
         flex: 1,

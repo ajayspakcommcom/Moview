@@ -76,6 +76,7 @@ const LoginScreen: React.FC<Props> = () => {
                 source={require('../../assets/images/logo.png')}
                 resizeMode={FastImage.resizeMode.contain}
             />
+            <Text style={styles.honest}>Honest Movie Reviews</Text>
 
             {
                 responseError &&
@@ -147,6 +148,7 @@ const LoginScreen: React.FC<Props> = () => {
 };
 
 const styles = StyleSheet.create({
+    
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -157,7 +159,13 @@ const styles = StyleSheet.create({
     logo: {
         width: 150,
         height: 72,
+        //marginBottom: 40,
+    },
+    honest: {
+        color:Colors.whiteColor, 
         marginBottom: 40,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small,
     },
 
     errorWrapper: {

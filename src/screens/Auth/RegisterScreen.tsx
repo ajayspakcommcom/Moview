@@ -119,6 +119,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                 source={require('../../assets/images/logo.png')}
                 resizeMode={FastImage.resizeMode.contain}
             />
+            <Text style={styles.honest}>Honest Movie Reviews</Text>
 
             <CustomTextInput
                 placeholder="First name"
@@ -177,10 +178,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: Colors.darkBackgroudColor
     },
-    logo: {
-        width: 166,
-        height: 118,
+
+    honest: {
+        color:Colors.whiteColor, 
         marginBottom: 40,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small,
+    },
+
+    logo: {
+        width: 150,
+        height: 72,
     },
 
     button: {

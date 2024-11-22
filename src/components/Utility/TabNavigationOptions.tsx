@@ -16,7 +16,7 @@ type TabOptions = {
 const TabNavigationOptions: TabOptions = {
     Home: {
         tabBarIcon: ({ focused, color, size }) => (
-            <Foundation name={focused ? 'home' : 'home'} size={20} color={color} />
+            <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />
         ),
         tabBarLabel: ''
     },
@@ -34,7 +34,7 @@ const TabNavigationOptions: TabOptions = {
     },
     Profile: {
         tabBarIcon: ({ focused, color, size = 30 }) => (
-            <FontAwesome name={focused ? 'user' : 'user'} size={18} color={color} />
+            <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />
         ),
         tabBarLabel: ''
     },

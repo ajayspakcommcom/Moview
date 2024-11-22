@@ -36,7 +36,7 @@ const LoginScreen: React.FC<Props> = () => {
         setLoader(true);
         try {
             if (username.trim() === '' || password.trim() === '') {
-                Alert.alert('Error', 'Username or password cannot be empty');
+                Alert.alert('Error', 'Username or password cannot be empty',[{text: "OK", onPress: () => setLoader(false)}],{ cancelable: true });
                 return;
             }
             login(username, password);
@@ -64,7 +64,6 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     React.useLayoutEffect(() => {
-
         return () => console.log('');
     }, [])
 
@@ -78,13 +77,7 @@ const LoginScreen: React.FC<Props> = () => {
             />
             <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-            {
-                responseError &&
-                <View style={styles.errorWrapper}>
-                    <Text style={styles.errorText}>{responseError.message}</Text>
-                </View>
-            }
-
+            {responseError && <View style={styles.errorWrapper}> <Text style={styles.errorText}>{responseError.message}</Text></View>}
 
             <CustomTextInput
                 placeholder="Username"

@@ -59,19 +59,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
                     if (result.status === 'success') {
                         setLoader(false);
-                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [
-                            {
-                                text: 'OK', onPress: () => {
-                                    setFirstname('');
-                                    setUsername('');
-                                    setPassword('');
-                                    setPhone('');
-                                }
-                            },
-                        ]);
+                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [{text: 'OK', onPress: () => navigation.navigate('Login')}]);
                     } else {
                         Alert.alert('Error', `${result.message}`, [
-                            { text: 'OK', onPress: () => { } }
+                            { text: 'OK', onPress: () => setLoader(false)}
                         ]);
                     }
 

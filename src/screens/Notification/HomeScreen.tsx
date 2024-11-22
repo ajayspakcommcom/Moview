@@ -13,6 +13,7 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { fetchNotificationsByUserId, deleteNotification } from '../../store/slices/notificationSlice';
 import { API_URL } from '../../configure/config.android';
 import Fonts from '../../styles/Fonts';
+import CustomButton from '../../components/Ui/CustomButton';
 
 type Props = {
     navigation: any;
@@ -84,10 +85,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         )}
 
         {userDetail.role === 'guest' && (
-          <View style={styles.withoutLoginWrapper}>
-            <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
-              <Text style={styles.pressableText}>Please Login</Text>
-            </Pressable>
+          <View style={styles.withoutLoginWrapper}>           
+            <CustomButton
+              text={'Please Login'}
+              onPressHandler={navigationHandler}
+              textSize={20}                
+            />
           </View>
         )}
       </View>
@@ -98,16 +101,9 @@ const styles = StyleSheet.create({
     withoutLoginWrapper: {
         flex: 1,        
         justifyContent:'center', 
-        alignItems:'center'        
-    }, 
-    pressableBtn: {
-        
-    }, 
-    pressableText: {
-        color:Colors.whiteColor, 
-        fontFamily:Fonts.Family.Bold, 
-        fontSize:Fonts.Size.Medium + 2
-    },
+        alignItems:'center', 
+        paddingHorizontal:15        
+    },     
     container: {
         width: '100%',
         position: 'relative',

@@ -21,6 +21,7 @@ const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByShow } from '../../store/slices/reviewListByShowSlice';
+import CustomButton from '../../components/Ui/CustomButton';
 
 interface ListItem {
     id: string;
@@ -153,13 +154,8 @@ const ShowDetailScreen: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '20%',
-      },
-      pressableBtn: {},
-      pressableText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium + 2,
-      },
+        paddingHorizontal:15
+      },      
       modalContainer: {
         flex: 1,
         backgroundColor: Colors.backgroundColorShadow,
@@ -430,10 +426,12 @@ const ShowDetailScreen: React.FC = () => {
                             {headerContent()}
                             {userDetail.role !== 'guest' &&  <ShowReviewForm showItem={route.params.showItem} onPress={onReviewPressHandler} />}
                             {userDetail.role === 'guest' && 
-                                <View style={styles.withoutLoginWrapper}>
-                                    <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
-                                        <Text style={styles.pressableText}>Please Login</Text>
-                                    </Pressable>
+                                <View style={styles.withoutLoginWrapper}>                                    
+                                    <CustomButton
+                                        text={'Please Login'}
+                                        onPressHandler={navigationHandler}
+                                        textSize={20}                
+                                    />
                                 </View>
                             }
                         </ScrollView>

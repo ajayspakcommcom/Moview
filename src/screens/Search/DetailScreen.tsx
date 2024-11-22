@@ -16,6 +16,7 @@ import ReviewItem from '../../components/ReviewList/ReviewItem';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
+import CustomButton from '../../components/Ui/CustomButton';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
@@ -139,14 +140,9 @@ const DetailScreen: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '20%',
+        paddingHorizontal:15
       },
-      pressableBtn: {},
-      pressableText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium + 2,
-      },
-
+      
       modalContainer: {
         flex: 1,
         backgroundColor: Colors.backgroundColorShadow,
@@ -424,10 +420,12 @@ const DetailScreen: React.FC = () => {
                             {headerContent()}
                             {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
                             {userDetail.role === 'guest' && 
-                                <View style={styles.withoutLoginWrapper}>
-                                    <Pressable style={styles.pressableBtn} onPress={navigationHandler}>
-                                        <Text style={styles.pressableText}>Please Login</Text>
-                                    </Pressable>
+                                <View style={styles.withoutLoginWrapper}>                                    
+                                    <CustomButton
+                                      text={'Please Login'}
+                                      onPressHandler={navigationHandler}
+                                      textSize={20}                
+                                    />
                                 </View>
                             }
                         </ScrollView>

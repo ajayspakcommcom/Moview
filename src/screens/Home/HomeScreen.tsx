@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { View, StyleSheet, Button, Pressable, Text,  } from 'react-native';
+import { View, StyleSheet, Button, Pressable, Text, Platform,  } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
 import { useFocusEffect } from '@react-navigation/native';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { API_URL } from "../../configure/config.android";
 import { useAuth } from '../../context/AuthContext';
 
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     filteredBtnWrapper: {
         width:40,
         height:40,
-        backgroundColor:Colors.whiteColor,
+        backgroundColor:Colors.darkBackgroudColor,
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
@@ -168,7 +168,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25, 
         shadowRadius: 3.5, 
         elevation: 5, 
+        borderWidth:3, 
+        borderColor:Colors.tabActiveColor
     },
+
+
     filteredPopWrapper: {
         width: 300,
         height: 300,
@@ -208,7 +212,7 @@ const styles = StyleSheet.create({
         bottom:15,
         right:15, 
         width:40,
-        height:40        
+        height:40               
     }    
 });
 

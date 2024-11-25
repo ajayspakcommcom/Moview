@@ -3,11 +3,13 @@ import { View, StyleSheet, FlatList, RefreshControl, Dimensions, ActivityIndicat
 import Colors from '../../styles/Colors';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import { MovieItem } from '../../types/Movie';
-import { fetchMovies } from '../../utils/Common';
+import { fetchMovies, getFirstThreeChars } from '../../utils/Common';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import MovieImageMap from '../../utils/MovieImageMap';
 import { Text } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
+import { LastesMovieShowItem } from '../../types/LatestMovieShow';
 
 interface MovieListProps {
 
@@ -64,12 +66,19 @@ const MovieList: React.FC<MovieListProps> = () => {
         navigation.navigate('DetailScreen', { movie: movieItem });
     };
 
-    const renderItem = ({ item }: { item: MovieItem }) => (
+    const renderItem = ({ item }: { item: LastesMovieShowItem }) => (
         <>
             <View style={[styles.item]}>
                 <Pressable onPress={navigateToDetails.bind(null, item)} style={styles.pressable}>
                     <FastImage style={styles.image} source={{uri: item.poster_url}} resizeMode={FastImage.resizeMode.cover} />                    
                 </Pressable>
+
+                <View style={styles.category}>
+                  <View style={styles.languageWrapper}>
+                      <Text style={[styles.catergoryText]}>{getFirstThreeChars(item.language)}</Text>
+                  </View>
+                </View>
+
             </View>
         </>
     );
@@ -114,6 +123,32 @@ const styles = StyleSheet.create({
         height: (screenWidth / 2) + 55,
         overflow: 'hidden', 
         position:'relative'
+    },
+    category: {
+        position: 'absolute',
+        left: 1,
+        bottom: 0,
+        display:'flex',
+        flexDirection:'row', 
+        paddingBottom:5,
+        paddingLeft:5
+    },
+    languageWrapper: {
+        backgroundColor: Colors.tagBgColor, 
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        verticalAlign:'top',
+        borderRadius: 50,
+        marginRight:5,
+        fontFamily:Fonts.Family.Light,
+        elevation:5, 
+        borderWidth:1,
+        borderColor:Colors.tagBorderColor, 
+        paddingBottom:2
+    },
+    catergoryText: {
+        color: Colors.whiteColor
     },
     pressable: {
         flex: 1

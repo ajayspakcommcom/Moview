@@ -48,9 +48,6 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
     </View>
   );
 
-  React.useMemo
-
-
   return (
     <View style={styles.container}>
       
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontFamily: Fonts.Family.Bold,
-    color: Colors.whiteColor,
+    color: Colors.blackColor,
   },
   flatHeader: {
     borderTopRightRadius:10,

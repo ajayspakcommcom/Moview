@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent, Pressable } from 'react-native';
+import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
 import Fonts from '../../styles/Fonts';
@@ -7,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/Notification';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { API_URL } from '../../configure/config.android';
 
 type Props = {
     notificationData: Notification[];
@@ -18,16 +20,13 @@ const movieList: MovieItem[] = [];
 const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
     const { user } = useAuth();
+    
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
+    const navigation: NavigationProp<ParamListBase> = useNavigation();
 
     React.useLayoutEffect(() => {
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('notificationData', notificationData[0]);
         setData(notificationData);
         return () => { };
     }, [notificationData]);
@@ -36,7 +35,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
         
     };
 
-    const onClose = async (obj: any) => {
+    const onClose = async (obj: Notification) => {        
         onClick && onClick(obj._id);
     }
 
@@ -50,7 +49,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
             height: 30,
             position: 'absolute',            
             right: 10,
-            zIndex: 10,
+            zIndex: 999,
             alignItems: 'center',
             justifyContent: 'center',                       
         },
@@ -89,7 +88,9 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
         },
         headingWrapper: {
             paddingVertical: 10,
-            width: '85%'            
+            width: '85%',            
+            position:'relative',
+            zIndex:0            
         },
         heading: {
             color: Colors.whiteColor,
@@ -109,6 +110,19 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
             paddingHorizontal: 50
         },
     });
+
+
+    const gotoDetailHandler = async (notification:Notification) => {
+        let movieShow = notification.type.toLowerCase();
+        const response = await fetch(`${API_URL}${movieShow}/${notification.movie_show_id}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${user?.token}`}            
+        });
+        const resp = await response.json();
+        const destination = movieShow === 'movie' ? 'DetailScreen' : 'ShowDetail';
+        const data = movieShow === 'movie' ? { movie: resp.data.movie } : { showItem: resp.data.show };        
+        navigation.navigate(destination, data);
+    };
     
 
     const renderItem = ({ item }: { item: Notification }) => (                
@@ -119,18 +133,19 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
                 </View>
 
                 <View style={styles.userIcon}>
-                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                    <Pressable onPress={gotoDetailHandler.bind(null, item)}>
+                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                    </Pressable>
                 </View>
 
-                <View style={[styles.headingWrapper]}>
-                    <Text style={styles.heading}>{item.title}</Text>
-                    <Text style={styles.desc}>{item.message}</Text>
+                <View style={[styles.headingWrapper]} >
+                    <Text style={styles.heading} onPress={gotoDetailHandler.bind(null, item)}>{item.title}</Text>
+                    <Text style={styles.desc} onPress={gotoDetailHandler.bind(null, item)}>{item.message}</Text>
                 </View>
 
             </View>        
     );
     
-
     return (
             <FlatList
                 ref={flatListRef}

@@ -3,6 +3,7 @@
 export type Notification = {
     __v: number;
     _id: string;
+    movie_show_id:string;
     created_at: string; // ISO date string
     expires_at: string; // ISO date string
     is_deleted: boolean;

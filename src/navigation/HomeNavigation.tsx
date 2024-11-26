@@ -7,7 +7,7 @@ import { TextAlign } from '../styles/TextAlignmentUtils';
 import FollowerFollowingScreen from '../screens/Home/FollowerFollowingScreen';
 import Notification from '../screens/Notification/HomeScreen';
 import ShowDetailScreen from '../screens/Home/ShowDetailScreen';
-import TestScreen from '../screens/Test/TestScreen';
+
 
 
 const Stack = createNativeStackNavigator();

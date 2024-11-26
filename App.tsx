@@ -32,10 +32,7 @@ function App(): React.JSX.Element {
 
   React.useLayoutEffect(() => {
     SplashScreen.hide();
-    Orientation.lockToPortrait();
-    return () => {
-
-    };
+    Orientation.lockToPortrait();    
   }, []);
 
 
@@ -95,9 +92,7 @@ function App(): React.JSX.Element {
             component={HomeNavigation}
             options={{ ...TabNavigationOptions.Home }}
             listeners={({ navigation }) => ({
-              tabPress: (e) => {                
-                navigation.navigate('Home', { screen: 'HomeScreen' });
-              }
+              tabPress: (e) => navigation.navigate('Home', { screen: 'HomeScreen' })
             })}            
           />
           

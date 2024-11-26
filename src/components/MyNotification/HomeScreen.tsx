@@ -21,11 +21,13 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Notification[]>([]);
-    
-
-
 
     React.useLayoutEffect(() => {
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('notificationData', notificationData[0]);
         setData(notificationData);
         return () => { };
     }, [notificationData]);
@@ -33,7 +35,6 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     const onRefresh = () => {
         
     };
-
 
     const onClose = async (obj: any) => {
         onClick && onClick(obj._id);

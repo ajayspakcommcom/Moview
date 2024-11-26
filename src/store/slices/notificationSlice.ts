@@ -56,8 +56,7 @@ export const fetchNotificationsByUserId = createAsyncThunk('notification/fetchNo
 // });
 
 
-export const createNotification = createAsyncThunk('notification/createNotification', async ({ url, token, user_id, title, message, type }: { url: string; token: string; user_id: string; title: string; message: string; type: string }, { rejectWithValue }) => {
-    console.log('user_id', user_id);
+export const createNotification = createAsyncThunk('notification/createNotification', async ({ url, token, user_id, title, message, type, movie_show_id }: { url: string; token: string; user_id: string; title: string; message: string; type: string, movie_show_id: string }, { rejectWithValue }) => {
     try {
         const response = await fetch(`${url}`, {
             method: 'POST',
@@ -65,7 +64,7 @@ export const createNotification = createAsyncThunk('notification/createNotificat
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ user_id, title, message, type }),
+            body: JSON.stringify({ user_id, title, message, type, movie_show_id }),
         });
 
         // Log response to see what's being returned

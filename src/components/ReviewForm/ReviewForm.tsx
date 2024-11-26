@@ -37,7 +37,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const hideDialog = () => {        
         onPress && onPress('reviews');
         setIsDialog(false);
-        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie' }));            
+        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
     
     React.useLayoutEffect(() => {
@@ -56,7 +56,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     };
 
     
-    const onSaveHandler = async () => {   
+    const onSaveHandler = async () => {           
         const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
         if (createdReview.meta.requestStatus === 'fulfilled') {                         
             setIsDialog(true); 

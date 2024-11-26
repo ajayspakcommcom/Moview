@@ -70,12 +70,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
       <View style={styles.container}>
         {userDetail.role !== 'guest' && (
           <React.Suspense fallback={<Loading />}>
-            {notificationData.length > 0 && (
-              <MyNotification
-                notificationData={notificationData}
-                onClick={deleteNotificationHandler}
-              />
-            )}
+            {notificationData.length > 0 && <MyNotification notificationData={notificationData} onClick={deleteNotificationHandler} />}
             {notificationData.length === 0 && (
               <View style={styles.noNotification}>
                 <Text style={styles.whiteText}>No Notifications</Text>
@@ -86,11 +81,7 @@ const Notification: React.FC<Props> = ({ navigation }) => {
 
         {userDetail.role === 'guest' && (
           <View style={styles.withoutLoginWrapper}>           
-            <CustomButton
-              text={'Please Login'}
-              onPressHandler={navigationHandler}
-              textSize={20}                
-            />
+            <CustomButton text={'Please Login'} onPressHandler={navigationHandler} textSize={20} />
           </View>
         )}
       </View>

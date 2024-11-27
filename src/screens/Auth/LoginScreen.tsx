@@ -40,10 +40,10 @@ const LoginScreen: React.FC<Props> = () => {
                 return;
             }
             login(username, password);
+            ///console.log('responseError', responseError?.message);
             setLoader(false);
 
-        } catch (error) {
-            console.error('Login error:', error);
+        } catch (error) {            
             Alert.alert('Error', 'Login failed. Please try again.');
         }
     };
@@ -53,8 +53,7 @@ const LoginScreen: React.FC<Props> = () => {
         try {            
             login('guest@gmail.com', '12345');
             setLoader(false);
-        } catch (error) {
-            console.error('Login error:', error);
+        } catch (error) {            
             Alert.alert('Error', 'Login failed. Please try again.');
         }
     };
@@ -77,7 +76,8 @@ const LoginScreen: React.FC<Props> = () => {
             />
             <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-            {responseError && <View style={styles.errorWrapper}> <Text style={styles.errorText}>{responseError.message}</Text></View>}
+            {/* {responseError?.message && <View style={styles.errorWrapper}> <Text style={styles.errorText}>{responseError?.message}</Text></View>} */}
+            {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
 
             <CustomTextInput
                 placeholder="Username"
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     errorWrapper: {
-        paddingBottom: 15
+        paddingBottom: 0
     },
 
     errorText: {

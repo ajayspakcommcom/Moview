@@ -203,12 +203,13 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
           style={{...styles.cancelBtn}}
           textStyle={{...styles.cancelText}}
         />
+
       </View>
 
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>            
                 <Dialog.Content>
-                <Text variant="bodyMedium">Maximum 100 characters allowed.</Text>
+                <Text variant="bodyMedium" style={[styles.alertText]}>Maximum 100 characters allowed.</Text>
                 </Dialog.Content>
                 <Dialog.Actions>
                 <Button onPress={hideDialog}>Ok</Button>
@@ -221,12 +222,15 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
 };
 
 const styles = StyleSheet.create({
+  alertText: {
+    color:Colors.blackColor
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: '15%',
+    paddingTop: '5%',
   },
   textArea: {
     height: 100,

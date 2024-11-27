@@ -80,8 +80,7 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
             alignItems: 'center',
             borderRadius: 5,
         },
-        userIcon: {
-            paddingRight: 15,
+        userIcon: {            
             paddingVertical: 5,
             paddingHorizontal: 10,
             width: '15%'        

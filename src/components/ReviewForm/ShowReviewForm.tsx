@@ -59,13 +59,17 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     };
 
     const onSaveHandler = async () => {
-        const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
-        if (createdReview.meta.requestStatus === 'fulfilled') {         
-            setIsDialog(true);
-            setMovieShowReview();
+        if(rating > 0 && comment.length > 0) {
+            const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
+            if (createdReview.meta.requestStatus === 'fulfilled') {         
+                setIsDialog(true);
+                setMovieShowReview();
+            } else {
+                Alert.alert('Error', 'Failed to create review.');
+            }
         } else {
-            Alert.alert('Error', 'Failed to create review.');
-        }
+            Alert.alert('', 'Rating and Comments are required');
+        }         
     };
 
     return (

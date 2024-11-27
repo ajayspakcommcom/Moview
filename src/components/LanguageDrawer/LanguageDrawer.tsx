@@ -53,12 +53,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
       
       <View style={styles.flatHeader}>
         <Text style={styles.flateHeaderText}>Filter by language</Text>
-        <Icon
-          name={'close-circle'}
-          size={40}
-          color={Colors.tabActiveColor}
-          onPress={onCancelHandler}
-        />
+        <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
       </View>
 
       <FlatList
@@ -139,12 +134,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.blackColor,
     paddingTop: 10,
-    paddingLeft: 10,
+    paddingLeft: 10    
   },
   container: {
     flex: 1, 
     minHeight:300,
-    maxHeight:400    
+    maxHeight:400, 
+    backgroundColor:Colors.blackColor
   },
   flatList: {  
     backgroundColor: '#f1f1f1',

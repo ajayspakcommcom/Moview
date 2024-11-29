@@ -178,14 +178,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     },
     genreItem: {
-        marginRight: 15,
-        paddingVertical: 2,
-        paddingHorizontal: 15,
-        borderWidth: 1,
-        borderColor: Colors.whiteColor,
-        borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
+        paddingVertical: 1,            
+            justifyContent: 'center',
+            alignItems: 'center', 
+            backgroundColor: Colors.tagBgColor,            
+            borderWidth:1,
+            borderColor:Colors.tagBorderColor, 
+            borderRadius: 50,
+            marginRight:5,            
+            paddingHorizontal: 10,
+            paddingBottom:2, 
+            paddingTop:0
     },
     genreText: {
         color: Colors.whiteColor,

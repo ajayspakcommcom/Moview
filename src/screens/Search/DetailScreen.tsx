@@ -222,10 +222,17 @@ const DetailScreen: React.FC = () => {
         paddingHorizontal: 15,
       },
       genreItem: {
-        paddingVertical: 1,
-        borderColor: Colors.whiteColor,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingVertical: 1,            
+            justifyContent: 'center',
+            alignItems: 'center', 
+            backgroundColor: Colors.tagBgColor,            
+            borderWidth:1,
+            borderColor:Colors.tagBorderColor, 
+            borderRadius: 50,
+            marginRight:5,            
+            paddingHorizontal: 10,
+            paddingBottom:2, 
+            paddingTop:0
       },
       genreText: {
         color: Colors.whiteColor,
@@ -354,7 +361,7 @@ const DetailScreen: React.FC = () => {
 
             <View style={styles.castReviewBtnWrapper}>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'synopsis')} hitSlop={hitSlops()}>
-                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Synopsis & Cast </Text></View>
+                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Cast </Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>

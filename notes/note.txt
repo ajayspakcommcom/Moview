@@ -9,13 +9,6 @@ http://moviu.in/moviu-privacy-policy.html
 com.spakmoviereview (old)
 com.moviu.app (new)
 
-
-
-
-
-
-
-
 ==================================
 
 ios section
@@ -30,5 +23,5 @@ npx react-native run-ios (for default)
 npx react-native run-ios --device "iPhone 16 Pro" (for specific)
 
 xcrun simctl list devices
-xcrun simctl boot 553E6D0D-0915-46D7-B11E-C34BC9B80384 (Boot and Use Another Simulator)
-xcrun simctl shutdown 969915C8-01A0-431B-BBA6-2514221940DC (shutdown)
+xcrun simctl boot 5D76B241-0D33-4439-8415-1AC90D787722 (Boot and Use Another Simulator)
+xcrun simctl shutdown 5D76B241-0D33-4439-8415-1AC90D787722 (shutdown)

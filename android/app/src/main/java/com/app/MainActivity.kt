@@ -1,4 +1,4 @@
-package com.spakmoviereview
+package com.moviu.app
 
 import android.os.Bundle
 import org.devio.rn.splashscreen.SplashScreen

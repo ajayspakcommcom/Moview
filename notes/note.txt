@@ -2,5 +2,9 @@
 npx react-native run-android
 npx react-native doctor
 gradlew assembleRelease (in android folder) 
+npx react-native build-android --mode=release (in Android Folder)
 
-https://www.freeprivacypolicy.com/live/a586fa04-9c08-4213-8082-02a0fef3eda1
+http://moviu.in/moviu-privacy-policy.html
+
+com.spakmoviereview (old)
+com.moviu.app (new)

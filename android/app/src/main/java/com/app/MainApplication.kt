@@ -1,4 +1,4 @@
-package com.spakmoviereview
+package com.moviu.app
 
 import android.app.Application
 import com.facebook.react.PackageList

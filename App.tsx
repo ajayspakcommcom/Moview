@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Keyboard, Platform } from 'react-native';
+import { Keyboard, Platform, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -32,7 +32,7 @@ function App(): React.JSX.Element {
 
   React.useLayoutEffect(() => {
     SplashScreen.hide();
-    Orientation.lockToPortrait();    
+    Orientation.lockToPortrait();
   }, []);
 
 
@@ -75,58 +75,67 @@ function App(): React.JSX.Element {
 
 
   return (
+    <View style={styles.appContainer}>
+      <NavigationContainer>
 
-    <NavigationContainer>
+        {!isLoggedIn &&
+          <Stack.Navigator initialRouteName="Login" screenOptions={{ ...stackScreenOptions }}>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ animationEnabled: false }} />
+            <Stack.Screen name="Register" component={RegisterScreen} options={{ animationEnabled: false }} />
+          </Stack.Navigator>
+        }
 
-      {!isLoggedIn &&
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ ...stackScreenOptions }}>
-          <Stack.Screen name="Login" component={LoginScreen} options={{ animationEnabled: false }} />
-          <Stack.Screen name="Register" component={RegisterScreen} options={{ animationEnabled: false }} />
-        </Stack.Navigator>
-      }
+        {isLoggedIn &&
+          <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor } }} >
+            <Tab.Screen
+              name="Home"
+              component={HomeNavigation}
+              options={{ ...TabNavigationOptions.Home }}
+              listeners={({ navigation }) => ({
+                tabPress: (e) => navigation.navigate('Home', { screen: 'HomeScreen' })
+              })}
+            />
 
-      {isLoggedIn &&
-        <Tab.Navigator screenOptions={{ ...tabScreenOptions, tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor } }} >
-          <Tab.Screen
-            name="Home"
-            component={HomeNavigation}
-            options={{ ...TabNavigationOptions.Home }}
-            listeners={({ navigation }) => ({
-              tabPress: (e) => navigation.navigate('Home', { screen: 'HomeScreen' })
-            })}            
-          />
-          
-          {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
-          {/* <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> */}
-          <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
-          
-          <Tab.Screen
-            name="MyReview"
-            component={MyReviewNavigation}
-            options={{ ...TabNavigationOptions.MyReview }}
-            listeners={({ navigation }) => ({
-              tabPress: (e) => {                
-                navigation.navigate('MyReview', { screen: 'HomeScreen' });
-              }
-            })} 
-          />
+            {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
+            {/* <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> */}
+            <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
 
-          <Tab.Screen
-            name="Profile"
-            component={ProfileNavigation}
-            options={{ ...TabNavigationOptions.Profile }}
-            listeners={({ navigation }) => ({
-              tabPress: (e) => {                
-                navigation.navigate('Profile', { screen: 'HomeScreen' });
-              }
-            })} 
-          />
-          
-        </Tab.Navigator>
-      }
+            <Tab.Screen
+              name="MyReview"
+              component={MyReviewNavigation}
+              options={{ ...TabNavigationOptions.MyReview }}
+              listeners={({ navigation }) => ({
+                tabPress: (e) => {
+                  navigation.navigate('MyReview', { screen: 'HomeScreen' });
+                }
+              })}
+            />
 
-    </NavigationContainer >
+            <Tab.Screen
+              name="Profile"
+              component={ProfileNavigation}
+              options={{ ...TabNavigationOptions.Profile }}
+              listeners={({ navigation }) => ({
+                tabPress: (e) => {
+                  navigation.navigate('Profile', { screen: 'HomeScreen' });
+                }
+              })}
+            />
+
+          </Tab.Navigator>
+        }
+
+      </NavigationContainer >
+    </View>
+
   );
 }
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    paddingTop: 60
+  }
+});
 
 export default App;

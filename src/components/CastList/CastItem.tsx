@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Cast } from '../../models/Common';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { getFirstAndSecondChar } from '../../utils/Common';
+import FastImage from 'react-native-fast-image';
 
 interface ItemProps {
     item: Cast;
@@ -19,7 +20,8 @@ const CastItem: React.FC<ItemProps> = ({ item }) => {
         <View style={styles.wrapper}>
             <View style={styles.headerWrapper}>
                 <View style={styles.user}>
-                    <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                    {Platform.OS === 'android' && <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />}
+                    {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
                 </View>
                 <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
             </View>

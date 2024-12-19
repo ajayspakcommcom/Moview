@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { AirbnbRating } from 'react-native-ratings';
@@ -12,6 +12,7 @@ import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-
 import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
+import FastImage from 'react-native-fast-image';
 
 interface ItemProps {
     item: Review;
@@ -54,7 +55,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                 <TouchableOpacity onPress={toggleExpand}>
                     <View style={styles.wrapper}>
                         <View style={styles.headerWrapper}>
-                            <View style={styles.user}>
+                            {Platform.OS === 'android' && <View style={styles.user}>
                                 <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
                                     <Icon
                                         name={'user-circle'}
@@ -63,7 +64,14 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                                         onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)} 
                                     />
                                 </LinearGradient>
-                            </View>
+                            </View>}
+
+                            {
+                                Platform.OS === 'ios' && <View style={styles.user}>
+                                    <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />
+                                </View>
+                            }
+
                             <View style={styles.content}>
                                 <Text
                                     style={styles.name}

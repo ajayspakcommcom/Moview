@@ -1,12 +1,13 @@
 import React from 'react';
 
+import FastImage from 'react-native-fast-image';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 type TabOptions = {
@@ -16,25 +17,38 @@ type TabOptions = {
 const TabNavigationOptions: TabOptions = {
     Home: {
         tabBarIcon: ({ focused, color, size }) => (
-            <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />
+            <> 
+               {Platform.OS === "android" && <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />}
+               {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/home-w.png')} />}
+            </>
         ),
         tabBarLabel: ''
     },
     Search: {
         tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome name={focused ? 'search' : 'search'} size={20} color={color} />
+            <>
+              {Platform.OS === 'android' && <FontAwesome name={focused ? 'search' : 'search'} size={20} color={color} />}
+              {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-w.png')} />}
+            </>
         ),
         tabBarLabel: ''
     },
     MyReview: {
         tabBarIcon: ({ focused, color, size }) => (
-            <AntDesign name={focused ? 'star' : 'star'} size={20} color={color} />
+            <>
+             {Platform.OS === "android" && <AntDesign name={focused ? 'star' : 'star'} size={20} color={color} />}
+             {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/my-review-w.png')} />}
+            </>
         ),
         tabBarLabel: ''
     },
     Profile: {
         tabBarIcon: ({ focused, color, size = 30 }) => (
-            <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />
+            <>
+             {Platform.OS === "android" &&  <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />}
+             {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
+            </>
+            
         ),
         tabBarLabel: ''
     },

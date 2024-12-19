@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { API_URL } from "../../configure/config.android";
 import { useAuth } from '../../context/AuthContext';
+import FastImage from 'react-native-fast-image';
 
 
 
@@ -132,7 +133,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} getSelectedLanguage={selectedCheckbox} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
-                        <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />
+                        {Platform.OS === 'android' && <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />}
+                        {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/filter-y.png')} />}
                     </Pressable>                                                  
                 </View>                
         </View>        

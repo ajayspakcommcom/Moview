@@ -22,7 +22,7 @@ npx react-native run-ios (for default)
 npx react-native run-ios --device "iPhone 16 Pro" (for specific)
 
 xcrun simctl list devices
-xcrun simctl boot 969915C8-01A0-431B-BBA6-2514221940DC (Boot and Use Another Simulator)
+xcrun simctl boot 5D76B241-0D33-4439-8415-1AC90D787722 (Boot and Use Another Simulator)
 xcrun simctl shutdown 5D76B241-0D33-4439-8415-1AC90D787722 (shutdown)
 
 
@@ -37,4 +37,7 @@ Run pod deintegrate to remove the old CocoaPods setup, then reinstall the depend
 cd ios
 pod deintegrate
 pod install
+
+
+open -a Simulator
 

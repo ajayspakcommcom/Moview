@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {StyleSheet, View, Pressable, FlatList} from 'react-native';
+import {StyleSheet, View, Pressable, FlatList, Platform} from 'react-native';
 import {Text, Checkbox} from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Fonts from '../../styles/Fonts';
 import {LANGUAGES} from '../../utils/Data';
+import FastImage from 'react-native-fast-image';
 
 interface LanguageDrawerProps {
   visible?: boolean;
@@ -53,7 +54,8 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
       
       <View style={styles.flatHeader}>
         <Text style={styles.flateHeaderText}>Filter by language</Text>
-        <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />
+        {Platform.OS === 'android' && <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />}
+        <Pressable onPress={onCancelHandler}><FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/close-y.png')} /></Pressable> 
       </View>
 
       <FlatList

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, LayoutChangeEvent, Pressable, Platform } from 'react-native';
 import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
@@ -9,6 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/Notification';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { API_URL } from '../../configure/config.android';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
     notificationData: Notification[];
@@ -128,7 +129,8 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
             <View style={[styles.item]}>
 
                 <View style={styles.actionWrapper}>
-                    <AntDesign name={'close'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />
+                    {Platform.OS === 'android' && <AntDesign name={'close'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />}
+                    {Platform.OS === 'ios' && <Pressable onPress={onClose.bind(null, item)}><FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/close-y.png')} /></Pressable>}
                 </View>
 
                 <View style={styles.userIcon}>

@@ -135,7 +135,8 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
                 <View style={styles.userIcon}>
                     <Pressable onPress={gotoDetailHandler.bind(null, item)}>
-                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                        {Platform.OS === 'android' && <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />}
+                        {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
                     </Pressable>
                 </View>
 

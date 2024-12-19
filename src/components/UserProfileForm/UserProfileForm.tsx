@@ -5,12 +5,14 @@ import {
   StyleSheet,
   GestureResponderEvent,
   Alert,
+  Platform,
 } from 'react-native';
 import Colors from '../../styles/Colors';
 import {API_URL} from '../../configure/config.android';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useAuth} from '../../context/AuthContext';
 import {Button, Dialog, Portal, TextInput} from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
 
 const CustomTextInput = React.lazy(
   () => import('../../components/Ui/CustomTextInput'),
@@ -139,13 +141,16 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
     <>
       <View style={styles.container}>
         <View style={styles.userIcon}>
-          <Icon
+          {Platform.OS === 'android' && <Icon
             name={'user-alt'}
             size={45}
             color={Colors.tabBgColor}
             onPress={() => {}}
             style={styles.icon}
-          />
+          />}
+
+          <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />
+
         </View>
 
         <CustomTextInput
@@ -247,6 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     justifyContent: 'center',
     marginBottom: 15,
+    alignItems:'center'
   },
   icon: {
     textAlign: 'center',

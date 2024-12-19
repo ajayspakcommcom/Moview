@@ -17,8 +17,7 @@ for ios
 cd ios
 pod install
 cd ..
-
-
+`
 npx react-native run-ios (for default)
 npx react-native run-ios --device "iPhone 16 Pro" (for specific)
 

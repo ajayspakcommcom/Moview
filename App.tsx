@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Keyboard, Platform, View, StyleSheet } from 'react-native';
+import { Keyboard, Platform, View, StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -75,7 +75,11 @@ function App(): React.JSX.Element {
 
 
   return (
+    
     <View style={styles.appContainer}>
+
+      {Platform.OS === 'ios' && <View style={styles.statusBar}></View>}
+
       <NavigationContainer>
 
         {!isLoggedIn &&
@@ -132,9 +136,13 @@ function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  statusBar: {
+    backgroundColor:Colors.blackColor,
+    height:60
+  },
   appContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 60 : 0
+    //paddingTop: Platform.OS === 'ios' ? 60 : 0
   }
 });
 

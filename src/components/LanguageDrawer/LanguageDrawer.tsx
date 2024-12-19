@@ -45,7 +45,9 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
   const renderItem = ({item: language}: {item: string}) => (
     <View style={styles.flatItem}>
       {Platform.OS === 'android' &&<Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />}
-      {Platform.OS === 'ios' &&<Text style={{color:'#fff'}} onPress={() => toggleCheckbox(language)}>{selected[language] ? 'Selected' : 'Unselected'}</Text>}
+      {Platform.OS === 'ios' && (<>
+        {selected[language] ? <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/checked.png')} /> : <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/unchecked.png')} />}
+      </>)}
       <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
     </View>
   );

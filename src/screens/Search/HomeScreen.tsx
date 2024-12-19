@@ -8,6 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { fetchMoviesShowsByKeyword } from '../../utils/Common';
 
 import { FilteredLatestMovieShow } from '../../types/FilteredLatestMovieShow';
+import FastImage from 'react-native-fast-image';
 const FilteredLatestMovieShowList = React.lazy(() => import('../../components/FilteredLatestMovieShowList/FilteredLatestMovieShowList'));
 
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
@@ -62,7 +63,25 @@ const HomeScreen: React.FC<Props> = () => {
         <View style={styles.container}>
 
             <View style={styles.searchWrapper}>
-                <Searchbar placeholder="Search Movie / Show" onChangeText={onChangeSearch} value={searchQuery} onClearIconPress={onClearHandler} />
+                <Searchbar 
+                placeholder="Search Movie / Show" 
+                onChangeText={onChangeSearch} 
+                value={searchQuery} 
+                onClearIconPress={onClearHandler} 
+                icon={() => (
+                    <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-b.png')} />
+                )}
+
+                clearIcon={() =>
+                    searchQuery ? (
+                        <FastImage
+                          style={{width:25, height:25}}
+                          source={require('../../assets/images/icons/close-b.png')} 
+                        />
+                    ) : null
+                  }
+
+                />
             </View>
 
             <View style={styles.movieList}>                

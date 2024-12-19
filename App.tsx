@@ -134,7 +134,7 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    paddingTop: 60
+    paddingTop: Platform.OS === 'ios' ? 60 : 0
   }
 });
 

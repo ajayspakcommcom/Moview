@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
@@ -14,6 +14,7 @@ import { fetchNotificationsByUserId, deleteNotification } from '../../store/slic
 import { API_URL } from '../../configure/config.android';
 import Fonts from '../../styles/Fonts';
 import CustomButton from '../../components/Ui/CustomButton';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
     navigation: any;
@@ -36,8 +37,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
         navigation.setOptions({
             title: `Notification`,
             headerLeft: () => {
-                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
-            }
+                return Platform.OS === 'android' ?
+                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
+                            <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                            </Pressable>
+            },
         });
     };
 
@@ -89,6 +94,11 @@ const Notification: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    backBtn: {
+        width:35, 
+        height:35, 
+        marginBottom:20
+    },  
     withoutLoginWrapper: {
         flex: 1,        
         justifyContent:'center', 

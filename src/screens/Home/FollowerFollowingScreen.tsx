@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.android';
 import { UserItem } from '../../types/User';
+import Icon from 'react-native-vector-icons/Ionicons';
+import FastImage from 'react-native-fast-image';
+import Colors from '../../styles/Colors';
 
 
 const FollowerFollowing = React.lazy(() => import('../../components/FollowerFollowing/FollowerFollowing'));
@@ -16,6 +19,7 @@ type Props = {
 
 const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
 
+    
     const userId = route.params.userId;
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -56,9 +60,21 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
             }
         };
 
+        const backButtonHandler = () => {
+            navigation.navigate('HomeScreen');
+        };
 
     React.useLayoutEffect(() => {
-        navigation.setOptions({title: ``});
+        navigation.setOptions({
+            title: ``,
+            headerLeft: () => {
+                return Platform.OS === 'android' ?
+                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
+                            <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                            </Pressable>
+            },
+        });
         fetchUserDetail();
         return () => {
             abortController.abort();
@@ -74,6 +90,11 @@ const FollowerFollowingScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
 const styles = StyleSheet.create({
+    backBtn: {
+        width:35, 
+        height:35, 
+        marginBottom:20
+    }, 
 });
 
 

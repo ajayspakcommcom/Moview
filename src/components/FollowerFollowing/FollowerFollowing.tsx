@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -14,6 +14,7 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { userFetchFollowers } from '../../store/slices/userFollowerSlice';
 import { userFetchFollowings } from '../../store/slices/userFollowingSlice';
 import { createFollower,  removeFollower } from '../../store/slices/followerSlice';
+import FastImage from 'react-native-fast-image';
 
 
 type Props = {
@@ -119,7 +120,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                 <View style={styles.headerContent}>
                     <View style={styles.userTextIcon}>
                         <View style={styles.userIcon}>
-                            <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />
+                            {Platform.OS === 'android' && <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />}
+                            {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />}
                         </View>
                         <View>
                             <Text style={styles.name}>{capitalizeFirstLetter(userData?.firstname as string)}</Text>
@@ -189,7 +191,8 @@ const styles = StyleSheet.create({
         borderRadius: 80,
         justifyContent: 'center',
         alignContent: 'center',
-        marginRight: 15
+        marginRight: 15, 
+        alignItems:'center'
     },
     name: {
         marginTop: 10,

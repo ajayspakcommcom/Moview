@@ -19,7 +19,8 @@ const TabNavigationOptions: TabOptions = {
         tabBarIcon: ({ focused, color, size }) => (
             <> 
                {Platform.OS === "android" && <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />}
-               {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/home-w.png')} />}
+               {(Platform.OS === "ios" && !focused) && <FastImage style={{width:25, height:25}} source={require(`../../assets/images/icons/home-w.png`)} />}
+               {(Platform.OS === "ios" && focused) && <FastImage style={{width:25, height:25}} source={require(`../../assets/images/icons/home-y.png`)} />}
             </>
         ),
         tabBarLabel: ''
@@ -28,7 +29,8 @@ const TabNavigationOptions: TabOptions = {
         tabBarIcon: ({ focused, color, size }) => (
             <>
               {Platform.OS === 'android' && <FontAwesome name={focused ? 'search' : 'search'} size={20} color={color} />}
-              {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-w.png')} />}
+              {(Platform.OS === "ios" && !focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-w.png')} />}
+              {(Platform.OS === "ios" && focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-y.png')} />}
             </>
         ),
         tabBarLabel: ''
@@ -37,7 +39,8 @@ const TabNavigationOptions: TabOptions = {
         tabBarIcon: ({ focused, color, size }) => (
             <>
              {Platform.OS === "android" && <AntDesign name={focused ? 'star' : 'star'} size={20} color={color} />}
-             {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/my-review-w.png')} />}
+             {(Platform.OS === "ios" && !focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/my-review-w.png')} />}
+             {(Platform.OS === "ios" && focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/my-review-y.png')} />}
             </>
         ),
         tabBarLabel: ''
@@ -46,7 +49,8 @@ const TabNavigationOptions: TabOptions = {
         tabBarIcon: ({ focused, color, size = 30 }) => (
             <>
              {Platform.OS === "android" &&  <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />}
-             {Platform.OS === "ios" && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
+             {(Platform.OS === "ios" && !focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
+             {(Platform.OS === "ios" && focused) && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />}
             </>
             
         ),

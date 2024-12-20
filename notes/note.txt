@@ -25,6 +25,11 @@ xcrun simctl list devices
 xcrun simctl boot 5D76B241-0D33-4439-8415-1AC90D787722 (Boot and Use Another Simulator)
 xcrun simctl shutdown 5D76B241-0D33-4439-8415-1AC90D787722 (shutdown)
 
+xcrun simctl shutdown all
+xcrun simctl erase all
+npx react-native run-ios --simulator="iPhone 16 Pro"
+
+
 
 cd ios
 xcodebuild clean

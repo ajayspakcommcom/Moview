@@ -266,7 +266,8 @@ const ShowDetailScreen: React.FC = () => {
         },
         releaseItem: {
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center', 
+            marginVertical:5
         },
         releaseText: {
             color: Colors.whiteColor,

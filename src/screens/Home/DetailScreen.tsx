@@ -262,7 +262,8 @@ const DetailScreen: React.FC = () => {
         },
         releaseItem: {
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center', 
+            marginVertical:5
         },
         releaseText: {
             color: Colors.whiteColor,
@@ -356,7 +357,9 @@ const DetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.releaseWrapper}>
-                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text></View>
+                <View style={styles.releaseItem}>
+                    <Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text>
+                </View>
             </View>
 
             <View style={styles.directorWrapper}>

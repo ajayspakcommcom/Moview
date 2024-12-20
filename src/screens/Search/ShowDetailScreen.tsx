@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Modal, Pressable, Image } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Modal, Pressable, Image, Platform } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -89,7 +89,11 @@ const ShowDetailScreen: React.FC = () => {
         navigation.setOptions({
             title: ``,
             headerLeft: () => {
-                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+                return Platform.OS === 'android' ?
+                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
+                            <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                            </Pressable>
             },
             headerRight: () => {
                 // return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
@@ -149,6 +153,11 @@ const ShowDetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+        backBtn: {
+            width:35, 
+            height:35, 
+            marginBottom:20
+        },
       withoutLoginWrapper: {
         flex: 1,
         justifyContent: 'center',

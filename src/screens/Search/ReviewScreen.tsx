@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, Platform, Pressable } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -50,7 +50,11 @@ const DetailScreen: React.FC = () => {
         navigation.setOptions({
             title: `${movie?.title}`,
             headerLeft: () => {
-                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+                return Platform.OS === 'android' ?
+                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
+                            <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                            </Pressable>
             },
             headerRight: () => {
                 return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
@@ -143,7 +147,11 @@ const DetailScreen: React.FC = () => {
 
 
 const styles = StyleSheet.create({
-
+    backBtn: {
+        width:35, 
+        height:35, 
+        marginBottom:20
+    },
     container: {
         flex: 1
     },

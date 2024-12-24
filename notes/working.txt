@@ -5,6 +5,8 @@
     }, 
 
 
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad}>
+ <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
       <ScrollView contentContainerStyle={styles.container}></ScrollView>
     </KeyboardAvoidingView> 
+   </TouchableWithoutFeedback>

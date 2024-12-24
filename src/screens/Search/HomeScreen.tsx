@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView,KeyboardAvoidingView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Colors from '../../styles/Colors';
 import { Searchbar } from 'react-native-paper';
@@ -10,7 +10,6 @@ import { fetchMoviesShowsByKeyword } from '../../utils/Common';
 import { FilteredLatestMovieShow } from '../../types/FilteredLatestMovieShow';
 import FastImage from 'react-native-fast-image';
 const FilteredLatestMovieShowList = React.lazy(() => import('../../components/FilteredLatestMovieShowList/FilteredLatestMovieShowList'));
-
 const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 
 type Props = {
@@ -60,40 +59,44 @@ const HomeScreen: React.FC<Props> = () => {
 
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
+        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
         <View style={styles.container}>
+                <View style={styles.searchWrapper}>
+                    <Searchbar
+                        placeholder="Search Movie / Show"
+                        onChangeText={onChangeSearch}
+                        value={searchQuery}
+                        onClearIconPress={onClearHandler}
+                        icon={() => (
+                            <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/search-b.png')} />
+                        )}
 
-            <View style={styles.searchWrapper}>
-                <Searchbar 
-                placeholder="Search Movie / Show" 
-                onChangeText={onChangeSearch} 
-                value={searchQuery} 
-                onClearIconPress={onClearHandler} 
-                icon={() => (
-                    <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/search-b.png')} />
-                )}
+                        clearIcon={() =>
+                            searchQuery ? (
+                                <FastImage
+                                    style={{ width: 25, height: 25 }}
+                                    source={require('../../assets/images/icons/close-b.png')}
+                                />
+                            ) : null
+                        }
 
-                clearIcon={() =>
-                    searchQuery ? (
-                        <FastImage
-                          style={{width:25, height:25}}
-                          source={require('../../assets/images/icons/close-b.png')} 
-                        />
-                    ) : null
-                  }
-
-                />
+                    />
+                </View>
+                <View style={styles.movieList}>
+                    {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}
+                    {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie / show</Text>}
+                </View>
             </View>
-
-            <View style={styles.movieList}>                
-                {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}                 
-                {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie / show</Text>} 
-            </View>
-
-        </View>
+        </KeyboardAvoidingView>           
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
+    keypad: {
+        flex: 1
+    },
     container: {
         flex: 1,
         padding: 15

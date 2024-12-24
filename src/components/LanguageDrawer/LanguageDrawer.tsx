@@ -46,7 +46,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
     <View style={styles.flatItem}>
       {Platform.OS === 'android' &&<Checkbox status={selected[language] ? 'checked' : 'unchecked'} onPress={() => toggleCheckbox(language)} />}
       {Platform.OS === 'ios' && (<>
-        {selected[language] ? <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/checked.png')} /> : <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/unchecked.png')} />}
+        {selected[language] ? <FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /> : <FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} />}
       </>)}
       <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
     </View>
@@ -58,7 +58,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
       <View style={styles.flatHeader}>
         <Text style={styles.flateHeaderText}>Filter by language</Text>
         {Platform.OS === 'android' && <Icon name={'close-circle'} size={40} color={Colors.tabActiveColor} onPress={onCancelHandler} />}
-        <Pressable onPress={onCancelHandler}><FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/close-y.png')} /></Pressable> 
+        <Pressable onPress={onCancelHandler}><FastImage style={styles.icon} source={require('../../assets/images/icons/close-y.png')} /></Pressable> 
       </View>
 
       <FlatList
@@ -77,6 +77,10 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
 };
 
 const styles = StyleSheet.create({
+  icon: {
+    width:25, 
+    height:25
+},
   flatFooter: {
     height: 50,
     minWidth: '100%',

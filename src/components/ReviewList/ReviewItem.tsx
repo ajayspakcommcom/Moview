@@ -68,7 +68,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
                             {
                                 Platform.OS === 'ios' && <View style={styles.user}>
-                                    <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />
+                                    <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />
                                 </View>
                             }
 
@@ -106,6 +106,10 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 };
 
 const styles = StyleSheet.create({
+    icon: {
+        width:25, 
+        height:25
+    },
     wrapper: {
         backgroundColor: Colors.reviewBgColor,
         paddingVertical: 10,

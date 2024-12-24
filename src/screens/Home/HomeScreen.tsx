@@ -134,7 +134,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
                         {Platform.OS === 'android' && <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />}
-                        {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/filter-y.png')} />}
+                        {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/filter-y.png')} />}
                     </Pressable>                                                  
                 </View>                
         </View>        
@@ -142,7 +142,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-
+    icon: {
+        width:25, 
+        height:25
+    },
     drawerMainWrapper: {
         position:'absolute',
         backgroundColor:'rgba(0, 0, 0, 0.4)',         

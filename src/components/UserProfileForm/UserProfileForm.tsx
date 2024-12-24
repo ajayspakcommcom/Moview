@@ -149,7 +149,7 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
             style={styles.icon}
           />}
 
-          <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />
+          <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />
 
         </View>
 
@@ -227,6 +227,10 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
 };
 
 const styles = StyleSheet.create({
+  icon: {
+    width:25, 
+    height:25
+},
   alertText: {
     color:Colors.blackColor
   },

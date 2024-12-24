@@ -121,7 +121,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     <View style={styles.userTextIcon}>
                         <View style={styles.userIcon}>
                             {Platform.OS === 'android' && <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />}
-                            {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />}
+                            {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />}
                         </View>
                         <View>
                             <Text style={styles.name}>{capitalizeFirstLetter(userData?.firstname as string)}</Text>
@@ -169,6 +169,10 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 };
 
 const styles = StyleSheet.create({
+    icon: {
+        width:25, 
+        height:25
+    },
     container: {
         flex: 1,
         padding: 15

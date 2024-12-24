@@ -41,6 +41,10 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
     }
 
     const styles = StyleSheet.create({
+        icon: {
+            width:25, 
+            height:25
+        },
         flatListWrapper: {
             paddingTop: 15,
             padding: 20,
@@ -130,13 +134,13 @@ const MyNotification: React.FC<Props> = ({notificationData, onClick}) => {
 
                 <View style={styles.actionWrapper}>
                     {Platform.OS === 'android' && <AntDesign name={'close'} size={30} color={Colors.tabActiveColor} onPress={onClose.bind(null, item)} />}
-                    {Platform.OS === 'ios' && <Pressable onPress={onClose.bind(null, item)}><FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/close-y.png')} /></Pressable>}
+                    {Platform.OS === 'ios' && <Pressable onPress={onClose.bind(null, item)}><FastImage style={styles.icon} source={require('../../assets/images/icons/close-y.png')} /></Pressable>}
                 </View>
 
                 <View style={styles.userIcon}>
                     <Pressable onPress={gotoDetailHandler.bind(null, item)}>
                         {Platform.OS === 'android' && <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />}
-                        {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-w.png')} />}
+                        {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />}
                     </Pressable>
                 </View>
 

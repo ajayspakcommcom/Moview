@@ -59,36 +59,36 @@ const HomeScreen: React.FC<Props> = () => {
 
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
-        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
-        <View style={styles.container}>
-                <View style={styles.searchWrapper}>
-                    <Searchbar
-                        placeholder="Search Movie / Show"
-                        onChangeText={onChangeSearch}
-                        value={searchQuery}
-                        onClearIconPress={onClearHandler}
-                        icon={() => (
-                            <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/search-b.png')} />
-                        )}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
+                <View style={styles.container}>
+                    <View style={styles.searchWrapper}>
+                        <Searchbar
+                            placeholder="Search Movie / Show"
+                            onChangeText={onChangeSearch}
+                            value={searchQuery}
+                            onClearIconPress={onClearHandler}
+                            icon={() => (
+                                <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/search-b.png')} />
+                            )}
 
-                        clearIcon={() =>
-                            searchQuery ? (
-                                <FastImage
-                                    style={{ width: 25, height: 25 }}
-                                    source={require('../../assets/images/icons/close-b.png')}
-                                />
-                            ) : null
-                        }
+                            clearIcon={() =>
+                                searchQuery ? (
+                                    <FastImage
+                                        style={{ width: 25, height: 25 }}
+                                        source={require('../../assets/images/icons/close-b.png')}
+                                    />
+                                ) : null
+                            }
 
-                    />
+                        />
+                    </View>
+                    <View style={styles.movieList}>
+                        {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}
+                        {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie / show</Text>}
+                    </View>
                 </View>
-                <View style={styles.movieList}>
-                    {filteredData.length >= 0 && <FilteredLatestMovieShowList filteredLatestMovieShows={filteredData} />}
-                    {filteredData.length <= 0 && <Text style={styles.text}>Not found any movie / show</Text>}
-                </View>
-            </View>
-        </KeyboardAvoidingView>           
+            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     );
 };

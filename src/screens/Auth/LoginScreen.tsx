@@ -72,16 +72,15 @@ const LoginScreen: React.FC<Props> = () => {
             />
             <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-            {/* {responseError?.message && <View style={styles.errorWrapper}> <Text style={styles.errorText}>{responseError?.message}</Text></View>} */}
             {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
 
             <CustomTextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={handleUsernameChange}
-                autoCapitalize="none"
-            />
-
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={handleUsernameChange}
+                    autoCapitalize="none"
+                />
+            
             <CustomTextInput
                 placeholder="Password"
                 value={password}
@@ -130,7 +129,6 @@ const LoginScreen: React.FC<Props> = () => {
                     <Text style={styles.skipBottomText}>Skip</Text>
                 </View>
             </Pressable>
-
 
         </View>
     );

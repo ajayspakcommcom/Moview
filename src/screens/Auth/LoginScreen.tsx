@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -23,7 +23,7 @@ const LoginScreen: React.FC<Props> = () => {
     const [loader, setLoader] = React.useState(false);
 
     const navigation: NavigationProp<ParamListBase> = useNavigation();
-    
+
     const handleUsernameChange = (text: string) => {
         setUsername(text);
     };
@@ -32,28 +32,28 @@ const LoginScreen: React.FC<Props> = () => {
         setPassword(text);
     };
 
-    const handleLogin = async () => {        
+    const handleLogin = async () => {
         setLoader(true);
         try {
             if (username.trim() === '' || password.trim() === '') {
-                Alert.alert('Error', 'Username or password cannot be empty',[{text: "OK", onPress: () => setLoader(false)}],{ cancelable: true });
+                Alert.alert('Error', 'Username or password cannot be empty', [{ text: "OK", onPress: () => setLoader(false) }], { cancelable: true });
                 return;
             }
             login(username, password);
             ///console.log('responseError', responseError?.message);
             setLoader(false);
 
-        } catch (error) {            
+        } catch (error) {
             Alert.alert('Error', 'Login failed. Please try again.');
         }
     };
 
-    const guestLogin = async () => {                
+    const guestLogin = async () => {
         setLoader(true);
-        try {            
+        try {
             login('guest@gmail.com', '12345');
             setLoader(false);
-        } catch (error) {            
+        } catch (error) {
             Alert.alert('Error', 'Login failed. Please try again.');
         }
     };
@@ -63,84 +63,82 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     return (
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
-            <ScrollView contentContainerStyle={styles.container}>
-                <FastImage
-                    style={styles.logo}
-                    source={require('../../assets/images/logo.png')}
-                    resizeMode={FastImage.resizeMode.contain}
-                />
-                <Text style={styles.honest}>Honest Movie Reviews</Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
+                <ScrollView contentContainerStyle={styles.container}>
+                    <FastImage
+                        style={styles.logo}
+                        source={require('../../assets/images/logo.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                    <Text style={styles.honest}>Honest Movie Reviews</Text>
+                    {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
+                    <CustomTextInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={handleUsernameChange}
+                        autoCapitalize="none"
+                    />
 
-                {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
+                    <CustomTextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={handlePasswordChange}
+                        secureTextEntry
+                    />
 
-                <CustomTextInput
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={handleUsernameChange}
-                    autoCapitalize="none"
-                />
+                    <CustomButton
+                        text={loader ? 'Login...' : 'Login'}
+                        onPressHandler={handleLogin}
+                        textSize={20}
+                        isDisabled={loader ? true : false}
+                    />
 
-                <CustomTextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={handlePasswordChange}
-                    secureTextEntry
-                />
-
-                <CustomButton
-                    text={loader ? 'Login...' : 'Login'}
-                    onPressHandler={handleLogin}
-                    textSize={20}
-                    isDisabled={loader ? true : false}
-                />
-
-                <View style={styles.rememberForgot}>
-                    <View style={styles.rememberCheckbox}>
-                        <Checkbox
-                            status={checked ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setChecked(!checked);
-                            }}
-                        />
-                        <Text style={styles.remember}>Remember Me</Text>
+                    <View style={styles.rememberForgot}>
+                        <View style={styles.rememberCheckbox}>
+                            <Checkbox
+                                status={checked ? 'checked' : 'unchecked'}
+                                onPress={() => {
+                                    setChecked(!checked);
+                                }}
+                            />
+                            <Text style={styles.remember}>Remember Me</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.forgotText}>Forgot Password</Text>
+                        </View>
                     </View>
-                    <View>
-                        <Text style={styles.forgotText}>Forgot Password</Text>
+
+
+                    <View style={styles.skipWrapper}>
+                        <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
+                        <View style={styles.skipDont}>
+                            <Text style={styles.skipBottomText}>Don’t have an account?</Text>
+                        </View>
                     </View>
-                </View>
 
+                    <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                        <View style={styles.registerBtnWrapper}>
+                            <Text style={styles.skipBottomText}>Register</Text>
+                        </View>
+                    </Pressable>
 
-                <View style={styles.skipWrapper}>
-                    <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
-                    <View style={styles.skipDont}>
-                        <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                    </View>
-                </View>
+                    <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                        <View style={styles.registerBtnWrapper}>
+                            <Text style={styles.skipBottomText}>Skip</Text>
+                        </View>
+                    </Pressable>
 
-                <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
-                    <View style={styles.registerBtnWrapper}>
-                        <Text style={styles.skipBottomText}>Register</Text>
-                    </View>
-                </Pressable>
-
-                <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
-                    <View style={styles.registerBtnWrapper}>
-                        <Text style={styles.skipBottomText}>Skip</Text>
-                    </View>
-                </Pressable>
-
-            </ScrollView>
-        </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
     keypad: {
         flex: 1
-    }, 
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -154,7 +152,7 @@ const styles = StyleSheet.create({
         //marginBottom: 40,
     },
     honest: {
-        color:Colors.whiteColor, 
+        color: Colors.whiteColor,
         marginBottom: 40,
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Small,

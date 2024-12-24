@@ -23,7 +23,7 @@ const CustomButton = React.lazy(
 const CustomTextTextarea = React.lazy(() => import('../Ui/CustomTextTextarea'));
 
 type Props = {
-  onCancel: (bool: boolean) => void;
+  onCancel?: (bool: boolean) => void;
 };
 
 const UserProfileForm: React.FC<Props> = ({onCancel}) => {

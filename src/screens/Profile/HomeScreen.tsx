@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -35,10 +35,10 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const cancelDialog = () => setDialogVisible(false);
     const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
 
-    const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);    
-    const { data: showReviews } = useSelector((state: RootState) => state.myShowReview);  
-    const { count: followerCount } = useSelector((state: RootState) => state.myFollower);  
-    const { count: followingCount } = useSelector((state: RootState) => state.myFollowing);  
+    const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);
+    const { data: showReviews } = useSelector((state: RootState) => state.myShowReview);
+    const { count: followerCount } = useSelector((state: RootState) => state.myFollower);
+    const { count: followingCount } = useSelector((state: RootState) => state.myFollowing);
     const dispatch = useAppDispatch();
 
     const signOutDialog = () => {
@@ -60,15 +60,15 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const getFollowingCount = async () => {
         const url = `${API_URL}following/${userDetail._id}`; // logged user id        
-        dispatch(fetchFollowings({ url, token: user?.token! }));        
+        dispatch(fetchFollowings({ url, token: user?.token! }));
     };
 
     const getFollowerCount = async () => {
         const url = `${API_URL}follower/${userDetail._id}`;
-        dispatch(fetchFollowers({ url: url, token: user?.token! }));         
+        dispatch(fetchFollowers({ url: url, token: user?.token! }));
     };
 
-    const getReviewListByUser = async () => {        
+    const getReviewListByUser = async () => {
         setMyReviews((moviewReviews.length + showReviews.length));
     };
 
@@ -79,10 +79,10 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
             getFollowerCount();
             getFollowingCount();
             getReviewListByUser();
-            
-            return () => {            
+
+            return () => {
             };
-        }, [moviewReviews, showReviews]) 
+        }, [moviewReviews, showReviews])
     );
 
     const editHandler = () => {
@@ -98,102 +98,108 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     return (
-         <>
-            {userDetail.role !== 'guest' && 
-                <ScrollView style={styles.container}>
-                    
-                        
+
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
+                <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{flex:1}}>
+                    {userDetail.role !== 'guest' &&
+                        <View style={styles.container}>
                             <View style={styles.innerContainer}>
-                        {
-                            !isEditMode &&
-                            <>
-                                <View style={styles.editWrapper}>
-                                    {Platform.OS === 'android' && <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />}
-                                    {Platform.OS === 'ios' && <Pressable onPress={editHandler}><FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/edit-w.png')} /></Pressable>}
-                                </View>
-                                <View style={styles.header}>
-                                    <View style={styles.headerContent}>
-                                        <View style={styles.userTextIcon}>
-                                            <View style={styles.userIcon}>
-                                                {Platform.OS === 'android' && <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />}
-                                                {Platform.OS === 'ios' && <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />}
+                                {
+                                    !isEditMode &&
+                                    <>
+                                        <View style={styles.editWrapper}>
+                                            {Platform.OS === 'android' && <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />}
+                                            {Platform.OS === 'ios' && <Pressable onPress={editHandler}><FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/edit-w.png')} /></Pressable>}
+                                        </View>
+                                        <View style={styles.header}>
+                                            <View style={styles.headerContent}>
+                                                <View style={styles.userTextIcon}>
+                                                    <View style={styles.userIcon}>
+                                                        {Platform.OS === 'android' && <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />}
+                                                        {Platform.OS === 'ios' && <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/profile-y.png')} />}
+                                                    </View>
+                                                    <View style={styles.userTextWrapper}>
+                                                        <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
+                                                        {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
+                                                    </View>
+                                                </View>
                                             </View>
-                                            <View style={styles.userTextWrapper}>                                        
-                                                <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>
-                                                {userDetail.biography && <Text style={styles.critic}>{userDetail.biography}</Text>}
+                                        </View>
+
+                                        <View style={styles.followerWrapper}>
+                                            <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
+                                                <View style={styles.movies}>
+                                                    <Text style={styles.follText}>{myReviews}</Text>
+                                                    <Text style={styles.follText}>Reviews</Text>
+                                                </View>
+                                            </Pressable>
+
+                                            <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
+                                                <View style={styles.followers}>
+                                                    <Text style={styles.follText}>{followerCount}</Text>
+                                                    <Text style={styles.follText}>Followers</Text>
+                                                </View>
+                                            </Pressable>
+
+                                            <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
+                                                <View style={styles.following}>
+                                                    <Text style={styles.follText}>{followingCount}</Text>
+                                                    <Text style={styles.follText}>Followings</Text>
+                                                </View>
+                                            </Pressable>
+
+                                        </View>
+
+                                        <View style={styles.myMoviesWrapper}>
+                                            <View style={styles.hr}></View>
+                                            <View style={styles.footerWrapper}>
+                                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
-                                    </View>
-                                </View>
+                                    </>
+                                }
 
-                                <View style={styles.followerWrapper}>
-                                    <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
-                                        <View style={styles.movies}>
-                                            <Text style={styles.follText}>{myReviews}</Text>
-                                            <Text style={styles.follText}>Reviews</Text>
-                                        </View>
-                                    </Pressable>
-
-                                    <Pressable onPress={gotoScreen.bind(null, 'FollowerScreen')}>
-                                        <View style={styles.followers}>
-                                            <Text style={styles.follText}>{followerCount}</Text>
-                                            <Text style={styles.follText}>Followers</Text>
-                                        </View>
-                                    </Pressable>
-
-                                    <Pressable onPress={gotoScreen.bind(null, 'FollowingScreen')}>
-                                        <View style={styles.following}>
-                                            <Text style={styles.follText}>{followingCount}</Text>                                    
-                                            <Text style={styles.follText}>Followings</Text>
-                                        </View>
-                                    </Pressable>
-
-                                </View>
-
-                                <View style={styles.myMoviesWrapper}>
-                                    <View style={styles.hr}></View>
-                                    <View style={styles.footerWrapper}>                                
-                                        <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
-                                    </View>
-                                </View>
-                            </>
-                        }
-
-                        {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
-                        <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
+                                {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
+                                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
                             </View>
 
                             <View style={styles.logoWrapper}>
-                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />       
-                                <Text style={styles.honest}>Honest Movie Reviews</Text>         
+                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
+                                <Text style={styles.honest}>Honest Movie Reviews</Text>
                             </View>
-                </ScrollView>
-            }
+                        </View>
+                    }
 
-        {userDetail.role === 'guest' && 
-            <View style={styles.withoutLoginWrapper}>               
-                <CustomButton
-                    text={'Please Login'}
-                    onPressHandler={navigationHandler}
-                    textSize={20}                
-                />
-            </View>
-        }
-         </>
+                    {userDetail.role === 'guest' &&
+                        <View style={styles.withoutLoginWrapper}>
+                            <CustomButton
+                                text={'Please Login'}
+                                onPressHandler={navigationHandler}
+                                textSize={20}
+                            />
+                        </View>
+                    }
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
+    keypad: {
+        flex: 1
+    },
     withoutLoginWrapper: {
-        flex: 1,        
-        justifyContent:'center', 
-        alignItems:'center', 
-        paddingHorizontal:15        
-    },     
-    logoWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 15
+    },
+    logoWrapper: {        
         alignItems: 'center'
     },
-    logoImg: {        
+    logoImg: {
         width: 122,
         height: 50
     },
@@ -243,7 +249,7 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 80,
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     },
     icon: {
         textAlign: 'center'
@@ -266,8 +272,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Small,
-        lineHeight: 22, 
-        marginTop:5
+        lineHeight: 22,
+        marginTop: 5
     },
     followerWrapper: {
         width: '100%',

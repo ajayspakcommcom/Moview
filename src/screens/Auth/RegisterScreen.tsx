@@ -103,7 +103,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     return (
-        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
+        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad} keyboardShouldPersistTaps="handled">
         <ScrollView contentContainerStyle={styles.container}>
             <FastImage
                 style={styles.logo}

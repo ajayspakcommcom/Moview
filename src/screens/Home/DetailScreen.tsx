@@ -395,8 +395,6 @@ const DetailScreen: React.FC = () => {
 
     return (
         <>
-            
-
                 {activeTab === 'synopsis' &&
                     <React.Suspense fallback={<Loading />}>
                         <FlatList
@@ -435,23 +433,22 @@ const DetailScreen: React.FC = () => {
 
                 {activeTab === 'writeReview' &&
                     <KeyboardAvoidingView  behavior='padding' style={styles.container}>
-                    <React.Suspense fallback={<Loading />}>
-                        <ScrollView>
-                            {headerContent()}
-                            {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
-                            {userDetail.role === 'guest' && 
-                                <View style={[styles.withoutLoginWrapper]}>                                    
-                                    <CustomButton
-                                        text={'Please Login'}
-                                        onPressHandler={navigationHandler}
-                                        textSize={20}                                        
-                                    />
-                                </View>
-                            }
-                        </ScrollView>
-                    </React.Suspense>
+                        <React.Suspense fallback={<Loading />}>
+                        <ScrollView contentContainerStyle={{ flexGrow: 1 }}  keyboardShouldPersistTaps="handled" >
+                                {headerContent()}
+                                {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                                {userDetail.role === 'guest' && 
+                                    <View style={[styles.withoutLoginWrapper]}>                                    
+                                        <CustomButton
+                                            text={'Please Login'}
+                                            onPressHandler={navigationHandler}
+                                            textSize={20}                                        
+                                        />
+                                    </View>
+                                }
+                            </ScrollView>
+                        </React.Suspense>
                     </KeyboardAvoidingView>
-
                 }
             
 

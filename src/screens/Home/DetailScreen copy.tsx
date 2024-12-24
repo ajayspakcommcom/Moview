@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View,TouchableWithoutFeedback, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Pressable, Modal, Keyboard, Platform, Image, TextInput } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Pressable, Modal, Platform, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -38,7 +38,7 @@ const DetailScreen: React.FC = () => {
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
 
-    const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);
+    const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);   
     const dispatch = useAppDispatch();
 
     const abortController = new AbortController();
@@ -86,10 +86,10 @@ const DetailScreen: React.FC = () => {
             title: ``,
             headerLeft: () => {
                 return Platform.OS === 'android' ?
-                    <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
-                    <Pressable onPress={backButtonHandler}>
-                        <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
-                    </Pressable>
+                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
+                            <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                            </Pressable>
             },
             headerRight: () => {
                 // return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
@@ -99,15 +99,15 @@ const DetailScreen: React.FC = () => {
     };
 
     const getReviewListByMovie = async () => {
-        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/${route.params.movie._id}`, token: user?.token! }));
+        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/${route.params.movie._id}`, token: user?.token! }));       
     };
 
     useFocusEffect(
         React.useCallback(() => {
             getReviewListByMovie();
-            return () => {
+            return () => {            
             };
-        }, [])
+        }, []) 
     );
 
     React.useLayoutEffect(() => {
@@ -126,7 +126,7 @@ const DetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
-
+        
         return () => {
             abortController.abort();
         };
@@ -137,8 +137,8 @@ const DetailScreen: React.FC = () => {
         setActiveTab(tabName);
     };
 
-    const openModal = (url: string) => {
-        setModalVisible(true);
+    const openModal = (url: string) => {                   
+        setModalVisible(true);              
         url ? Image.getSize(url, (width, height) => setImageSize({ width, height }), (error) => console.error("Failed to get image size:", error)) : Alert.alert("Error", "Image URI not found.");
     };
 
@@ -148,18 +148,18 @@ const DetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         backBtn: {
-            width: 35,
-            height: 35,
-            marginBottom: 20
-        },
+            width:35, 
+            height:35, 
+            marginBottom:20
+        },  
         withoutLoginWrapper: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '20%',
-            paddingHorizontal: 15
-        },
-
+            flex: 1,        
+            justifyContent:'center', 
+            alignItems:'center', 
+            marginTop:'20%',
+            paddingHorizontal:15          
+        }, 
+        
         modalContainer: {
             flex: 1,
             backgroundColor: Colors.backgroundColorShadow,
@@ -174,9 +174,9 @@ const DetailScreen: React.FC = () => {
         },
         fullImage: {
             width: imageSize.width,
-            height: imageSize.height
+            height: imageSize.height        
         },
-
+    
         container: {
             flex: 1,
         },
@@ -239,17 +239,17 @@ const DetailScreen: React.FC = () => {
             paddingHorizontal: 15
         },
         genreItem: {
-            paddingVertical: 1,
+            paddingVertical: 1,            
             justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: Colors.tagBgColor,
-            borderWidth: 1,
-            borderColor: Colors.tagBorderColor,
+            alignItems: 'center', 
+            backgroundColor: Colors.tagBgColor,            
+            borderWidth:1,
+            borderColor:Colors.tagBorderColor, 
             borderRadius: 50,
-            marginRight: 5,
+            marginRight:5,            
             paddingHorizontal: 10,
-            paddingBottom: 2,
-            paddingTop: 0
+            paddingBottom:2, 
+            paddingTop:0
         },
         genreText: {
             color: Colors.whiteColor,
@@ -262,8 +262,8 @@ const DetailScreen: React.FC = () => {
         },
         releaseItem: {
             justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 5
+            alignItems: 'center', 
+            marginVertical:5
         },
         releaseText: {
             color: Colors.whiteColor,
@@ -313,18 +313,18 @@ const DetailScreen: React.FC = () => {
             color: Colors.tabBgColor,
             fontWeight: '500'
         },
-
+    
         crTextActive: {
             color: Colors.whiteColor,
         }
     });
 
     const headerContent = () => {
-        return <>
+        return <>            
             <View style={styles.header}>
                 {detailData.poster_url &&
-                    <Pressable onPress={() => openModal(detailData.poster_url!)}>
-                        <FastImage style={styles.img} source={{ uri: detailData.poster_url }} />
+                    <Pressable onPress={() => openModal(detailData.poster_url!)}>                        
+                        <FastImage style={styles.img} source={{uri: detailData.poster_url}} />
                     </Pressable>
                 }
             </View>
@@ -394,98 +394,79 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView behavior='padding' style={styles.container}>
-
-                {/* {activeTab === 'synopsis' &&
-    <React.Suspense fallback={<Loading />}>
-        <FlatList
-            ListHeaderComponent={() => (
-                headerContent()
-            )}
-            data={detailData.cast}
-            renderItem={({ item }) => <CastItem item={item} />}
-            keyExtractor={(item) => item._id}
-            numColumns={3}
-        />
-    </React.Suspense>
-}
-
-{activeTab === 'reviews' &&
-    <>                    
-        {reviewListByMovie.length > 0 &&
-            <FlatList
-                ListHeaderComponent={() => (
-                    headerContent()
-                )}
-                data={reviewListByMovie}
-                renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
-                keyExtractor={(item) => item._id}
-            />
-        }
-
-        {reviewListByMovie.length === 0 &&
-            <View style={styles.noReviewWrapper}>
-                {headerContent()}
-                <Text style={styles.reviewText}>No Review found</Text>
-            </View>
-        }
-    </>
-}
-
-{activeTab === 'writeReview' &&
-        <React.Suspense fallback={<Loading />}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}  keyboardShouldPersistTaps="handled" >
-                {headerContent()}
-                {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
-                {userDetail.role === 'guest' && 
-                    <View style={[styles.withoutLoginWrapper]}>                                    
-                        <CustomButton
-                            text={'Please Login'}
-                            onPressHandler={navigationHandler}
-                            textSize={20}                                        
+        <KeyboardAvoidingView  behavior='padding' style={styles.container}>
+                {activeTab === 'synopsis' &&
+                    <React.Suspense fallback={<Loading />}>
+                        <FlatList
+                            ListHeaderComponent={() => (
+                                headerContent()
+                            )}
+                            data={detailData.cast}
+                            renderItem={({ item }) => <CastItem item={item} />}
+                            keyExtractor={(item) => item._id}
+                            numColumns={3}
                         />
-                    </View>
+                    </React.Suspense>
                 }
-            </ScrollView>                            
-        </React.Suspense>
-}
 
+                {activeTab === 'reviews' &&
+                    <>                    
+                        {reviewListByMovie.length > 0 &&
+                            <FlatList
+                                ListHeaderComponent={() => (
+                                    headerContent()
+                                )}
+                                data={reviewListByMovie}
+                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
+                                keyExtractor={(item) => item._id}
+                            />
+                        }
 
-{detailData.poster_url &&
-<Modal visible={isModalVisible} transparent={true}>
-    <View style={styles.modalContainer}>
-        <Pressable style={styles.closeArea} onPress={closeModal}>
-            <FastImage
-                style={styles.fullImage}                                
-                source={{uri:detailData.poster_url}}
-                resizeMode="cover"
-            />
-        </Pressable>
-    </View>
-</Modal>
-} */}
+                        {reviewListByMovie.length === 0 &&
+                            <View style={styles.noReviewWrapper}>
+                                {headerContent()}
+                                <Text style={styles.reviewText}>No Review found</Text>
+                            </View>
+                        }
+                    </>
+                }
 
-            <ScrollView contentContainerStyle={{flex:1}}>
-                <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
-                        placeholder="useless placeholder"
-                    />
-                    <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
-                        placeholder="useless placeholder"
-                    />
-                    <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
-                        placeholder="useless placeholder"
-                    />
-                    <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
-                        placeholder="useless placeholder"
-                    />
-            </ScrollView>  
-            </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+                {activeTab === 'writeReview' &&
+                        <React.Suspense fallback={<Loading />}>
+                        <ScrollView contentContainerStyle={{ flexGrow: 1 }}  keyboardShouldPersistTaps="handled" >
+                                {headerContent()}
+                                {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                                {userDetail.role === 'guest' && 
+                                    <View style={[styles.withoutLoginWrapper]}>                                    
+                                        <CustomButton
+                                            text={'Please Login'}
+                                            onPressHandler={navigationHandler}
+                                            textSize={20}                                        
+                                        />
+                                    </View>
+                                }
+                            </ScrollView>
+                        </React.Suspense>
+                }
+            
+
+            {detailData.poster_url &&
+                <Modal visible={isModalVisible} transparent={true}>
+                    <View style={styles.modalContainer}>
+                        <Pressable style={styles.closeArea} onPress={closeModal}>
+                            <FastImage
+                                style={styles.fullImage}                                
+                                source={{uri:detailData.poster_url}}
+                                resizeMode="cover"
+                            />
+                        </Pressable>
+                    </View>
+                </Modal>
+            }
+
+       
+
+        </KeyboardAvoidingView>
     );
 };
 

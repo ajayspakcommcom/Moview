@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView,Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -63,79 +63,83 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad}>
+            <ScrollView contentContainerStyle={styles.container}>
 
-            <FastImage
-                style={styles.logo}
-                source={require('../../assets/images/logo.png')}
-                resizeMode={FastImage.resizeMode.contain}
-            />
-            <Text style={styles.honest}>Honest Movie Reviews</Text>
+                <FastImage
+                    style={styles.logo}
+                    source={require('../../assets/images/logo.png')}
+                    resizeMode={FastImage.resizeMode.contain}
+                />
+                <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-            {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
+                {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
 
-            <CustomTextInput
+                <CustomTextInput
                     placeholder="Username"
                     value={username}
                     onChangeText={handleUsernameChange}
                     autoCapitalize="none"
                 />
-            
-            <CustomTextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={handlePasswordChange}
-                secureTextEntry
-            />
 
-            <CustomButton
-                text={loader ? 'Login...' : 'Login'}
-                onPressHandler={handleLogin}
-                textSize={20}
-                isDisabled={loader ? true : false}
-            />
+                <CustomTextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={handlePasswordChange}
+                    secureTextEntry
+                />
 
-            <View style={styles.rememberForgot}>
-                <View style={styles.rememberCheckbox}>
-                    <Checkbox
-                        status={checked ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setChecked(!checked);
-                        }}
-                    />
-                    <Text style={styles.remember}>Remember Me</Text>
+                <CustomButton
+                    text={loader ? 'Login...' : 'Login'}
+                    onPressHandler={handleLogin}
+                    textSize={20}
+                    isDisabled={loader ? true : false}
+                />
+
+                <View style={styles.rememberForgot}>
+                    <View style={styles.rememberCheckbox}>
+                        <Checkbox
+                            status={checked ? 'checked' : 'unchecked'}
+                            onPress={() => {
+                                setChecked(!checked);
+                            }}
+                        />
+                        <Text style={styles.remember}>Remember Me</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.forgotText}>Forgot Password</Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={styles.forgotText}>Forgot Password</Text>
+
+
+                <View style={styles.skipWrapper}>
+                    <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
+                    <View style={styles.skipDont}>
+                        <Text style={styles.skipBottomText}>Don’t have an account?</Text>
+                    </View>
                 </View>
-            </View>
 
+                <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                    <View style={styles.registerBtnWrapper}>
+                        <Text style={styles.skipBottomText}>Register</Text>
+                    </View>
+                </Pressable>
 
-            <View style={styles.skipWrapper}>
-                <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
-                <View style={styles.skipDont}>
-                    <Text style={styles.skipBottomText}>Don’t have an account?</Text>
-                </View>
-            </View>
+                <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                    <View style={styles.registerBtnWrapper}>
+                        <Text style={styles.skipBottomText}>Skip</Text>
+                    </View>
+                </Pressable>
 
-            <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
-                <View style={styles.registerBtnWrapper}>
-                    <Text style={styles.skipBottomText}>Register</Text>
-                </View>
-            </Pressable>
-
-            <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
-                <View style={styles.registerBtnWrapper}>
-                    <Text style={styles.skipBottomText}>Skip</Text>
-                </View>
-            </Pressable>
-
-        </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
-    
+    keypad: {
+        flex: 1
+    }, 
     container: {
         flex: 1,
         justifyContent: 'center',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -103,8 +103,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad}>
+        <ScrollView contentContainerStyle={styles.container}>
             <FastImage
                 style={styles.logo}
                 source={require('../../assets/images/logo.png')}
@@ -156,13 +156,15 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                     <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
                 </View>
             </Pressable>
-        </View>
+        </ScrollView>
         </KeyboardAvoidingView> 
     );
 };
 
 const styles = StyleSheet.create({
-    
+    keypad: {
+        flex: 1
+    }, 
     container: {
         flex: 1,
         justifyContent: 'center',

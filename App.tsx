@@ -100,7 +100,7 @@ function App(): React.JSX.Element {
               })}
             />
 
-            {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
+            <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} />
             {/* <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> */}
             <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
 

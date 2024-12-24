@@ -394,7 +394,7 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
-        <>
+        <KeyboardAvoidingView  behavior='padding' style={styles.container}>
                 {activeTab === 'synopsis' &&
                     <React.Suspense fallback={<Loading />}>
                         <FlatList
@@ -432,7 +432,7 @@ const DetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'writeReview' &&
-                    <KeyboardAvoidingView  behavior='padding' style={styles.container}>
+                    
                         <React.Suspense fallback={<Loading />}>
                         <ScrollView contentContainerStyle={{ flexGrow: 1 }}  keyboardShouldPersistTaps="handled" >
                                 {headerContent()}
@@ -448,7 +448,6 @@ const DetailScreen: React.FC = () => {
                                 }
                             </ScrollView>
                         </React.Suspense>
-                    </KeyboardAvoidingView>
                 }
             
 
@@ -465,7 +464,7 @@ const DetailScreen: React.FC = () => {
                     </View>
                 </Modal>
             }
-        </>
+        </KeyboardAvoidingView>
     );
 };
 

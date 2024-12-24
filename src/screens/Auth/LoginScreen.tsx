@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView,Platform } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -63,9 +63,9 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     return (
-        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
             <ScrollView contentContainerStyle={styles.container}>
-
                 <FastImage
                     style={styles.logo}
                     source={require('../../assets/images/logo.png')}
@@ -133,6 +133,7 @@ const LoginScreen: React.FC<Props> = () => {
 
             </ScrollView>
         </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
     );
 };
 

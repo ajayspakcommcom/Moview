@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -59,10 +59,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
                     if (result.status === 'success') {
                         setLoader(false);
-                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [{text: 'OK', onPress: () => navigation.navigate('Login')}]);
+                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [{ text: 'OK', onPress: () => navigation.navigate('Login') }]);
                     } else {
                         Alert.alert('Error', `${result.message}`, [
-                            { text: 'OK', onPress: () => setLoader(false)}
+                            { text: 'OK', onPress: () => setLoader(false) }
                         ]);
                     }
 
@@ -103,68 +103,70 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     return (
-        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad} keyboardShouldPersistTaps="handled">
-        <ScrollView contentContainerStyle={styles.container}>
-            <FastImage
-                style={styles.logo}
-                source={require('../../assets/images/logo.png')}
-                resizeMode={FastImage.resizeMode.contain}
-            />
-            <Text style={styles.honest}>Honest Movie Reviews</Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad} keyboardShouldPersistTaps="handled">
+                <ScrollView contentContainerStyle={styles.container}>
+                    <FastImage
+                        style={styles.logo}
+                        source={require('../../assets/images/logo.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                    <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-            <CustomTextInput
-                placeholder="First name"
-                value={firstname}
-                onChangeText={handleFirstnameChange}
-                autoCapitalize="none"
-            />
+                    <CustomTextInput
+                        placeholder="First name"
+                        value={firstname}
+                        onChangeText={handleFirstnameChange}
+                        autoCapitalize="none"
+                    />
 
-            <CustomTextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={handleUsernameChange}
-                autoCapitalize="none"
-            />
+                    <CustomTextInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={handleUsernameChange}
+                        autoCapitalize="none"
+                    />
 
-            <CustomTextInput
-                placeholder="Mobile"
-                value={phone}
-                onChangeText={handlePhoneChange}
-            />
+                    <CustomTextInput
+                        placeholder="Mobile"
+                        value={phone}
+                        onChangeText={handlePhoneChange}
+                    />
 
-            <CustomTextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={handlePasswordChange}
-                secureTextEntry
-            />
+                    <CustomTextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={handlePasswordChange}
+                        secureTextEntry
+                    />
 
-            <CustomButton
-                text={loader ? "Register..." : "Register"}
-                onPressHandler={handleLogin}
-                textSize={20}
-                isDisabled={loader ? true : false}
-            />
+                    <CustomButton
+                        text={loader ? "Register..." : "Register"}
+                        onPressHandler={handleLogin}
+                        textSize={20}
+                        isDisabled={loader ? true : false}
+                    />
 
-            <View style={styles.footerTextWrapper}>
-                <Text style={styles.dontHaveAccount}>Already have an account?</Text>
+                    <View style={styles.footerTextWrapper}>
+                        <Text style={styles.dontHaveAccount}>Already have an account?</Text>
 
-            </View>
+                    </View>
 
-            <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
-                <View style={styles.registerBtnWrapper}>
-                    <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
-                </View>
-            </Pressable>
-        </ScrollView>
-        </KeyboardAvoidingView> 
+                    <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
+                        <View style={styles.registerBtnWrapper}>
+                            <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
+                        </View>
+                    </Pressable>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
     keypad: {
         flex: 1
-    }, 
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     },
 
     honest: {
-        color:Colors.whiteColor, 
+        color: Colors.whiteColor,
         marginBottom: 40,
         fontFamily: Fonts.Family.Medium,
         fontSize: Fonts.Size.Small,

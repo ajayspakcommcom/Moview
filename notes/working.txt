@@ -1,0 +1,10 @@
+
+
+ keypad: {
+        flex: 1
+    }, 
+
+
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad}>
+      <ScrollView contentContainerStyle={styles.container}></ScrollView>
+    </KeyboardAvoidingView> 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View,TouchableWithoutFeedback, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Pressable, Modal, Keyboard, Platform, Image, TextInput } from 'react-native';
+import { View,TouchableWithoutFeedback, ScrollView, KeyboardAvoidingView, Button, Alert, StyleSheet, Text, TouchableOpacity, FlatList, Pressable, Modal, Keyboard, Platform, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
@@ -466,22 +466,36 @@ const DetailScreen: React.FC = () => {
 </Modal>
 } */}
 
-            <ScrollView contentContainerStyle={{flex:1}}>
+            <ScrollView contentContainerStyle={{flexGrow:1}}>
                 <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
+                        style={{ backgroundColor: 'red', height: 100, marginBottom:20 }}
                         placeholder="useless placeholder"
                     />
                     <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
+                        style={{ backgroundColor: 'red', height: 100,marginBottom:20 }}
                         placeholder="useless placeholder"
                     />
                     <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
+                        style={{ backgroundColor: 'red', height: 100,marginBottom:20 }}
                         placeholder="useless placeholder"
                     />
                     <TextInput
-                        style={{ backgroundColor: 'red', height: 300 }}
+                        style={{ backgroundColor: 'red', height: 100,marginBottom:20 }}
                         placeholder="useless placeholder"
+                    />
+                    <TextInput
+                        style={{ backgroundColor: 'red', height: 100,marginBottom:20 }}
+                        placeholder="useless placeholder"
+                    />
+                    <TextInput
+                        style={{ backgroundColor: 'red', height: 100,marginBottom:20 }}
+                        placeholder="useless placeholder"
+                    />
+                    <Button
+                    onPress={() => console.log('Ram...')}
+                    title="Learn More"
+                    color="#841584"
+                    accessibilityLabel="Learn more about this purple button"
                     />
             </ScrollView>  
             </KeyboardAvoidingView>

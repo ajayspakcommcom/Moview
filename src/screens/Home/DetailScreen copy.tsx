@@ -448,7 +448,6 @@ const DetailScreen: React.FC = () => {
                             </ScrollView>
                         </React.Suspense>
                 }
-            
 
             {detailData.poster_url &&
                 <Modal visible={isModalVisible} transparent={true}>

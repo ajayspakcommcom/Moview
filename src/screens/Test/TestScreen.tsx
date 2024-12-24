@@ -1,57 +1,73 @@
 import React from 'react';
 import {
-  KeyboardAvoidingView,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
+  Button,
   View,
   Platform,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 const TestScreen = () => {
 
+  const handleFormSubmit = () => {
+    console.log('Form Submitted!');
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainer} keyboardShouldPersistTaps="handled">
-          <Text style={styles.header}>Write a Review</Text>
-          <TextInput style={styles.input} placeholder="Your Name"/>
-          <TextInput style={styles.input} placeholder="Your Review" multiline/>
-          <Text style={styles.footer}>Thank you for your feedback!</Text>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      enableOnAndroid={true} // Works on both iOS and Android
+      extraScrollHeight={20} // Ensures inputs are visible
+      keyboardShouldPersistTaps="handled" // Dismiss keyboard on tapping outside
+    >
+      <Text style={styles.header}>iOS-Friendly Form</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your name"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your email"
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={[styles.input, styles.textArea]}
+        placeholder="Enter your feedback"
+        multiline
+        numberOfLines={4}
+      />
+      <Button title="Submit" onPress={handleFormSubmit} />
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      },
-      contentContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        padding: 20,
-      },
-      header: {
-        fontSize: 24,
-        marginBottom: 20,
-      },
-      input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 20,
-        paddingHorizontal: 10,
-      },
-      footer: {
-        marginTop: 20,
-        textAlign: 'center',
-      },
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  textArea: {
+    height: 100,
+    textAlignVertical: 'top', // For proper alignment in multiline TextInput
+  },
 });
 
 export default TestScreen;

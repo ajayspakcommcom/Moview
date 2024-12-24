@@ -63,7 +63,7 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad}>
+        <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
             <ScrollView contentContainerStyle={styles.container}>
 
                 <FastImage

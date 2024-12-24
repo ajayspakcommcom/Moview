@@ -395,7 +395,7 @@ const DetailScreen: React.FC = () => {
 
     return (
         <>
-            <KeyboardAvoidingView enabled={true} behavior='padding' style={styles.container}>
+            
 
                 {activeTab === 'synopsis' &&
                     <React.Suspense fallback={<Loading />}>
@@ -434,6 +434,7 @@ const DetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'writeReview' &&
+                    <KeyboardAvoidingView  behavior='padding' style={styles.container}>
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
@@ -449,8 +450,10 @@ const DetailScreen: React.FC = () => {
                             }
                         </ScrollView>
                     </React.Suspense>
+                    </KeyboardAvoidingView>
+
                 }
-            </KeyboardAvoidingView>
+            
 
             {detailData.poster_url &&
                 <Modal visible={isModalVisible} transparent={true}>

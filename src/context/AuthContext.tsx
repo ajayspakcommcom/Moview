@@ -70,8 +70,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
 
             const result = await response.json();
+            console.log('Ram...');
+            console.log('result', result);
 
-            if (result.status === 'success') {
+            if (result.status === 'success' && result.userDetail.is_deleted === false) {
                 setUser({ username: result.userDetail.firstname, token: result.token, role: result.userDetail.role } as User);
                 setResponseError(null);
                 setUserDetail(result.userDetail);
@@ -84,8 +86,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 dispatch(fetchNotificationsByUserId({ url: notificationUrl, token: result.token }));
             }
             else {
-                setResponseError({ message: result.message, status: result.status });
-
+                console.log('Krishna...');
+                setResponseError({ message: result.message ? result.message : 'Email does not exist', status: result.status });                
             }
 
         } catch (error) {

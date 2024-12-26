@@ -46,3 +46,10 @@ pod install
 
 open -a Simulator
 
+{
+    "status": "success",
+    "data": null,
+    "message": "User deleted successfully"
+}
+
+https://spak-api.com/api/user/676d2716cdb887ba5139daa1

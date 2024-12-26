@@ -157,17 +157,17 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                                 <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
+
+                                        <View style={styles.logoWrapper}>
+                                            <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
+                                            <Text style={styles.honest}>Honest Movie Reviews</Text>
+                                        </View>
+                                        
                                     </>
                                 }
-
                                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
                                 <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
-                            </View>
-
-                            <View style={styles.logoWrapper}>
-                                <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
-                                <Text style={styles.honest}>Honest Movie Reviews</Text>
-                            </View>
+                            </View>                            
                         </View>
                     }
 

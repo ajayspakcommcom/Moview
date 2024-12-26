@@ -17,7 +17,7 @@ type Props = {
 const LoginScreen: React.FC<Props> = () => {
 
     const { login, responseError } = useAuth();
-    const [username, setUsername] = React.useState('omkar@gmail.com'); //omkar@gmail.com //hariom@gmail.com
+    const [username, setUsername] = React.useState('sunil@gmail.com'); //omkar@gmail.com //sunil@gmail.com
     const [password, setPassword] = React.useState('12345'); //12345
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
@@ -39,8 +39,7 @@ const LoginScreen: React.FC<Props> = () => {
                 Alert.alert('Error', 'Username or password cannot be empty', [{ text: "OK", onPress: () => setLoader(false) }], { cancelable: true });
                 return;
             }
-            login(username, password);
-            ///console.log('responseError', responseError?.message);
+            login(username, password);            
             setLoader(false);
 
         } catch (error) {

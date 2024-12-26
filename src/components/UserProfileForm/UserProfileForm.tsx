@@ -1,18 +1,13 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  GestureResponderEvent,
-  Alert,
-  Platform,
-} from 'react-native';
+import { View, Text, StyleSheet, Alert, Platform, Pressable, } from 'react-native';
 import Colors from '../../styles/Colors';
-import {API_URL} from '../../configure/config.android';
+import { API_URL } from '../../configure/config.android';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useAuth} from '../../context/AuthContext';
-import {Button, Dialog, Portal, TextInput} from 'react-native-paper';
+import { useAuth } from '../../context/AuthContext';
+import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
+import Fonts from '../../styles/Fonts';
+import AlertDialog from '../AlertDialog/AlertDialog';
 
 const CustomTextInput = React.lazy(
   () => import('../../components/Ui/CustomTextInput'),
@@ -26,8 +21,11 @@ type Props = {
   onCancel?: (bool: boolean) => void;
 };
 
-const UserProfileForm: React.FC<Props> = ({onCancel}) => {
-  const {userDetail, user, updateUserDetail} = useAuth();
+const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
+
+
+  const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
+  const { userDetail, user, updateUserDetail, logout } = useAuth();
 
   const [firstname, setFirstname] = React.useState('');
   const [username, setUsername] = React.useState('');
@@ -49,17 +47,17 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
     setPassword('12345');
     setBiography(userDetail.biography);
 
-    return () => {};
+    return () => { };
   }, []);
 
   const editHandler = async () => {
     try {
       const fields = [
-        {name: 'First name', value: firstname},
-        {name: 'Username', value: username},
-        {name: 'Password', value: password},
-        {name: 'Phone', value: phone},
-        {name: 'Biography', value: biography},
+        { name: 'First name', value: firstname },
+        { name: 'Username', value: username },
+        { name: 'Password', value: password },
+        { name: 'Phone', value: phone },
+        { name: 'Biography', value: biography },
       ];
 
       const emptyField = fields.find(field => field.value.trim() === '');
@@ -100,10 +98,10 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
             ]);
           } else {
             Alert.alert('Error', `${result.message}`, [
-              {text: 'OK', onPress: () => {}},
+              { text: 'OK', onPress: () => { } },
             ]);
           }
-        } catch (error) {}
+        } catch (error) { }
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -137,15 +135,51 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
     onCancel(false);
   };
 
+  const openDeleteHandler = () => {
+    setDialogVisible(true);
+  };
+
+  const deleteHandler = async () => {
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const url = `${API_URL}user/${userDetail._id}`;
+    const token = user?.token;
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        signal: signal
+      });
+      const resData = await response.json();
+
+      if (resData.status === 'success') {
+        setDialogVisible(false);
+        logout();
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  };
+
   return (
     <>
+
+      <AlertDialog visible={dialogVisible} signOut={deleteHandler} cancelLogout={() => setDialogVisible(false)} title={'Are you sure want to delete this account?'} />
+
       <View style={styles.container}>
         <View style={styles.userIcon}>
           {Platform.OS === 'android' && <Icon
             name={'user-alt'}
             size={45}
             color={Colors.tabBgColor}
-            onPress={() => {}}
+            onPress={() => { }}
             style={styles.icon}
           />}
 
@@ -205,20 +239,29 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
           onPressHandler={cancelHandler}
           textSize={20}
           isDisabled={loader ? true : false}
-          style={{...styles.cancelBtn}}
-          textStyle={{...styles.cancelText}}
+          style={{ ...styles.cancelBtn }}
+          textStyle={{ ...styles.cancelText }}
         />
+
+        <Pressable style={styles.deleteTextWrapper} onPress={openDeleteHandler}>
+          <Text style={styles.deleteText}>Delete Account</Text>
+        </Pressable>
+
+        <View style={styles.logoWrapper}>
+          <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
+          <Text style={styles.honest}>Honest Movie Reviews</Text>
+        </View>
 
       </View>
 
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>            
-                <Dialog.Content>
-                <Text variant="bodyMedium" style={[styles.alertText]}>Maximum 100 characters allowed.</Text>
-                </Dialog.Content>
-                <Dialog.Actions>
-                <Button onPress={hideDialog}>Ok</Button>
-                </Dialog.Actions>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Content>
+            <Text variant="bodyMedium" style={[styles.alertText]}>Maximum 100 characters allowed.</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Ok</Button>
+          </Dialog.Actions>
         </Dialog>
       </Portal>
 
@@ -227,12 +270,38 @@ const UserProfileForm: React.FC<Props> = ({onCancel}) => {
 };
 
 const styles = StyleSheet.create({
+  deleteTextWrapper: {
+    width: '100%',
+    color: Colors.whiteColor,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    paddingRight: 15
+  },
+  deleteText: {
+    color: Colors.whiteColor,
+    fontSize: Fonts.Size.Small - 3,
+    textDecorationLine: 'underline',
+    marginBottom: 10
+  },
+  honest: {
+    fontFamily: Fonts.Family.Medium,
+    fontSize: Fonts.Size.Small - 2,
+    color: Colors.whiteColor,
+  },
+  logoImg: {
+    width: 122,
+    height: 50
+  },
+  logoWrapper: {
+    alignItems: 'center'
+  },
   icon: {
-    width:25, 
-    height:25
-},
+    width: 25,
+    height: 25,
+    textAlign: 'center',
+  },
   alertText: {
-    color:Colors.blackColor
+    color: Colors.blackColor
   },
   container: {
     flexGrow: 1,
@@ -256,10 +325,7 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     justifyContent: 'center',
     marginBottom: 15,
-    alignItems:'center'
-  },
-  icon: {
-    textAlign: 'center',
+    alignItems: 'center'
   },
   cancelBtn: {
     backgroundColor: Colors.darkBackgroudColor, //Colors.dullRedColor,

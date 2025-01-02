@@ -15,8 +15,6 @@ import MyReviewNavigation from './src/navigation/MyReviewNavigation';
 import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
-import TestScreen from './src/screens/Test/TestScreen';
-import Test1 from './src/screens/Test/Test1';
 
 
 

@@ -1,0 +1,5 @@
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  [NSThread sleepForTimeInterval:5]; // add this into AppDelegate.mm
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}

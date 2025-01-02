@@ -11,6 +11,7 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  [NSThread sleepForTimeInterval:3];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

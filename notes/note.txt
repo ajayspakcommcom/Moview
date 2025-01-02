@@ -53,3 +53,6 @@ open -a Simulator
 }
 
 https://spak-api.com/api/user/676d2716cdb887ba5139daa1
+
+[NSThread sleepForTimeInterval:3];
+https://www.youtube.com/watch?v=ji-FOveCNTE

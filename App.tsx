@@ -16,6 +16,8 @@ import HomeNavigation from './src/navigation/HomeNavigation';
 import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import Test1 from './src/screens/Test/Test1';
+import Test2 from './src/screens/Test/Test2';
+
 
 
 const Stack = createStackNavigator();
@@ -97,8 +99,8 @@ function App(): React.JSX.Element {
               })}
             />
 
-            {/* <Stack.Screen name="Test" component={TestScreen} options={{ animationEnabled: false }} /> */}
              <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> 
+            <Stack.Screen name="Test2" component={Test2} options={{ animationEnabled: false }} />
             <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
 
             <Tab.Screen

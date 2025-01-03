@@ -1,68 +1,80 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  Dimensions,
-} from 'react-native';
-import {API_URL} from '../../configure/config.android';
-import {useAuth} from '../../context/AuthContext';
-import {LastesMovieShowItem} from '../../types/LatestMovieShow';
+import { View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { Text } from 'react-native-paper';
+import { Image } from 'react-native-svg';
+import { TabView, SceneMap, SceneRendererProps, NavigationState } from 'react-native-tab-view';
 
-interface LoadingProps {
-  message?: string;
-}
+type Route = {
+  key: string;  
+  render?: () => React.ReactNode;
+};
 
-// Functional component with optional message prop
-const Test1: React.FC<LoadingProps> = ({message = 'Test1'}) => {
-  const {user} = useAuth();
-  const [latestMovieShowList, setLatestMovieShowList] = React.useState<LastesMovieShowItem[]>([]);
+type State = NavigationState<Route>;
 
-  const getLatestMovieShowList = async () => {
-    const url = `${API_URL}latest/movie-show`;
-    const token = user;
-    const abortController = new AbortController();
-    const signal = abortController.signal;
+const routes:Route[] = [
+  { 
+    key: 'logo',     
+    render: () => (      
+         <View style={{flexGrow:1, alignItems:'center', justifyContent:'center'}}><FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} /></View>   
+    )
+  },
+  { 
+    key: 'latest',     
+    render: () => (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}><Text style={{ color: '#fff', fontSize: 13 }}>Latest</Text></View>
+    )
+  },
+  { 
+    key: 'movie',     
+    render: () => (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}><Text style={{ color: '#fff', fontSize: 13 }}>Movies</Text></View>
+    )
+  },
+  { 
+    key: 'show',     
+    render: () => (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}><Text style={{ color: '#fff', fontSize: 13 }}>Shows</Text></View>
+    )
+  },
+];
 
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {Authorization: `Bearer ${token?.token}`, 'Content-Type': 'application/json'},
-        signal: signal,
-      });
+const Test1: React.FC = () => {
 
-      const result = await response.json();
+  const [index, setIndex] = React.useState(0);
 
-      if (result.status === 'success') {
-        const sortedData = result.data.sort((a: any, b: any) => a.title.localeCompare(b.title));
-        setLatestMovieShowList(sortedData);
-        console.clear();
-        console.log('sortedData', sortedData.length);
-      }
-    } catch (error) {
-      console.log('');
+  const renderTabBar = (props: SceneRendererProps & { navigationState: State }) => (
+    <View style={{ flexDirection: 'row', backgroundColor:'#000' }}>
+      {props.navigationState.routes.map((route, i) => (
+        <TouchableOpacity key={route.key} onPress={() => setIndex(i)} style={[{ flex: 1, alignItems: 'center', padding: 10, }, styles.tabItem, index === i && styles.activeTab]}>
+          {route.render && route.render()}
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+
+  const renderScene = ({ route }: { route: Route }) => {
+    switch (route.key) {
+      case 'logo':
+        return <View style={{ flex: 1, backgroundColor: '#ff4081' }} />;
+      case 'latest':
+        return <View style={{ flex: 1, backgroundColor: '#673ab7' }} />;
+      case 'movie':
+        return <View style={{ flex: 1, backgroundColor: '#4caf50' }} />;
+      case 'show':
+        return <View style={{ flex: 1, backgroundColor: 'yellow' }} />;
+      default:
+        return null;
     }
   };
 
-  React.useLayoutEffect(() => {
-    getLatestMovieShowList();
-  }, []);
-
-  const renderItem = ({item}: {item: LastesMovieShowItem}) => (
-    <>
-       <View style={styles.imageWrapper}>
-        {item.test_poster_url && item.isMovie && <Image source={{uri: `https://moviu.s3.us-east-1.amazonaws.com/movies/${item.test_poster_url}`}} style={styles.image} />}                            
-       </View> 
-    </>
-  );
-
   return (
-    <View style={styles.container}>
-      <FlatList data={latestMovieShowList} renderItem={renderItem} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.list} />
-    </View>
+    <TabView
+    navigationState={{ index, routes }}
+    renderScene={renderScene}
+    onIndexChange={setIndex}
+    renderTabBar={renderTabBar}
+  />
   );
 };
 
@@ -72,19 +84,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  list: {
-    justifyContent: 'center',
-  },
-  imageWrapper : {
-    backgroundColor:'red'
-  },
-  image: {
-    width: (Dimensions.get('window').width/1) - 20,
-    height: 300,
-    margin: 10,
-    borderRadius: 5,
-  },
+  }, 
+  logoImg: {
+    width: 80,
+    height: 35
+},
+tabItem: {
+  flex: 1,
+  alignItems: 'center',
+  padding: 10,
+  borderBottomWidth: 2,
+  borderBottomColor: 'transparent',
+},
+activeTab: {
+  borderBottomColor: '#fff', // Highlight color for the active tab
+},
 });
 
 export default React.memo(Test1);

@@ -27,26 +27,24 @@ const MovieList: React.FC<MovieListProps> = () => {
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [loading, setLoading] = React.useState(true);
 
-    useLayoutEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
-        const abortController = new AbortController();
-        const signal = abortController.signal;
-
-        const getMovieList = async () => {
-            if (user) {
-                try {
-                    const resp = await fetchMovies(user.token!, signal);
-                    setTimeout(() => {
-                        setMovieList(resp.data.movies);
-                        setLoading(false);
-                    }, 2000);
-
-
-                } catch (error) {
-                    console.log(error);
-                }
+    const getMovieList = React.useCallback(async () => {
+        if (user) {
+            try {
+                const resp = await fetchMovies(user.token!, signal);
+                setTimeout(() => {
+                    setMovieList(resp.data.movies);
+                    setLoading(false);
+                }, 2000);
+            } catch (error) {
+                console.log(error);
             }
-        };
+        }
+    }, [user, signal, fetchMovies, setMovieList, setLoading]);
+
+    useLayoutEffect(() => {
 
         getMovieList();
 
@@ -57,6 +55,7 @@ const MovieList: React.FC<MovieListProps> = () => {
 
     const onRefresh = () => {
         setRefreshing(true);
+        getMovieList();
         setTimeout(() => {
             setRefreshing(false);
         }, 2000);

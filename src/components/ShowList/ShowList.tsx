@@ -26,36 +26,34 @@ const ShowList: React.FC<ShowListProps> = () => {
     const flatListRef = React.useRef<FlatList<any>>(null);
     const [loading, setLoading] = React.useState(true);
 
-    useLayoutEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
 
-        const abortController = new AbortController();
-        const signal = abortController.signal;
-
-        const getShowList = async () => {
-            if (user) {
-                try {
-                    const resp = await fetchShows(user.token!, signal);
-                    
-                    setTimeout(() => {
-                        setShowList(resp.data.shows);
-                        setLoading(false);
-                    }, 2000);
-
-
-                } catch (error) {
-                    if (error instanceof Error) {
-                        if (error.name === 'AbortError') {
-
-                        } else {
-
-                        }
+    const getShowList = React.useCallback(async () => {
+        if (user) {
+            try {
+                const resp = await fetchShows(user.token!, signal);
+    
+                setTimeout(() => {
+                    setShowList(resp.data.shows);
+                    setLoading(false);
+                }, 2000);
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.name === 'AbortError') {
+                        // Handle abort error (e.g., when a fetch request is cancelled)
                     } else {
-
+                        // Handle other errors
                     }
-                    throw error; // Re-throw the error to be handled by the caller if necessary
+                } else {
+                    // Handle non-error object as an error (edge case)
                 }
+                throw error; // Re-throw the error for the caller to handle if needed
             }
-        };
+        }
+    }, [user, signal, fetchShows, setShowList, setLoading]);
+
+    useLayoutEffect(() => {
 
         getShowList();
 
@@ -66,6 +64,7 @@ const ShowList: React.FC<ShowListProps> = () => {
 
     const onRefresh = () => {
         setRefreshing(true);
+        getShowList();
         setTimeout(() => {
             setRefreshing(false);
         }, 2000);

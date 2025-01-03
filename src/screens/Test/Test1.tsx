@@ -41,6 +41,7 @@ const routes:Route[] = [
 
 const Test1: React.FC = () => {
 
+  const {width} = Dimensions.get('screen');
   const [index, setIndex] = React.useState(0);
 
   const renderTabBar = (props: SceneRendererProps & { navigationState: State }) => (
@@ -74,6 +75,7 @@ const Test1: React.FC = () => {
     renderScene={renderScene}
     onIndexChange={setIndex}
     renderTabBar={renderTabBar}
+    initialLayout={{width:width}}
   />
   );
 };

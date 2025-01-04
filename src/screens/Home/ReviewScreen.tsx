@@ -76,7 +76,7 @@ const DetailScreen: React.FC = () => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container}>            
             <View style={styles.header}>
                 {detailData.poster_url &&
                     <FastImage

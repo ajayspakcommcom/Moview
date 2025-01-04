@@ -62,6 +62,7 @@ const MovieList: React.FC<MovieListProps> = () => {
     };
 
     const navigateToDetails = (movieItem: MovieItem) => {
+        console.log('movieItem', movieItem);
         navigation.navigate('DetailScreen', { movie: movieItem });
     };
 

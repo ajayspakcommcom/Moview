@@ -126,6 +126,7 @@ const DetailScreen: React.FC = () => {
 
         loadHeaderContent();
         getReviewListByUser();
+        console.log('detailData', detailData);
         
         return () => {
             abortController.abort();
@@ -320,7 +321,7 @@ const DetailScreen: React.FC = () => {
     });
 
     const headerContent = () => {
-        return <>            
+        return <>                        
             <View style={styles.header}>
                 {detailData.poster_url &&
                     <Pressable onPress={() => openModal(detailData.poster_url!)}>                        

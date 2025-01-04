@@ -127,7 +127,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   }, [navigation]);
 
   const routes = React.useMemo(
-    () => [     
+    () => [
       {
         key: 'latest',
         render: () => (
@@ -158,50 +158,50 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const renderTabBar = (props: SceneRendererProps & { navigationState: State }) => (
     <View style={styles.renderTabBar}>
-       <TouchableOpacity style={[styles.tabItem]}>
-       <View style={styles.tabViewLogoBtn}>
-            <FastImage
-              style={styles.logoImg}
-              source={require('../../assets/images/small-logo.png')}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity style={[styles.tabItem]}>
+        <View style={styles.tabViewLogoBtn}>
+          <FastImage
+            style={styles.logoImg}
+            source={require('../../assets/images/small-logo.png')}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+        </View>
+      </TouchableOpacity>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity key={route.key} onPress={() => setIndex(i)} style={[styles.tabItem, index === i && styles.activeTab]}>
           {route.render && route.render()}
         </TouchableOpacity>
       ))}
       <TouchableOpacity style={[styles.tabItem]}>
-      <View style={[styles.childWrapper, styles.notificationWrapper]}>
-        <Pressable
-          hitSlop={hitSlops()}
-          onPress={notificationHandler}
-          style={styles.notificationBtn}
-        >
-          <FastImage
-            style={styles.icon}
-            source={require('../../assets/images/icons/notification-w.png')}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-          {notificationCount > 0 && (<Text style={styles.notificationText}>{notificationCount}</Text>)}
-        </Pressable>
-      </View>
+        <View style={[styles.childWrapper, styles.notificationWrapper]}>
+          <Pressable
+            hitSlop={hitSlops()}
+            onPress={notificationHandler}
+            style={styles.notificationBtn}
+          >
+            <FastImage
+              style={styles.icon}
+              source={require('../../assets/images/icons/notification-w.png')}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+            {notificationCount > 0 && (<Text style={styles.notificationText}>{notificationCount}</Text>)}
+          </Pressable>
+        </View>
       </TouchableOpacity>
-      
+
 
     </View>
   );
 
 
   const renderScene = ({ route }: { route: Route }) => {
-    switch (route.key) {     
+    switch (route.key) {
       case 'latest':
         return (<LatestMovieShowList filteredData={filteredData} />);
       case 'movie':
         return (<MovieList />);
       case 'show':
-        return (<ShowList />);      
+        return (<ShowList />);
       default:
         console.log('Default');
         return null;
@@ -276,9 +276,12 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
   tabItem: {
-    flex: 1,
+    // flex: 1,
+    flexGrow:1,
     alignItems: 'center',
     padding: 10,
+    paddingHorizontal:15,
+    justifyContent: 'center',
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },

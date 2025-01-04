@@ -4,7 +4,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useF
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { formatDate, hitSlops } from '../../utils/Common';
+import { convertTimeFormat, formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
@@ -117,12 +117,15 @@ const DetailScreen: React.FC = () => {
             ...prevState,
             id: route.params.movie?._id,
             title: route.params.movie?.title,
+            banner_url:route.params.movie?.banner_url,
             poster_url: route.params.movie?.poster_url,
             release_date: route.params.movie?.release_date,
             director: route.params.movie?.director,
+            writer:route.params.movie?.writer,
             genre: route.params.movie?.genre,
             cast: route.params.movie?.cast,
             rating: route.params.movie?.rating,
+            runtime: route.params.movie?.runtime
         }));
 
         loadHeaderContent();
@@ -143,95 +146,96 @@ const DetailScreen: React.FC = () => {
             width:35, 
             height:35, 
             marginBottom:20
+        },  
+        withoutLoginWrapper: {
+            flex: 1,        
+            justifyContent:'center', 
+            alignItems:'center', 
+            marginTop:'20%',
+            paddingHorizontal:15          
+        }, 
+        
+        modalContainer: {
+            flex: 1,
+            backgroundColor: Colors.backgroundColorShadow,
+            justifyContent: "center",
+            alignItems: "center",
         },
-      withoutLoginWrapper: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '20%',
-        paddingHorizontal:15
-      },
-      
-      modalContainer: {
-        flex: 1,
-        backgroundColor: Colors.backgroundColorShadow,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      closeArea: {
-        flex: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      fullImage: {
-        width: imageSize.width,
-        height: imageSize.height,
-      },
-
-      container: {
-        flex: 1,
-      },
-      reviewListContainer: {
-        paddingHorizontal: 20,
-      },
-      noReviewWrapper: {
-        flex: 1,
-      },
-      reviewText: {
-        color: Colors.whiteColor,
-        textAlign: 'center',
-      },
-      ratingTextWrapper: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-      },
-      ratingText: {
-        color: Colors.whiteColor,
-        fontSize: Fonts.Size.Medium + 5,
-        fontWeight: '600',
-        paddingLeft: 5,
-      },
-      ratingSlash: {
-        color: Colors.whiteColor,
-        marginHorizontal: 2,
-      },
-      totalRatingText: {
-        color: Colors.tabBgColor,
-        fontSize: Fonts.Size.Small,
-        fontWeight: '500',
-      },
-      header: {
-        width: '100%',
-        height: 200,
-        paddingHorizontal: 0,
-      },
-      img: {
-        width: '100%',
-        height: 200,
-        flexGrow: 1,
-      },
-      detailText: {
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-      },
-      detailHeading: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Bold,
-        fontSize: Fonts.Size.Medium + 1,
-        textTransform: 'uppercase',
-      },
-      ratingWrapper: {
-        paddingVertical: 0,
-        alignItems: 'center',
-        flexDirection: 'row',
-      },
-      genreWrapper: {
-        flexDirection: 'row',
-        paddingHorizontal: 15,
-      },
-      genreItem: {
-        paddingVertical: 1,            
+        closeArea: {
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        fullImage: {
+            width: imageSize.width,
+            height: imageSize.height        
+        },
+    
+        container: {
+            flex: 1,
+        },
+        reviewListContainer: {
+            paddingHorizontal: 20
+        },
+        noReviewWrapper: {
+            flex: 1,
+        },
+        reviewText: {
+            color: Colors.whiteColor,
+            textAlign: 'center'
+        },
+        ratingTextWrapper: {
+            flexDirection: 'row',
+            alignItems: 'flex-end'
+        },
+        ratingText: {
+            color: Colors.whiteColor,
+            fontSize: Fonts.Size.Medium + 5,
+            fontWeight: '600',
+            paddingLeft: 5
+        },
+        ratingSlash: {
+            color: Colors.whiteColor,
+            marginHorizontal: 2
+        },
+        totalRatingText: {
+            color: Colors.tabBgColor,
+            fontSize: Fonts.Size.Small,
+            fontWeight: '500'
+        },
+        header: {
+            width: '100%',
+            height: 200,
+            paddingHorizontal: 0
+        },
+        img: {
+            width: '100%',
+            height: 200,
+            flexGrow: 1
+        },
+        detailText: {
+            paddingVertical: 10,
+            paddingHorizontal: 15
+        },
+        detailHeading: {
+            color: Colors.tabActiveColor,
+            fontFamily: Fonts.Family.Bold,
+            fontSize: Fonts.Size.Medium + 1,
+            textTransform: 'uppercase',
+            marginBottom:2
+        },
+        ratingWrapper: {
+            paddingVertical: 0,
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        genreWrapper: {
+            flexDirection: 'row',
+            paddingHorizontal: 15
+        },
+        genreItem: {
+            paddingVertical: 1,            
             justifyContent: 'center',
             alignItems: 'center', 
             backgroundColor: Colors.tagBgColor,            
@@ -242,72 +246,93 @@ const DetailScreen: React.FC = () => {
             paddingHorizontal: 10,
             paddingBottom:2, 
             paddingTop:0
-      },
-      genreText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium,
-      },
-      releaseWrapper: {
-        paddingHorizontal: 15,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-      },
-      releaseItem: {
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      releaseText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium,
-      },
-      directorWrapper: {
-        marginTop: 0,
-        paddingHorizontal: 15,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-      },
-      directorItem: {
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      directorText: {
-        color: Colors.whiteColor,
-        fontFamily: Fonts.Family.Medium,
-      },
-      editableRating: {
-        width: '100%',
-        paddingTop: 25,
-      },
-      hrWrapper: {
-        paddingVertical: 10,
-        width: '100%',
-        paddingHorizontal: 15,
-      },
-      hr: {
-        minHeight: 2,
-        backgroundColor: Colors.tabBgColor,
-      },
-      castReviewBtnWrapper: {
-        paddingHorizontal: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        marginBottom: 10,
-      },
-      castReviewText: {
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 50,
-      },
-      crText: {
-        fontSize: Fonts.Size.Medium,
-        color: Colors.tabBgColor,
-        fontWeight: '500',
-      },
-
-      crTextActive: {
-        color: Colors.whiteColor,
-      },
+        },
+        genreText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        releaseWrapper: {            
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            flexDirection:'row'
+        },
+        spaceBetween : {
+            color:Colors.whiteColor, 
+            paddingHorizontal:5,                         
+            fontSize:Fonts.Size.XXX_Large, 
+            lineHeight:22                        
+        },
+        releaseText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        aboveDirectorSpace: {
+            marginTop:10            
+        },
+        directorWrapper: {
+            marginTop: 3,
+            paddingHorizontal: 15,
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start'
+        },
+        directorItem: {
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        directorText: {
+            color: Colors.whiteColor,
+            fontFamily: Fonts.Family.Medium
+        },
+        editableRating: {
+            width: '100%',
+            paddingTop: 25
+        },
+        hrWrapper: {
+            paddingVertical: 10,
+            width: '100%',
+            paddingHorizontal: 15,
+        },
+        hr: {
+            minHeight: 2,
+            backgroundColor: Colors.tabBgColor,
+        },
+        castReviewBtnWrapper: {
+            paddingHorizontal: 15,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            marginBottom: 10,
+        },
+        castReviewText: {
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            borderRadius: 50,            
+            position:'relative'
+        },
+        crText: {
+            fontSize: Fonts.Size.Medium,
+            color: Colors.tabBgColor,
+            fontWeight: '500'
+        },
+        totalReviewWrapper: {
+            position:'absolute', 
+            borderRadius:20,
+            width:20,
+            height:20,
+            left:65,
+            bottom: 15,
+            backgroundColor:Colors.tabActiveColor,            
+            justifyContent:'center'
+        },
+        totalReview: {
+            color:Colors.blackColor,             
+            textAlign:'center', 
+            fontFamily:Fonts.Family.Light, 
+            fontSize:Fonts.Size.Small - 4
+        },
+        crTextActive: {
+            color: Colors.whiteColor,
+        }
     });
 
     const openModal = (url: string) => {                   
@@ -321,16 +346,24 @@ const DetailScreen: React.FC = () => {
 
     const headerContent = () => {
         return <>            
-            <View style={styles.header}>
-                {detailData.poster_url &&                      
-                    <Pressable onPress={() => openModal(detailData.poster_url!)}>
-                        <FastImage style={styles.img} source={{uri: detailData.poster_url}} />
-                    </Pressable>                                       
+             <View style={styles.header}>
+                {detailData.banner_url &&
+                    <Pressable onPress={() => openModal(detailData.banner_url!)}>                        
+                        <FastImage style={styles.img} source={{uri: detailData.banner_url}} />
+                    </Pressable>
                 }
             </View>
 
             <View style={styles.detailText}>
-                <Text style={styles.detailHeading}>{detailData.title}</Text>
+               
+               <Text style={styles.detailHeading}>{detailData.title}</Text>
+               
+                    <View style={styles.releaseWrapper}>
+                            <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
+                            {detailData.runtime && <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>}
+                            {detailData.runtime && <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime)}</Text>}
+                    </View>
+
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
                         count={1}
@@ -356,12 +389,14 @@ const DetailScreen: React.FC = () => {
                 ))}
             </View>
 
-            <View style={styles.releaseWrapper}>
-                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text></View>
+         
+
+            <View style={[styles.directorWrapper, styles.aboveDirectorSpace]}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>
@@ -374,6 +409,7 @@ const DetailScreen: React.FC = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
+                    <View style={styles.totalReviewWrapper}><Text style={styles.totalReview}>{reviewListByMovie.length}</Text></View> 
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
@@ -449,13 +485,13 @@ const DetailScreen: React.FC = () => {
                 }
             </KeyboardAvoidingView>
 
-            {detailData.poster_url &&
+            {detailData.banner_url &&
             <Modal visible={isModalVisible} transparent={true}>
                 <View style={styles.modalContainer}>
                     <Pressable style={styles.closeArea} onPress={closeModal}>
                         <FastImage
                             style={styles.fullImage}                                
-                            source={{uri:detailData.poster_url}}
+                            source={{uri:detailData.banner_url}}
                             resizeMode="cover"
                         />
                     </Pressable>

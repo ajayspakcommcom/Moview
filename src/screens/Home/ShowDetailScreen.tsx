@@ -4,7 +4,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useF
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { formatDate, hitSlops } from '../../utils/Common';
+import { convertTimeFormat, formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
@@ -118,12 +118,15 @@ const ShowDetailScreen: React.FC = () => {
             ...prevState,
             id: route.params.showItem?._id,
             title: route.params.showItem?.title,
+            banner_url:route.params.showItem?.banner_url,
             poster_url: route.params.showItem?.poster_url,
             release_date: route.params.showItem?.release_date,
             director: route.params.showItem?.director,
+            writer:route.params.showItem?.writer,
             genre: route.params.showItem?.genre,
             cast: route.params.showItem?.cast,
             rating: route.params.showItem?.rating,
+            runtime: route.params.showItem?.runtime
         }));
 
 
@@ -161,8 +164,8 @@ const ShowDetailScreen: React.FC = () => {
             flex: 1,        
             justifyContent:'center', 
             alignItems:'center', 
-            marginTop:'20%', 
-            paddingHorizontal:15         
+            marginTop:'20%',
+            paddingHorizontal:15          
         }, 
         
         modalContainer: {
@@ -181,6 +184,7 @@ const ShowDetailScreen: React.FC = () => {
             width: imageSize.width,
             height: imageSize.height        
         },
+    
         container: {
             flex: 1,
         },
@@ -228,10 +232,11 @@ const ShowDetailScreen: React.FC = () => {
             paddingHorizontal: 15
         },
         detailHeading: {
-            color: Colors.whiteColor,
+            color: Colors.tabActiveColor,
             fontFamily: Fonts.Family.Bold,
             fontSize: Fonts.Size.Medium + 1,
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            marginBottom:2
         },
         ratingWrapper: {
             paddingVertical: 0,
@@ -259,22 +264,26 @@ const ShowDetailScreen: React.FC = () => {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
-        releaseWrapper: {
-            paddingHorizontal: 15,
+        releaseWrapper: {            
             alignItems: 'flex-start',
-            justifyContent: 'flex-start'
+            justifyContent: 'flex-start',
+            flexDirection:'row'
         },
-        releaseItem: {
-            justifyContent: 'center',
-            alignItems: 'center', 
-            marginVertical:5
+        spaceBetween : {
+            color:Colors.whiteColor, 
+            paddingHorizontal:5,                         
+            fontSize:Fonts.Size.XXX_Large, 
+            lineHeight:22                        
         },
         releaseText: {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
+        aboveDirectorSpace: {
+            marginTop:10            
+        },
         directorWrapper: {
-            marginTop: 0,
+            marginTop: 3,
             paddingHorizontal: 15,
             alignItems: 'flex-start',
             justifyContent: 'flex-start'
@@ -310,14 +319,30 @@ const ShowDetailScreen: React.FC = () => {
         castReviewText: {
             paddingVertical: 5,
             paddingHorizontal: 10,
-            borderRadius: 50
+            borderRadius: 50,            
+            position:'relative'
         },
         crText: {
             fontSize: Fonts.Size.Medium,
             color: Colors.tabBgColor,
             fontWeight: '500'
         },
-    
+        totalReviewWrapper: {
+            position:'absolute', 
+            borderRadius:20,
+            width:20,
+            height:20,
+            left:65,
+            bottom: 15,
+            backgroundColor:Colors.tabActiveColor,            
+            justifyContent:'center'
+        },
+        totalReview: {
+            color:Colors.blackColor,             
+            textAlign:'center', 
+            fontFamily:Fonts.Family.Light, 
+            fontSize:Fonts.Size.Small - 4
+        },
         crTextActive: {
             color: Colors.whiteColor,
         }
@@ -327,15 +352,22 @@ const ShowDetailScreen: React.FC = () => {
         return <>
 
             <View style={styles.header}>
-                {detailData.poster_url && 
-                    <Pressable onPress={() => openModal(detailData.poster_url!)}>
-                        <FastImage style={styles.img} source={{uri: detailData.poster_url}} />
+                {detailData.banner_url && 
+                    <Pressable onPress={() => openModal(detailData.banner_url!)}>
+                        <FastImage style={styles.img} source={{uri: detailData.banner_url}} />
                     </Pressable>     
                 }
             </View>
 
             <View style={styles.detailText}>
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
+
+                <View style={styles.releaseWrapper}>
+                    <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
+                    {detailData.runtime && <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>}
+                    {detailData.runtime && <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime)}</Text>}
+                </View>
+
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
                         count={1}
@@ -361,12 +393,12 @@ const ShowDetailScreen: React.FC = () => {
                 ))}
             </View>
 
-            <View style={styles.releaseWrapper}>
-                <View style={styles.releaseItem}><Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text></View>
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>
@@ -379,6 +411,7 @@ const ShowDetailScreen: React.FC = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
+                     <View style={styles.totalReviewWrapper}><Text style={styles.totalReview}>{reviewListByShow.length}</Text></View> 
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
@@ -458,13 +491,13 @@ const ShowDetailScreen: React.FC = () => {
                 
             </KeyboardAvoidingView>
 
-            {detailData.poster_url &&
+            {detailData.banner_url &&
                 <Modal visible={isModalVisible} transparent={true}>
                     <View style={styles.modalContainer}>
                         <Pressable style={styles.closeArea} onPress={closeModal}>
                             <FastImage
                                 style={styles.fullImage}                                
-                                source={{uri:detailData.poster_url}}
+                                source={{uri:detailData.banner_url}}
                                 resizeMode="cover"
                             />
                         </Pressable>

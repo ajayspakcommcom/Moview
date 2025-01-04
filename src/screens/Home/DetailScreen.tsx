@@ -116,17 +116,20 @@ const DetailScreen: React.FC = () => {
             ...prevState,
             id: route.params.movie?._id,
             title: route.params.movie?.title,
+            banner_url:route.params.movie?.banner_url,
             poster_url: route.params.movie?.poster_url,
             release_date: route.params.movie?.release_date,
             director: route.params.movie?.director,
+            writer:route.params.movie?.writer,
             genre: route.params.movie?.genre,
             cast: route.params.movie?.cast,
             rating: route.params.movie?.rating,
+            runtime: route.params.movie?.runtime
         }));
 
         loadHeaderContent();
         getReviewListByUser();
-        console.log('detailData', detailData);
+        
         
         return () => {
             abortController.abort();
@@ -257,14 +260,14 @@ const DetailScreen: React.FC = () => {
             fontFamily: Fonts.Family.Medium
         },
         releaseWrapper: {
-            paddingHorizontal: 15,
+            paddingLeft:5,
             alignItems: 'flex-start',
             justifyContent: 'flex-start'
         },
         releaseItem: {
             justifyContent: 'center',
             alignItems: 'center', 
-            marginVertical:5
+            marginVertical:2
         },
         releaseText: {
             color: Colors.whiteColor,
@@ -323,15 +326,30 @@ const DetailScreen: React.FC = () => {
     const headerContent = () => {
         return <>                        
             <View style={styles.header}>
-                {detailData.poster_url &&
-                    <Pressable onPress={() => openModal(detailData.poster_url!)}>                        
-                        <FastImage style={styles.img} source={{uri: detailData.poster_url}} />
+                {detailData.banner_url &&
+                    <Pressable onPress={() => openModal(detailData.banner_url!)}>                        
+                        <FastImage style={styles.img} source={{uri: detailData.banner_url}} />
                     </Pressable>
                 }
             </View>
 
             <View style={styles.detailText}>
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
+
+                <View style={styles.releaseWrapper}>
+                    <View style={styles.releaseItem}>
+                        <Text style={styles.releaseText}>Date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.releaseWrapper}>
+                    <View style={styles.releaseItem}>
+                        <Text style={styles.releaseText}>Runtime: {detailData.runtime}</Text>
+                    </View>
+                </View>
+
+                
+
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
                         count={1}
@@ -357,14 +375,12 @@ const DetailScreen: React.FC = () => {
                 ))}
             </View>
 
-            <View style={styles.releaseWrapper}>
-                <View style={styles.releaseItem}>
-                    <Text style={styles.releaseText}>Release date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'DD/MM/YYYY') : '----'}</Text>
-                </View>
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>
@@ -456,7 +472,7 @@ const DetailScreen: React.FC = () => {
                         <Pressable style={styles.closeArea} onPress={closeModal}>
                             <FastImage
                                 style={styles.fullImage}                                
-                                source={{uri:detailData.poster_url}}
+                                source={{uri:detailData.banner_url}}
                                 resizeMode="cover"
                             />
                         </Pressable>

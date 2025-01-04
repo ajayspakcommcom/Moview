@@ -104,17 +104,29 @@ export const fetchShows = async (userToken: string, signal: AbortSignal) => {
     }
 };
 
-export const formatDate = (date: Date, format: string): string => {
+export const formatDate = (date: Date, format: 'Month YYYY' | 'DD-MM-YYYY'): string => {
     // Helper function to add leading zeroes
     const addLeadingZero = (num: number): string => (num < 10 ? `0${num}` : num.toString());
 
+    // Array of month names
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
     // Extracting parts of the date
     const day: string = addLeadingZero(date.getDate());
-    const month: string = addLeadingZero(date.getMonth() + 1); // Months are zero-based
+    const monthText: string = monthNames[date.getMonth()]; // Months are zero-based
+    const monthNumber: string = addLeadingZero(date.getMonth() + 1);
     const year: string = date.getFullYear().toString();
 
     // Replace placeholders in the format string
-    return format.replace('DD', day).replace('MM', month).replace('YYYY', year);
+    return format
+        .replace('DD', day)
+        .replace('MM', monthNumber) // Keep numeric month for backward compatibility
+        .replace('Month', monthText) // Replace with text month
+        .replace('YYYY', year);
+
 }
 
 export const extractUniqueMovieIds = (reviews: { movie: { _id: string; } }[]): string[] => {

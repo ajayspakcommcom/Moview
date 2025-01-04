@@ -4,7 +4,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useF
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { formatDate, hitSlops } from '../../utils/Common';
+import { convertTimeFormat, formatDate, hitSlops } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
@@ -262,19 +262,24 @@ const DetailScreen: React.FC = () => {
         releaseWrapper: {
             paddingLeft:5,
             alignItems: 'flex-start',
-            justifyContent: 'flex-start'
+            justifyContent: 'flex-start',
+            flexDirection:'row'
         },
-        releaseItem: {
-            justifyContent: 'center',
-            alignItems: 'center', 
-            marginVertical:2
+        spaceBetween : {
+            color:Colors.whiteColor, 
+            paddingHorizontal:5,                         
+            fontSize:Fonts.Size.XXX_Large, 
+            lineHeight:22                        
         },
         releaseText: {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
+        aboveDirectorSpace: {
+            marginTop:10            
+        },
         directorWrapper: {
-            marginTop: 0,
+            marginTop: 3,
             paddingHorizontal: 15,
             alignItems: 'flex-start',
             justifyContent: 'flex-start'
@@ -337,17 +342,10 @@ const DetailScreen: React.FC = () => {
                 <Text style={styles.detailHeading}>{detailData.title}</Text>
 
                 <View style={styles.releaseWrapper}>
-                    <View style={styles.releaseItem}>
-                        <Text style={styles.releaseText}>Date: {detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
-                    </View>
+                        <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
+                        <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>
+                        <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime!)}</Text>
                 </View>
-
-                <View style={styles.releaseWrapper}>
-                    <View style={styles.releaseItem}>
-                        <Text style={styles.releaseText}>Runtime: {detailData.runtime}</Text>
-                    </View>
-                </View>
-
                 
 
                 <View style={styles.ratingWrapper}>
@@ -375,7 +373,9 @@ const DetailScreen: React.FC = () => {
                 ))}
             </View>
 
-            <View style={styles.directorWrapper}>
+            
+
+            <View style={[styles.directorWrapper, styles.aboveDirectorSpace]}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
             </View>
 

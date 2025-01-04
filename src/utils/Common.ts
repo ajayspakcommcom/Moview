@@ -129,6 +129,19 @@ export const formatDate = (date: Date, format: 'Month YYYY' | 'DD-MM-YYYY'): str
 
 }
 
+export const convertTimeFormat = (timeString: string) => {
+    // Validate input
+    if (typeof timeString !== 'string' || !/^\d{2}:\d{2}$/.test(timeString)) {
+      throw new Error('Invalid time format. Expected format: "HH:MM"');
+    }
+  
+    // Split the input string into hours and minutes
+    const [hours, minutes] = timeString.split(':');
+  
+    // Return formatted string
+    return `${hours}h ${minutes}m`;
+  }
+
 export const extractUniqueMovieIds = (reviews: { movie: { _id: string; } }[]): string[] => {
     const movieIds: string[] = reviews.map(review => review.movie._id);
     return Array.from(new Set(movieIds));

@@ -109,15 +109,15 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     !isEditMode &&
                                     <>
                                         <View style={styles.editWrapper}>
-                                            {Platform.OS === 'android' && <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />}
-                                            {Platform.OS === 'ios' && <Pressable onPress={editHandler}><FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/edit-w.png')} /></Pressable>}
+                                            {/* {Platform.OS === 'android' && <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />} */}
+                                            <Pressable onPress={editHandler}><FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/edit-w.png')} /></Pressable>
                                         </View>
                                         <View style={styles.header}>
                                             <View style={styles.headerContent}>
                                                 <View style={styles.userTextIcon}>
                                                     <View style={styles.userIcon}>
-                                                        {Platform.OS === 'android' && <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />}
-                                                        {Platform.OS === 'ios' && <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/profile-y.png')} />}
+                                                        {/* {Platform.OS === 'android' && <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />} */}
+                                                        <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/profile-y.png')} />
                                                     </View>
                                                     <View style={styles.userTextWrapper}>
                                                         <Text style={styles.name}>{capitalizeFirstLetter(userDetail.firstname)}</Text>

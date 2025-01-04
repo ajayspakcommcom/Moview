@@ -175,13 +175,13 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
 
       <View style={styles.container}>
         <View style={styles.userIcon}>
-          {Platform.OS === 'android' && <Icon
+          {/* {Platform.OS === 'android' && <Icon
             name={'user-alt'}
             size={45}
             color={Colors.tabBgColor}
             onPress={() => { }}
             style={styles.icon}
-          />}
+          />} */}
 
           <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />
 

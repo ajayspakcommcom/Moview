@@ -316,14 +316,30 @@ const DetailScreen: React.FC = () => {
         castReviewText: {
             paddingVertical: 5,
             paddingHorizontal: 10,
-            borderRadius: 50
+            borderRadius: 50,            
+            position:'relative'
         },
         crText: {
             fontSize: Fonts.Size.Medium,
             color: Colors.tabBgColor,
             fontWeight: '500'
         },
-    
+        totalReviewWrapper: {
+            position:'absolute', 
+            borderRadius:20,
+            width:20,
+            height:20,
+            left:65,
+            bottom: 15,
+            backgroundColor:Colors.tabActiveColor,            
+            justifyContent:'center'
+        },
+        totalReview: {
+            color:Colors.whiteColor,             
+            textAlign:'center', 
+            fontFamily:Fonts.Family.Light, 
+            fontSize:Fonts.Size.Small - 5
+        },
         crTextActive: {
             color: Colors.whiteColor,
         }
@@ -344,8 +360,8 @@ const DetailScreen: React.FC = () => {
 
                 <View style={styles.releaseWrapper}>
                         <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
-                        <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>
-                        <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime!)}</Text>
+                        {detailData.runtime && <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>}
+                        {detailData.runtime && <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime)}</Text>}
                 </View>
                 
 
@@ -393,10 +409,15 @@ const DetailScreen: React.FC = () => {
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'synopsis' && styles.crTextActive]}>Cast </Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
-                    <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
+                    <View style={styles.castReviewText}>
+                        <Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text>
+                        <View style={styles.totalReviewWrapper}><Text style={styles.totalReview}>{reviewListByMovie.length}</Text></View> 
+                    </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
-                    <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
+                    <View style={[styles.castReviewText]}>
+                        <Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
 

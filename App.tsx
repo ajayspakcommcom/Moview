@@ -19,7 +19,6 @@ import Test1 from './src/screens/Test/Test1';
 import Test2 from './src/screens/Test/Test2';
 
 
-
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 

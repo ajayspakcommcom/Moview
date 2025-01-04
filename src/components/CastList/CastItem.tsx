@@ -20,8 +20,9 @@ const CastItem: React.FC<ItemProps> = ({ item }) => {
         <View style={styles.wrapper}>
             <View style={styles.headerWrapper}>
                 <View style={styles.user}>
-                    {Platform.OS === 'android' && <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />}
-                    {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />}
+                    {/* {Platform.OS === 'android' && <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />}
+                    {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />} */}
+                    <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />
                 </View>
                 <Text style={styles.name}>{getFirstAndSecondChar(item.actor)}</Text>
             </View>

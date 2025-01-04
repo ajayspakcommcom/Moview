@@ -18,9 +18,13 @@ const TabNavigationOptions: TabOptions = {
     Home: {
         tabBarIcon: ({ focused, color, size }) => (
             <> 
-               {Platform.OS === "android" && <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />}
+               {/* {Platform.OS === "android" && <Foundation name={focused ? 'home' : 'home'} size={22} color={color} />}
                {(Platform.OS === "ios" && !focused) && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-w.png`)} />}
-               {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-y.png`)} />}
+               {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-y.png`)} />} */}
+
+               
+               {!focused && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-w.png`)} />}
+               {focused && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-y.png`)} />}
             </>
         ),
         tabBarLabel: ''
@@ -28,9 +32,13 @@ const TabNavigationOptions: TabOptions = {
     Search: {
         tabBarIcon: ({ focused, color, size }) => (
             <>
-              {Platform.OS === 'android' && <FontAwesome name={focused ? 'search' : 'search'} size={20} color={color} />}
+              {/* {Platform.OS === 'android' && <FontAwesome name={focused ? 'search' : 'search'} size={20} color={color} />}
               {(Platform.OS === "ios" && !focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/search-w.png')} />}
-              {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/search-y.png')} />}
+              {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/search-y.png')} />} */}
+
+              
+              {!focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/search-w.png')} />}
+              {focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/search-y.png')} />}
             </>
         ),
         tabBarLabel: ''
@@ -38,9 +46,13 @@ const TabNavigationOptions: TabOptions = {
     MyReview: {
         tabBarIcon: ({ focused, color, size }) => (
             <>
-             {Platform.OS === "android" && <AntDesign name={focused ? 'star' : 'star'} size={20} color={color} />}
+             {/* {Platform.OS === "android" && <AntDesign name={focused ? 'star' : 'star'} size={20} color={color} />}
              {(Platform.OS === "ios" && !focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/my-review-w.png')} />}
-             {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/my-review-y.png')} />}
+             {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/my-review-y.png')} />} */}
+
+             
+             {!focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/my-review-w.png')} />}
+             {focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/my-review-y.png')} />}
             </>
         ),
         tabBarLabel: ''
@@ -48,9 +60,13 @@ const TabNavigationOptions: TabOptions = {
     Profile: {
         tabBarIcon: ({ focused, color, size = 30 }) => (
             <>
-             {Platform.OS === "android" &&  <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />}
+             {/* {Platform.OS === "android" &&  <FontAwesome name={focused ? 'user' : 'user'} size={20} color={color} />}
              {(Platform.OS === "ios" && !focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />}
-             {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />}
+             {(Platform.OS === "ios" && focused) && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />} */}
+
+             
+             {!focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />}
+             {focused && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />}
             </>
             
         ),

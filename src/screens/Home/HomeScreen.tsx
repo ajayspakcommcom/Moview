@@ -133,8 +133,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 {isVisibleDrawer && <View style={styles.drawerMainWrapper}><LanguageDrawer visible={isVisibleDrawer} onCancelHandler={closeDrawerHandler} onApplyHandler={applyHandler} getSelectedLanguage={selectedCheckbox} /></View>}
                 <View style={styles.filterWrapper}>                                        
                     <Pressable style={styles.filteredBtnWrapper} onPress={toggleDrawerHandler}>
-                        {Platform.OS === 'android' && <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />}
-                        {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/filter-y.png')} />}
+                        {/* {Platform.OS === 'android' && <Icon name={'filter'} size={25} color={Colors.tabActiveColor} />} */}
+                        <FastImage style={styles.icon} source={require('../../assets/images/icons/filter-y.png')} />
                     </Pressable>                                                  
                 </View>                
         </View>        

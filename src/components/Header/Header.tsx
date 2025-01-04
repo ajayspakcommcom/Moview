@@ -54,8 +54,6 @@ const Header: React.FC<HeaderProps> = ({ message, onPressedHandler, navigation, 
                 </View>
                 <View style={[styles.childWrapper, styles.notificationWrapper]}>
                     <Pressable hitSlop={hitSlops()} onPress={notificationHandler} style={styles.notificationBtn}>
-                        {/* {Platform.OS === 'android' && <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />}
-                        {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/notification-w.png')} resizeMode={FastImage.resizeMode.contain} />} */}
                         <FastImage style={styles.icon} source={require('../../assets/images/icons/notification-w.png')} resizeMode={FastImage.resizeMode.contain} />
                         {notificationCount > 0 && <Text style={styles.notificationText}>{notificationCount}</Text>}                        
                     </Pressable>

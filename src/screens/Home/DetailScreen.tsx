@@ -228,10 +228,11 @@ const DetailScreen: React.FC = () => {
             paddingHorizontal: 15
         },
         detailHeading: {
-            color: Colors.whiteColor,
+            color: Colors.tabActiveColor,
             fontFamily: Fonts.Family.Bold,
             fontSize: Fonts.Size.Medium + 1,
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            marginBottom:2
         },
         ratingWrapper: {
             paddingVertical: 0,

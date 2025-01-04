@@ -1,13 +1,20 @@
-// App.tsx
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { useHeaderHeight } from '@react-navigation/elements'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const Test2 = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
+  const [address1, setAddress1] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  const insets = useSafeAreaInsets();
+
+  const headerHeight = useHeaderHeight();
+
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -16,11 +23,10 @@ const Test2 = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
+      
         style={styles.container}
-        behavior={Platform.select({
-          ios: 'padding',  // iOS uses padding behavior
-          android: 'height',  // Android uses height behavior
-        })}
+        behavior={'padding'}        
+        keyboardVerticalOffset={insets.top + headerHeight}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.title}>React Native Form</Text>
@@ -49,7 +55,17 @@ const Test2 = () => {
             onChangeText={setAddress}
             placeholder="Enter your address"
             multiline
-            numberOfLines={4} // Defines the number of lines the TextInput will show
+            numberOfLines={4} 
+          />
+
+          <Text>Address:</Text>
+          <TextInput
+            style={[styles.input, styles.addressInput]}
+            value={address1}
+            onChangeText={setAddress1}
+            placeholder="Enter your address"
+            multiline
+            numberOfLines={4}
           />
 
           <Button title="Submit" onPress={handleSubmit} />
@@ -90,11 +106,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   addressInput: {
-    minHeight: 100, // Set a minimum height for the address field
-    maxHeight: 150, // Set a maximum height for the address field
-    paddingTop: 8, // Adjust padding to ensure content isn't cut off
-    paddingBottom: 8, // Adjust padding for consistency
-    textAlignVertical: 'top', // Ensures text is aligned at the top of the input
+    minHeight: 100, 
+    maxHeight: 150, 
+    paddingTop: 8, 
+    paddingBottom: 8, 
+    textAlignVertical: 'top', 
   },
   result: {
     marginTop: 20,

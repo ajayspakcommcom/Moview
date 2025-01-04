@@ -260,8 +260,7 @@ const DetailScreen: React.FC = () => {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
-        releaseWrapper: {
-            paddingLeft:5,
+        releaseWrapper: {            
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
             flexDirection:'row'
@@ -335,10 +334,10 @@ const DetailScreen: React.FC = () => {
             justifyContent:'center'
         },
         totalReview: {
-            color:Colors.whiteColor,             
+            color:Colors.blackColor,             
             textAlign:'center', 
             fontFamily:Fonts.Family.Light, 
-            fontSize:Fonts.Size.Small - 5
+            fontSize:Fonts.Size.Small - 4
         },
         crTextActive: {
             color: Colors.whiteColor,

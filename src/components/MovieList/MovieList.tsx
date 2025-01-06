@@ -45,9 +45,7 @@ const MovieList: React.FC<MovieListProps> = () => {
     }, [user, signal, fetchMovies, setMovieList, setLoading]);
 
     useLayoutEffect(() => {
-
         getMovieList();
-
         return () => {
             abortController.abort(); // Cleanup on unmount
         };
@@ -93,6 +91,7 @@ const MovieList: React.FC<MovieListProps> = () => {
     return (
         <>
             <FlatList
+                contentContainerStyle={{ flexGrow:1 }}
                 ref={flatListRef}
                 data={movieList}
                 renderItem={renderItem}

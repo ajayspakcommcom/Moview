@@ -77,8 +77,8 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
     }, [user?.token]);
 
     const onRefresh = () => {        
-        getLatestMovieShowList();
         setRefreshing(true);
+        getLatestMovieShowList();
         setTimeout(() => {
             setRefreshing(false);
         }, 2000);
@@ -135,9 +135,10 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
                     colors={[Colors.blackColor, Colors.darkBackgroudColor, Colors.playPauseButtonColor]}
                     progressBackgroundColor={Colors.tabActiveColor}
                 />}
+
                 numColumns={2}
                 extraData={latestMovieShowList}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}                
             />
         </>
     );

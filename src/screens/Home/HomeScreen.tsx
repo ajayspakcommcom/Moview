@@ -36,7 +36,7 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const { user } = useAuth();
-  const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
+  //const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
   const { data: notificationData } = useSelector((state: RootState) => state.notification);
   const [notificationCount, setNotificationCount] = React.useState<number>(0);
   const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);

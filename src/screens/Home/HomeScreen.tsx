@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Button, Pressable, Text, Platform, Dimensions, TouchableOpacity, } from 'react-native';
+import { View, StyleSheet,  Pressable, Text,  Dimensions, TouchableOpacity, } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { setTransparentHeader } from '../../utils/navigationOptions';
 import Colors from '../../styles/Colors';
@@ -36,7 +36,7 @@ type Props = {
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const { user } = useAuth();
-  //const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
+  const [selectedTab, setSelectedTab] = React.useState<string | null>('Latest');
   const { data: notificationData } = useSelector((state: RootState) => state.notification);
   const [notificationCount, setNotificationCount] = React.useState<number>(0);
   const [isVisibleDrawer, setIsVisibleDrawer] = React.useState<boolean>(false);
@@ -132,7 +132,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         key: 'latest',
         render: () => (
           <View style={styles.tabViewBtn}>
-            <Text style={{ color: '#fff', fontSize: 13 }}>Latest</Text>
+            <Text style={styles.tabText}>Latest</Text>
           </View>
         ),
       },
@@ -140,7 +140,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         key: 'movie',
         render: () => (
           <View style={styles.tabViewBtn}>
-            <Text style={{ color: '#fff', fontSize: 13 }}>Movies</Text>
+            <Text style={styles.tabText}>Movies</Text>
           </View>
         ),
       },
@@ -148,7 +148,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         key: 'show',
         render: () => (
           <View style={styles.tabViewBtn}>
-            <Text style={{ color: '#fff', fontSize: 13 }}>Shows</Text>
+            <Text style={styles.tabText}>Shows</Text>
           </View>
         ),
       }
@@ -169,7 +169,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       </TouchableOpacity>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity key={route.key} onPress={() => setIndex(i)} style={[styles.tabItem, index === i && styles.activeTab]}>
-          {route.render && route.render()}
+          {route.render && route.render()}          
         </TouchableOpacity>
       ))}
       <TouchableOpacity style={[styles.tabItem]}>
@@ -250,6 +250,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  tabText: {
+    color:Colors.whiteColor, 
+    fontSize:Fonts.Size.Small + 2
+  },
   notificationText: {
     position: 'absolute',
     bottom: 15,
@@ -283,7 +287,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:15,
     justifyContent: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
+    borderBottomColor: 'transparent'    
   },
   activeTab: {
     borderBottomColor: Colors.whiteColor,

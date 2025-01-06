@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import FollowingList from '../../components/Followings/FollowingList';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import Fonts from '../../styles/Fonts';
 import { RootState, useAppDispatch } from '../../store/index';
 import { useSelector } from 'react-redux';
 import { fetchFollowings } from '../../store/slices/followingSlice';
+import FastImage from 'react-native-fast-image';
 
 
 type Props = {
@@ -36,7 +37,9 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         navigation.setOptions({
             title: `Followings`,
             headerLeft: () => {
-                return <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} />
+                return  <Pressable onPress={backButtonHandler}>
+                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
+                        </Pressable>
             },
             headerRight: () => {
                 return '' //<Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
@@ -66,6 +69,11 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+    backBtn: {
+        width:35, 
+        height:35, 
+        marginBottom:20
+    },  
     container: {
         flex: 1,
         justifyContent: 'center',

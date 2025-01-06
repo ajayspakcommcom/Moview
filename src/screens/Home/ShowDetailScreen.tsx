@@ -88,11 +88,9 @@ const ShowDetailScreen: React.FC = () => {
         navigation.setOptions({
             title: ``,
             headerLeft: () => {
-                return Platform.OS === 'android' ?
-                            <Icon name={'chevron-back'} size={30} color={Colors.whiteColor} onPress={backButtonHandler} /> :
-                            <Pressable onPress={backButtonHandler}>
+                return  <Pressable onPress={backButtonHandler}>
                                 <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
-                            </Pressable>
+                        </Pressable>
             },
             headerRight: () => {
                 // return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />

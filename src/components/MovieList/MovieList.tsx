@@ -98,6 +98,9 @@ const MovieList: React.FC<MovieListProps> = () => {
                 keyExtractor={item => item._id}
                 horizontal={false}
                 refreshControl={<RefreshControl
+                    title='Loading...'
+                    tintColor={Colors.tabActiveColor}
+                    titleColor={Colors.whiteColor}
                     refreshing={refreshing}
                     onRefresh={onRefresh}
                     colors={[Colors.blackColor, Colors.darkBackgroudColor, Colors.playPauseButtonColor]}

@@ -104,19 +104,14 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                 <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{flex:1}}>
                     {userDetail.role !== 'guest' &&
                         <View style={styles.container}>
-                            <View style={styles.innerContainer}>
+                            <View style={[styles.innerContainer]}>
                                 {
                                     !isEditMode &&
-                                    <>
-                                        <View style={styles.editWrapper}>
-                                            {/* {Platform.OS === 'android' && <Feather name={'edit'} size={25} color={styles.editIcon.color} onPress={editHandler} />} */}
-                                            <Pressable onPress={editHandler}><FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/edit-w.png')} /></Pressable>
-                                        </View>
-                                        <View style={styles.header}>
+                                    <>                                        
+                                        <View style={[styles.header]}>
                                             <View style={styles.headerContent}>
                                                 <View style={styles.userTextIcon}>
-                                                    <View style={styles.userIcon}>
-                                                        {/* {Platform.OS === 'android' && <Icon name={'user-alt'} size={45} color={Colors.tabBgColor} onPress={() => { }} style={styles.icon} />} */}
+                                                    <View style={styles.userIcon}>                                                        
                                                         <FastImage style={{ width: 25, height: 25 }} source={require('../../assets/images/icons/profile-y.png')} />
                                                     </View>
                                                     <View style={styles.userTextWrapper}>
@@ -127,7 +122,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                             </View>
                                         </View>
 
-                                        <View style={styles.followerWrapper}>
+                                        <View style={[styles.followerWrapper]}>
                                             <Pressable onPress={gotoTabScreen.bind(null, 'MyReview', 'HomeScreen')}>
                                                 <View style={styles.movies}>
                                                     <Text style={styles.follText}>{myReviews}</Text>
@@ -151,18 +146,17 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                                         </View>
 
-                                        <View style={styles.myMoviesWrapper}>
+                                        <View style={[styles.myMoviesWrapper]}>
                                             <View style={styles.hr}></View>
+                                            <View style={styles.footerBtnsWrapper}>
+                                            <Pressable onPress={editHandler} style={styles.footerBtns}>
+                                                <Text style={styles.footerBtnText}>Edit Profile</Text>
+                                            </Pressable>
+                                            </View>
                                             <View style={styles.footerWrapper}>
                                                 <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
-
-                                        <View style={styles.logoWrapper}>
-                                            <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
-                                            <Text style={styles.honest}>Honest Movie Reviews</Text>
-                                        </View>
-                                        
                                     </>
                                 }
                                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
@@ -209,10 +203,12 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
     },
     container: {
-        flex: 1,
+        flex: 1
     },
     innerContainer: {
         flex: 1,
+        flexDirection:'column', 
+        justifyContent:'center'
     },
     editWrapper: {
         paddingTop: 30,
@@ -228,6 +224,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         flexWrap: 'wrap',
+        paddingTop:30
     },
     headerContent: {
         width: '80%', //200,
@@ -319,8 +316,20 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.tabBgColor,
         borderRadius: 50
     },
+    footerBtnsWrapper:{
+        paddingTop:15
+    },
+    footerBtns: {
+        borderColor:Colors.whiteColor,
+        borderWidth:2,
+        alignItems:'center',
+        padding:15
+    },
+    footerBtnText: {
+        color:Colors.whiteColor
+    },
     footerWrapper: {
-        paddingTop: 25
+        paddingTop: 15
     },
     footerItem: {
         flexWrap: 'nowrap',

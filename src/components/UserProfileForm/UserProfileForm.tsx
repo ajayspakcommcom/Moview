@@ -174,17 +174,8 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
       <AlertDialog visible={dialogVisible} signOut={deleteHandler} cancelLogout={() => setDialogVisible(false)} title={'Are you sure want to delete this account?'} />
 
       <View style={styles.container}>
-        <View style={styles.userIcon}>
-          {/* {Platform.OS === 'android' && <Icon
-            name={'user-alt'}
-            size={45}
-            color={Colors.tabBgColor}
-            onPress={() => { }}
-            style={styles.icon}
-          />} */}
-
+        <View style={styles.userIcon}>          
           <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />
-
         </View>
 
         <CustomTextInput
@@ -247,11 +238,6 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
           <Text style={styles.deleteText}>Delete Account</Text>
         </Pressable>
 
-        <View style={styles.logoWrapper}>
-          <FastImage style={styles.logoImg} source={require('../../assets/images/small-logo.png')} resizeMode={FastImage.resizeMode.contain} />
-          <Text style={styles.honest}>Honest Movie Reviews</Text>
-        </View>
-
       </View>
 
       <Portal>
@@ -273,15 +259,14 @@ const styles = StyleSheet.create({
   deleteTextWrapper: {
     width: '100%',
     color: Colors.whiteColor,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    paddingRight: 15
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 15,
+    backgroundColor:Colors.categoryRedColor,
+    padding:15
   },
   deleteText: {
-    color: Colors.whiteColor,
-    fontSize: Fonts.Size.Small - 3,
-    textDecorationLine: 'underline',
-    marginBottom: 10
+    color: Colors.whiteColor        
   },
   honest: {
     fontFamily: Fonts.Family.Medium,

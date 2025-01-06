@@ -10,3 +10,6 @@
       <ScrollView contentContainerStyle={styles.container}></ScrollView>
     </KeyboardAvoidingView> 
    </TouchableWithoutFeedback>
+
+   userName : AdminTest
+   password : Admin@12345

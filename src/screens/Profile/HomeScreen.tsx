@@ -55,7 +55,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const onLogoutHandler = () => {
-        setDialogVisible(true);
+        setDialogVisible(true);        
     };
 
     const getFollowingCount = async () => {
@@ -154,7 +154,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                             </Pressable>
                                             </View>
                                             <View style={styles.footerWrapper}>
-                                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
+                                                <CustomButton text={'Logout...'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
                                     </>

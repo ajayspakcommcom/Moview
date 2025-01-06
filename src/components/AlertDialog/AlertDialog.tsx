@@ -10,6 +10,7 @@ interface AlertDialogProps {
     signOut: () => void;
     title?: string;
     content?: string;
+    isContent?: boolean
 }
 
 const AlertDialog: React.FC<AlertDialogProps> = ({
@@ -18,13 +19,14 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
     signOut,
     title = "Alert",
     content = "This is a simple dialog",
+    isContent= false
 }) => {
 
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={cancelLogout}>
                 {title && <Dialog.Title style={styles.title}>{title}</Dialog.Title>}
-                {content && <Dialog.Content>
+                {(content && isContent) && <Dialog.Content>
                     <Text style={styles.deleteKTHeading}>By deleting your account, you acknowledge that:</Text>
                     <View style={styles.info}>
                         <Text style={styles.feature}>1) All your reviews, follows, and notifications will be permanently removed.</Text>

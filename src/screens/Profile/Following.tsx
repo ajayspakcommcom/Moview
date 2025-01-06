@@ -10,6 +10,7 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { useSelector } from 'react-redux';
 import { fetchFollowings } from '../../store/slices/followingSlice';
 import FastImage from 'react-native-fast-image';
+import { Platform } from 'react-native';
 
 
 type Props = {
@@ -38,8 +39,12 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
             title: `Followings`,
             headerLeft: () => {
                 return  <Pressable onPress={backButtonHandler}>
-                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
-                        </Pressable>
+                {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
+                {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
+                        <FastImage style={[styles.iosBackBtnImg]}  source={require('../../assets/images/icons/back-w-1.png')} />
+                        <Text style={[styles.iosBackBtnText]}>  Back</Text>  
+                    </View>}
+            </Pressable>
             },
             headerRight: () => {
                 return '' //<Icon name={'notifications'} size={25} color={Colors.tabActiveColor} />
@@ -69,6 +74,17 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+    iosBackBtnText: {
+        color:Colors.whiteColor
+    },
+    iosBackBtnWrapper: {
+        flexDirection:'row', 
+        alignItems:'center'
+    },
+    iosBackBtnImg: {
+        width:8, 
+        height:15,             
+    },
     backBtn: {
         width:35, 
         height:35, 

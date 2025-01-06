@@ -1,15 +1,19 @@
+ iosBackBtnText: {
+            color:Colors.whiteColor
+        },
+        iosBackBtnWrapper: {
+            flexDirection:'row', 
+            alignItems:'center'
+        },
+        iosBackBtnImg: {
+            width:8, 
+            height:15,             
+        },
 
-
- keypad: {
-        flex: 1
-    }, 
-
-
- <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
-      <ScrollView contentContainerStyle={styles.container}></ScrollView>
-    </KeyboardAvoidingView> 
-   </TouchableWithoutFeedback>
-
-   userName : AdminTest
-   password : Admin@12345
+<Pressable onPress={backButtonHandler}>
+    {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
+    {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
+            <FastImage style={[styles.iosBackBtnImg]}  source={require('../../assets/images/icons/back-w-1.png')} />
+            <Text style={[styles.iosBackBtnText]}>  Back</Text>  
+        </View>}
+</Pressable>

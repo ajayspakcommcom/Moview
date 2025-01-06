@@ -38,8 +38,12 @@ const Notification: React.FC<Props> = ({ navigation }) => {
             title: `Notification`,
             headerLeft: () => {
                 return  <Pressable onPress={backButtonHandler}>
-                                <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />
-                        </Pressable>
+                {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
+                {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
+                        <FastImage style={[styles.iosBackBtnImg]}  source={require('../../assets/images/icons/back-w-1.png')} />
+                        <Text style={[styles.iosBackBtnText]}>  Back</Text>  
+                    </View>}
+            </Pressable>
             },
         });
     };
@@ -92,6 +96,17 @@ const Notification: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    iosBackBtnText: {
+        color:Colors.whiteColor
+    },
+    iosBackBtnWrapper: {
+        flexDirection:'row', 
+        alignItems:'center'
+    },
+    iosBackBtnImg: {
+        width:8, 
+        height:15,             
+    },
     backBtn: {
         width:35, 
         height:35, 

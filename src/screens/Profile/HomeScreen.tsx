@@ -160,7 +160,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     </>
                                 }
                                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
-                                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} title={'Are you sure want to logout?'} />
+                                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} isContent={false} title={'Are you sure want to logout?'} />
                             </View>                            
                         </View>
                     }

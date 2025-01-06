@@ -171,7 +171,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
   return (
     <>
 
-      <AlertDialog visible={dialogVisible} signOut={deleteHandler} cancelLogout={() => setDialogVisible(false)} title={'Are you sure want to delete this account?'} />
+      <AlertDialog visible={dialogVisible} isContent={true} signOut={deleteHandler} cancelLogout={() => setDialogVisible(false)} title={'Are you sure want to delete this account?'} />
 
       <View style={styles.container}>
         <View style={styles.userIcon}>          

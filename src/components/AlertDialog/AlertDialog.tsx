@@ -36,7 +36,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
                     <Text style={styles.deleteKTHeading}>If you wish to proceed, please confirm your account deletion.</Text>
                 </Dialog.Content>}
                 <Dialog.Actions>
-                    <Button onPress={cancelLogout} mode='outlined' style={[styles.btn]}>No</Button>
+                    <Button onPress={cancelLogout} mode='outlined' style={[styles.btn, styles.outlinedBtn]}>No</Button>
                     <Button onPress={signOut} mode='contained' style={[styles.btn]}>Yes</Button>
                 </Dialog.Actions>
             </Dialog>
@@ -47,6 +47,9 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
 export default React.memo(AlertDialog);
 
 const styles = StyleSheet.create({
+    outlinedBtn: {
+        borderWidth:2
+    },
     btn: {
         width:100, 
         borderRadius:5

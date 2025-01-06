@@ -126,7 +126,8 @@ const DetailScreen: React.FC = () => {
             genre: route.params.movie?.genre,
             cast: route.params.movie?.cast,
             rating: route.params.movie?.rating,
-            runtime: route.params.movie?.runtime
+            runtime: route.params.movie?.runtime,
+            description:route.params.movie?.description
         }));
 
         loadHeaderContent();
@@ -410,6 +411,10 @@ const DetailScreen: React.FC = () => {
 
             <View style={styles.directorWrapper}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
+            </View>
+
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Description: {detailData.description}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>

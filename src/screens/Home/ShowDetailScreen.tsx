@@ -128,7 +128,8 @@ const ShowDetailScreen: React.FC = () => {
             genre: route.params.showItem?.genre,
             cast: route.params.showItem?.cast,
             rating: route.params.showItem?.rating,
-            runtime: route.params.showItem?.runtime
+            runtime: route.params.showItem?.runtime,
+            description:route.params.showItem?.description
         }));
 
 
@@ -412,6 +413,10 @@ const ShowDetailScreen: React.FC = () => {
 
             <View style={styles.directorWrapper}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
+            </View>
+
+            <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Description: {detailData.description}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>

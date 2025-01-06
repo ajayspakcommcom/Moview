@@ -243,7 +243,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Content>
-            <Text variant="bodyMedium" style={[styles.alertText]}>Maximum 100 characters allowed.</Text>
+            <Text variant="bodyMedium" style={[styles.alertText]}>Maximum 100 characters allowed.</Text>            
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Ok</Button>

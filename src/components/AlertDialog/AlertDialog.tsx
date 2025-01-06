@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Portal, Dialog, Button, Text } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Portal, Dialog, Button, Text, List } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
+
 
 interface AlertDialogProps {
     visible: boolean;
@@ -17,10 +19,20 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
     title = "Alert",
     content = "This is a simple dialog",
 }) => {
+
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={cancelLogout}>
-                <Dialog.Title style={styles.title}>{title}</Dialog.Title>
+                {title && <Dialog.Title style={styles.title}>{title}</Dialog.Title>}        
+                {content && <Dialog.Content>
+                    <Text style={styles.deleteKTHeading}>By deleting your account, you acknowledge that:</Text>
+                    <View style={styles.info}>                        
+                        <Text style={styles.feature}>1) All your reviews, follows, and notifications will be permanently removed.</Text>
+                        <Text style={styles.feature}>2) Any interactions with other users, including your reviews and follow activities, will no longer be accessible.</Text>
+                        <Text style={styles.feature}>3) This action is irreversible, and all your data will be permanently deleted from our system.</Text>
+                    </View>
+                    <Text style={styles.deleteKTHeading}>If you wish to proceed, please confirm your account deletion.</Text>
+                </Dialog.Content> }       
                 <Dialog.Actions>
                     <Button onPress={cancelLogout}>No</Button>
                     <Button onPress={signOut}>Yes</Button>
@@ -36,5 +48,19 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: '800'
+    },
+    deleteKTHeading: {
+        fontSize:Fonts.Size.Small + 1,
+        fontFamily:Fonts.Family.Bold, 
+        marginBottom:15,
+        fontWeight:'600'
+    },
+    info: {
+        
+    },
+    feature: {
+        fontFamily:Fonts.Family.Thin,
+      fontSize:Fonts.Size.Small,  
+      marginBottom:15
     }
 });

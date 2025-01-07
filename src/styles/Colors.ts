@@ -18,7 +18,8 @@ const Colors = {
     borderColor: '#ccc',
     backgroundColorShadow: 'rgba(0, 0, 0, 0.5)',
     tagBgColor: '#333132', 
-    tagBorderColor: '#A7A9AC'    
+    tagBorderColor: '#A7A9AC',    
+    blueColor:'#007AFF'
 };
 
 export default Colors;

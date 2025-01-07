@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginHorizontal:'auto'
   },
   emailBtn: {
-    backgroundColor:'#007AFF', 
+    backgroundColor:Colors.blueColor, 
     borderRadius:20, 
     textAlign:'center', 
     flexShrink:1,

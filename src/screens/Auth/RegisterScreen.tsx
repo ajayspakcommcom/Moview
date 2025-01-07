@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView, Linking } from 'react-native';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,7 +15,7 @@ type Props = {
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
-    const [isSelected, setSelection] = React.useState(false);
+    const [checked, setChecked] = React.useState(false);
     const [firstname, setFirstname] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -102,6 +102,11 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         navigation.navigate(screen);
     };
 
+     const termsConditionHandler = () => {    
+        const url = 'https://astaracademy.in/index.html';
+        Linking.openURL(url).catch((err) => console.error('An error occurred', err));    
+      };
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView behavior={'padding'} style={styles.keypad} keyboardShouldPersistTaps="handled">
@@ -139,6 +144,19 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         onChangeText={handlePasswordChange}
                         secureTextEntry
                     />
+{/* ☑️ By checking the box below, you agree to abide by our [Community Guidelines](#) and [Terms of Use](#). */}
+
+                    <Text style={styles.checkboxLabel}>
+                        By checking the box below, you agree to abide by our 
+                        <Pressable onPress={termsConditionHandler}><Text style={styles.linkText}>Community Guidelines</Text></Pressable> and 
+                        <Pressable onPress={termsConditionHandler}><Text style={styles.linkText}> Terms of Use.</Text></Pressable>
+                    </Text>
+                    <View style={styles.flatItem}>
+                        {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
+                        <Text style={styles.checkboxLabel} onPress={() => setChecked(!checked)}>
+                            I agree to the Community Guidelines and Terms of Use.
+                        </Text>
+                    </View>
 
 
                     <CustomButton
@@ -164,6 +182,27 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    linkText: {
+        textDecorationLine:'underline',
+        color:Colors.blueColor
+    },
+    checkboxLabel: {
+        marginLeft: 5,
+        fontSize: Fonts.Size.Small,
+        color: Colors.whiteColor,
+    },
+    icon: {
+        width: 25,
+        height: 25
+    },
+    flatItem: {                
+        flexDirection: 'row',
+        alignItems: 'center',        
+        paddingVertical:10,
+        //paddingLeft: 10,
+        //backgroundColor:'red',
+        width:'100%'
+    },
     checkbox: {
         marginRight: 8,
       },

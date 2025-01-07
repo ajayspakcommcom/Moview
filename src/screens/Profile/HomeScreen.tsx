@@ -19,6 +19,7 @@ import { RootState, useAppDispatch } from '../../store/index';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchFollowings } from '../../store/slices/followingSlice';
 import { fetchFollowers } from '../../store/slices/followerSlice';
+import HelpSupportModal from '../../components/HelpSupportModal/HelpSupportModal';
 
 type Props = {
     navigation: any;
@@ -148,10 +149,11 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                                         <View style={[styles.myMoviesWrapper]}>
                                             <View style={styles.hr}></View>
+                                            <HelpSupportModal />
                                             <View style={styles.footerBtnsWrapper}>
-                                            <Pressable onPress={editHandler} style={styles.footerBtns}>
-                                                <Text style={styles.footerBtnText}>Edit Profile</Text>
-                                            </Pressable>
+                                                <Pressable onPress={editHandler} style={styles.footerBtns}>
+                                                    <Text style={styles.footerBtnText}>Edit Profile</Text>
+                                                </Pressable>
                                             </View>
                                             <View style={styles.footerWrapper}>
                                                 <CustomButton text={'Logout...'} onPressHandler={onLogoutHandler} textSize={20} />

@@ -1,90 +1,38 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  Button,
-  View,
-  Platform,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {RefreshControl, ScrollView, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 
-// Define props interface (optional if you have specific props)
-interface LoadingProps {
-    message?: string;
-}
 
-// Functional component with optional message prop
-const Test6: React.FC<LoadingProps> = ({ message = 'Test6' }) => {
+const Test6 = () => {
 
-    const handleFormSubmit = () => {
-        console.log('Form Submitted!');
-      };
+  const openLink = () => {    
+    const url = 'https://astaracademy.in/index.html';
+    Linking.openURL(url).catch((err) => console.error('An error occurred', err));    
+  };
 
-    return (
-        <KeyboardAwareScrollView
-              contentContainerStyle={styles.container}
-              enableOnAndroid={true} // Works on both iOS and Android
-              extraScrollHeight={20} // Ensures inputs are visible
-              keyboardShouldPersistTaps="handled" // Dismiss keyboard on tapping outside
-            >
-              <Text style={styles.header}>iOS-Friendly Form</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your name"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your email"
-                keyboardType="email-address"
-              />
-              <TextInput
-                style={[styles.input, styles.textArea]}
-                placeholder="Enter your feedback"
-                multiline
-                numberOfLines={4}
-              />
-              <TextInput
-                style={[styles.input, styles.textArea]}
-                placeholder="Enter your feedback"
-                multiline
-                numberOfLines={4}
-              />
-              <TextInput
-                style={[styles.input, styles.textArea]}
-                placeholder="Enter your feedback"
-                multiline
-                numberOfLines={4}
-              />
-              <Button title="Submit" onPress={handleFormSubmit} />
-            </KeyboardAwareScrollView>
-    );
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+      <TouchableOpacity onPress={openLink}>
+        <Text style={{ color: 'blue' }}>Open Link</Text>
+      </TouchableOpacity>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      justifyContent: 'center',
-      padding: 20,
-    },
-    header: {
-      fontSize: 24,
-      textAlign: 'center',
-      marginBottom: 20,
-    },
-    input: {
-      height: 40,
-      borderColor: 'gray',
-      borderWidth: 1,
-      marginBottom: 20,
-      paddingHorizontal: 10,
-      borderRadius: 5,
-    },
-    textArea: {
-      height: 100,
-      textAlignVertical: 'top', // For proper alignment in multiline TextInput
-    },
-  });
+  container: {
+    flex: 1,
+    //backgroundColor:Colors.darkBackgroudColor
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-export default React.memo(Test6);
+export default Test6;

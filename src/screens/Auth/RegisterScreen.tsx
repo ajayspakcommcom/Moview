@@ -4,7 +4,7 @@ import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import FastImage from 'react-native-fast-image';
 import { hitSlops } from '../../utils/Common';
 const CustomTextInput = React.lazy(() => import('../../components/Ui/CustomTextInput'));

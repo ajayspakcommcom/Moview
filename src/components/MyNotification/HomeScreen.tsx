@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/Notification';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import FastImage from 'react-native-fast-image';
 
 type Props = {

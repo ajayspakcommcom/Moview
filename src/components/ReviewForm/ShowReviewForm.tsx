@@ -6,7 +6,7 @@ import Fonts from '../../styles/Fonts';
 import CustomButton from '../Ui/CustomButton';
 import { ShowItem } from '../../types/Show';
 import { useAuth } from '../../context/AuthContext';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { useAppDispatch } from '../../store';
 import { createReviewListByShow } from '../../store/slices/reviewListByShowSlice';
 import { createNotification } from '../../store/slices/notificationSlice';

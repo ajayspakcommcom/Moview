@@ -4,7 +4,7 @@ import FollowingList from '../../components/Followings/FollowingList';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../context/AuthContext';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import Fonts from '../../styles/Fonts';
 import { RootState, useAppDispatch } from '../../store/index';
 import { useSelector } from 'react-redux';

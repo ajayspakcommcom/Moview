@@ -8,7 +8,7 @@ import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
 
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { useAuth } from '../../context/AuthContext';
 import { ShowItem } from '../../types/Show';
 import ShowReviewItem from '../../components/ReviewList/ShowReviewItem';

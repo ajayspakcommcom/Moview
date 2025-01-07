@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet, Pressable, Platform } from 'react-native';
 import FollowerList from '../../components/Followers/FollowerList';
 import Colors from '../../styles/Colors';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { useAuth } from '../../context/AuthContext';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';

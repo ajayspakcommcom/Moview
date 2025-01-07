@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { Text } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
 import FastImage from 'react-native-fast-image';

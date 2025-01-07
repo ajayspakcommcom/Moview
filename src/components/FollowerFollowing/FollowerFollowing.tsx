@@ -7,7 +7,7 @@ import Fonts from '../../styles/Fonts';
 import { capitalizeFirstLetter } from '../../utils/Common';
 import { UserItem } from '../../types/User';
 import CustomButton from '../Ui/CustomButton';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';

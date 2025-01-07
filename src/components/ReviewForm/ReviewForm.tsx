@@ -6,7 +6,7 @@ import Fonts from '../../styles/Fonts';
 import CustomButton from '../Ui/CustomButton';
 import { MovieItem } from '../../types/Movie';
 import { useAuth } from '../../context/AuthContext';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';

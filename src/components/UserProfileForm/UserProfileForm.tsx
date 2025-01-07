@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Alert, Platform, Pressable, } from 'react-native';
 import Colors from '../../styles/Colors';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../context/AuthContext';
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper';

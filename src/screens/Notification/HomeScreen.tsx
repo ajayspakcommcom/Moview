@@ -11,7 +11,7 @@ const Loading = React.lazy(() => import('../../components/Loading/Loading'));
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchNotificationsByUserId, deleteNotification } from '../../store/slices/notificationSlice';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import Fonts from '../../styles/Fonts';
 import CustomButton from '../../components/Ui/CustomButton';
 import FastImage from 'react-native-fast-image';

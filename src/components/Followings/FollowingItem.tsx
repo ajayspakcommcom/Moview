@@ -7,7 +7,7 @@ import Colors from '../../styles/Colors';
 import CustomButton from '../Ui/CustomButton';
 import { useAuth } from '../../context/AuthContext';
 import Fonts from '../../styles/Fonts';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { useAppDispatch } from '../../store/index';
 import { createFollower,  removeFollower } from '../../store/slices/followerSlice';

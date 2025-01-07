@@ -5,7 +5,7 @@ import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/
 import { LastesMovieShowItem } from '../../types/LatestMovieShow';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { Text } from 'react-native-paper';
 import { getFirstThreeChars } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';

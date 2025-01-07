@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, View, Text } from 'react-native';
 import ShowReviewItem from './ShowReviewItem';
 import { Review } from '../../models/Review';
-import { API_URL } from '../../configure/config.android';
+import { API_URL } from '../../configure/config.ios';
 import { useAuth } from '../../context/AuthContext';
 import { ShowItem } from '../../types/Show';
 import Colors from '../../styles/Colors';

@@ -6,7 +6,7 @@ import Colors from '../../styles/Colors';
 import { useFocusEffect } from '@react-navigation/native';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
-import { API_URL } from "../../configure/config.android";
+import { API_URL } from "../../configure/config.ios";
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import { TabView, SceneRendererProps, NavigationState } from 'react-native-tab-view';

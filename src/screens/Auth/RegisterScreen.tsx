@@ -156,9 +156,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
                     <CustomButton
                         text={loader ? "Register..." : "Register"}
-                        onPressHandler={handleLogin}
+                        onPressHandler={ checked ? handleLogin : () => console.log('Ram...')}
                         textSize={20}
-                        isDisabled={loader ? true : false}
+                        //isDisabled={(checked) ? true : false}                        
+                        style={{backgroundColor:checked ? Colors.tabActiveColor : Colors.textInputDisabled}}
                     />
 
                     <View style={styles.footerTextWrapper}>

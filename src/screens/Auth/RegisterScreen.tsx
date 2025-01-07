@@ -22,7 +22,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const [phone, setPhone] = React.useState('');
     const [loader, setLoader] = React.useState(false);
 
-    const handleLogin = async () => {
+    const handleLogin = React.useCallback(async () => {
 
         try {
 
@@ -50,13 +50,12 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             "username": username,
                             "email": username,
                             "phone": phone,
-                            "password": password
+                            "password": password, 
+                            "terms": checked 
                         }),
                     });
 
                     const result = await response.json();
-
-
                     if (result.status === 'success') {
                         setLoader(false);
                         Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [{ text: 'OK', onPress: () => navigation.navigate('Login') }]);
@@ -76,7 +75,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             Alert.alert('Error', 'Login failed. Please try again.');
         }
 
-    };
+    }, [checked])
 
     const handleFirstnameChange = (text: string) => {
         setFirstname(text);
@@ -94,9 +93,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         setPassword(text);
     };
 
-    const skipHandler = (event: GestureResponderEvent) => {
-
-    };
 
     const goto = (screen: string) => {
         navigation.navigate(screen);

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import Colors from '../../styles/Colors';
-import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../configure/config.ios';
@@ -16,6 +15,7 @@ type Props = {
 
 const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
+    const [isSelected, setSelection] = React.useState(false);
     const [firstname, setFirstname] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -140,6 +140,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         secureTextEntry
                     />
 
+
                     <CustomButton
                         text={loader ? "Register..." : "Register"}
                         onPressHandler={handleLogin}
@@ -149,7 +150,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
                     <View style={styles.footerTextWrapper}>
                         <Text style={styles.dontHaveAccount}>Already have an account?</Text>
-
                     </View>
 
                     <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
@@ -164,6 +164,12 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    checkbox: {
+        marginRight: 8,
+      },
+      label: {
+        fontSize: 16,
+      },
     keypad: {
         flex: 1
     },

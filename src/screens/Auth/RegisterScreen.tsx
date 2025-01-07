@@ -144,7 +144,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         onChangeText={handlePasswordChange}
                         secureTextEntry
                     />
-{/* ☑️ By checking the box below, you agree to abide by our [Community Guidelines](#) and [Terms of Use](#). */}
 
                     <Text style={styles.checkboxLabel}>
                         By checking the box below, you agree to abide by our 

@@ -1,155 +1,258 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
-import { Text, TextInput, Button, Checkbox } from 'react-native-paper';
+import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
+import Colors from '../../styles/Colors';
+import { Checkbox } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigation, ParamListBase, NavigationProp } from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
+import CustomTextInput from '../../components/Ui/CustomTextInput';
+import CustomButton from '../../components/Ui/CustomButton';
+import { hitSlops } from '../../utils/Common';
 
+type Props = {
 
-export default function Test1() {
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    mobile: '',
-    password: '',
-    termsAccepted: false
-  });
+};
 
-  const [errors, setErrors] = React.useState({
-    name: '',
-    email: '',
-    mobile: '',
-    password: '',
-  });
+const Test1: React.FC<Props> = () => {
 
-  const handleSubmit = () => {    
-    const newErrors = {
-      name: !formData.name ? 'Name is required' : '',
-      email: !formData.email ? 'Email is required' : '',
-      mobile: !formData.mobile ? 'Mobile number is required' : '',
-      password: !formData.password ? 'Password is required' : '',
+    const { login, responseError } = useAuth();
+    const [username, setUsername] = React.useState(''); //omkar@gmail.com //contact@spakcomm.com
+    const [password, setPassword] = React.useState(''); //12345 // contact@12345
+    const [checked, setChecked] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
+
+    const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+    const handleUsernameChange = (text: string) => {
+        setUsername(text);
     };
 
-    setErrors(newErrors);
+    const handlePasswordChange = (text: string) => {
+        setPassword(text);
+    };
 
-    if (Object.values(newErrors).every(error => !error) && formData.termsAccepted) {
-      console.log('Form submitted:', formData);
-      // Handle form submission here
-    }
-  };
+    const handleLogin = async () => {
+        setLoader(true);
+        try {
+            if (username.trim() === '' || password.trim() === '') {
+                Alert.alert('Error', 'Username or password cannot be empty', [{ text: "OK", onPress: () => setLoader(false) }], { cancelable: true });
+                return;
+            }
+            login(username, password);            
+            setLoader(false);
 
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Registration Form</Text>
-      
-      <TextInput
-        label="Name"
-        value={formData.name}
-        onChangeText={(text) => setFormData({ ...formData, name: text })}
-        style={styles.input}
-        error={!!errors.name}
-      />
-      {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
+        } catch (error) {
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
+    };
 
-      <TextInput
-        label="Email"
-        value={formData.email}
-        onChangeText={(text) => setFormData({ ...formData, email: text })}
-        keyboardType="email-address"
-        style={styles.input}
-        error={!!errors.email}
-      />
-      {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+    const guestLogin = async () => {
+        setLoader(true);
+        try {
+            login('guest@gmail.com', '12345');
+            setLoader(false);
+        } catch (error) {
+            Alert.alert('Error', 'Login failed. Please try again.');
+        }
+    };
 
-      <TextInput
-        label="Mobile"
-        value={formData.mobile}
-        onChangeText={(text) => setFormData({ ...formData, mobile: text })}
-        keyboardType="phone-pad"
-        style={styles.input}
-        error={!!errors.mobile}
-      />
-      {errors.mobile ? <Text style={styles.errorText}>{errors.mobile}</Text> : null}
+    const goto = (screen: string) => {
+        navigation.navigate(screen);
+    };
 
-      <TextInput
-        label="Password"
-        value={formData.password}
-        onChangeText={(text) => setFormData({ ...formData, password: text })}
-        secureTextEntry
-        style={styles.input}
-        error={!!errors.password}
-      />
-      {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
-
-      <View style={styles.checkboxContainer}>
-        {Platform.OS === 'ios' ? (
-          <TouchableOpacity onPress={() => setFormData({ ...formData, termsAccepted: !formData.termsAccepted })} >
-            <View style={{
-              width: 20,
-              height: 20,
-              borderWidth: 1,
-              borderColor: '#000',
-              backgroundColor: formData.termsAccepted ? '#000' : '#fff',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              {formData.termsAccepted && (<Text style={{color: '#fff'}}>✓</Text>)}
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <Checkbox
-            status={formData.termsAccepted ? 'checked' : 'unchecked'} 
-            onPress={() => setFormData({ ...formData, termsAccepted: !formData.termsAccepted })}
-          />
-        )}
-        <Text>I accept the terms and conditions</Text>
-        <TouchableOpacity 
-          onPress={() => Alert.alert(
-            'Terms & Conditions',
-            'Please read our terms and conditions carefully...'
-          )}
-          style={{marginLeft: 8}}
+    return (
+        <KeyboardAvoidingView 
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+            style={styles.keypad}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -200}
         >
-          <Text style={{color: 'blue', textDecorationLine: 'underline'}}>View</Text>
-        </TouchableOpacity>
-      </View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ScrollView 
+                    contentContainerStyle={styles.container}
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                >
+                    <FastImage
+                        style={styles.logo}
+                        source={require('../../assets/images/logo.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                    <Text style={styles.honest}>Honest Movie Reviews</Text>
+                    {responseError?.message && <View style={styles.errorWrapper}><Text style={styles.honest}>{responseError?.message}</Text></View>}
+                    <CustomTextInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={handleUsernameChange}
+                        autoCapitalize="none"
+                    />
 
-      <Button 
-        mode="contained" 
-        onPress={handleSubmit}
-        style={styles.button}
-        disabled={!formData.termsAccepted}
-      >
-        Submit
-      </Button>
-    </ScrollView>
-  );
-}
+                    <CustomTextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={handlePasswordChange}
+                        secureTextEntry
+                    />
+
+                    <CustomButton
+                        text={loader ? 'Login...' : 'Login'}
+                        onPressHandler={handleLogin}
+                        textSize={20}
+                        isDisabled={loader ? true : false}
+                    />
+
+                    <View style={styles.rememberForgot}>
+                        <View style={styles.rememberCheckbox}>
+                            <Checkbox
+                                status={checked ? 'checked' : 'unchecked'}
+                                onPress={() => {
+                                    setChecked(!checked);
+                                }}
+                            />
+                            <Text style={styles.remember}>Remember Me</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.forgotText}>Forgot Password</Text>
+                        </View>
+                    </View>
+
+
+                    <View style={styles.skipWrapper}>
+                        <Text style={styles.skipText} onPress={goto.bind(null, 'Home')}>SKIP</Text>
+                        <View style={styles.skipDont}>
+                            <Text style={styles.skipBottomText}>Don’t have an account?</Text>
+                        </View>
+                    </View>
+
+                    <Pressable onPress={goto.bind(null, 'Register')} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                        <View style={styles.registerBtnWrapper}>
+                            <Text style={styles.skipBottomText}>Register</Text>
+                        </View>
+                    </Pressable>
+
+                    <Pressable onPress={guestLogin} style={styles.registerBtnPressable} hitSlop={hitSlops()}>
+                        <View style={styles.registerBtnWrapper}>
+                            <Text style={styles.skipBottomText}>Skip</Text>
+                        </View>
+                    </Pressable>
+
+                </ScrollView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+    );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    marginBottom: 8,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginBottom: 8,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-  button: {
-    marginTop: 16,
-    paddingVertical: 8,
-  },
+    keypad: {
+        flex: 1,
+        backgroundColor: Colors.darkBackgroudColor
+    },
+    container: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    logo: {
+        width: 150,
+        height: 72,
+        //marginBottom: 40,
+    },
+    honest: {
+        color: Colors.whiteColor,
+        marginBottom: 40,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small,
+    },
+
+    errorWrapper: {
+        paddingBottom: 0
+    },
+
+    errorText: {
+        color: Colors.redColor,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Medium,
+    },
+
+    button: {
+        width: '100%',
+        height: 50,
+        backgroundColor: 'blue',
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    rememberForgot: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        color: Colors.whiteColor,
+        paddingRight: 10,
+        display: 'none'
+    },
+
+    rememberCheckbox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+
+    remember: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Small,
+    },
+
+    forgotText: {
+        color: Colors.whiteColor,
+        fontSize: Fonts.Size.Small,
+        textDecorationLine: 'underline'
+    },
+
+    skipWrapper: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    skipText: {
+        fontSize: Fonts.Size.X_Large - 3,
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Light,
+        marginBottom: 30,
+        marginTop: 80,
+        display: 'none'
+    },
+
+    skipDont: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30,
+    },
+    skipBottomText: {
+        color: Colors.whiteColor,
+        fontFamily: Fonts.Family.Medium,
+        fontSize: Fonts.Size.Small,
+        lineHeight: 20
+    },
+    registerBtnPressable: {
+        width: '100%',
+        marginTop: 20
+    },
+    registerBtnWrapper: {
+        borderWidth: 2,
+        borderColor: Colors.whiteColor,
+        width: '100%',
+        alignItems: 'center',
+        padding: 15
+    }
 });
+
+export default Test1;

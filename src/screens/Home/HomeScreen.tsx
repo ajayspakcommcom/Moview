@@ -169,8 +169,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       </TouchableOpacity>
       {props.navigationState.routes.map((route, i) => (
         <TouchableOpacity key={route.key} onPress={() => setIndex(i)} style={[styles.tabItem, index === i && styles.activeTab]}>
-          {route.render && route.render()}          
-          
+          {/* {route.render && route.render()}                     */}
+          <View style={styles.tabViewBtn}>
+            <Text style={[styles.tabText, {color: index === i ? Colors.tabActiveColor :Colors.whiteColor }]}>{route['key']}</Text>
+          </View>
         </TouchableOpacity>
       ))}
       <TouchableOpacity style={[styles.tabItem]}>
@@ -255,7 +257,8 @@ const styles = StyleSheet.create({
     fontWeight:'600',
     fontFamily:Fonts.Family.Bold,
     color:Colors.whiteColor, 
-    fontSize:Fonts.Size.Small + 3
+    fontSize:Fonts.Size.Small + 3,
+    textTransform:'capitalize'
   },
   notificationText: {
     position: 'absolute',
@@ -293,7 +296,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'transparent'    
   },
   activeTab: {
-    borderBottomColor: Colors.whiteColor
+    borderBottomColor: Colors.tabActiveColor
   },
   logoImg: {
     width: 80,

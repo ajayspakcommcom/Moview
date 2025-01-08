@@ -98,10 +98,38 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         navigation.navigate(screen);
     };
 
-     const termsConditionHandler = () => {    
-        const url = 'https://astaracademy.in/index.html';
-        Linking.openURL(url).catch((err) => console.error('An error occurred', err));    
-      };
+    const termsConditionHandler = React.useCallback(async () => {
+        const url = 'https://moviu.in/privacy.html';
+        
+        try {
+            const canOpen = await Linking.canOpenURL(url);
+            if (!canOpen) {
+                Alert.alert('Error','Unable to open the privacy policy page. Please try again later.',[{ text: 'OK' }]);
+                return;
+            }
+    
+            await Linking.openURL(url);
+            
+        } catch (err) {
+            console.error('Error opening privacy policy:', err);
+            Alert.alert(
+                'Error',
+                'Could not open the privacy policy page. Please check your internet connection and try again.',
+                [
+                    {
+                        text: 'Try Again',
+                        onPress: termsConditionHandler
+                    },
+                    {
+                        text: 'Cancel',
+                        style: 'cancel'
+                    }
+                ]
+            );
+        } finally {
+            console.log('');
+        }
+    }, []);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

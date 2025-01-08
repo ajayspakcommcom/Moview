@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Pressable, FlatList, Platform} from 'react-native';
+import {StyleSheet, View, Pressable, FlatList, Platform, Dimensions} from 'react-native';
 import {Text, Checkbox} from 'react-native-paper';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -44,7 +44,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
 
   const renderItem = ({item: language}: {item: string}) => (
     <View style={styles.flatItem}>      
-        {selected[language] ? <FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /> : <FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} />}
+        {selected[language] ? <Pressable onPress={() => toggleCheckbox(language)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => toggleCheckbox(language)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
       <Text style={styles.checkboxLabel} onPress={() => toggleCheckbox(language)}>{language}</Text>
     </View>
   );
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Family.Bold,
     color: Colors.blackColor,
   },
-  flatHeader: {
+  flatHeader: {    
     borderTopRightRadius:10,
     borderTopLeftRadius:10,
     backgroundColor: Colors.blackColor,
@@ -122,8 +122,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   flateHeaderText: {
+    fontWeight:'600',
     color: Colors.whiteColor,
     fontFamily: Fonts.Family.Bold,
+    fontSize:Fonts.Size.X_Large - 2
   },
   flatListStyle: {    
     borderRadius: 10,
@@ -145,7 +147,8 @@ const styles = StyleSheet.create({
     flex: 1, 
     minHeight:300,
     maxHeight:400, 
-    backgroundColor:Colors.blackColor
+    backgroundColor:Colors.blackColor,
+    width:Dimensions.get('screen').width - 60
   },
   flatList: {  
     backgroundColor: '#f1f1f1',

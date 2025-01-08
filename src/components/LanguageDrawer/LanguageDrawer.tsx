@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     minWidth: '100%',
     backgroundColor: Colors.tabActiveColor,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     top: 0,
     right: 0,
     zIndex: 1,
@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
   footerText: {
     fontFamily: Fonts.Family.Bold,
     color: Colors.blackColor,
+    fontSize:Fonts.Size.Medium,
+    fontWeight:'700'
   },
   flatHeader: {    
     borderTopRightRadius:10,

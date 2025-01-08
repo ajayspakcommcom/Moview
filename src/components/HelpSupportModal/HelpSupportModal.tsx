@@ -53,7 +53,8 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            console.clear();
+            console.log('Modal has been closed');
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.centeredViewInner}>
@@ -61,7 +62,7 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
               <Pressable
                 style={[styles.button, styles.closeBtn]}
                 onPress={() => setModalVisible(!modalVisible)}>                
-                <FastImage style={{width:50, height:50}}  source={require('../../assets/images/icons/close-w.png')} />
+                <FastImage style={{width:50, height:50}}  source={require('../../assets/images/icons/close-y.png')} />
               </Pressable>
               <View style={styles.contentWrapper}>
                   <Text style={styles.title}>Help & Support</Text>
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     minHeight:200,
     width:Dimensions.get('screen').width - 0,
     margin: 20,
-    backgroundColor: Colors.inputBackgroundColor, //Colors.whiteColor,
+    backgroundColor: Colors.darkBackgroudColor, //Colors.inputBackgroundColor, 
     borderRadius: 50,    
     alignItems: 'center',
     justifyContent:'center',
@@ -145,12 +146,14 @@ const styles = StyleSheet.create({
     fontWeight:'600',
     fontSize:Fonts.Size.X_Large,
     textAlign:'center', 
-    marginBottom:20
+    marginBottom:20,
+    color:Colors.whiteColor
   },
   instructions: {
     fontWeight:'300',
     fontSize:Fonts.Size.Medium,
-    textAlign:'center'
+    textAlign:'center',
+    color:Colors.whiteColor
   },
   emailBtnWrapper: {
     marginHorizontal:'auto'

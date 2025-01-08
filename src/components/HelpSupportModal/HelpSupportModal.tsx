@@ -7,7 +7,7 @@ import Fonts from '../../styles/Fonts';
 
 // Constants
 const SUPPORT_EMAIL = 'moviu.support@spakcomm.com';
-const SUPPORT_WEBSITE = 'http://moviu.in/';
+const SUPPORT_WEBSITE = 'https://moviu.in/supports.html';
 const EMAIL_SUBJECT = 'Contacting via App';
 const EMAIL_BODY = 'Hello, I would like to contact you regarding...';
 

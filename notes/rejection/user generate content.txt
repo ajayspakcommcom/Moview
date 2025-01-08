@@ -1,0 +1,17 @@
+Dear Apple Review Team,
+
+We have implemented a comprehensive content moderation system in our app, Moviu, to ensure the safety and appropriateness of user-generated content. Here are the key components:
+
+1. **User Reporting:** Users can report inappropriate content directly within the app. Each report is logged and reviewed manually by our moderation team.
+2. **Manual Review:** Our team conducts daily reviews of reported content and user activities to ensure compliance with our community guidelines.
+3. **Content Removal and Account Actions:** Inappropriate content is promptly removed, and users who violate our guidelines may have their accounts suspended or deleted. Users are notified of these actions with reasons provided.
+4. **Community Guidelines:** All users agree to our terms of use and community guidelines, which are clearly outlined in the app.
+
+We are committed to maintaining a safe and positive environment for our users. Please let us know if further information is needed.
+
+Thank you for your consideration.
+
+Best regards,
+[Your Name]
+
+

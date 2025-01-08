@@ -143,7 +143,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                     <Text style={styles.honest}>Honest Movie Reviews</Text>
 
                     <CustomTextInput
-                        placeholder="First name"
+                        placeholder="Name"
                         value={firstname}
                         onChangeText={handleFirstnameChange}
                         autoCapitalize="none"

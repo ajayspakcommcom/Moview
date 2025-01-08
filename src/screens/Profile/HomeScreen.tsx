@@ -149,12 +149,12 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
                                         <View style={[styles.myMoviesWrapper]}>
                                             <View style={styles.hr}></View>
-                                            <HelpSupportModal />
                                             <View style={styles.footerBtnsWrapper}>
                                                 <Pressable onPress={editHandler} style={styles.footerBtns}>
                                                     <Text style={styles.footerBtnText}>Edit Profile</Text>
                                                 </Pressable>
                                             </View>
+                                            <HelpSupportModal />
                                             <View style={styles.footerWrapper}>
                                                 <CustomButton text={'Logout...'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     footerBtnsWrapper:{
-        paddingTop:15
+                
     },
     footerBtns: {
         borderColor:Colors.whiteColor,

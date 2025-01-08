@@ -61,3 +61,9 @@ com.spakcomm.moviu
 com.spakcomm.moviu
 1.0 (1)
 
+directorText
+descriptionText: {
+    color:Colors.textInputDisabled, 
+    fontSize: Fonts.Size.Small
+}
+

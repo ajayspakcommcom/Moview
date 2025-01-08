@@ -76,7 +76,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
         };
     }, [user?.token]);
 
-    const onRefresh = () => {        
+    const onRefresh = () => {                
         setRefreshing(true);
         getLatestMovieShowList();
         setTimeout(() => {

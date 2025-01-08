@@ -92,6 +92,7 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
 
 const styles = StyleSheet.create({
   footerBtns: {
+    backgroundColor:Colors.darkBackgroudColor,
     borderColor: Colors.whiteColor,
     borderWidth: 2,
     alignItems: 'center',

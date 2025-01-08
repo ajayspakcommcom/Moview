@@ -310,6 +310,10 @@ const ShowDetailScreen: React.FC = () => {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
+        descriptionText: {
+            color:Colors.textInputDisabled, 
+            fontSize: Fonts.Size.Small
+        },
         editableRating: {
             width: '100%',
             paddingTop: 25
@@ -416,7 +420,7 @@ const ShowDetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Description: {detailData.description}</Text></View>
+                <View style={styles.directorItem}><Text style={[styles.directorText, styles.descriptionText]}>Description: {detailData.description}</Text></View>
             </View>
 
             <View style={styles.hrWrapper}>

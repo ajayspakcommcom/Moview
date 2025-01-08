@@ -24,4 +24,3 @@ const Colors = {
 
 export default Colors;
 
-//rgba(0, 0, 0, 0.9)

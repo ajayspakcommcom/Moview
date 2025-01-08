@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions, Linking } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions, Linking, Clipboard } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import Colors from '../../styles/Colors';
@@ -24,19 +24,73 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
   const emailHandler = React.useCallback(async () => {
     try {
       setIsLoading(true);
-      const emailUrl = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
-      
-      const canOpen = await Linking.canOpenURL(emailUrl);
-      console.log('Can open email URL:', canOpen);
-      if (!canOpen) {
-        Alert.alert('Error', 'Email client not configured or available on your device');
+  
+      // Check if Mail app is available (iOS)
+      const mailtoUrl = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
+      const canOpenMail = await Linking.canOpenURL(mailtoUrl);
+      console.log('mail', mailtoUrl);
+  
+      if (canOpenMail) {
+        await Linking.openURL(mailtoUrl);
         return;
       }
-
-      await Linking.openURL(emailUrl);
+  
+      // If Mail app is not available, try alternative email apps
+      const gmailUrl = `googlegmail:///co?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
+      const outlookUrl = `ms-outlook://compose?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
+  
+      const canOpenGmail = await Linking.canOpenURL(gmailUrl);
+      const canOpenOutlook = await Linking.canOpenURL(outlookUrl);
+  
+      if (!canOpenMail && !canOpenGmail && !canOpenOutlook) {
+        Alert.alert(
+          'No Email App Found',
+          'Would you like to copy the support email address to clipboard?',
+          [
+            {
+              text: 'Copy Email',
+              onPress: () => {
+                Clipboard.setString(SUPPORT_EMAIL);
+                Alert.alert('Success', 'Support email copied to clipboard');
+              },
+            },
+            {text: 'Cancel',style: 'cancel'},
+          ]
+        );
+        return;
+      }
+  
+      // If at least one email app is available, show options
+      const availableApps = [];
+      if (canOpenMail) availableApps.push({ title: 'Mail', url: mailtoUrl });
+      if (canOpenGmail) availableApps.push({ title: 'Gmail', url: gmailUrl });
+      if (canOpenOutlook) availableApps.push({ title: 'Outlook', url: outlookUrl });
+  
+      if (availableApps.length === 1) {
+        await Linking.openURL(availableApps[0].url);
+      } else {
+        Alert.alert(
+          'Choose Email App',
+          'Select your preferred email application',
+          [
+            ...availableApps.map(app => ({
+              text: app.title,
+              onPress: () => Linking.openURL(app.url),
+            })),
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+          ]
+        );
+      }
+  
     } catch (err) {
-      console.error('Error opening email client:', err);
-      Alert.alert('Error', 'Could not open email client');
+      console.error('Error handling email:', err);
+      Alert.alert(
+        'Error',
+        'Could not open email client. Please send email manually to ' + SUPPORT_EMAIL
+      );
     } finally {
       setIsLoading(false);
     }

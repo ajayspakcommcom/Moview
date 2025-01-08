@@ -169,10 +169,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         secureTextEntry
                     />
 
-                    <Text style={styles.checkboxLabel}>
-                        By checking the box below, you agree to abide by our 
-                        <Pressable onPress={termsConditionHandler}><Text style={styles.linkText}>Community Guidelines</Text></Pressable> and 
-                        <Pressable onPress={termsConditionHandler}><Text style={styles.linkText}> Terms of Use.</Text></Pressable>
+                    <Text style={[styles.checkboxLabel, styles.checkboxLabel1]}>                        
+                        By registering or skipping this step you agree to <Pressable onPress={termsConditionHandler}><Text style={[styles.linkText]}> Terms Of Service.</Text></Pressable>
                     </Text>
                     <View style={styles.flatItem}>
                         {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
@@ -208,12 +206,17 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
     linkText: {
         textDecorationLine:'underline',
-        color:Colors.blueColor
+        color:Colors.blueColor, 
+        fontSize:Fonts.Size.Small - 2
     },
     checkboxLabel: {
         marginLeft: 5,
         fontSize: Fonts.Size.Small,
         color: Colors.whiteColor,
+    },
+    checkboxLabel1: {
+        width:'100%',         
+        fontSize:Fonts.Size.Small - 2
     },
     icon: {
         width: 25,

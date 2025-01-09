@@ -2,8 +2,7 @@ import * as React from 'react';
 import { View,  StyleSheet, Alert,  ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
-import CustomTextInput from '../../components/Ui/CustomTextInput';
-import CustomButton from '../../components/Ui/CustomButton';
+
 
 
 type Props = {
@@ -15,119 +14,9 @@ const Test1: React.FC<Props> = () => {
 
     return (
       
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 40}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <ScrollView 
-                    ref={scrollViewRef}
-                    contentContainerStyle={[styles.container, { paddingBottom: 40 }]}
-                    keyboardShouldPersistTaps="handled"
-                    showsVerticalScrollIndicator={false}
-                    bounces={false}
-                >
-                    <View style={styles.inputContainer}>
-                        <CustomTextInput
-                            placeholder="Full Name"
-                            value={name}
-                            onChangeText={setName}
-                            autoCapitalize="words"
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={setEmail}
-                            autoCapitalize="none"
-                            keyboardType="email-address"
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        {/* Continue for other inputs with increasing y values */}
-                        <CustomTextInput
-                            placeholder="Password"
-                            value={password}
-                            onChangeText={setPassword}
-                            secureTextEntry
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="Mobile Number"
-                            value={mobile}
-                            onChangeText={setMobile}
-                            keyboardType="phone-pad"
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="City"
-                            value={city}
-                            onChangeText={setCity}
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="State"
-                            value={state}
-                            onChangeText={setState}
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 0 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="Address Line 1"
-                            value={address1}
-                            onChangeText={setAddress1}
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 100 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="Address Line 2"
-                            value={address2}
-                            onChangeText={setAddress2}
-                            onFocus={() => {
-                                scrollViewRef.current?.scrollTo({ y: 100 });
-                            }}
-                        />
-
-                        <CustomTextInput
-                            placeholder="Message"
-                            value={message}
-                            onChangeText={setMessage}
-                            multiline
-                            numberOfLines={4}
-                            style={styles.messageInput}
-                            onFocus={() => {                                
-                                scrollViewRef.current?.scrollTo({ y: 200 });
-                            }}
-                        />
-
-                        <CustomButton
-                            title="Sign Up"
-                            onPress={() => console.log('Submitted...')}
-                            loading={loader}
-                        />
-                    </View>
-                </ScrollView>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+      <View>
+        
+      </View>
       
     )
 };

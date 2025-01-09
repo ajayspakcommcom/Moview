@@ -14,6 +14,7 @@ import { Button, Dialog, Portal } from 'react-native-paper';
 
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
 import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
+import { Filter } from 'bad-words'
 
 interface ItemProps {
     showItem: ShowItem,
@@ -28,6 +29,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
     const [isDialog, setIsDialog] = React.useState(false);
+    const filter = new Filter();
 
     const dispatch = useAppDispatch();
 
@@ -59,13 +61,20 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     };
 
     const onSaveHandler = async () => {
+        const containsProfanity = filter.isProfane(comment);
         if(rating > 0 && comment.length > 0) {
-            const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
+
+            if(containsProfanity) {
+                Alert.alert('Warning', 'Your review contains language that violates our community guidelines. Please remove any inappropriate content and resubmit your review.');
+                return;
+            } else {
+                const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
             if (createdReview.meta.requestStatus === 'fulfilled') {         
                 setIsDialog(true);
                 setMovieShowReview();
             } else {
                 Alert.alert('Error', 'Failed to create review.');
+            }
             }
         } else {
             Alert.alert('', 'Rating and Comments are required');

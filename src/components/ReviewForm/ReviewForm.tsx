@@ -7,14 +7,14 @@ import CustomButton from '../Ui/CustomButton';
 import { MovieItem } from '../../types/Movie';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.ios';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../store/index';
-import { createReviewListByMovie, fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
+import { useAppDispatch } from '../../store/index';
+import { createReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import { createNotification } from '../../store/slices/notificationSlice';
 
 import { fetchReviewsByUserId as fetchMovieReviewsByUserId } from '../../store/slices/myMovieReviewSlice';
-import { fetchReviewsByUserId as fetchShowReviewsByUserId } from '../../store/slices/myShowReviewSlice';
+import { Filter } from 'bad-words'
+
 
 
 interface ItemProps {
@@ -29,17 +29,18 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
-    
+    const filter = new Filter();
+
 
     const [isDialog, setIsDialog] = React.useState(false);
     const dispatch = useAppDispatch();
 
-    const hideDialog = () => {        
+    const hideDialog = () => {
         onPress && onPress('reviews');
         setIsDialog(false);
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
-    
+
     React.useLayoutEffect(() => {
 
         return () => {
@@ -55,24 +56,34 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         setComment(text);
     };
 
-    
-    const onSaveHandler = async () => {    
-        if(rating > 0 && comment.length > 0) {
-            const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment })); 
-            if (createdReview.meta.requestStatus === 'fulfilled') {                         
-                setIsDialog(true); 
-                const movieUrl = `${API_URL}review/user/${userDetail._id}`;
-                await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));       
+
+    const onSaveHandler = async () => {
+
+        const containsProfanity = filter.isProfane(comment);
+
+        if (rating > 0 && comment.length > 0) {
+
+            if (containsProfanity) {
+                Alert.alert('Warning', 'Your review contains language that violates our community guidelines. Please remove any inappropriate content and resubmit your review.');
+                return;
             } else {
-                Alert.alert('Error', 'Failed to create review.');
+                const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment }));
+                if (createdReview.meta.requestStatus === 'fulfilled') {
+                    setIsDialog(true);
+                    const movieUrl = `${API_URL}review/user/${userDetail._id}`;
+                    await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
+                } else {
+                    Alert.alert('Error', 'Failed to create review.');
+                }
             }
+
         } else {
             Alert.alert('', 'Rating and Comments are required');
         }
     };
 
     return (
-        <>               
+        <>
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating
@@ -116,14 +127,14 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
             </View>
 
             <Portal>
-            <Dialog visible={isDialog} onDismiss={hideDialog}>
+                <Dialog visible={isDialog} onDismiss={hideDialog}>
                     <Dialog.Title>
-                        <Text>Review created successfully</Text> 
+                        <Text>Review created successfully</Text>
                     </Dialog.Title>
-                <Dialog.Actions>                    
-                    <Button onPress={hideDialog}>Ok</Button>                    
-                </Dialog.Actions>
-            </Dialog>
+                    <Dialog.Actions>
+                        <Button onPress={hideDialog}>Ok</Button>
+                    </Dialog.Actions>
+                </Dialog>
             </Portal>
 
         </>

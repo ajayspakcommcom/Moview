@@ -156,7 +156,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                             </View>
                                             <HelpSupportModal />
                                             <View style={styles.footerWrapper}>
-                                                <CustomButton text={'Logout...'} onPressHandler={onLogoutHandler} textSize={20} />
+                                                <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
                                     </>

@@ -185,13 +185,13 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
           autoCapitalize="none"
         />
 
-        <CustomTextInput
+        {/* <CustomTextInput
           placeholder="Username"
           value={username}
           onChangeText={handleUsernameChange}
           autoCapitalize="none"
           editable={false}
-        />
+        /> */}
 
         <CustomTextInput
           placeholder="Mobile"
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: '5%',

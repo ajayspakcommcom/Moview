@@ -148,11 +148,10 @@ const DetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         readMoreContainer: {
-            width: '100%',
-            alignItems: 'flex-end',
+            width: '100%'            
         },
         readMoreButton: {
-            marginTop: 8,
+            
         },
         readMoreText: {
             color: Colors.tabActiveColor,
@@ -431,14 +430,13 @@ const DetailScreen: React.FC = () => {
             </View>
 
             {detailData.director && <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}>
-                    <Text style={styles.directorText}>
-                        Director: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 100)}
-                    </Text>
-                    {detailData.description && detailData.description.length > 100 && (
+                <View style={styles.directorItem}>                  
+                    {detailData.description && detailData.description.length > 40 && (
                         <View style={styles.readMoreContainer}>
                             <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
-                                <Text style={styles.readMoreText}>{isExpandedDescription ? 'Read Less' : 'Read More'}</Text>
+                            <Text style={styles.directorText}>                                    
+                                    Synopsis: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 40)}
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     )}

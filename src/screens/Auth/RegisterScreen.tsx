@@ -25,59 +25,69 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const scrollViewRef = React.useRef<ScrollView>(null);
 
     const handleLogin = React.useCallback(async () => {
-
+        if (!checked) {
+            Alert.alert('', 'Please agree to the Terms of Service');
+            return;
+        }
+    
         try {
-
+            // Validate all fields
             const fields = [
                 { name: 'First name', value: firstname },
                 { name: 'Username', value: username },
                 { name: 'Password', value: password },
-                { name: 'Phone', value: phone }
+                { name: 'Mobile', value: phone }
             ];
-
-            const emptyField = fields.find(field => field.value.trim() === '');
-
+    
+            const emptyField = fields.find(field => !field.value?.trim());
             if (emptyField) {
                 Alert.alert('', `${emptyField.name} is required`);
                 return;
-            } else {
-
-                try {
-                    setLoader(true);
-                    const response = await fetch(`${API_URL}user`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            "firstname": firstname,
-                            "username": username,
-                            "email": username,
-                            "phone": phone,
-                            "password": password,
-                            "terms": checked
-                        }),
-                    });
-
-                    const result = await response.json();
-                    if (result.status === 'success') {
-                        setLoader(false);
-                        Alert.alert('Registration Successfully', 'Thank you for your registration. We will contact you soon.', [{ text: 'OK', onPress: () => navigation.navigate('Login') }]);
-                    } else {
-                        Alert.alert('Error', `${result.message}`, [
-                            { text: 'OK', onPress: () => setLoader(false) }
-                        ]);
-                    }
-
-                } catch (error) {
-
-                }
             }
-
+    
+            setLoader(true);
+    
+            const response = await fetch(`${API_URL}user`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstname,
+                    username,
+                    email: username,
+                    phone,
+                    password,
+                    terms: checked
+                }),
+            });
+    
+            const result = await response.json();
+    
+            if (result.status === 'success') {
+                Alert.alert(
+                    'Registration Successful', 
+                    'Thank you for your registration. We will contact you soon.', 
+                    [{ 
+                        text: 'OK', 
+                        onPress: () => navigation.navigate('Login') 
+                    }]
+                );
+            } else {
+                Alert.alert('Error', result.message || 'Registration failed');
+            }
+    
         } catch (error) {
-            console.error('Login error:', error);
-            Alert.alert('Error', 'Login failed. Please try again.');
+            console.error('Registration error:', error);
+            Alert.alert(
+                'Error', 
+                'Registration failed. Please check your internet connection and try again.'
+            );
+        } finally {
+            setLoader(false);
         }
-
-    }, [checked])
+    }, [checked, firstname, username, password, phone, navigation]);
 
     const handleFirstnameChange = (text: string) => {
         setFirstname(text);
@@ -169,7 +179,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             placeholder="Username"
                             value={username}
                             onChangeText={handleUsernameChange}
-                            autoCapitalize="none"
+                            autoCapitalize="none"                            
                         />
 
                         <CustomTextInput

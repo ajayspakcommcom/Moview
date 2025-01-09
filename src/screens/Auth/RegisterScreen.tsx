@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView, Linking } from 'react-native';
+import { View, Text, StyleSheet, GestureResponderEvent, Alert, Pressable, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView, Linking, Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -21,6 +21,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const [password, setPassword] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [loader, setLoader] = React.useState(false);
+
+    const scrollViewRef = React.useRef<ScrollView>(null);
 
     const handleLogin = React.useCallback(async () => {
 
@@ -50,8 +52,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             "username": username,
                             "email": username,
                             "phone": phone,
-                            "password": password, 
-                            "terms": checked 
+                            "password": password,
+                            "terms": checked
                         }),
                     });
 
@@ -100,16 +102,16 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
     const termsConditionHandler = React.useCallback(async () => {
         const url = 'https://moviu.in/privacy.html';
-        
+
         try {
             const canOpen = await Linking.canOpenURL(url);
             if (!canOpen) {
-                Alert.alert('Error','Unable to open the privacy policy page. Please try again later.',[{ text: 'OK' }]);
+                Alert.alert('Error', 'Unable to open the privacy policy page. Please try again later.', [{ text: 'OK' }]);
                 return;
             }
-    
+
             await Linking.openURL(url);
-            
+
         } catch (err) {
             console.error('Error opening privacy policy:', err);
             Alert.alert(
@@ -132,82 +134,101 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     }, []);
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad} keyboardShouldPersistTaps="handled">
-                <ScrollView contentContainerStyle={styles.container}>
-                    <FastImage
-                        style={styles.logo}
-                        source={require('../../assets/images/logo.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                    />
-                    <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-                    <CustomTextInput
-                        placeholder="Name"
-                        value={firstname}
-                        onChangeText={handleFirstnameChange}
-                        autoCapitalize="none"
-                    />
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.keypad}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 40}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View style={{flex:1}}>
+                    <ScrollView
+                        contentContainerStyle={styles.container}
+                        keyboardShouldPersistTaps="handled"
+                        showsVerticalScrollIndicator={false}
+                        bounces={false}
+                        keyboardDismissMode="none"
+                        scrollEventThrottle={16}
+                        automaticallyAdjustKeyboardInsets={false} // Add this
+                    >
+                        <FastImage
+                            style={styles.logo}
+                            source={require('../../assets/images/logo.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                        />
+                        <Text style={styles.honest}>Honest Movie Reviews</Text>
 
-                    <CustomTextInput
-                        placeholder="Username"
-                        value={username}
-                        onChangeText={handleUsernameChange}
-                        autoCapitalize="none"
-                    />
+                        <CustomTextInput
+                            placeholder="Name"
+                            value={firstname}
+                            onChangeText={handleFirstnameChange}
+                            autoCapitalize="none"
+                        />
 
-                    <CustomTextInput
-                        placeholder="Mobile"
-                        value={phone}
-                        onChangeText={handlePhoneChange}
-                    />
+                        <CustomTextInput
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={handleUsernameChange}
+                            autoCapitalize="none"
+                        />
 
-                    <CustomTextInput
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={handlePasswordChange}
-                        secureTextEntry
-                    />
+                        <CustomTextInput
+                            placeholder="Mobile"
+                            value={phone}
+                            keyboardType="number-pad"
+                            onChangeText={handlePhoneChange}
+                            maxLength={10} 
+                            returnKeyType="done"                            
+                        />
 
-                    <Text style={[styles.checkboxLabel, styles.checkboxLabel1]}>                        
-                        By registering or skipping this step you agree to <Pressable onPress={termsConditionHandler}><Text style={[styles.linkText]}> Terms Of Service.</Text></Pressable>
-                    </Text>
-                    <View style={styles.flatItem}>
-                        {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
-                        <Text style={styles.checkboxLabel} onPress={() => setChecked(!checked)}>
-                            I agree to the Community Guidelines and Terms of Use.
+                        <CustomTextInput
+                            placeholder="Password"
+                            value={password}
+                            onChangeText={handlePasswordChange}
+                            secureTextEntry
+                        />
+
+                        <Text style={[styles.checkboxLabel, styles.checkboxLabel1]}>
+                            By registering or skipping this step you agree to <Pressable onPress={termsConditionHandler}><Text style={[styles.linkText]}> Terms Of Service.</Text></Pressable>
                         </Text>
-                    </View>
-
-
-                    <CustomButton
-                        text={loader ? "Register..." : "Register"}
-                        onPressHandler={ checked ? handleLogin : () => console.log('Ram...')}
-                        textSize={20}
-                        //isDisabled={(checked) ? true : false}                        
-                        style={{backgroundColor:checked ? Colors.tabActiveColor : Colors.textInputDisabled}}
-                    />
-
-                    <View style={styles.footerTextWrapper}>
-                        <Text style={styles.dontHaveAccount}>Already have an account?</Text>
-                    </View>
-
-                    <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
-                        <View style={styles.registerBtnWrapper}>
-                            <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
+                        <View style={styles.flatItem}>
+                            {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
+                            <Text style={styles.checkboxLabel} onPress={() => setChecked(!checked)}>
+                                I agree to the Community Guidelines and Terms of Use.
+                            </Text>
                         </View>
-                    </Pressable>
-                </ScrollView>
-            </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+
+
+                        <CustomButton
+                            text={loader ? "Register..." : "Register"}
+                            onPressHandler={checked ? handleLogin : () => console.log('Ram...')}
+                            textSize={20}
+                            //isDisabled={(checked) ? true : false}                        
+                            style={{ backgroundColor: checked ? Colors.tabActiveColor : Colors.textInputDisabled }}
+                        />
+
+                        <View style={styles.footerTextWrapper}>
+                            <Text style={styles.dontHaveAccount}>Already have an account?</Text>
+                        </View>
+
+                        <Pressable style={styles.registerBtnPressable} hitSlop={hitSlops()} onPress={goto.bind(null, 'Login')}>
+                            <View style={styles.registerBtnWrapper}>
+                                <Text style={[styles.dontHaveAccount, styles.login]}>Login</Text>
+                            </View>
+                        </Pressable>
+                    </ScrollView>
+                </View>
+
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
     linkText: {
-        textDecorationLine:'underline',
-        color:Colors.blueColor, 
-        fontSize:Fonts.Size.Small - 2
+        textDecorationLine: 'underline',
+        color: Colors.blueColor,
+        fontSize: Fonts.Size.Small - 2
     },
     checkboxLabel: {
         marginLeft: 5,
@@ -215,32 +236,33 @@ const styles = StyleSheet.create({
         color: Colors.whiteColor,
     },
     checkboxLabel1: {
-        width:'100%',         
-        fontSize:Fonts.Size.Small - 2
+        width: '100%',
+        fontSize: Fonts.Size.Small - 2
     },
     icon: {
         width: 25,
         height: 25
     },
-    flatItem: {                
+    flatItem: {
         flexDirection: 'row',
-        alignItems: 'center',        
-        paddingVertical:10,
+        alignItems: 'center',
+        paddingVertical: 10,
         //paddingLeft: 10,
         //backgroundColor:'red',
-        width:'100%'
+        width: '100%'
     },
     checkbox: {
         marginRight: 8,
-      },
-      label: {
+    },
+    label: {
         fontSize: 16,
-      },
+    },
     keypad: {
         flex: 1
     },
     container: {
-        flex: 1,
+        // flex: 1,
+        flexGrow:1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,

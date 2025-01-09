@@ -161,8 +161,7 @@ const ShowDetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         readMoreContainer: {
-            width: '100%',
-            
+            width: '100%'            
         },
         readMoreButton: {
             

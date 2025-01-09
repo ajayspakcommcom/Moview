@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import Colors from '../../styles/Colors';
 import { Checkbox } from 'react-native-paper';
 import Fonts from '../../styles/Fonts';
@@ -17,8 +17,8 @@ type Props = {
 const LoginScreen: React.FC<Props> = () => {
 
     const { login, responseError } = useAuth();
-    const [username, setUsername] = React.useState(''); //omkar@gmail.com //contact@spakcomm.com
-    const [password, setPassword] = React.useState(''); //12345 // contact@12345
+    const [username, setUsername] = React.useState('omkar@gmail.com'); //omkar@gmail.com //contact@spakcomm.com
+    const [password, setPassword] = React.useState('12345'); //12345 // contact@12345
     const [checked, setChecked] = React.useState(false);
     const [loader, setLoader] = React.useState(false);
 
@@ -62,9 +62,16 @@ const LoginScreen: React.FC<Props> = () => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView behavior={'padding'} style={styles.keypad}>
-                <ScrollView contentContainerStyle={styles.container}>
+            <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keypad} keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 40}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <ScrollView 
+                    contentContainerStyle={styles.container}
+                    showsVerticalScrollIndicator={false}
+                    bounces={true}
+                    keyboardDismissMode="none"  
+                    scrollEventThrottle={16}    
+                    >
+                      
                     <FastImage
                         style={styles.logo}
                         source={require('../../assets/images/logo.png')}
@@ -129,8 +136,8 @@ const LoginScreen: React.FC<Props> = () => {
                     </Pressable>
 
                 </ScrollView>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
     );
 };
 
@@ -139,10 +146,18 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        // flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // paddingHorizontal: 20,
+        // backgroundColor: Colors.darkBackgroudColor
+
+        flexGrow: 1,
+        justifyContent: 'center', 
         alignItems: 'center',
         paddingHorizontal: 20,
+        paddingTop: 20,
+        paddingBottom: 40,
         backgroundColor: Colors.darkBackgroudColor
     },
     logo: {

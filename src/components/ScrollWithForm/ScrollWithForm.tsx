@@ -6,12 +6,25 @@ import CustomTextInput from '../../components/Ui/CustomTextInput';
 import CustomButton from '../../components/Ui/CustomButton';
 
 
+
 type Props = {
 
 };
 
-const Test1: React.FC<Props> = () => {
+const ScrollWithForm: React.FC<Props> = () => {
 
+    const [password, setPassword] = React.useState(''); //12345 // contact@12345
+    const [loader, setLoader] = React.useState(false);
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [mobile, setMobile] = React.useState('');
+    const [city, setCity] = React.useState('');
+    const [state, setState] = React.useState('');
+    const [address1, setAddress1] = React.useState('');
+    const [address2, setAddress2] = React.useState('');
+    const [message, setMessage] = React.useState('');
+
+    const scrollViewRef = React.useRef<ScrollView>(null);
 
     return (
       
@@ -254,4 +267,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Test1;
+export default React.memo(ScrollWithForm);

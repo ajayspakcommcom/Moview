@@ -37,11 +37,11 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
     }, []);
 
     const onSwipe = (event: PanGestureHandlerGestureEvent) => {
-
+        
     };
 
     const onTap = (event: TapGestureHandlerGestureEvent) => {
-
+        console.log('Ram...');
     };
 
     const gotoUserProfile = (id: string) => {
@@ -51,7 +51,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     return (
         <GestureHandlerRootView>
-            <PanGestureHandler onGestureEvent={onSwipe}>
+            <PanGestureHandler onGestureEvent={onTap}>
                 <TouchableOpacity onPress={toggleExpand}>
                     <View style={styles.wrapper}>
                         <View style={styles.headerWrapper}>
@@ -67,9 +67,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                             </View>}
 
                             {
-                                Platform.OS === 'ios' && <View style={styles.user}>
-                                    <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} />
-                                </View>
+                                Platform.OS === 'ios' && <View style={styles.user}><FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} /></View>
                             }
 
                             <View style={styles.content}>
@@ -111,10 +109,14 @@ const styles = StyleSheet.create({
         height:25
     },
     wrapper: {
-        backgroundColor: Colors.reviewBgColor,
-        paddingVertical: 10,
+        // backgroundColor: Colors.reviewBgColor,
+        paddingVertical: 8,
         paddingHorizontal: 20,
         marginBottom: 10,
+        borderWidth:3,
+        borderColor:Colors.tabBgColor,
+        borderRadius:20, 
+        position:'relative'
     },
     headerWrapper: {
         flexDirection: 'row',

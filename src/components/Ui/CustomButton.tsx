@@ -24,13 +24,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
             backgroundColor: Colors.tabActiveColor,
             borderRadius: 1,
             justifyContent: 'center',
-            alignItems: 'center',
-
+            alignItems: 'center',            
         },
-        text: {
-            fontSize: Fonts.Size.Medium - 1,
+        text: {                                    
+            fontFamily: Fonts.Family.Bold,
             color: Colors.blackColor,
-            fontFamily: Fonts.Family.Bold
+            fontSize:Fonts.Size.Medium,
+            fontWeight:'700'
         },
         rippleEffect: {
             opacity: 0.5

@@ -4,7 +4,7 @@ import { useRoute, useNavigation, ParamListBase, NavigationProp, RouteProp, useF
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../styles/Colors';
 import { MovieItem } from '../../types/Movie';
-import { convertTimeFormat, formatDate, hitSlops } from '../../utils/Common';
+import { convertTimeFormat, formatDate, hitSlops, truncateText } from '../../utils/Common';
 import Fonts from '../../styles/Fonts';
 import { AirbnbRating } from 'react-native-ratings';
 import FastImage from 'react-native-fast-image';
@@ -40,8 +40,10 @@ const DetailScreen: React.FC = () => {
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
 
-    const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);   
+    const { data: reviewListByMovie } = useSelector((state: RootState) => state.reviewListByMovie);
     const dispatch = useAppDispatch();
+
+    const [isExpandedDescription, setIsExpandedDescription] = React.useState(false);
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -87,13 +89,13 @@ const DetailScreen: React.FC = () => {
         navigation.setOptions({
             title: ``,
             headerLeft: () => {
-                return  <Pressable onPress={backButtonHandler}>
-                {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
-                {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
-                        <FastImage style={[styles.iosBackBtnImg]}  source={require('../../assets/images/icons/back-w-1.png')} />
-                        <Text style={[styles.iosBackBtnText]}>  Back</Text>  
+                return <Pressable onPress={backButtonHandler}>
+                    {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
+                    {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
+                        <FastImage style={[styles.iosBackBtnImg]} source={require('../../assets/images/icons/back-w-1.png')} />
+                        <Text style={[styles.iosBackBtnText]}>  Back</Text>
                     </View>}
-            </Pressable>
+                </Pressable>
             },
             headerRight: () => {
                 // return <Icon name={'notifications'} size={25} color={Colors.tabActiveColor} onPress={gotoNotification} />
@@ -103,14 +105,14 @@ const DetailScreen: React.FC = () => {
     };
 
     const getReviewListByMovie = async () => {
-        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/${route.params.movie._id}`, token: user?.token! }));       
+        dispatch(fetchReviewListByMovie({ url: `${API_URL}review/movie/${route.params.movie._id}`, token: user?.token! }));
     };
 
     useFocusEffect(
         React.useCallback(() => {
             getReviewListByMovie();
             return () => console.log('');
-        }, []) 
+        }, [])
     );
 
     React.useLayoutEffect(() => {
@@ -119,21 +121,21 @@ const DetailScreen: React.FC = () => {
             ...prevState,
             id: route.params.movie?._id,
             title: route.params.movie?.title,
-            banner_url:route.params.movie?.banner_url,
+            banner_url: route.params.movie?.banner_url,
             poster_url: route.params.movie?.poster_url,
             release_date: route.params.movie?.release_date,
             director: route.params.movie?.director,
-            writer:route.params.movie?.writer,
+            writer: route.params.movie?.writer,
             genre: route.params.movie?.genre,
             cast: route.params.movie?.cast,
             rating: route.params.movie?.rating,
             runtime: route.params.movie?.runtime,
-            description:route.params.movie?.description,
+            description: route.params.movie?.description,
         }));
 
         loadHeaderContent();
         getReviewListByUser();
-        
+
         return () => {
             abortController.abort();
         };
@@ -145,30 +147,42 @@ const DetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+        readMoreContainer: {
+            width: '100%',
+            alignItems: 'flex-end',
+        },
+        readMoreButton: {
+            marginTop: 8,
+        },
+        readMoreText: {
+            color: Colors.tabActiveColor,
+            fontFamily: Fonts.Family.Medium,
+            fontSize: Fonts.Size.Small
+        },
         iosBackBtnText: {
-            color:Colors.whiteColor
+            color: Colors.whiteColor
         },
         iosBackBtnWrapper: {
-            flexDirection:'row', 
-            alignItems:'center'
+            flexDirection: 'row',
+            alignItems: 'center'
         },
         iosBackBtnImg: {
-            width:8, 
-            height:15,             
+            width: 8,
+            height: 15,
         },
         backBtn: {
-            width:35, 
-            height:35, 
-            marginBottom:20
-        },  
+            width: 35,
+            height: 35,
+            marginBottom: 20
+        },
         withoutLoginWrapper: {
-            flex: 1,        
-            justifyContent:'center', 
-            alignItems:'center', 
-            marginTop:'20%',
-            paddingHorizontal:15          
-        }, 
-        
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '20%',
+            paddingHorizontal: 15
+        },
+
         modalContainer: {
             flex: 1,
             backgroundColor: Colors.backgroundColorShadow,
@@ -183,9 +197,9 @@ const DetailScreen: React.FC = () => {
         },
         fullImage: {
             width: imageSize.width,
-            height: imageSize.height        
+            height: imageSize.height
         },
-    
+
         container: {
             flex: 1,
         },
@@ -237,7 +251,7 @@ const DetailScreen: React.FC = () => {
             fontFamily: Fonts.Family.Bold,
             fontSize: Fonts.Size.Medium + 1,
             textTransform: 'uppercase',
-            marginBottom:2
+            marginBottom: 2
         },
         ratingWrapper: {
             paddingVertical: 0,
@@ -249,39 +263,39 @@ const DetailScreen: React.FC = () => {
             paddingHorizontal: 15
         },
         genreItem: {
-            paddingVertical: 1,            
+            paddingVertical: 1,
             justifyContent: 'center',
-            alignItems: 'center', 
-            backgroundColor: Colors.tagBgColor,            
-            borderWidth:1,
-            borderColor:Colors.tagBorderColor, 
+            alignItems: 'center',
+            backgroundColor: Colors.tagBgColor,
+            borderWidth: 1,
+            borderColor: Colors.tagBorderColor,
             borderRadius: 50,
-            marginRight:5,            
+            marginRight: 5,
             paddingHorizontal: 10,
-            paddingBottom:2, 
-            paddingTop:0
+            paddingBottom: 2,
+            paddingTop: 0
         },
         genreText: {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
-        releaseWrapper: {            
+        releaseWrapper: {
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
-            flexDirection:'row'
+            flexDirection: 'row'
         },
-        spaceBetween : {
-            color:Colors.whiteColor, 
-            paddingHorizontal:5,                         
-            fontSize:Fonts.Size.XXX_Large, 
-            lineHeight:22                        
+        spaceBetween: {
+            color: Colors.whiteColor,
+            paddingHorizontal: 5,
+            fontSize: Fonts.Size.XXX_Large,
+            lineHeight: 22
         },
         releaseText: {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
         aboveDirectorSpace: {
-            marginTop:10            
+            marginTop: 10
         },
         directorWrapper: {
             marginTop: 3,
@@ -290,15 +304,14 @@ const DetailScreen: React.FC = () => {
             justifyContent: 'flex-start'
         },
         directorItem: {
-            justifyContent: 'center',
-            alignItems: 'center'
+            width: '100%'
         },
         directorText: {
             color: Colors.whiteColor,
             fontFamily: Fonts.Family.Medium
         },
         descriptionText: {
-            color:Colors.textInputDisabled, 
+            color: Colors.textInputDisabled,
             fontSize: Fonts.Size.Small
         },
         editableRating: {
@@ -324,8 +337,8 @@ const DetailScreen: React.FC = () => {
         castReviewText: {
             paddingVertical: 5,
             paddingHorizontal: 10,
-            borderRadius: 50,            
-            position:'relative'
+            borderRadius: 50,
+            position: 'relative'
         },
         crText: {
             fontSize: Fonts.Size.Medium,
@@ -333,28 +346,28 @@ const DetailScreen: React.FC = () => {
             fontWeight: '500'
         },
         totalReviewWrapper: {
-            position:'absolute', 
-            borderRadius:20,
-            width:20,
-            height:20,
-            left:65,
+            position: 'absolute',
+            borderRadius: 20,
+            width: 20,
+            height: 20,
+            left: 65,
             bottom: 15,
-            backgroundColor:Colors.tabActiveColor,            
-            justifyContent:'center'
+            backgroundColor: Colors.tabActiveColor,
+            justifyContent: 'center'
         },
         totalReview: {
-            color:Colors.blackColor,             
-            textAlign:'center', 
-            fontFamily:Fonts.Family.Light, 
-            fontSize:Fonts.Size.Small - 4
+            color: Colors.blackColor,
+            textAlign: 'center',
+            fontFamily: Fonts.Family.Light,
+            fontSize: Fonts.Size.Small - 4
         },
         crTextActive: {
             color: Colors.whiteColor,
         }
     });
 
-    const openModal = (url: string) => {                   
-        setModalVisible(true);              
+    const openModal = (url: string) => {
+        setModalVisible(true);
         url ? Image.getSize(url, (width, height) => setImageSize({ width, height }), (error) => console.error("Failed to get image size:", error)) : Alert.alert("Error", "Image URI not found.");
     };
 
@@ -363,24 +376,24 @@ const DetailScreen: React.FC = () => {
     };
 
     const headerContent = () => {
-        return <>            
-             <View style={styles.header}>
+        return <>
+            <View style={styles.header}>
                 {detailData.banner_url &&
-                    <Pressable onPress={() => openModal(detailData.banner_url!)}>                        
-                        <FastImage style={styles.img} source={{uri: detailData.banner_url}} />
+                    <Pressable onPress={() => openModal(detailData.banner_url!)}>
+                        <FastImage style={styles.img} source={{ uri: detailData.banner_url }} />
                     </Pressable>
                 }
             </View>
 
             <View style={styles.detailText}>
-               
-               <Text style={styles.detailHeading}>{detailData.title}</Text>
-               
-                    <View style={styles.releaseWrapper}>
-                            <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
-                            {detailData.runtime && <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>}
-                            {detailData.runtime && <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime)}</Text>}
-                    </View>
+
+                <Text style={styles.detailHeading}>{detailData.title}</Text>
+
+                <View style={styles.releaseWrapper}>
+                    <Text style={styles.releaseText}>{detailData.release_date ? formatDate(new Date(detailData.release_date), 'Month YYYY') : '----'}</Text>
+                    {detailData.runtime && <Text style={[styles.releaseText, styles.spaceBetween]}>.</Text>}
+                    {detailData.runtime && <Text style={styles.releaseText}>{convertTimeFormat(detailData.runtime)}</Text>}
+                </View>
 
                 <View style={styles.ratingWrapper}>
                     <AirbnbRating
@@ -407,7 +420,7 @@ const DetailScreen: React.FC = () => {
                 ))}
             </View>
 
-         
+
 
             <View style={[styles.directorWrapper, styles.aboveDirectorSpace]}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
@@ -417,9 +430,20 @@ const DetailScreen: React.FC = () => {
                 <View style={styles.directorItem}><Text style={styles.directorText}>Writer: {detailData.writer}</Text></View>
             </View>
 
-            <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={[styles.directorText, styles.descriptionText]}>Description: {detailData.description}</Text></View>
-            </View>
+            {detailData.director && <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}>
+                    <Text style={styles.directorText}>
+                        Director: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 100)}
+                    </Text>
+                    {detailData.description && detailData.description.length > 100 && (
+                        <View style={styles.readMoreContainer}>
+                            <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
+                                <Text style={styles.readMoreText}>{isExpandedDescription ? 'Read Less' : 'Read More'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
+            </View>}
 
             <View style={styles.hrWrapper}>
                 <View style={styles.hr}></View>
@@ -431,7 +455,7 @@ const DetailScreen: React.FC = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'reviews')}>
                     <View style={styles.castReviewText}><Text style={[styles.crText, activeTab === 'reviews' && styles.crTextActive]}>Reviews</Text></View>
-                    <View style={styles.totalReviewWrapper}><Text style={styles.totalReview}>{reviewListByMovie.length}</Text></View> 
+                    <View style={styles.totalReviewWrapper}><Text style={styles.totalReview}>{reviewListByMovie.length}</Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleTabClick.bind(null, 'writeReview')}>
                     <View style={[styles.castReviewText]}><Text style={[styles.crText, activeTab === 'writeReview' && styles.crTextActive]}>Write Review</Text></View>
@@ -467,7 +491,7 @@ const DetailScreen: React.FC = () => {
                 }
 
                 {activeTab === 'reviews' &&
-                    <>                    
+                    <>
                         {reviewListByMovie.length > 0 &&
                             <FlatList
                                 ListHeaderComponent={() => (
@@ -492,13 +516,13 @@ const DetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            {userDetail.role !== 'guest' &&  <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
-                            {userDetail.role === 'guest' && 
-                                <View style={styles.withoutLoginWrapper}>                                    
+                            {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                            {userDetail.role === 'guest' &&
+                                <View style={styles.withoutLoginWrapper}>
                                     <CustomButton
-                                      text={'Please Login'}
-                                      onPressHandler={navigationHandler}
-                                      textSize={20}                
+                                        text={'Please Login'}
+                                        onPressHandler={navigationHandler}
+                                        textSize={20}
                                     />
                                 </View>
                             }
@@ -508,18 +532,18 @@ const DetailScreen: React.FC = () => {
             </KeyboardAvoidingView>
 
             {detailData.banner_url &&
-            <Modal visible={isModalVisible} transparent={true}>
-                <View style={styles.modalContainer}>
-                    <Pressable style={styles.closeArea} onPress={closeModal}>
-                        <FastImage
-                            style={styles.fullImage}                                
-                            source={{uri:detailData.banner_url}}
-                            resizeMode="cover"
-                        />
-                    </Pressable>
-                </View>
-            </Modal>
-        }
+                <Modal visible={isModalVisible} transparent={true}>
+                    <View style={styles.modalContainer}>
+                        <Pressable style={styles.closeArea} onPress={closeModal}>
+                            <FastImage
+                                style={styles.fullImage}
+                                source={{ uri: detailData.banner_url }}
+                                resizeMode="cover"
+                            />
+                        </Pressable>
+                    </View>
+                </Modal>
+            }
 
         </>
     );

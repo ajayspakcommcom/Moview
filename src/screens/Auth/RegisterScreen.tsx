@@ -110,8 +110,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
         navigation.navigate(screen);
     };
 
-    const termsConditionHandler = React.useCallback(async () => {
-        const url = 'https://moviu.in/privacy.html';
+    const termsConditionHandler = React.useCallback(async (url: string) => {
+        // const url = 'https://moviu.in/privacy.html';
 
         try {
             const canOpen = await Linking.canOpenURL(url);
@@ -126,11 +126,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             console.error('Error opening privacy policy:', err);
             Alert.alert(
                 'Error',
-                'Could not open the privacy policy page. Please check your internet connection and try again.',
+                'Could not open the page. Please check your internet connection and try again.',
                 [
                     {
-                        text: 'Try Again',
-                        onPress: termsConditionHandler
+                        text: 'Try Again',                        
                     },
                     {
                         text: 'Cancel',
@@ -142,6 +141,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             console.log('');
         }
     }, []);
+
+
 
     return (
 
@@ -198,14 +199,13 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             secureTextEntry
                         />
 
-                        <Text style={[styles.checkboxLabel, styles.checkboxLabel1]}>
-                            By registering or skipping this step you agree to <Pressable onPress={termsConditionHandler}><Text style={[styles.linkText]}> Terms Of Service.</Text></Pressable>
-                        </Text>
+                        {/* <Text style={[styles.checkboxLabel, styles.checkboxLabel1]}>                            
+                            By registering or skipping this step <Pressable onPress={termsConditionHandler}><Text style={[styles.linkText]}> Terms Of Service.</Text></Pressable>
+                            By registering / skipping 
+                        </Text> */}
                         <View style={styles.flatItem}>
                             {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
-                            <Text style={styles.checkboxLabel} onPress={() => setChecked(!checked)}>
-                                I agree to the Community Guidelines and Terms of Use.
-                            </Text>
+                            <Text style={styles.checkboxLabel}> By registering / skipping  i agree to the <Pressable onPress={() => termsConditionHandler('termsConditionHandler')}><Text style={[styles.linkText]}> Community Guidelines</Text></Pressable> and <Pressable onPress={() => termsConditionHandler('https://moviu.in/privacy.html')}><Text style={[styles.linkText]}>Terms of Use.</Text></Pressable> </Text>
                         </View>
 
 
@@ -238,11 +238,11 @@ const styles = StyleSheet.create({
     linkText: {
         textDecorationLine: 'underline',
         color: Colors.blueColor,
-        fontSize: Fonts.Size.Small - 2
+        fontSize: Fonts.Size.Small + 2
     },
     checkboxLabel: {
         marginLeft: 5,
-        fontSize: Fonts.Size.Small,
+        fontSize: Fonts.Size.Small + 2,
         color: Colors.whiteColor,
     },
     checkboxLabel1: {
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 10,
+        marginBottom:10,
         //paddingLeft: 10,
         //backgroundColor:'red',
         width: '100%'

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, Pressable, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Colors from '../../styles/Colors';
 import { useAuth } from '../../context/AuthContext';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -20,6 +20,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchFollowings } from '../../store/slices/followingSlice';
 import { fetchFollowers } from '../../store/slices/followerSlice';
 import HelpSupportModal from '../../components/HelpSupportModal/HelpSupportModal';
+import { Linking } from 'react-native';
 
 type Props = {
     navigation: any;
@@ -98,6 +99,22 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         logout();
     };
 
+    const urlLinkHandler = React.useCallback(async (url:string) => {
+        try {          
+          const canOpen = await Linking.canOpenURL(url);
+          if (!canOpen) {
+            Alert.alert('Error', 'Could not open the website');
+            return;
+          }
+          await Linking.openURL(url);
+        } catch (err) {
+          console.error('Error opening website:', err);
+          Alert.alert('Error', 'Could not open the website');
+        } finally {
+          
+        }
+      }, []);
+
     return (
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -159,6 +176,10 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                                 <CustomButton text={'Logout'} onPressHandler={onLogoutHandler} textSize={20} />
                                             </View>
                                         </View>
+                                        <View style={styles.privacy_guideline}>
+                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/privacy.html')}><Text style={styles.guidText}>Privacy & Policy</Text></Pressable>
+                                                <Pressable onPress={() => urlLinkHandler('https://www.google.com/')}><Text style={styles.guidText}>Moviu Community Guidelines</Text></Pressable>
+                                        </View>
                                     </>
                                 }
                                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
@@ -183,6 +204,17 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+    privacy_guideline: {
+        marginTop:15,        
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    guidText: {
+        color:Colors.whiteColor, 
+        fontFamily:Fonts.Family.Bold,
+        lineHeight:30,
+        fontWeight:'600'
+    },
     keypad: {
         flex: 1
     },

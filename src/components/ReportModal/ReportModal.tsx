@@ -6,13 +6,15 @@ import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import RightArrow from '../Ui/RightArrow';
 import Toast from 'react-native-toast-message';
+import { useAuth } from '../../context/AuthContext';
+import { API_URL } from '../../configure/config.ios';
 
 interface Props {
   userId: string;
   movieId: string;
   reviewId: string;
   visible?: boolean;
-  cancel?: () => void;  
+  cancel?: () => void;
 }
 
 const reportItems = [
@@ -28,46 +30,48 @@ const reportItems = [
 
 const ReportModal: React.FC<Props> = ({ userId, movieId, reviewId, visible, cancel }) => {
 
+  const { userDetail, user } = useAuth();
+
   const handleCloseModal = React.useCallback(() => {
     cancel?.();
   }, [cancel]);
 
-  const saveReportHadnler = React.useCallback((text: string) => {
-
-
-    const testData = {
-        "user": "63f1b3e9f4d50e12c8b56789",
-        "movie": "63f1b3e9f4d50e12c8b5678a",
-        "review": "63f1b3e9f4d50e12c8b5678b",
-        "reason": "Inappropriate Content...",           
-      }
-    
-    console.log('text',text);
-    console.log('userId', userId);
-    console.log('movieId', movieId);
-    console.log('reviewId', reviewId);
+  const saveReportHadnler = React.useCallback(async (text: string) => {
 
     const postObj = {
       "user": userId,
       "movie": movieId,
       "review": reviewId,
-      "reason": text,   
+      "reason": text,
     };
 
-    console.log('post', postObj);
+    const response = await fetch(`${API_URL}moview-report-review`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${user?.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ ...postObj })
+    });
 
+    const resp = await response.json();
 
-    cancel?.();    
-    setTimeout(() => {
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: 'Thank you! Your report has been submitted.',
-        position: 'bottom',      
-        autoHide: true, // Ensures the toast hides automatically
-        visibilityTime: 3000, // Toast will be visible for 5 seconds
-      });
-    }, 500);
+    if (resp.status === 'success') {
+      cancel?.();
+      setTimeout(() => {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: 'Thank you! Your report has been submitted.',
+          position: 'bottom',
+          autoHide: true,
+          visibilityTime: 3000,
+        });
+      }, 500);
+    } else {
+      Alert.alert('', 'Somethong went wrong.')
+    }
+
   }, [userId, movieId, reviewId]);
 
   return (

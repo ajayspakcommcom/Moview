@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, TextInput, Button, Text, ActionSheetIOS } from 'react-native';
 import { GestureHandlerRootView, LongPressGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
-import ReportModal from '../../components/ReportModal/ReportModal';
+import ReportMovieModal from '../../components/ReportModal/ReportMovieModal';
 
 
 
@@ -32,10 +32,7 @@ const Test1: React.FC<Props> = () => {
                 </View>
             </LongPressGestureHandler>
 
-            <ReportModal id="dddd"
-                visible={pressed} 
-                cancel={handleCloseModal}
-            />
+          
 
         </GestureHandlerRootView>
     )

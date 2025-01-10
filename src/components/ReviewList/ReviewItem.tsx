@@ -12,7 +12,7 @@ import { GestureHandlerRootView, LongPressGestureHandler, TapGestureHandler } fr
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
-import ReportModal from '../ReportModal/ReportModal';
+import ReportMovieModal from '../ReportModal/ReportMovieModal';
 import { MovieItem } from '../../types/Movie';
 
 
@@ -102,7 +102,7 @@ const ReviewItem: React.FC<ItemProps> = ({ item, movieId }) => {
                     </View>
                 </Pressable>
 
-                <ReportModal 
+                <ReportMovieModal 
                 userId={userDetail._id}
                 movieId={movieId}
                 reviewId={item._id}              
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 20,
         marginBottom: 10,
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: Colors.tabBgColor,
         borderRadius: 20,
         position: 'relative'

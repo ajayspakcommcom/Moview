@@ -496,7 +496,7 @@ const DetailScreen: React.FC = () => {
                                     headerContent()
                                 )}
                                 data={reviewListByMovie}
-                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} /></View>}
+                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ReviewItem item={item} movieId={route.params.movie?._id} /></View>}
                                 keyExtractor={(item) => item._id}
                             />
                         }

@@ -56,7 +56,6 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
     return (
         <GestureHandlerRootView>
 
-
             <View style={styles.wrapper}>
                 <LongPressGestureHandler onActivated={onLongPress} minDurationMs={500}>
                     <View style={[styles.headerWrapper]}>
@@ -106,9 +105,10 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                     </View>
                 </Pressable>
 
-                <ReportModal id="dddd"
+                <ReportModal 
+                id={item._id}              
                 visible={pressed}
-                cancel={handleCloseModal}                
+                cancel={handleCloseModal}  
             />                        
             </View>
             

@@ -31,7 +31,8 @@ const ReportModal: React.FC<Props> = ({ id, visible, cancel }) => {
   }, [cancel]);
 
   const saveReportHadnler = React.useCallback((text: string) => {
-    console.log(text);
+    console.log('text',text);
+    console.log('id', id);
     cancel?.();    
     setTimeout(() => {
       Toast.show({
@@ -43,7 +44,7 @@ const ReportModal: React.FC<Props> = ({ id, visible, cancel }) => {
         visibilityTime: 3000, // Toast will be visible for 5 seconds
       });
     }, 500);
-  }, []);
+  }, [id]);
 
   return (
     <SafeAreaProvider>

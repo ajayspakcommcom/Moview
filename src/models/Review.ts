@@ -19,7 +19,7 @@ interface Show {
     title?: string;
 }
 
-export interface Review {
+export interface Review {    
     __v: number;
     _id: string;
     created_at: string;

@@ -506,7 +506,7 @@ const ShowDetailScreen: React.FC = () => {
                                     headerContent()
                                 )}
                                 data={reviewListByShow}
-                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} /></View>}
+                                renderItem={({ item }) => <View style={styles.reviewListContainer}><ShowReviewItem item={item} showId={route.params.showItem?._id} /></View>}
                                 keyExtractor={(item) => item._id}
                             />
                         }
@@ -524,7 +524,7 @@ const ShowDetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem} onPress={onReviewPressHandler} />}
+                            {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem}  onPress={onReviewPressHandler} />}
 
                             {userDetail.role === 'guest' &&
                                 <View style={[styles.withoutLoginWrapper]}>

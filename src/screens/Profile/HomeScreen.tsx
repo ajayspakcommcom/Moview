@@ -177,8 +177,8 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                             </View>
                                         </View>
                                         <View style={styles.privacy_guideline}>
-                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/privacy.html')}><Text style={styles.guidText}>Privacy & Policy</Text></Pressable>
-                                                <Pressable onPress={() => urlLinkHandler('https://www.google.com/')}><Text style={styles.guidText}>Moviu Community Guidelines</Text></Pressable>
+                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/privacy-policy.html')}><Text style={styles.guidText}>Privacy & Policy</Text></Pressable>
+                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/community-guidelines.html')}><Text style={styles.guidText}>Moviu Community Guidelines</Text></Pressable>
                                         </View>
                                     </>
                                 }

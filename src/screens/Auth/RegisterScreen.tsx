@@ -111,7 +111,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const termsConditionHandler = React.useCallback(async (url: string) => {
-        // const url = 'https://moviu.in/privacy.html';
 
         try {
             const canOpen = await Linking.canOpenURL(url);
@@ -205,7 +204,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         </Text> */}
                         <View style={styles.flatItem}>
                             {checked ? <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/checked.png')} /></Pressable> : <Pressable onPress={() => setChecked(!checked)}><FastImage style={styles.icon} source={require('../../assets/images/icons/unchecked.png')} /></Pressable>}
-                            <Text style={styles.checkboxLabel}> By registering / skipping  i agree to the <Pressable onPress={() => termsConditionHandler('termsConditionHandler')}><Text style={[styles.linkText]}> Community Guidelines</Text></Pressable> and <Pressable onPress={() => termsConditionHandler('https://moviu.in/privacy.html')}><Text style={[styles.linkText]}>Terms of Use.</Text></Pressable> </Text>
+                            <Text style={styles.checkboxLabel}> By registering / skipping  i agree to the <Pressable onPress={() => termsConditionHandler('https://moviu.in/community-guidelines.html')}><Text style={[styles.linkText]}> Community Guidelines</Text></Pressable> and <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={[styles.linkText]}>Terms of Use.</Text></Pressable> </Text>
                         </View>
 
 
@@ -244,6 +243,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: Fonts.Size.Small + 2,
         color: Colors.whiteColor,
+        lineHeight:20,        
     },
     checkboxLabel1: {
         width: '100%',
@@ -255,12 +255,13 @@ const styles = StyleSheet.create({
     },
     flatItem: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         paddingVertical: 10,
         marginBottom:10,
         //paddingLeft: 10,
         //backgroundColor:'red',
-        width: '100%'
+        width: '100%',
+        
     },
     checkbox: {
         marginRight: 8,

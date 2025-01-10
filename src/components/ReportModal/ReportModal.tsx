@@ -8,7 +8,9 @@ import RightArrow from '../Ui/RightArrow';
 import Toast from 'react-native-toast-message';
 
 interface Props {
-  id: string;
+  userId: string;
+  movieId: string;
+  reviewId: string;
   visible?: boolean;
   cancel?: () => void;  
 }
@@ -24,15 +26,37 @@ const reportItems = [
   "Scam or fraud"
 ];
 
-const ReportModal: React.FC<Props> = ({ id, visible, cancel }) => {
+const ReportModal: React.FC<Props> = ({ userId, movieId, reviewId, visible, cancel }) => {
 
   const handleCloseModal = React.useCallback(() => {
     cancel?.();
   }, [cancel]);
 
   const saveReportHadnler = React.useCallback((text: string) => {
+
+
+    const testData = {
+        "user": "63f1b3e9f4d50e12c8b56789",
+        "movie": "63f1b3e9f4d50e12c8b5678a",
+        "review": "63f1b3e9f4d50e12c8b5678b",
+        "reason": "Inappropriate Content...",           
+      }
+    
     console.log('text',text);
-    console.log('id', id);
+    console.log('userId', userId);
+    console.log('movieId', movieId);
+    console.log('reviewId', reviewId);
+
+    const postObj = {
+      "user": userId,
+      "movie": movieId,
+      "review": reviewId,
+      "reason": text,   
+    };
+
+    console.log('post', postObj);
+
+
     cancel?.();    
     setTimeout(() => {
       Toast.show({
@@ -44,7 +68,7 @@ const ReportModal: React.FC<Props> = ({ id, visible, cancel }) => {
         visibilityTime: 3000, // Toast will be visible for 5 seconds
       });
     }, 500);
-  }, [id]);
+  }, [userId, movieId, reviewId]);
 
   return (
     <SafeAreaProvider>

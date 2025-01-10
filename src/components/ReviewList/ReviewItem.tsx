@@ -13,13 +13,15 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import ReportModal from '../ReportModal/ReportModal';
+import { MovieItem } from '../../types/Movie';
 
 
 interface ItemProps {
     item: Review;
+    movieId: string
 }
 
-const ReviewItem: React.FC<ItemProps> = ({ item }) => {
+const ReviewItem: React.FC<ItemProps> = ({ item, movieId }) => {
 
     const { userDetail } = useAuth();
 
@@ -32,10 +34,8 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
     };
 
     React.useLayoutEffect(() => {
-
-        return () => {
-
-        }
+        console.log('item', item);
+        return () => {}
     }, []);
 
     const gotoUserProfile = (id: string) => {
@@ -49,9 +49,6 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
     const handleCloseModal = () => {
         setPressed(false);        
     };
-
-
-
 
     return (
         <GestureHandlerRootView>
@@ -106,7 +103,9 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
                 </Pressable>
 
                 <ReportModal 
-                id={item._id}              
+                userId={userDetail._id}
+                movieId={movieId}
+                reviewId={item._id}              
                 visible={pressed}
                 cancel={handleCloseModal}  
             />                        

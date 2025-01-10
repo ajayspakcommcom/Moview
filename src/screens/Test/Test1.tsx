@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, TextInput, Button, Text, ActionSheetIOS } from 'react-native';
-import { Filter } from 'bad-words'
-import Colors from '../../styles/Colors';
 import { GestureHandlerRootView, LongPressGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
 import ReportModal from '../../components/ReportModal/ReportModal';
 
@@ -18,7 +16,6 @@ const Test1: React.FC<Props> = () => {
 
     const onLongPress = () => {
         setPressed(true);       
-        console.log('Ram...');
     };
 
     const handleCloseModal = () => {
@@ -35,7 +32,7 @@ const Test1: React.FC<Props> = () => {
                 </View>
             </LongPressGestureHandler>
 
-            <ReportModal 
+            <ReportModal id="dddd"
                 visible={pressed} 
                 cancel={handleCloseModal}
             />

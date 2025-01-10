@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions, ScrollView } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions, ScrollView, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import FastImage from 'react-native-fast-image';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import RightArrow from '../Ui/RightArrow';
+import Toast from 'react-native-toast-message';
 
 interface Props {
+  id: string;
   visible?: boolean;
   cancel?: () => void;  
 }
@@ -22,11 +24,26 @@ const reportItems = [
   "Scam or fraud"
 ];
 
-const ReportModal: React.FC<Props> = ({ visible, cancel }) => {
+const ReportModal: React.FC<Props> = ({ id, visible, cancel }) => {
 
-  const handleCloseModal = React.useCallback(() => {        
-    cancel?.();    
+  const handleCloseModal = React.useCallback(() => {
+    cancel?.();
   }, [cancel]);
+
+  const saveReportHadnler = React.useCallback((text: string) => {
+    console.log(text);
+    cancel?.();    
+    setTimeout(() => {
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Thank you! Your report has been submitted.',
+        position: 'bottom',      
+        autoHide: true, // Ensures the toast hides automatically
+        visibilityTime: 3000, // Toast will be visible for 5 seconds
+      });
+    }, 500);
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -35,13 +52,12 @@ const ReportModal: React.FC<Props> = ({ visible, cancel }) => {
           <View style={styles.centeredViewInner}>
             <View style={[styles.modalView]}>
               <Pressable style={[styles.button, styles.closeBtn]} onPress={handleCloseModal}>
-                <FastImage  style={styles.closeIcon}  source={require('../../assets/images/icons/close-y.png')} />
+                <FastImage style={styles.closeIcon} source={require('../../assets/images/icons/close-y.png')} />
               </Pressable>
               <ScrollView style={[styles.scrollViewContainer]}>
                 <View style={styles.listContainer}>
-
-                {reportItems.map((item, index) => (
-                    <Pressable key={index} style={styles.listItem}>
+                  {reportItems.map((item, index) => (
+                    <Pressable key={index} style={styles.listItem} onPress={() => saveReportHadnler(item)}>
                       <View style={styles.listInnerItem}>
                         <Text style={styles.listText}>{item}</Text>
                         <RightArrow />
@@ -49,26 +65,26 @@ const ReportModal: React.FC<Props> = ({ visible, cancel }) => {
                       <View style={styles.separator} />
                     </Pressable>
                   ))}
-
                 </View>
               </ScrollView>
             </View>
           </View>
-        </Modal>      
+        </Modal>
+        <Toast />
       </SafeAreaView>
     </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContainer: {    
-    marginTop:30,
-    flex:1,
-    width:'100%' ,
-    zIndex:-1
+  scrollViewContainer: {
+    marginTop: 30,
+    flex: 1,
+    width: '100%',
+    zIndex: -1
   },
   listContainer: {
-    marginTop:20,
+    marginTop: 20,
     width: '100%',
     paddingVertical: 20,
     paddingHorizontal: 10,
@@ -77,12 +93,12 @@ const styles = StyleSheet.create({
   listItem: {
     width: '100%',
     paddingVertical: 15,
-    paddingHorizontal: 20    
+    paddingHorizontal: 20
   },
-  listInnerItem : {
-    justifyContent:'space-between', 
+  listInnerItem: {
+    justifyContent: 'space-between',
     // backgroundColor:'red', 
-    flexDirection:'row'
+    flexDirection: 'row'
   },
   listText: {
     color: Colors.whiteColor,
@@ -139,7 +155,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50
   },
-  
+
 });
 
 export default React.memo(ReportModal);

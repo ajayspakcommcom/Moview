@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Platform, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import { AirbnbRating } from 'react-native-ratings';
@@ -8,11 +8,12 @@ import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import { truncateText } from '../../utils/Common';
 import LinearGradient from 'react-native-linear-gradient';
-import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
-import { PanGestureHandlerGestureEvent, TapGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, LongPressGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
+import ReportModal from '../ReportModal/ReportModal';
+
 
 interface ItemProps {
     item: Review;
@@ -24,9 +25,10 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
     const [isExpanded, setIsExpanded] = React.useState(false);
     const navigation = useNavigation<any>();
+    const [pressed, setPressed] = React.useState(false);
 
     const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
+        setIsExpanded(!isExpanded);        
     };
 
     React.useLayoutEffect(() => {
@@ -36,68 +38,80 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
         }
     }, []);
 
-    const onSwipe = (event: PanGestureHandlerGestureEvent) => {
-        
-    };
-
-    const onTap = (event: TapGestureHandlerGestureEvent) => {
-        console.log('Ram...');
-    };
-
     const gotoUserProfile = (id: string) => {
         navigation.navigate('FollowerFollowing', { userId: id });
     };
 
+    const onLongPress = () => {
+        setPressed(true);
+    };
+
+    const handleCloseModal = () => {
+        setPressed(false);        
+    };
+
+
+
 
     return (
         <GestureHandlerRootView>
-            <PanGestureHandler onGestureEvent={onTap}>
-                <TouchableOpacity onPress={toggleExpand}>
-                    <View style={styles.wrapper}>
-                        <View style={styles.headerWrapper}>
-                            {Platform.OS === 'android' && <View style={styles.user}>
-                                <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                                    <Icon
-                                        name={'user-circle'}
-                                        size={30}
-                                        color={Colors.whiteColor}
-                                        onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)} 
-                                    />
-                                </LinearGradient>
-                            </View>}
 
-                            {
-                                Platform.OS === 'ios' && <View style={styles.user}><FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} /></View>
-                            }
 
-                            <View style={styles.content}>
-                                <Text
-                                    style={styles.name}
-                                    onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)} 
-                                >{item.user.firstname}</Text>
-                                <View style={styles.rating}>
-                                    <AirbnbRating
-                                        count={5}
-                                        reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                                        defaultRating={item.rating}
-                                        size={15}
-                                        showRating={false}
-                                        isDisabled={true}
-                                        selectedColor={Colors.tabActiveColor}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.toggleIcon}>
-                                <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
+            <View style={styles.wrapper}>
+                <LongPressGestureHandler onActivated={onLongPress} minDurationMs={500}>
+                    <View style={[styles.headerWrapper]}>
+                        {Platform.OS === 'android' && <View style={styles.user}>
+                            <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                                <Icon
+                                    name={'user-circle'}
+                                    size={30}
+                                    color={Colors.whiteColor}
+                                    onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)}
+                                />
+                            </LinearGradient>
+                        </View>}
+
+                        {
+                            Platform.OS === 'ios' && <View style={styles.user}><FastImage style={styles.icon} source={require('../../assets/images/icons/profile-w.png')} /></View>
+                        }
+
+                        <View style={styles.content}>
+                            <Text
+                                style={styles.name}
+                                onPress={userDetail._id === item.user._id ? undefined : gotoUserProfile.bind(null, item.user._id)}
+                            >{item.user.firstname}</Text>
+                            <View style={styles.rating}>
+                                <AirbnbRating
+                                    count={5}
+                                    reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                                    defaultRating={item.rating}
+                                    size={15}
+                                    showRating={false}
+                                    isDisabled={true}
+                                    selectedColor={Colors.tabActiveColor}
+                                />
                             </View>
                         </View>
 
-                        <View style={styles.footerWrapper}>
-                            <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
+
+                        <View style={styles.toggleIcon}>
+                            <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
                         </View>
+
                     </View>
-                </TouchableOpacity>
-            </PanGestureHandler>
+                </LongPressGestureHandler>
+                <Pressable onPress={toggleExpand}>
+                    <View style={styles.footerWrapper}>
+                        <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
+                    </View>
+                </Pressable>
+
+                <ReportModal id="dddd"
+                visible={pressed}
+                cancel={handleCloseModal}                
+            />                        
+            </View>
+            
         </GestureHandlerRootView>
 
     );
@@ -105,18 +119,18 @@ const ReviewItem: React.FC<ItemProps> = ({ item }) => {
 
 const styles = StyleSheet.create({
     icon: {
-        width:25, 
-        height:25
+        width: 25,
+        height: 25
     },
     wrapper: {
         // backgroundColor: Colors.reviewBgColor,
         paddingVertical: 8,
         paddingHorizontal: 20,
         marginBottom: 10,
-        borderWidth:3,
-        borderColor:Colors.tabBgColor,
-        borderRadius:20, 
-        position:'relative'
+        borderWidth: 3,
+        borderColor: Colors.tabBgColor,
+        borderRadius: 20,
+        position: 'relative'
     },
     headerWrapper: {
         flexDirection: 'row',

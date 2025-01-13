@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, TextInput, Button, Text, ActionSheetIOS } from 'react-native';
-import { GestureHandlerRootView, LongPressGestureHandler, TapGestureHandler } from 'react-native-gesture-handler';
-import ReportMovieModal from '../../components/ReportModal/ReportMovieModal';
-import LinearGradient from 'react-native-linear-gradient';
+import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, TextInput, Button, Text, ActionSheetIOS, Image } from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+
 
 
 
@@ -13,40 +12,38 @@ type Props = {
 
 const Test1: React.FC<Props> = () => {
 
-
-
-
-    return (
-       <View style={styles.container}>
-            <LinearGradient
-            colors={['red', 'green']} 
-            style={styles.container}    
-    >
-      <View style={styles.inner}>
-        <Text style={styles.text}>Gradient Background</Text>
-      </View>
-    </LinearGradient>
-       </View>
-    )
+  return (
+<View style={styles.container}>
+      {/* <Image
+        key={'blurryImage'}
+        source={{ uri }}
+        style={styles.absolute}
+      /> */}
+      <Text style={styles.absolute}>Hi, I am some blurred text</Text>
+      {/* in terms of positioning and zIndex-ing everything before the BlurView will be blurred */}
+      <BlurView
+        style={styles.absolute}
+        blurType="light"
+        blurAmount={10}
+        reducedTransparencyFallbackColor="white"
+      />
+      <Text>I'm the non blurred text because I got rendered on top of the BlurView</Text>
+    </View>
+  )
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:'red'
-    },   
-    inner: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      text: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold',
-      },
+  container: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  absolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  }
 });
 
 export default Test1;

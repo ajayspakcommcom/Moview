@@ -67,17 +67,12 @@ function App(): React.JSX.Element {
     headerShown: false,
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
-    tabBarStyle: { 
-      // backgroundColor: Colors.tabBgColor, 
-      // paddingHorizontal: 5, 
-      // paddingTop: 10, 
-      // height: 50, 
-      // paddingBottom: 0
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', // make the background transparent
-    position: 'absolute', // position the tab bar correctly
-    borderTopWidth: 0, // remove the default border
-    elevation: 0, // Android: remove shadow/elevation
-    shadowOpacity: 0, // iOS: remove shadow
+    tabBarStyle: {      
+    backgroundColor: 'rgba(0, 0, 0, 0.80)', 
+    position: 'absolute', 
+    borderTopWidth: 0, 
+    elevation: 0, 
+    shadowOpacity: 0, 
     },    
     tabBarLabelStyle: { fontSize: 10, lineHeight: 0, height: 0 },
     //tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor }

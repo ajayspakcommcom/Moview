@@ -15,7 +15,7 @@ const Test1: React.FC<Props> = () => {
     const [pressed, setPressed] = useState(false);
 
     const onLongPress = () => {
-        setPressed(true);       
+        console.log('Ram...');
     };
 
     const handleCloseModal = () => {
@@ -31,9 +31,6 @@ const Test1: React.FC<Props> = () => {
                     <Text style={styles.buttonText}>Long Press Me</Text>
                 </View>
             </LongPressGestureHandler>
-
-          
-
         </GestureHandlerRootView>
     )
 };

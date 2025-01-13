@@ -22,8 +22,8 @@ npx react-native run-ios (for default)
 npx react-native run-ios --device "iPhone 16 Pro" (for specific)
 
 xcrun simctl list devices
-xcrun simctl boot 5D76B241-0D33-4439-8415-1AC90D787722 (Boot and Use Another Simulator)
-xcrun simctl shutdown 5D76B241-0D33-4439-8415-1AC90D787722 (shutdown)
+xcrun simctl boot A7012AD1-05B1-4AED-97B8-44F7A0A79EFC (Boot and Use Another Simulator)
+xcrun simctl shutdown 424A450E-3581-438D-8BE8-F34B19404A33 (shutdown)
 
 xcrun simctl shutdown all
 xcrun simctl erase all
@@ -67,3 +67,8 @@ descriptionText: {
     fontSize: Fonts.Size.Small
 }
 
+For Release : 
+1) XCode  > Product > Scheme >  Edit Scheme >  Build Configuration > Release
+
+For Debug:
+1) XCode  > Product > Scheme >  Edit Scheme >  Build Configuration > Debug

@@ -19,7 +19,8 @@ const Colors = {
     backgroundColorShadow: 'rgba(0, 0, 0, 0.5)',
     tagBgColor: '#333132', 
     tagBorderColor: '#A7A9AC',    
-    blueColor:'#007AFF'
+    blueColor:'#007AFF', 
+    startModalGradientColor:'#333333',    
 };
 
 export default Colors;

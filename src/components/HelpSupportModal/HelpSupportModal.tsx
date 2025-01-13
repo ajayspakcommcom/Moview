@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     color: Colors.whiteColor
   },
   emailBtn: {
-    backgroundColor: Colors.blueColor,
+    backgroundColor: Colors.tabActiveColor,
     borderRadius: 20,
     width: 200,
     padding: 10,
@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
   },
   emailText: {
     textAlign: 'center',
-    color: Colors.whiteColor,
-    fontSize: Fonts.Size.Medium,
+    color: Colors.blackColor,
+    fontSize: Fonts.Size.Medium - 2,
   },
   button: {
     borderRadius: 20,

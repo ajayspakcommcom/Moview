@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, TextInput, Button, Text, ActionSheetIOS, Image } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
-
 
 
 
@@ -14,36 +13,47 @@ const Test1: React.FC<Props> = () => {
 
   return (
 <View style={styles.container}>
-      {/* <Image
-        key={'blurryImage'}
-        source={{ uri }}
-        style={styles.absolute}
-      /> */}
-      <Text style={styles.absolute}>Hi, I am some blurred text</Text>
-      {/* in terms of positioning and zIndex-ing everything before the BlurView will be blurred */}
-      <BlurView
-        style={styles.absolute}
-        blurType="light"
-        blurAmount={10}
-        reducedTransparencyFallbackColor="white"
-      />
-      <Text>I'm the non blurred text because I got rendered on top of the BlurView</Text>
+      {/* Add a background image or color */}
+      <ImageBackground
+        source={{ uri: 'https://img.freepik.com/free-photo/nature-beauty-colors-meadow-daisy-blossoms-generated-by-ai_188544-10116.jpg' }} // You can use an image or leave it as solid color
+        style={styles.imageBackground}
+      >        
+        <BlurView
+          style={styles.blurContainer}
+          blurType="dark" 
+          blurAmount={20} 
+        >
+          <View style={styles.innerContainer}>
+            <Text style={styles.text}>This view has a blurred background with a blue tint</Text>
+          </View>
+        </BlurView>
+      </ImageBackground>
     </View>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center"
+    flex: 1,
   },
-  absolute: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  }
+  imageBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  blurContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+  },
+  innerContainer: {        
+    borderRadius: 10,
+  },
+  text: {
+    color: 'white',
+    fontSize: 18,
+  },
 });
 
 export default Test1;

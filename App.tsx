@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Keyboard, Platform, View, StyleSheet, StatusBar } from 'react-native';
+import { Keyboard, Platform, View, StyleSheet, StatusBar, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,6 +17,7 @@ import SearchNavigation from './src/navigation/SearchNavigation';
 import ProfileNavigation from './src/navigation/ProfileNavigation';
 import Test1 from './src/screens/Test/Test1';
 import Test2 from './src/screens/Test/Test2';
+import { BlurView } from '@react-native-community/blur';
 
 
 const Stack = createStackNavigator();
@@ -67,20 +68,19 @@ function App(): React.JSX.Element {
     headerShown: false,
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
-    tabBarStyle: {      
-    backgroundColor: 'rgba(0, 0, 0, 0.80)', 
-    position: 'absolute', 
-    borderTopWidth: 0, 
-    elevation: 0, 
-    shadowOpacity: 0, 
-    },    
-    tabBarLabelStyle: { fontSize: 10, lineHeight: 0, height: 0 },
-    //tabBarStyle: keyboardVisible ? { display: 'none' } : { backgroundColor: Colors.blackColor }
+    tabBarStyle: {
+      backgroundColor: 'rgba(0, 0, 0, 0.80)',
+      position: 'absolute',
+      borderTopWidth: 0,
+      elevation: 0,
+      shadowOpacity: 0,
+    },
+    tabBarLabelStyle: { fontSize: 10, lineHeight: 0, height: 0 }
   };
 
 
   return (
-    
+
     <View style={styles.appContainer}>
 
       {Platform.OS === 'ios' && <View style={styles.statusBar}></View>}
@@ -95,18 +95,17 @@ function App(): React.JSX.Element {
         }
 
         {isLoggedIn &&
-          <Tab.Navigator screenOptions={{ ...tabScreenOptions}} >
+          <Tab.Navigator screenOptions={{ ...tabScreenOptions }}>
             <Tab.Screen
               name="Home"
               component={HomeNavigation}
-              options={{ ...TabNavigationOptions.Home}}
+              options={{ ...TabNavigationOptions.Home }}
               listeners={({ navigation }) => ({
                 tabPress: (e) => navigation.navigate('Home', { screen: 'HomeScreen' })
               })}
             />
 
-            <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> 
-            {/* <Stack.Screen name="Test2" component={Test2} options={{ animationEnabled: false }} /> */}
+            <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} />
             <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
 
             <Tab.Screen
@@ -142,12 +141,11 @@ function App(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   statusBar: {
-    backgroundColor:Colors.blackColor,
-    height:60
+    backgroundColor: Colors.blackColor,
+    height: 60
   },
   appContainer: {
     flex: 1,
-    //paddingTop: Platform.OS === 'ios' ? 60 : 0
   }
 });
 

@@ -177,8 +177,9 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                             </View>
                                         </View>
                                         <View style={styles.privacy_guideline}>
-                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/privacy-policy.html')}><Text style={styles.guidText}>Privacy & Policy</Text></Pressable>
-                                                <Pressable onPress={() => urlLinkHandler('https://moviu.in/community-guidelines.html')}><Text style={styles.guidText}>Community Guidelines</Text></Pressable>
+                                            <Pressable onPress={() => urlLinkHandler('https://moviu.in/privacy-policy.html')}><Text style={styles.guidText}>Privacy Policy</Text></Pressable>
+                                            <Pressable style={[styles.andText]}><Text style={styles.guidText}>&</Text></Pressable>
+                                            <Pressable onPress={() => urlLinkHandler('https://moviu.in/community-guidelines.html')}><Text style={styles.guidText}> Community Guidelines</Text></Pressable>
                                         </View>
                                     </>
                                 }
@@ -204,16 +205,23 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+
+    andText: {
+        paddingLeft:5
+    },
+
     privacy_guideline: {
         marginTop:15,        
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',         
+        flexDirection:'row'
     },
     guidText: {
         color:Colors.whiteColor, 
         fontFamily:Fonts.Family.Bold,
         lineHeight:30,
-        fontWeight:'600'
+        fontWeight:'600',
+        textDecorationLine: 'underline',        
     },
     keypad: {
         flex: 1

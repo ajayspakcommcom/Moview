@@ -54,7 +54,7 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
       
       <View style={styles.flatHeader}>
         <Text style={styles.flateHeaderText}>Filter by language</Text>        
-        <Pressable onPress={onCancelHandler}><FastImage style={styles.icon} source={require('../../assets/images/icons/close-y.png')} /></Pressable> 
+        <Pressable onPress={onCancelHandler}><FastImage style={[styles.icon, styles.closeIcon]} source={require('../../assets/images/icons/close-y.png')} /></Pressable> 
       </View>
 
       <FlatList
@@ -73,6 +73,10 @@ const LanguageDrawer: React.FC<LanguageDrawerProps> = ({visible,onCancelHandler,
 };
 
 const styles = StyleSheet.create({
+  closeIcon: {
+    width:50,
+    height:50
+  },
   icon: {
     width:25, 
     height:25

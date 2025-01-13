@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     zIndex: 9,
-    bottom: 15,
+    bottom: 100,
     right: 15,
     width: 40,
     height: 40

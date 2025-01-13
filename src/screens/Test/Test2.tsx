@@ -7,12 +7,7 @@ import Toast from 'react-native-toast-message';
 const Test2 = () => {
 
   const showToast = () => {
-    Toast.show({
-      type: 'success',
-      text1: 'Success',
-      text2: 'Your operation was successful!',
-      position:'bottom'
-    });
+   console.log('Ram...');
   };
 
   return (

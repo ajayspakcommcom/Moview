@@ -17,6 +17,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
     const [checked, setChecked] = React.useState(false);
     const [firstname, setFirstname] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [phone, setPhone] = React.useState('');
@@ -29,69 +30,79 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             Alert.alert('', 'Please agree to the Terms of Service');
             return;
         }
-    
+
         try {
-            // Validate all fields
             const fields = [
                 { name: 'First name', value: firstname },
                 { name: 'Username', value: username },
-                { name: 'Password', value: password },
-                { name: 'Mobile', value: phone }
+                { name: 'Email', value: email },
+                { name: 'Password', value: password }                
             ];
-    
+
             const emptyField = fields.find(field => !field.value?.trim());
             if (emptyField) {
                 Alert.alert('', `${emptyField.name} is required`);
                 return;
             }
-    
+
+            console.log('First Name:', firstname);
+            console.log('Email:', email);
+            console.log('Username:', username);
+            console.log('Password:', password);
+            console.log('Phone:', phone);
+
             setLoader(true);
-    
+
             const response = await fetch(`${API_URL}user`, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     firstname,
+                    email,
                     username,
-                    email: username,
-                    phone,
+                    phone:'**********',
                     password,
                     terms: checked
                 }),
             });
-    
+
             const result = await response.json();
-    
+
             if (result.status === 'success') {
                 Alert.alert(
-                    'Registration Successful', 
-                    'Thank you for your registration. We will contact you soon.', 
-                    [{ 
-                        text: 'OK', 
-                        onPress: () => navigation.navigate('Login') 
+                    'Registration Successful',
+                    'Thank you for your registration. We will contact you soon.',
+                    [{
+                        text: 'OK',
+                        onPress: () => navigation.navigate('Login')
                     }]
                 );
             } else {
                 Alert.alert('Error', result.message || 'Registration failed');
             }
-    
+
         } catch (error) {
             console.error('Registration error:', error);
             Alert.alert(
-                'Error', 
+                'Error',
                 'Registration failed. Please check your internet connection and try again.'
             );
         } finally {
             setLoader(false);
         }
-    }, [checked, firstname, username, password, phone, navigation]);
+
+    }, [checked, firstname, email, username, password, phone, navigation]);
 
     const handleFirstnameChange = (text: string) => {
         setFirstname(text);
     };
+
+    const handleEmailChange = (text: string) => {
+        setEmail(text);
+    }
 
     const handleUsernameChange = (text: string) => {
         setUsername(text);
@@ -128,7 +139,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                 'Could not open the page. Please check your internet connection and try again.',
                 [
                     {
-                        text: 'Try Again',                        
+                        text: 'Try Again',
                     },
                     {
                         text: 'Cancel',
@@ -151,7 +162,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 40}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <View style={{flex:1}}>
+                <View style={{ flex: 1 }}>
                     <ScrollView
                         contentContainerStyle={styles.container}
                         keyboardShouldPersistTaps="handled"
@@ -176,20 +187,27 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                         />
 
                         <CustomTextInput
-                            placeholder="Username"
-                            value={username}
-                            onChangeText={handleUsernameChange}
-                            autoCapitalize="none"                            
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={handleEmailChange}
+                            autoCapitalize="none"
                         />
 
                         <CustomTextInput
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={handleUsernameChange}
+                            autoCapitalize="none"
+                        />
+
+                        {/* <CustomTextInput
                             placeholder="Mobile"
                             value={phone}
                             keyboardType="number-pad"
                             onChangeText={handlePhoneChange}
-                            maxLength={10} 
-                            returnKeyType="done"                            
-                        />
+                            maxLength={10}
+                            returnKeyType="done"
+                        /> */}
 
                         <CustomTextInput
                             placeholder="Password"
@@ -243,7 +261,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontSize: Fonts.Size.Small + 2,
         color: Colors.whiteColor,
-        lineHeight:20,        
+        lineHeight: 20,
     },
     checkboxLabel1: {
         width: '100%',
@@ -257,11 +275,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         paddingVertical: 10,
-        marginBottom:10,
+        marginBottom: 10,
         //paddingLeft: 10,
         //backgroundColor:'red',
         width: '100%',
-        
+
     },
     checkbox: {
         marginRight: 8,
@@ -274,7 +292,7 @@ const styles = StyleSheet.create({
     },
     container: {
         // flex: 1,
-        flexGrow:1,
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,

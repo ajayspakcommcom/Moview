@@ -8,6 +8,7 @@ import RightArrow from '../Ui/RightArrow';
 import Toast from 'react-native-toast-message';
 import { useAuth } from '../../context/AuthContext';
 import { API_URL } from '../../configure/config.ios';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface Props {
   userId: string;
@@ -55,7 +56,7 @@ const ReportShowModal: React.FC<Props> = ({ userId, showId, reviewId, visible, c
     });
 
     const resp = await response.json();
-    
+
     if (resp.status === 'success') {
       cancel?.();
       setTimeout(() => {
@@ -79,24 +80,25 @@ const ReportShowModal: React.FC<Props> = ({ userId, showId, reviewId, visible, c
       <SafeAreaView style={styles.centeredView}>
         <Modal presentationStyle="formSheet" animationType="slide" transparent={true} visible={visible} onRequestClose={handleCloseModal}>
           <View style={styles.centeredViewInner}>
-            <View style={[styles.modalView]}>
-              <Pressable style={[styles.button, styles.closeBtn]} onPress={handleCloseModal}>
-                <FastImage style={styles.closeIcon} source={require('../../assets/images/icons/close-y.png')} />
-              </Pressable>
-              <ScrollView style={[styles.scrollViewContainer]}>
-                <View style={styles.listContainer}>
-                  {reportItems.map((item, index) => (
-                    <Pressable key={index} style={styles.listItem} onPress={() => saveReportHadnler(item)}>
-                      <View style={styles.listInnerItem}>
-                        <Text style={styles.listText}>{item}</Text>
-                        <RightArrow />
-                      </View>
-                      <View style={styles.separator} />
-                    </Pressable>
-                  ))}
-                </View>
-              </ScrollView>
-            </View>
+            <LinearGradient colors={[Colors.startModalGradientColor, Colors.blackColor]} start={{ x: 0, y: 0.0001 }} end={{ x: 0, y: 1 }} style={styles.modalView}>
+              <View style={[styles.modalView]}>
+                <Pressable style={[styles.button, styles.closeBtn]} onPress={handleCloseModal}>
+                  <FastImage style={styles.closeIcon} source={require('../../assets/images/icons/close-y.png')} />
+                </Pressable>
+                <ScrollView style={[styles.scrollViewContainer]}>
+                  <View style={styles.listContainer}>
+                    {reportItems.map((item, index) => (
+                      <Pressable key={index} style={styles.listItem} onPress={() => saveReportHadnler(item)}>
+                        <View style={styles.listInnerItem}>
+                          <Text style={styles.listText}>{item}</Text>
+                          <RightArrow />
+                        </View>                        
+                      </Pressable>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </LinearGradient>
           </View>
         </Modal>
         <Toast />
@@ -107,26 +109,25 @@ const ReportShowModal: React.FC<Props> = ({ userId, showId, reviewId, visible, c
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
-    marginTop: 30,
+    marginTop: 60,
     flex: 1,
     width: '100%',
     zIndex: -1
   },
   listContainer: {
-    marginTop: 20,
-    width: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+    marginTop: 10,
+    width: '100%',    
+    paddingHorizontal: 20,
   },
 
   listItem: {
-    width: '100%',
-    paddingVertical: 15,
-    paddingHorizontal: 20
+    width: '100%',        
+    borderBottomWidth:1,
+    borderBottomColor:Colors.whiteColor,
+    paddingVertical:16
   },
   listInnerItem: {
     justifyContent: 'space-between',
-    // backgroundColor:'red', 
     flexDirection: 'row'
   },
   listText: {
@@ -136,8 +137,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: Colors.tagBorderColor,
-    width: '100%',
-    marginTop: 15,
+    width: '100%'    
   },
   centeredView: {
     flex: 1,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: Colors.backgroundColorShadow
+    backgroundColor: Colors.blackColor
   },
   modalView: {
     position: 'relative',
@@ -157,18 +157,18 @@ const styles = StyleSheet.create({
     minHeight: 200,
     width: Dimensions.get('screen').width,
     margin: 20,
-    backgroundColor: Colors.darkBackgroudColor,
+    // backgroundColor: Colors.darkBackgroudColor,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: Colors.blackColor,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    // elevation: 5,
   },
   button: {
     borderRadius: 20,
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50
   },
+
 
 });
 

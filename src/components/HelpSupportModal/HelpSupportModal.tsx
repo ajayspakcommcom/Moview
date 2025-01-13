@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 
+import LinearGradient from 'react-native-linear-gradient';
 // Constants
 const SUPPORT_EMAIL = 'moviu.support@spakcomm.com';
 const SUPPORT_WEBSITE = 'https://moviu.in/supports.html';
@@ -20,28 +21,28 @@ interface Props {
 const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const emailHandler = React.useCallback(async () => {
     try {
       setIsLoading(true);
-  
+
       // Check if Mail app is available (iOS)
       const mailtoUrl = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
       const canOpenMail = await Linking.canOpenURL(mailtoUrl);
       console.log('mail', mailtoUrl);
-  
+
       if (canOpenMail) {
         await Linking.openURL(mailtoUrl);
         return;
       }
-  
+
       // If Mail app is not available, try alternative email apps
       const gmailUrl = `googlegmail:///co?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
       const outlookUrl = `ms-outlook://compose?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
-  
+
       const canOpenGmail = await Linking.canOpenURL(gmailUrl);
       const canOpenOutlook = await Linking.canOpenURL(outlookUrl);
-  
+
       if (!canOpenMail && !canOpenGmail && !canOpenOutlook) {
         Alert.alert(
           'No Email App Found',
@@ -54,18 +55,18 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
                 Alert.alert('Success', 'Support email copied to clipboard');
               },
             },
-            {text: 'Cancel',style: 'cancel'},
+            { text: 'Cancel', style: 'cancel' },
           ]
         );
         return;
       }
-  
+
       // If at least one email app is available, show options
       const availableApps = [];
       if (canOpenMail) availableApps.push({ title: 'Mail', url: mailtoUrl });
       if (canOpenGmail) availableApps.push({ title: 'Gmail', url: gmailUrl });
       if (canOpenOutlook) availableApps.push({ title: 'Outlook', url: outlookUrl });
-  
+
       if (availableApps.length === 1) {
         await Linking.openURL(availableApps[0].url);
       } else {
@@ -84,7 +85,7 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
           ]
         );
       }
-  
+
     } catch (err) {
       console.error('Error handling email:', err);
       Alert.alert(
@@ -129,44 +130,47 @@ const HelpSupportModal: React.FC<Props> = ({ visible, cancel, title }) => {
           visible={modalVisible}
           onRequestClose={handleCloseModal}>
           <View style={styles.centeredViewInner}>
-            <View style={styles.modalView}>
-              <Pressable
-                style={[styles.button, styles.closeBtn]}
-                onPress={handleCloseModal}>
-                <FastImage 
-                  style={styles.closeIcon} 
-                  source={require('../../assets/images/icons/close-y.png')} 
-                />
-              </Pressable>
-              
-              <View style={styles.contentWrapper}>
-                <Text style={styles.title}>Help & Support</Text>
-                <Text style={styles.instructions}>
-                  If you need assistance, you can contact us through email or visit our support website for more help.
-                </Text>
-                
-                <View style={styles.buttonContainer}>
-                  <Pressable 
-                    style={[styles.emailBtn, isLoading && styles.buttonDisabled]}
-                    onPress={emailHandler}
-                    disabled={isLoading}>
-                    <Text style={styles.emailText}>Contact Us via Email</Text>
-                  </Pressable>
+            <LinearGradient colors={[Colors.startModalGradientColor, Colors.blackColor]} start={{ x: 0, y: 0.0001 }} end={{ x: 0, y: 1 }} style={styles.modalView}>
+              <View style={styles.modalView}>
+                <Pressable
+                  style={[styles.button, styles.closeBtn]}
+                  onPress={handleCloseModal}>
+                  <FastImage
+                    style={styles.closeIcon}
+                    source={require('../../assets/images/icons/close-y.png')}
+                  />
+                </Pressable>
 
-                  <Pressable 
-                    style={[styles.emailBtn, isLoading && styles.buttonDisabled]}
-                    onPress={websiteHandler}
-                    disabled={isLoading}>
-                    <Text style={styles.emailText}>Visit Support Website</Text>
-                  </Pressable>
+                <View style={styles.contentWrapper}>
+                  <Text style={styles.title}>Help & Support</Text>
+                  <Text style={styles.instructions}>
+                    If you need assistance, you can contact us through email or visit our support website for more help.
+                  </Text>
+
+                  <View style={styles.buttonContainer}>
+                    <Pressable
+                      style={[styles.emailBtn, isLoading && styles.buttonDisabled]}
+                      onPress={emailHandler}
+                      disabled={isLoading}>
+                      <Text style={styles.emailText}>Contact Us via Email</Text>
+                    </Pressable>
+
+                    <Pressable
+                      style={[styles.emailBtn, isLoading && styles.buttonDisabled]}
+                      onPress={websiteHandler}
+                      disabled={isLoading}>
+                      <Text style={styles.emailText}>Visit Support Website</Text>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
-            </View>
+            </LinearGradient>
+
           </View>
         </Modal>
 
-        <Pressable 
-          style={styles.footerBtns} 
+        <Pressable
+          style={styles.footerBtns}
           onPress={() => setModalVisible(true)}>
           <Text style={styles.footerBtnText}>Help & Support</Text>
         </Pressable>
@@ -194,7 +198,8 @@ const styles = StyleSheet.create({
     minHeight: 200,
     width: Dimensions.get('screen').width,
     margin: 20,
-    backgroundColor: Colors.darkBackgroudColor,
+    // backgroundColor: Colors.darkBackgroudColor,
+    // backgroundColor: 'red',
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',

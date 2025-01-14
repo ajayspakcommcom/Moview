@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByShow } from '../../store/slices/reviewListByShowSlice';
 import CustomButton from '../../components/Ui/CustomButton';
+import ShowReviewFormModal from '../../components/ReviewForm/ShowReviewFormModal';
 
 interface ListItem {
     id: string;
@@ -527,7 +528,8 @@ const ShowDetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem}  onPress={onReviewPressHandler} />}
+                            {/* {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem}  onPress={onReviewPressHandler} />} */}
+                            {userDetail.role !== 'guest' && <ShowReviewFormModal showItem={route.params.showItem} cancel={() => setActiveTab('reviews')} visible={true} />}                            
                             {userDetail.role === 'guest' &&
                                 <View style={[styles.withoutLoginWrapper]}>
                                     <CustomButton

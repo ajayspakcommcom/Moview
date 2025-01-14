@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Text, Pressable, Linking } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
@@ -28,16 +28,11 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
-    const [isDialog, setIsDialog] = React.useState(false);
+    const [isThannkYou, setIsThankYou] = React.useState(false);
+
     const filter = new Filter();
 
     const dispatch = useAppDispatch();
-
-    React.useLayoutEffect(() => {
-
-        return () => {
-        };
-    }, [showItem._id]);
 
     const ratingCompleted = (rating: number) => {
         setRating(rating);
@@ -48,9 +43,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     };
 
     const hideDialog = () => {
-        onPress && onPress('reviews');
-        setIsDialog(false);
-        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show', movie_show_id: showItem._id }));         
+        dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show', movie_show_id: showItem._id }));
     };
 
     const setMovieShowReview = async () => {
@@ -62,24 +55,59 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
 
     const onSaveHandler = async () => {
         const containsProfanity = filter.isProfane(comment);
-        if(rating > 0 && comment.length > 0) {
+        if (rating > 0 && comment.length > 0) {
 
-            if(containsProfanity) {
+            if (containsProfanity) {
                 Alert.alert('Warning', 'Your review contains language that violates our community guidelines. Please remove any inappropriate content and resubmit your review.');
                 return;
             } else {
-                const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment })); 
-            if (createdReview.meta.requestStatus === 'fulfilled') {         
-                setIsDialog(true);
-                setMovieShowReview();
-            } else {
-                Alert.alert('Error', 'Failed to create review.');
-            }
+                const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment }));
+                if (createdReview.meta.requestStatus === 'fulfilled') {
+                    setIsThankYou(true);
+                    setTimeout(() => {
+                        setIsThankYou(false);
+                        hideDialog();
+                    }, 5000);
+                    setMovieShowReview();
+                } else {
+                    Alert.alert('Error', 'Failed to create review.');
+                }
             }
         } else {
             Alert.alert('', 'Rating and Comments are required');
-        }         
+        }
     };
+
+    const termsConditionHandler = React.useCallback(async (url: string) => {
+
+        try {
+            const canOpen = await Linking.canOpenURL(url);
+            if (!canOpen) {
+                Alert.alert('Error', 'Unable to open the privacy policy page. Please try again later.', [{ text: 'OK' }]);
+                return;
+            }
+
+            await Linking.openURL(url);
+
+        } catch (err) {
+            console.error('Error opening privacy policy:', err);
+            Alert.alert(
+                'Error',
+                'Could not open the page. Please check your internet connection and try again.',
+                [
+                    {
+                        text: 'Try Again',
+                    },
+                    {
+                        text: 'Cancel',
+                        style: 'cancel'
+                    }
+                ]
+            );
+        } finally {
+            console.log('');
+        }
+    }, []);
 
     return (
         <>
@@ -113,6 +141,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                         onChangeText={handleCommentChange}
                         value={comment}
                         inputMode={'text'}
+                        placeholderTextColor={Colors.whiteColor}
                     />
                 </KeyboardAvoidingView>
                 <CustomButton
@@ -122,34 +151,55 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                     style={{ backgroundColor: Colors.tabActiveColor }}
                     isDisabled={loader ? true : false}
                 />
+
+                <View style={styles.termWrapper}>
+                    <Text style={styles.termText}>
+                        I agree to the
+                        <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={styles.linkText}>Condition of Use.</Text></Pressable>
+                        The data I'm submitting is true and not copyrighted by a third party.</Text>
+                </View>
+
+                {isThannkYou && <View style={styles.thankYouWrapper}>
+                    <Text style={styles.thankText}>Thank you for your review!</Text>
+                </View>}
+
             </View>
-
-            <Portal>
-            <Dialog visible={isDialog} onDismiss={hideDialog}>
-                    <Dialog.Title>
-                        <Text>Review created successfully</Text> 
-                    </Dialog.Title>
-                <Dialog.Actions>                    
-                    <Button onPress={hideDialog}>Ok</Button>                    
-                </Dialog.Actions>
-            </Dialog>
-            </Portal>
-
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    thankYouWrapper: {        
+        minHeight:200,
+        justifyContent:'center'
+    },
+    thankText: {
+        fontSize:Fonts.Size.Medium + 5,
+        textAlign:'center',
+        color:Colors.whiteColor,
+        fontWeight:'600'
+    },
+    linkText: {
+        textDecorationLine: 'underline',
+        color: Colors.blueColor,
+        paddingHorizontal:5,         
+    },
+    termWrapper: {        
+        paddingVertical:10
+    },
+    termText: {
+        color:Colors.whiteColor,
+        textAlign:'center'
+    },
     container: {
         flex: 1,
     },
     editableRating: {
-        flexDirection: 'row',
-        justifyContent: 'center'
+        flexDirection: 'row',        
+        paddingLeft:15
     },
     editableRatingInnerWrapper: {
         width: 200,
-        paddingTop: 25,
         position: 'relative',
         flexDirection: 'row',
 
@@ -178,10 +228,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginBottom: 15
     },
-    textInput: {
+    textInput: {        
         backgroundColor: Colors.playPauseButtonColor,
         width: '100%',
-        height: 120,
+        height: 250,
         paddingHorizontal: 10,
         fontSize: Fonts.Size.Medium,
         textAlignVertical: 'top',

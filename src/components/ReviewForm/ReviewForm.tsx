@@ -35,8 +35,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 
     const dispatch = useAppDispatch();
 
-    const hideDialog = () => {
-        onPress && onPress('reviews');    
+    const hideDialog = () => {        
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
 
@@ -64,6 +63,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                     setIsThankYou(true);      
                     setTimeout(() => {
                         setIsThankYou(false);
+                        hideDialog();
                     }, 5000);                                     
                     const movieUrl = `${API_URL}review/user/${userDetail._id}`;
                     await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));

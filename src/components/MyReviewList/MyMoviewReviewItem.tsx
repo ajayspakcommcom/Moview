@@ -95,10 +95,14 @@ const MyMoviewReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: Colors.reviewBgColor,
+        // backgroundColor: Colors.reviewBgColor,
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginBottom: 10,
+        borderWidth: 2,
+        borderColor: Colors.tabBgColor,
+        borderRadius: 20,
+        minHeight:100
     },
     headerWrapper: {
         flexDirection: 'row',
@@ -110,13 +114,13 @@ const styles = StyleSheet.create({
     img: {
         width: 30,
         height: 40,
-        shadowColor: Colors.blackColor, // Shadow color
-        shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
-        shadowOpacity: 0.9, // Shadow opacity
-        shadowRadius: 4, // Shadow blur radius
-        elevation: 5, // Elevation for Android (creates a shadow)
-        backgroundColor: Colors.transparentColor, // Background color is necessary for shadow on iOS
-        borderRadius: 5, // Optional: to match the image's border radius
+        shadowColor: Colors.blackColor, 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.9, 
+        shadowRadius: 4, 
+        elevation: 5, 
+        backgroundColor: Colors.transparentColor, 
+        borderRadius: 5, 
     },
     gradient: {
         borderRadius: 30
@@ -144,7 +148,11 @@ const styles = StyleSheet.create({
     footerText: {
         color: Colors.whiteColor,
         lineHeight: 20
-    }
+    }, 
+    
+    
 });
 
 export default React.memo(MyMoviewReviewItem);
+
+

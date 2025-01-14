@@ -96,10 +96,14 @@ const MyShowReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: Colors.reviewBgColor,
+        // backgroundColor: Colors.reviewBgColor,
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginBottom: 10,
+        borderWidth: 2,
+        borderColor: Colors.tabBgColor,
+        borderRadius: 20,
+        minHeight:100
     },
     headerWrapper: {
         flexDirection: 'row',

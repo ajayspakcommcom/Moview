@@ -137,7 +137,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         ),
       },
       {
-        key: 'movie',
+        key: 'movies',
         render: () => (
           <View style={styles.tabViewBtn}>
             <Text style={styles.tabText}>Movies</Text>
@@ -145,7 +145,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         ),
       },
       {
-        key: 'show',
+        key: 'shows',
         render: () => (
           <View style={styles.tabViewBtn}>
             <Text style={styles.tabText}>Shows</Text>
@@ -201,9 +201,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     switch (route.key) {
       case 'latest':
         return (<LatestMovieShowList filteredData={filteredData} />);
-      case 'movie':
+      case 'movies':
         return (<MovieList />);
-      case 'show':
+      case 'shows':
         return (<ShowList />);
       default:
         console.log('Default');

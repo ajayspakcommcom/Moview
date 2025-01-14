@@ -29,15 +29,14 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const [rating, setRating] = React.useState<number>(0);
     const [loader, setLoader] = React.useState(false);
     const [totalCount, setTotalCount] = React.useState(5);
+    const [isThannkYou, setIsThankYou] = React.useState(false);
     const filter = new Filter();
 
 
-    const [isDialog, setIsDialog] = React.useState(false);
     const dispatch = useAppDispatch();
 
     const hideDialog = () => {
-        onPress && onPress('reviews');
-        setIsDialog(false);
+        onPress && onPress('reviews');    
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
 
@@ -61,8 +60,11 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                 return;
             } else {
                 const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem?._id, user: userDetail._id, rating, comment }));
-                if (createdReview.meta.requestStatus === 'fulfilled') {
-                    setIsDialog(true);
+                if (createdReview.meta.requestStatus === 'fulfilled') {                    
+                    setIsThankYou(true);      
+                    setTimeout(() => {
+                        setIsThankYou(false);
+                    }, 5000);                                     
                     const movieUrl = `${API_URL}review/user/${userDetail._id}`;
                     await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
                 } else {
@@ -153,24 +155,27 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                         <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={styles.linkText}>Condition of Use.</Text></Pressable> 
                         The data I'm submitting is true and not copyrighted by a third party.</Text>
                 </View>
+
+                {isThannkYou && <View style={styles.thankYouWrapper}>
+                    <Text style={styles.thankText}>Thank you for your review!</Text>
+                </View>}
+
             </View>
-
-            <Portal>
-                <Dialog visible={isDialog} onDismiss={hideDialog}>
-                    <Dialog.Title>
-                        <Text>Review created successfully</Text>
-                    </Dialog.Title>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog}>Ok</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    thankYouWrapper: {        
+        minHeight:200,
+        justifyContent:'center'
+    },
+    thankText: {
+        fontSize:Fonts.Size.Medium + 5,
+        textAlign:'center',
+        color:Colors.whiteColor,
+        fontWeight:'600'
+    },
     linkText: {
         textDecorationLine: 'underline',
         color: Colors.blueColor,

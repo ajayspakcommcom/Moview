@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     img: {
         width: 30,
         height: 40,
-        shadowColor: Colors.blackColor, // Shadow color
+        shadowColor: Colors.blackColor, 
         shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
         shadowOpacity: 0.9, // Shadow opacity
         shadowRadius: 4, // Shadow blur radius

@@ -377,6 +377,10 @@ const ShowDetailScreen: React.FC = () => {
         }, 
         scrollableGenre: {
             maxHeight:25
+        }, 
+        darkColor: {
+            color:Colors.tagBorderColor, 
+            fontSize:Fonts.Size.Small
         }
     });
 
@@ -443,11 +447,11 @@ const ShowDetailScreen: React.FC = () => {
 
 
             <View style={[styles.directorWrapper, styles.aboveDirectorSpace]}>
-                <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
+                <View style={styles.directorItem}><Text style={styles.directorText}>Director: <Text style={[styles.darkColor]}>{detailData.director}</Text></Text></View>
             </View>
 
             <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}><Text style={[styles.directorText]}>Writer: {detailData.writer}</Text></View>
+                <View style={styles.directorItem}><Text style={[styles.directorText]}>Writer: <Text style={[styles.darkColor]}>{detailData.writer}</Text></Text></View>
             </View>
             {/* 
             <View style={styles.directorWrapper}>
@@ -460,7 +464,7 @@ const ShowDetailScreen: React.FC = () => {
                         <View style={styles.readMoreContainer}>
                             <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
                                 <Text style={styles.directorText}>
-                                    Synopsis: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 40)}
+                                    Synopsis: {isExpandedDescription ? <Text style={[styles.darkColor]}>{detailData.description}</Text> : <Text style={[styles.darkColor]}>{truncateText(detailData.description!, 40)}</Text>}
                                 </Text>
                             </TouchableOpacity>
                         </View>

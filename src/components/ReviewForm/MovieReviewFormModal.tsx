@@ -62,7 +62,10 @@ const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cance
                 <Pressable style={[styles.button, styles.closeBtn]} onPress={handleCloseModal}>
                   <FastImage style={styles.closeIcon} source={require('../../assets/images/icons/close-y.png')} />
                 </Pressable>
-                <ScrollView style={styles.content}>          
+                <ScrollView style={styles.content}>       
+                  <View style={styles.writeReviewWrapper}>
+                     <Text style={styles.writeText}>Write a review</Text>
+                  </View>   
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{'This is Hello World'}</Text>
                   </View>        
@@ -78,6 +81,14 @@ const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cance
 };
 
 const styles = StyleSheet.create({
+  writeReviewWrapper: {
+    paddingHorizontal:15
+  },
+  writeText: {
+    fontWeight:'600',
+    color:Colors.whiteColor, 
+    fontSize:Fonts.Size.X_Large
+  },
   titleTextWrapper: {
     padding:15
   },

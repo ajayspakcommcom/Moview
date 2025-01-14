@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Text, Linking, Pressable } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
@@ -82,8 +82,39 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         }
     };
 
+    const termsConditionHandler = React.useCallback(async (url: string) => {
+
+        try {
+            const canOpen = await Linking.canOpenURL(url);
+            if (!canOpen) {
+                Alert.alert('Error', 'Unable to open the privacy policy page. Please try again later.', [{ text: 'OK' }]);
+                return;
+            }
+
+            await Linking.openURL(url);
+
+        } catch (err) {
+            console.error('Error opening privacy policy:', err);
+            Alert.alert(
+                'Error',
+                'Could not open the page. Please check your internet connection and try again.',
+                [
+                    {
+                        text: 'Try Again',
+                    },
+                    {
+                        text: 'Cancel',
+                        style: 'cancel'
+                    }
+                ]
+            );
+        } finally {
+            console.log('');
+        }
+    }, []);
+
     return (
-        <>
+        <>           
             <View style={styles.editableRating}>
                 <View style={styles.editableRatingInnerWrapper}>
                     <AirbnbRating
@@ -123,6 +154,12 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                     style={{ backgroundColor: Colors.tabActiveColor }}
                     isDisabled={loader ? true : false}
                 />
+                <View style={styles.termWrapper}>
+                    <Text style={styles.termText}>
+                        I agree to the 
+                        <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={styles.linkText}>Condition of Use.</Text></Pressable> 
+                        The data I'm submitting is true and not copyrighted by a third party.</Text>
+                </View>
             </View>
 
             <Portal>
@@ -141,6 +178,18 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
 };
 
 const styles = StyleSheet.create({
+    linkText: {
+        textDecorationLine: 'underline',
+        color: Colors.blueColor,
+        paddingHorizontal:5,         
+    },
+    termWrapper: {        
+        paddingVertical:10
+    },
+    termText: {
+        color:Colors.whiteColor,
+        textAlign:'center'
+    },
     container: {
         flex: 1,
     },

@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import CustomButton from '../../components/Ui/CustomButton';
+import MovieReviewFormModal from '../../components/ReviewForm/MovieReviewFormModal';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
@@ -514,7 +515,8 @@ const DetailScreen: React.FC = () => {
                     <React.Suspense fallback={<Loading />}>
                         <ScrollView>
                             {headerContent()}
-                            {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                            {/* {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />} */}
+                            {userDetail.role !== 'guest' && <MovieReviewFormModal movieItem={route.params.movie} cancel={() => setActiveTab('reviews')} visible={true} />}
                             {userDetail.role === 'guest' &&
                                 <View style={styles.withoutLoginWrapper}>
                                     <CustomButton

@@ -40,7 +40,7 @@ const ShowReviewFormModal: React.FC<Props> = ({ showItem, cancel }) => {
                 </Pressable>
                 <ScrollView style={styles.content}>       
                   <View style={styles.writeReviewWrapper}>
-                     <Text style={styles.writeText}>Write a review</Text>
+                     <Text style={styles.writeText}>Write your review</Text>
                   </View>   
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{showItem.title}</Text>

@@ -39,7 +39,7 @@ const MovieReviewFormModal: React.FC<Props> = ({ movieItem, visible, cancel }) =
                 </Pressable>
                 <ScrollView style={styles.content}>       
                   <View style={styles.writeReviewWrapper}>
-                     <Text style={styles.writeText}>Write a review</Text>
+                     <Text style={styles.writeText}>Write your review</Text>
                   </View>   
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{movieItem.title}</Text>

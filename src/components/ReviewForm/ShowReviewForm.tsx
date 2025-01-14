@@ -137,7 +137,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                         style={styles.textInput}
                         multiline={true}
                         numberOfLines={10}
-                        placeholder="Type Here..."
+                        placeholder="Write your review"
                         onChangeText={handleCommentChange}
                         value={comment}
                         inputMode={'text'}

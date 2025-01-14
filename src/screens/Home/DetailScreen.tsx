@@ -144,7 +144,7 @@ const DetailScreen: React.FC = () => {
     }, [activeTab]);
 
     const handleTabClick = (tabName: string) => {
-        setActiveTab(tabName);        
+        setActiveTab(tabName);
         const isModal = tabName === 'writeReview' ? true : false;
         console.log(isModal);
     };
@@ -160,17 +160,17 @@ const DetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         scrollView: {
-            flexGrow:1
+            flexGrow: 1
         },
         readMoreContainer: {
-            width: '100%'            
+            width: '100%'
         },
-        readMoreButton: {            
+        readMoreButton: {
         },
         readMoreText: {
             color: Colors.tabActiveColor,
             fontFamily: Fonts.Family.Medium,
-            fontSize: Fonts.Size.Small                        
+            fontSize: Fonts.Size.Small
         },
         iosBackBtnText: {
             color: Colors.whiteColor
@@ -191,9 +191,9 @@ const DetailScreen: React.FC = () => {
         withoutLoginWrapper: {
             flex: 1,
             justifyContent: 'center',
-            alignItems: 'center',            
-            paddingHorizontal: 15, 
-            paddingBottom:70
+            alignItems: 'center',
+            paddingHorizontal: 15,
+            paddingBottom: 70
         },
 
         modalContainer: {
@@ -316,8 +316,8 @@ const DetailScreen: React.FC = () => {
             alignItems: 'flex-start',
             justifyContent: 'flex-start'
         },
-        directorItem: {                                     
-            width:'100%'
+        directorItem: {
+            width: '100%'
         },
         directorText: {
             color: Colors.whiteColor,
@@ -415,15 +415,25 @@ const DetailScreen: React.FC = () => {
                 </View>
             </View>
 
-            <View style={styles.genreWrapper}>
+            {/* <View style={styles.genreWrapper}>
                 {detailData.genre?.split(',').map((genre, index) => (
                     <View key={index} style={styles.genreItem}>
                         <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? '' : ''}</Text>
                     </View>
                 ))}
-            </View>
+            </View> */}
 
-
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.genreWrapper}
+            >
+                {detailData.genre?.split(',').map((genre, index) => (
+                    <View key={index} style={styles.genreItem}>
+                        <Text style={styles.genreText}>{genre.trim()}</Text>
+                    </View>
+                ))}
+            </ScrollView>
 
             <View style={[styles.directorWrapper, styles.aboveDirectorSpace]}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
@@ -434,11 +444,11 @@ const DetailScreen: React.FC = () => {
             </View>
 
             {detailData.director && <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}>                  
+                <View style={styles.directorItem}>
                     {detailData.description && detailData.description.length > 40 && (
                         <View style={styles.readMoreContainer}>
                             <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
-                                <Text style={styles.directorText}>                                    
+                                <Text style={styles.directorText}>
                                     Synopsis: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 40)}
                                 </Text>
                             </TouchableOpacity>

@@ -115,10 +115,14 @@ const styles = StyleSheet.create({
         height: 25
     },
     wrapper: {
-        backgroundColor: Colors.reviewBgColor,
-        paddingVertical: 10,
+        // backgroundColor: Colors.reviewBgColor,
+        paddingVertical: 8,
         paddingHorizontal: 20,
         marginBottom: 10,
+        borderWidth: 2,
+        borderColor: Colors.tabBgColor,
+        borderRadius: 20,
+        position: 'relative'
     },
     headerWrapper: {
         flexDirection: 'row',

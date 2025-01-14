@@ -149,10 +149,10 @@ const DetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         readMoreContainer: {
-            width: '100%'            
+            width: '100%'
         },
         readMoreButton: {
-            
+
         },
         readMoreText: {
             color: Colors.tabActiveColor,
@@ -412,13 +412,26 @@ const DetailScreen: React.FC = () => {
                 </View>
             </View>
 
-            <View style={styles.genreWrapper}>
+            {/* <View style={styles.genreWrapper}>
                 {detailData.genre?.split(',').map((genre, index) => (
                     <View key={index} style={styles.genreItem}>
                         <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? ',' : ''}</Text>
                     </View>
                 ))}
-            </View>
+            </View> */}
+
+
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.genreWrapper}
+            >
+                {detailData.genre?.split(',').map((genre, index) => (
+                    <View key={index} style={styles.genreItem}>
+                        <Text style={styles.genreText}>{genre.trim()}</Text>
+                    </View>
+                ))}
+            </ScrollView>
 
 
 
@@ -431,11 +444,11 @@ const DetailScreen: React.FC = () => {
             </View>
 
             {detailData.director && <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}>                  
+                <View style={styles.directorItem}>
                     {detailData.description && detailData.description.length > 40 && (
                         <View style={styles.readMoreContainer}>
                             <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
-                            <Text style={styles.directorText}>                                    
+                                <Text style={styles.directorText}>
                                     Synopsis: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 40)}
                                 </Text>
                             </TouchableOpacity>

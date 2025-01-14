@@ -162,13 +162,13 @@ const ShowDetailScreen: React.FC = () => {
 
     const styles = StyleSheet.create({
         scrollView: {
-            flexGrow:1
+            flexGrow: 1
         },
         readMoreContainer: {
-            width: '100%'            
+            width: '100%'
         },
         readMoreButton: {
-            
+
         },
         readMoreText: {
             color: Colors.tabActiveColor,
@@ -322,7 +322,7 @@ const ShowDetailScreen: React.FC = () => {
         directorItem: {
             // justifyContent: 'center',
             // alignItems: 'center'
-              width:'100%'
+            width: '100%'
         },
         directorText: {
             color: Colors.whiteColor,
@@ -421,13 +421,25 @@ const ShowDetailScreen: React.FC = () => {
                 </View>
             </View>
 
-            <View style={styles.genreWrapper}>
+            {/* <View style={styles.genreWrapper}>
                 {detailData.genre?.split(',').map((genre, index) => (
                     <View key={index} style={styles.genreItem}>
                         <Text style={styles.genreText}>{genre}{(detailData.genre?.split(',').length as number) - 1 > index ? ',' : ''}</Text>
                     </View>
                 ))}
-            </View>
+            </View> */}
+
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.genreWrapper}
+            >
+                {detailData.genre?.split(',').map((genre, index) => (
+                    <View key={index} style={styles.genreItem}>
+                        <Text style={styles.genreText}>{genre.trim()}</Text>
+                    </View>
+                ))}
+            </ScrollView>
 
             <View style={styles.directorWrapper}>
                 <View style={styles.directorItem}><Text style={styles.directorText}>Director: {detailData.director}</Text></View>
@@ -441,12 +453,12 @@ const ShowDetailScreen: React.FC = () => {
                 <View style={styles.directorItem}><Text style={[styles.directorText, styles.descriptionText]}>Description: {detailData.description}</Text></View>
             </View> */}
 
-{detailData.director && <View style={styles.directorWrapper}>
-                <View style={styles.directorItem}>                  
+            {detailData.director && <View style={styles.directorWrapper}>
+                <View style={styles.directorItem}>
                     {detailData.description && detailData.description.length > 40 && (
                         <View style={styles.readMoreContainer}>
                             <TouchableOpacity onPress={() => setIsExpandedDescription(!isExpandedDescription)} style={styles.readMoreButton}>
-                                <Text style={styles.directorText}>                                    
+                                <Text style={styles.directorText}>
                                     Synopsis: {isExpandedDescription ? detailData.description : truncateText(detailData.description!, 40)}
                                 </Text>
                             </TouchableOpacity>
@@ -529,7 +541,7 @@ const ShowDetailScreen: React.FC = () => {
                         <ScrollView>
                             {headerContent()}
                             {/* {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem}  onPress={onReviewPressHandler} />} */}
-                            {userDetail.role !== 'guest' && <ShowReviewFormModal showItem={route.params.showItem} cancel={() => setActiveTab('reviews')} visible={true} />}                            
+                            {userDetail.role !== 'guest' && <ShowReviewFormModal showItem={route.params.showItem} cancel={() => setActiveTab('reviews')} visible={true} />}
                             {userDetail.role === 'guest' &&
                                 <View style={[styles.withoutLoginWrapper]}>
                                     <CustomButton

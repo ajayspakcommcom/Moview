@@ -67,7 +67,7 @@ const LoginScreen: React.FC<Props> = () => {
                 <ScrollView 
                     contentContainerStyle={styles.container}
                     showsVerticalScrollIndicator={false}
-                    bounces={true}
+                    bounces={false}
                     keyboardDismissMode="none"  
                     scrollEventThrottle={16}    
                     >

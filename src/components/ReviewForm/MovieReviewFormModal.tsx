@@ -9,16 +9,16 @@ import { API_URL } from '../../configure/config.ios';
 import LinearGradient from 'react-native-linear-gradient';
 import ReviewForm from './ReviewForm';
 import Fonts from '../../styles/Fonts';
+import { MovieItem } from '../../types/Movie';
 
 interface Props {
-  userId: string;
-  movieId: string;  
+  movieItem: MovieItem,
   visible?: boolean;
   cancel?: () => void;
 }
 
 
-const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cancel }) => {
+const MovieReviewFormModal: React.FC<Props> = ({ movieItem, visible, cancel }) => {
 
   const { user } = useAuth();
 
@@ -27,31 +27,6 @@ const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cance
     cancel?.();
   }, [cancel]);
 
-  const saveReportHadnler = React.useCallback(async (text: string) => {
-
-    const postObj = {
-      "user": userId,
-      "movie": movieId
-    };
-
-    const response = await fetch(`${API_URL}moview-report-review`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${user?.token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ ...postObj })
-    });
-
-    const resp = await response.json();
-
-    if (resp.status === 'success') {
-      cancel?.();
-    } else {
-      Alert.alert('', 'Somethong went wrong.')
-    }
-
-  }, [userId, movieId]);
 
   return (
     <SafeAreaProvider>
@@ -69,7 +44,7 @@ const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cance
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{'This is Hello World'}</Text>
                   </View>        
-                    <ReviewForm  onPress={() => console.log()} />                  
+                    <ReviewForm  movieItem={movieItem} onPress={() => console.log('Modal')} />                  
                 </ScrollView>              
             </LinearGradient>
           </View>
@@ -82,7 +57,8 @@ const MovieReviewFormModal: React.FC<Props> = ({ userId, movieId, visible, cance
 
 const styles = StyleSheet.create({
   writeReviewWrapper: {
-    paddingHorizontal:15
+    paddingHorizontal:15, 
+    paddingBottom:10
   },
   writeText: {
     fontWeight:'600',
@@ -102,7 +78,7 @@ const styles = StyleSheet.create({
   content:{
     flex:1,    
     width:'100%',    
-    paddingTop:50
+    paddingTop:30
   },
   centeredViewInner: {
     flex: 1,

@@ -522,7 +522,7 @@ const DetailScreen: React.FC = () => {
                     <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="handled" >
                         {headerContent()}
                         {/* {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />} */}
-                        <MovieReviewFormModal movieId='1' userId='2' cancel={() => setActiveTab('reviews')} visible={true} />
+                        <MovieReviewFormModal movieItem={route.params.movie} cancel={() => setActiveTab('reviews')} visible={true} />
                         {userDetail.role === 'guest' &&
                             <View style={[styles.withoutLoginWrapper]}>
                                 <CustomButton

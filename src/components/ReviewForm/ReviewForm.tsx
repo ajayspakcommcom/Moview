@@ -18,7 +18,7 @@ import { Filter } from 'bad-words'
 
 
 interface ItemProps {
-    movieItem?: MovieItem,
+    movieItem: MovieItem,
     onPress?: (bool: string) => void;
 }
 
@@ -40,13 +40,6 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         setIsDialog(false);
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
-
-    React.useLayoutEffect(() => {
-
-        return () => {
-
-        };
-    }, [movieItem?._id]);
 
     const ratingCompleted = (rating: number) => {
         setRating(rating);

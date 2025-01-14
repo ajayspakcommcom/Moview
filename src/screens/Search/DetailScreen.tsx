@@ -363,6 +363,9 @@ const DetailScreen: React.FC = () => {
         },
         crTextActive: {
             color: Colors.whiteColor,
+        }, 
+        scrollableGenre: {
+            maxHeight:25
         }
     });
 
@@ -422,6 +425,7 @@ const DetailScreen: React.FC = () => {
 
 
             <ScrollView
+                style={[styles.scrollableGenre]}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.genreWrapper}

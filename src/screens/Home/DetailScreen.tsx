@@ -275,7 +275,7 @@ const DetailScreen: React.FC = () => {
             flexDirection: 'row',
             paddingHorizontal: 15
         },
-        genreItem: {
+        genreItem: {            
             paddingVertical: 1,
             justifyContent: 'center',
             alignItems: 'center',
@@ -375,6 +375,9 @@ const DetailScreen: React.FC = () => {
         },
         crTextActive: {
             color: Colors.whiteColor,
+        }, 
+        scrollableGenre: {
+            maxHeight:25
         }
     });
 
@@ -424,6 +427,7 @@ const DetailScreen: React.FC = () => {
             </View> */}
 
             <ScrollView
+                style={[styles.scrollableGenre]}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.genreWrapper}

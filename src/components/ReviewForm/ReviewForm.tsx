@@ -67,7 +67,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                 Alert.alert('Warning', 'Your review contains language that violates our community guidelines. Please remove any inappropriate content and resubmit your review.');
                 return;
             } else {
-                const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem._id, user: userDetail._id, rating, comment }));
+                const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem?._id, user: userDetail._id, rating, comment }));
                 if (createdReview.meta.requestStatus === 'fulfilled') {
                     setIsDialog(true);
                     const movieUrl = `${API_URL}review/user/${userDetail._id}`;
@@ -106,13 +106,14 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
             <View style={styles.formWrapper}>
                 <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                     <TextInput
-                        style={styles.textInput}
+                        style={[styles.textInput]}
                         multiline={true}
                         numberOfLines={10}
                         placeholder="Type Here..."
                         onChangeText={handleCommentChange}
                         value={comment}
                         inputMode={'text'}
+                        placeholderTextColor={Colors.whiteColor}
                     />
                 </KeyboardAvoidingView>
                 <CustomButton
@@ -144,13 +145,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     editableRating: {
-        flexDirection: 'row',
-        // justifyContent: 'center'
+        flexDirection: 'row',        
         paddingLeft:15
     },
     editableRatingInnerWrapper: {
         width: 200,
-        // paddingTop: 25,
         position: 'relative',
         flexDirection: 'row',
 
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginBottom: 15
     },
-    textInput: {
+    textInput: {        
         backgroundColor: Colors.playPauseButtonColor,
         width: '100%',
         height: 250,

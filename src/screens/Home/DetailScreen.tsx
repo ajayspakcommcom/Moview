@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../store/index';
 import { fetchReviewListByMovie } from '../../store/slices/reviewListByMoviewSlice';
 import CustomButton from '../../components/Ui/CustomButton';
+import MovieReviewFormModal from '../../components/ReviewForm/MovieReviewFormModal';
 
 const CastItem = React.lazy(() => import('../../components/CastList/CastItem'));
 const ReviewForm = React.lazy(() => import('../../components/ReviewForm/ReviewForm'));
@@ -143,7 +144,9 @@ const DetailScreen: React.FC = () => {
     }, [activeTab]);
 
     const handleTabClick = (tabName: string) => {
-        setActiveTab(tabName);
+        setActiveTab(tabName);        
+        const isModal = tabName === 'writeReview' ? true : false;
+        console.log(isModal);
     };
 
     const openModal = (url: string) => {
@@ -156,6 +159,9 @@ const DetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+        scrollView: {
+            flexGrow:1
+        },
         readMoreContainer: {
             width: '100%'            
         },
@@ -185,9 +191,9 @@ const DetailScreen: React.FC = () => {
         withoutLoginWrapper: {
             flex: 1,
             justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '20%',
-            paddingHorizontal: 15
+            alignItems: 'center',            
+            paddingHorizontal: 15, 
+            paddingBottom:70
         },
 
         modalContainer: {
@@ -513,9 +519,10 @@ const DetailScreen: React.FC = () => {
 
             {activeTab === 'writeReview' &&
                 <React.Suspense fallback={<Loading />}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" >
+                    <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps="handled" >
                         {headerContent()}
-                        {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />}
+                        {/* {userDetail.role !== 'guest' && <ReviewForm movieItem={route.params.movie} onPress={onReviewPressHandler} />} */}
+                        <MovieReviewFormModal movieId='1' userId='2' cancel={() => setActiveTab('reviews')} visible={true} />
                         {userDetail.role === 'guest' &&
                             <View style={[styles.withoutLoginWrapper]}>
                                 <CustomButton

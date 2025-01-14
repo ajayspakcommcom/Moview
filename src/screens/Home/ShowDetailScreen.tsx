@@ -160,6 +160,9 @@ const ShowDetailScreen: React.FC = () => {
     };
 
     const styles = StyleSheet.create({
+        scrollView: {
+            flexGrow:1
+        },
         readMoreContainer: {
             width: '100%'            
         },
@@ -525,7 +528,6 @@ const ShowDetailScreen: React.FC = () => {
                         <ScrollView>
                             {headerContent()}
                             {userDetail.role !== 'guest' && <ShowReviewForm showItem={route.params.showItem}  onPress={onReviewPressHandler} />}
-
                             {userDetail.role === 'guest' &&
                                 <View style={[styles.withoutLoginWrapper]}>
                                     <CustomButton

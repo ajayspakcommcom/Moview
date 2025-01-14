@@ -18,7 +18,7 @@ import { Filter } from 'bad-words'
 
 
 interface ItemProps {
-    movieItem: MovieItem,
+    movieItem?: MovieItem,
     onPress?: (bool: string) => void;
 }
 
@@ -46,7 +46,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
         return () => {
 
         };
-    }, [movieItem._id]);
+    }, [movieItem?._id]);
 
     const ratingCompleted = (rating: number) => {
         setRating(rating);
@@ -95,8 +95,6 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                         onFinishRating={ratingCompleted}
                         selectedColor={Colors.tabActiveColor}
                     />
-                    {/* {rating > 0 && <View style={styles.countRatingWrapper}><Text style={styles.ratingText}>{rating}</Text></View>} */}
-
                     <View style={styles.countRatingWrapper}>
                         <Text style={styles.ratingText}>{rating}</Text>
                         <Text style={styles.ratingSlash}>/</Text>
@@ -147,11 +145,12 @@ const styles = StyleSheet.create({
     },
     editableRating: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        // justifyContent: 'center'
+        paddingLeft:15
     },
     editableRatingInnerWrapper: {
         width: 200,
-        paddingTop: 25,
+        // paddingTop: 25,
         position: 'relative',
         flexDirection: 'row',
 
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     textInput: {
         backgroundColor: Colors.playPauseButtonColor,
         width: '100%',
-        height: 120,
+        height: 250,
         paddingHorizontal: 10,
         fontSize: Fonts.Size.Medium,
         textAlignVertical: 'top',

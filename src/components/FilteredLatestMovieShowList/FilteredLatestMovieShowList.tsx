@@ -137,6 +137,7 @@ const FilteredLatestMovieShowList: React.FC<FilteredLatestMovieShowListProps> = 
                 numColumns={2}
                 extraData={filteredLatestMovieShowList}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
+                bounces={false}
             />
         </>
     );

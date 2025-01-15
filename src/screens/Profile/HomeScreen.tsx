@@ -248,9 +248,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     innerContainer: {
+        paddingTop: 30,
         flex: 1,
-        flexDirection:'column', 
-        justifyContent:'center'
+        flexDirection:'column'        
     },
     editWrapper: {
         paddingTop: 30,

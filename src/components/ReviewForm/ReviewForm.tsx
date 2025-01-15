@@ -60,11 +60,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
             } else {
                 const createdReview = await dispatch(createReviewListByMovie({ url: `${API_URL}review`, token: user?.token!, movie: movieItem?._id, user: userDetail._id, rating, comment }));
                 if (createdReview.meta.requestStatus === 'fulfilled') {                    
-                    setIsThankYou(true);      
-                    setTimeout(() => {
-                        setIsThankYou(false);
-                        hideDialog();
-                    }, 5000);                                     
+                    Alert.alert('Thank you for your review!', '', [{text: 'OK', onPress: () => hideDialog()}]);
                     const movieUrl = `${API_URL}review/user/${userDetail._id}`;
                     await dispatch(fetchMovieReviewsByUserId({ url: movieUrl, token: user?.token! }));
                 } else {
@@ -155,11 +151,6 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
                         <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={styles.linkText}>Condition of Use.</Text></Pressable> 
                         The data I'm submitting is true and not copyrighted by a third party.</Text>
                 </View>
-
-                {isThannkYou && <View style={styles.thankYouWrapper}>
-                    <Text style={styles.thankText}>Thank you for your review!</Text>
-                </View>}
-
             </View>
         </>
     );

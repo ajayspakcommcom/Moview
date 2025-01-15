@@ -63,11 +63,12 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
             } else {
                 const createdReview = await dispatch(createReviewListByShow({ url: `${API_URL}review-show`, token: user?.token!, show: showItem._id, user: userDetail._id, rating, comment }));
                 if (createdReview.meta.requestStatus === 'fulfilled') {
-                    setIsThankYou(true);
-                    setTimeout(() => {
-                        setIsThankYou(false);
-                        hideDialog();
-                    }, 5000);
+                    Alert.alert('Thank you for your review!', '', [{text: 'OK', onPress: () => hideDialog()}]);
+                    // setIsThankYou(true);
+                    // setTimeout(() => {
+                    //     setIsThankYou(false);
+                    //     hideDialog();
+                    // }, 5000);
                     setMovieShowReview();
                 } else {
                     Alert.alert('Error', 'Failed to create review.');
@@ -158,11 +159,6 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
                         <Pressable onPress={() => termsConditionHandler('https://moviu.in/terms-of-use.html')}><Text style={styles.linkText}>Condition of Use.</Text></Pressable>
                         The data I'm submitting is true and not copyrighted by a third party.</Text>
                 </View>
-
-                {isThannkYou && <View style={styles.thankYouWrapper}>
-                    <Text style={styles.thankText}>Thank you for your review!</Text>
-                </View>}
-
             </View>
         </>
     );

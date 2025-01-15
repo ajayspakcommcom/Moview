@@ -18,12 +18,7 @@ type State = NavigationState<Route>;
 const Test1: React.FC = () => {
 
   const createTwoButtonAlert = () =>
-    Alert.alert('Are you sure want to logout?', '', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'destructive',
-      },
+    Alert.alert('Are you sure want to logout?', '', [      
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);
 

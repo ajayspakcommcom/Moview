@@ -64,6 +64,7 @@ const HomeScreen: React.FC<Props> = () => {
                 <View style={styles.container}>
                     <View style={styles.searchWrapper}>
                         <Searchbar
+                            style={styles.inputField}
                             placeholder="Search Movie / Show"
                             onChangeText={onChangeSearch}
                             value={searchQuery}
@@ -80,7 +81,6 @@ const HomeScreen: React.FC<Props> = () => {
                                     />
                                 ) : null
                             }
-
                         />
                     </View>
                     <View style={styles.movieList}>
@@ -94,6 +94,9 @@ const HomeScreen: React.FC<Props> = () => {
 };
 
 const styles = StyleSheet.create({
+    inputField: {
+        borderRadius:10
+    },
     keypad: {
         flex: 1
     },

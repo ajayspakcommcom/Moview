@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
         color: Colors.blueColor,
         paddingHorizontal:5,         
     },
-    termWrapper: {        
+    termWrapper: { 
+        marginTop:10,     
         paddingVertical:10
     },
     termText: {
@@ -236,7 +237,8 @@ const styles = StyleSheet.create({
         fontSize: Fonts.Size.Medium,
         textAlignVertical: 'top',
         color: Colors.whiteColor,
-        marginBottom: 15
+        marginBottom: 15, 
+        borderRadius:10
     }
 });
 

@@ -72,3 +72,18 @@ For Release :
 
 For Debug:
 1) XCode  > Product > Scheme >  Edit Scheme >  Build Configuration > Debug
+
+
+ movieShowWrapper: {
+        backgroundColor: Colors.tagBgColor, 
+        paddingVertical: 1,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        verticalAlign:'top',
+        borderRadius: 50,
+        fontFamily:Fonts.Family.Light,
+        elevation:5,
+        borderWidth:1,
+        borderColor:Colors.tagBorderColor, 
+        paddingBottom:2
+    },

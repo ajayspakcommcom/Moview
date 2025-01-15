@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import FastImage from 'react-native-fast-image';
 import { API_URL } from '../../configure/config.ios';
 import { Text } from 'react-native-paper';
+import Fonts from '../../styles/Fonts';
 
 
 interface FilteredLatestMovieShowListProps {
@@ -154,13 +155,15 @@ const styles = StyleSheet.create({
     },
     category: {
         position: 'absolute',
-        backgroundColor: Colors.categoryRedColor,
-        left: 1,
-        bottom: 0,
+        backgroundColor: Colors.tagBgColor,
+        left: 8,
+        bottom: 8,
         paddingVertical: 1,
         paddingHorizontal: 10,
         textAlign: 'center',
-        borderRadius: 2,
+        borderRadius: 10,
+        borderColor:Colors.tagBorderColor, 
+        borderWidth:1
     },
     catergoryText: {
         color: Colors.whiteColor

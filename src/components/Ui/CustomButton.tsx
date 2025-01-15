@@ -22,9 +22,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({ text, onPressHandler, textS
             width: '100%',
             height: 50,
             backgroundColor: Colors.tabActiveColor,
-            borderRadius: 1,
+            borderRadius: 10,
             justifyContent: 'center',
-            alignItems: 'center',            
+            alignItems: 'center',                        
         },
         text: {                                    
             fontFamily: Fonts.Family.Bold,

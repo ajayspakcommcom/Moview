@@ -1,57 +1,126 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
+import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { TabView, SceneRendererProps, NavigationState } from 'react-native-tab-view';
+import Fonts from '../../styles/Fonts';
+import Colors from '../../styles/Colors';
+import FastImage from 'react-native-fast-image';
+import { Dimensions } from 'react-native';
 
-interface ReviewItemProps {
-  item: {
-    id: string;
-    review: string;
-  };
-}
 
-const movieReviewData = [
-  { id: '1', review: 'Great movie!' },
-  { id: '2', review: 'Not bad, enjoyed it.' },
-  { id: '3', review: 'Could be better.' },
-  { id: '4', review: 'Loved the acting!' },
-  { id: '5', review: 'Fantastic visuals!' },
-  { id: '6', review: 'Average storyline.' },
-  { id: '7', review: 'Highly recommended!' },
-  { id: '8', review: 'Not my cup of tea.' },
-  { id: '9', review: 'Amazing soundtrack!' },
-  { id: '10', review: 'Worth watching again.' }
-];
+type Route = {
+  key: string;
+  render?: () => React.ReactNode;
+};
 
-const MyMovieReviewItem: React.FC<ReviewItemProps> = ({ item }) => (
-  <View style={styles.itemContainer}>
-    <Text>{item.review}</Text>
-  </View>
-);
+type State = NavigationState<Route>;
 
 const Test1: React.FC = () => {
 
+  const [index, setIndex] = React.useState(0);
+  const { width } = Dimensions.get('screen');
+
+  const routes = React.useMemo(
+    () => [
+      {
+        key: 'movies',
+        render: () => (
+          <View style={styles.tabViewBtn}>
+            <Text style={styles.tabText}>Movies</Text>
+          </View>
+        ),
+      },
+      {
+        key: 'shows',
+        render: () => (
+          <View style={styles.tabViewBtn}>
+            <Text style={styles.tabText}>Shows</Text>
+          </View>
+        ),
+      }
+    ],
+    []
+  );
+
+  const renderScene = ({ route }: { route: Route }) => {
+    switch (route.key) {
+      case 'movies':
+        return (<View style={styles.sceneWrapper}><Text style={{ color: Colors.blackColor }}>Movies</Text></View>);
+      case 'shows':
+        return (<View style={styles.sceneWrapper}><Text style={{ color: Colors.blackColor }}>Show</Text></View>);
+      default:
+        console.log('Default');
+        return null;
+    }
+  };
+
+  const renderTabBar = (props: SceneRendererProps & { navigationState: State }) => (
+    <View style={styles.renderTabBar}>
+      {props.navigationState.routes.map((route, i) => (
+        <TouchableOpacity key={route.key} onPress={() => setIndex(i)} style={[styles.tabItem, index === i && styles.activeTab]}>
+          <View style={styles.tabViewBtn}>
+            <Text style={[styles.tabText, { color: index === i ? Colors.tabActiveColor : Colors.whiteColor }]}>{route['key']}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+
+
   return (
-    <FlatList
-        style={{backgroundColor:'pink'}}
-        data={movieReviewData}
-        renderItem={({ item }) => <MyMovieReviewItem item={item} />}
-        keyExtractor={(item) => item.id}
-        scrollEnabled={true}
-      />
+    <TabView
+      style={{ backgroundColor: Colors.backgroundColorShadow }}
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      renderTabBar={renderTabBar}
+      initialLayout={{ width: width }}
+    />
   )
 };
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 15,
-    marginVertical: 8,
-    backgroundColor: 'red',
-    borderRadius: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2    
+  tabText: {
+    fontWeight: '600',
+    fontFamily: Fonts.Family.Bold,
+    color: Colors.whiteColor,
+    fontSize: Fonts.Size.Small + 3,
+    textTransform: 'capitalize'
   },
+  sceneWrapper: {
+    backgroundColor: 'red',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  renderTabBar: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.backgroundColorShadow,
+    height: 60
+  },
+  tabViewLogoBtn: {
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  tabViewBtn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabItem: {
+    flexGrow: 1,
+    alignItems: 'center',
+    padding: 10,
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+    borderBottomWidth: 3,
+    borderBottomColor: 'transparent'
+  },
+  activeTab: {
+    borderBottomColor: Colors.tabActiveColor
+  }
 });
 
 export default Test1;

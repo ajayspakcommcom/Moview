@@ -263,7 +263,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingRight: 15,
     backgroundColor:Colors.categoryRedColor,
-    padding:15
+    padding:15,
+    borderRadius:10
   },
   deleteText: {
     color: Colors.whiteColor        
@@ -302,6 +303,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     padding: 10,
+    borderRadius:10
   },
   userIcon: {
     backgroundColor: Colors.whiteColor,

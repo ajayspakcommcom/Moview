@@ -272,7 +272,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center', 
+    borderRadius:10
   },
   footerBtnText: {
     color: Colors.whiteColor

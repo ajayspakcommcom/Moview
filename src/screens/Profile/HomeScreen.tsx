@@ -167,7 +167,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                         <View style={[styles.myMoviesWrapper]}>
                                             <View style={styles.hr}></View>
                                             <View style={styles.footerBtnsWrapper}>
-                                                <Pressable onPress={editHandler} style={styles.footerBtns}>
+                                                <Pressable onPress={editHandler} style={[styles.footerBtns]}>
                                                     <Text style={styles.footerBtnText}>Edit Profile</Text>
                                                 </Pressable>
                                             </View>
@@ -365,7 +365,8 @@ const styles = StyleSheet.create({
         borderColor:Colors.whiteColor,
         borderWidth:2,
         alignItems:'center',
-        padding:15
+        padding:15, 
+        borderRadius:10
     },
     footerBtnText: {
         color:Colors.whiteColor

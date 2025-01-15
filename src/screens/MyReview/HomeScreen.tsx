@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Pressable} from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/index';
@@ -8,6 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import Colors from '../../styles/Colors';
 import Fonts from '../../styles/Fonts';
 import CustomButton from '../../components/Ui/CustomButton';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -18,59 +19,59 @@ type Props = {
     navigation: any;
 };
 
-const HomeScreen: React.FC<Props> = ({navigation}) => {
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
     const { userDetail, logout } = useAuth();
-    
 
-    const { data: moviewReviewsData } = useSelector((state: RootState) => state.myMovieReview);    
+
+    const { data: moviewReviewsData } = useSelector((state: RootState) => state.myMovieReview);
     const { data: showReviewsData } = useSelector((state: RootState) => state.myShowReview);
 
     const [moviewReviews, setMoviewReviews] = React.useState<MovieReviewResponse[]>([]);
     const [showReviews, setShowReviews] = React.useState<ShowReviewResponse[]>([]);
 
     const getMovieShowReview = React.useCallback(() => {
-        
-        if(userDetail.role === 'guest') {
+
+        if (userDetail.role === 'guest') {
             setMoviewReviews([]);
             setShowReviews([]);
-        } else {            
+        } else {
             setMoviewReviews(moviewReviewsData);
             setShowReviews(showReviewsData);
         }
-        
-        
-    }, [moviewReviewsData, showReviewsData]); 
 
-      useFocusEffect(
-          React.useCallback(() => {                            
-              getMovieShowReview();
-            return () => {};
-        }, [getMovieShowReview]) 
+
+    }, [moviewReviewsData, showReviewsData]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getMovieShowReview();
+            return () => { };
+        }, [getMovieShowReview])
     );
 
     const navigationHandler = () => {
         logout();
     };
 
-    return (              
-            <View style={styles.container}>                
-                {userDetail.role !== 'guest' && 
-                    <React.Suspense fallback={<Loading />}>
-                         <MyReviewList userItem={userDetail} isUser={false} movies={moviewReviews} shows={showReviews} />
-                    </React.Suspense>
-                }
+    return (
+        <View style={styles.container}>
+            {userDetail.role !== 'guest' &&
+                <React.Suspense fallback={<Loading />}>
+                    <MyReviewList userItem={userDetail} isUser={false} movies={moviewReviews} shows={showReviews} />
+                </React.Suspense>
+            }
 
-                {userDetail.role === 'guest' && 
-                    <View style={styles.withoutLoginWrapper}>                        
-                        <CustomButton
-                            text={'Please Login'}
-                            onPressHandler={navigationHandler}
-                            textSize={20}                
-                        />
-                    </View>
-                }
-            </View>        
+            {userDetail.role === 'guest' &&
+                <View style={styles.withoutLoginWrapper}>
+                    <CustomButton
+                        text={'Please Login'}
+                        onPressHandler={navigationHandler}
+                        textSize={20}
+                    />
+                </View>
+            }
+        </View>
     );
 };
 
@@ -78,13 +79,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingVertical: 15
-    }, 
+    },
     withoutLoginWrapper: {
-        flex: 1,        
-        justifyContent:'center', 
-        alignItems:'center',
-        paddingHorizontal:15
-    },     
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 15
+    },
 });
 
 export default HomeScreen;

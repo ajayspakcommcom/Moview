@@ -34,13 +34,8 @@ const MyMoviewReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
         }
     }, []);
 
-    const onSwipe = (event: PanGestureHandlerGestureEvent) => {
-
-    };
-
-    const onTap = (event: TapGestureHandlerGestureEvent) => {
-
-    };
+   
+   
 
     const gotoUserProfile = (id: string) => {
         navigation.navigate('FollowerFollowing', { userId: id });
@@ -48,48 +43,43 @@ const MyMoviewReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
 
 
     return (
-        <GestureHandlerRootView>
-            <PanGestureHandler onGestureEvent={onSwipe}>
-                <TouchableOpacity onPress={toggleExpand}>
-                    <View style={styles.wrapper}>
-                        <View style={styles.headerWrapper}>
-                            <View style={styles.user}>
+        <TouchableOpacity onPress={toggleExpand}>
+            <View style={styles.wrapper}>
+                <View style={styles.headerWrapper}>
+                    <View style={styles.user}>
 
-                                {isUser &&
-                                    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                                        <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                                    </LinearGradient>
-                                }
+                        {isUser &&
+                            <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
+                                <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
+                            </LinearGradient>
+                        }
 
-                                {!isUser && <FastImage style={styles.img} source={{uri:item.movie?.poster_url!}} resizeMode={FastImage.resizeMode.contain} />}
+                        {!isUser && <FastImage style={styles.img} source={{uri:item.movie?.poster_url!}} resizeMode={FastImage.resizeMode.contain} />}
 
-                            </View>
-                            <View style={styles.content}>
-                                {item.isMovie && <Text style={styles.name}>{item.movie?.title}</Text>}                                
-                                <View style={styles.rating}>
-                                    <AirbnbRating
-                                        count={5}
-                                        reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
-                                        defaultRating={item.rating}
-                                        size={15}
-                                        showRating={false}
-                                        isDisabled={true}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.toggleIcon}>
-                                <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
-                            </View>
-                        </View>
-
-                        <View style={styles.footerWrapper}>
-                            <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
+                    </View>
+                    <View style={styles.content}>
+                        {item.isMovie && <Text style={styles.name}>{item.movie?.title}</Text>}                                
+                        <View style={styles.rating}>
+                            <AirbnbRating
+                                count={5}
+                                reviews={["Bad", "Meh", "OK", "Good", "Jesus"]}
+                                defaultRating={item.rating}
+                                size={15}
+                                showRating={false}
+                                isDisabled={true}
+                            />
                         </View>
                     </View>
-                </TouchableOpacity>
-            </PanGestureHandler>
-        </GestureHandlerRootView>
+                    <View style={styles.toggleIcon}>
+                        <AntDesignIcon name={'pluscircleo'} size={30} color={Colors.tabActiveColor} />
+                    </View>
+                </View>
 
+                <View style={styles.footerWrapper}>
+                    <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>       
     );
 };
 

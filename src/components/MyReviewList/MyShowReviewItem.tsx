@@ -34,14 +34,6 @@ const MyShowReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
         }
     }, []);
 
-    const onSwipe = (event: PanGestureHandlerGestureEvent) => {
-
-    };
-
-    const onTap = (event: TapGestureHandlerGestureEvent) => {
-
-    };
-
     const gotoUserProfile = (id: string) => {
         navigation.navigate('FollowerFollowing', { userId: id });
     };
@@ -49,8 +41,7 @@ const MyShowReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
 
     return (
         <>            
-            <GestureHandlerRootView>
-            <PanGestureHandler onGestureEvent={onSwipe}>
+         
                 <TouchableOpacity onPress={toggleExpand}>
                     <View style={styles.wrapper}>
                         <View style={styles.headerWrapper}>
@@ -87,9 +78,7 @@ const MyShowReviewItem: React.FC<ItemProps> = ({ item, isUser = true }) => {
                             <Text style={styles.footerText}>{isExpanded ? item.review_text : truncateText(item.review_text, 100)}</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
-            </PanGestureHandler>
-        </GestureHandlerRootView>
+                </TouchableOpacity>         
         </>
     );
 };

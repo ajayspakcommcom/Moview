@@ -7,6 +7,7 @@ import { MovieReviewResponse, ShowReviewResponse } from '../../models/MyReview';
 import Fonts from '../../styles/Fonts';
 import MyMoviewReviewItem from './MyMoviewReviewItem';
 import { hitSlops } from '../../utils/Common';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -67,6 +68,8 @@ const MyReviewList: React.FC<ListProps> = ({ userItem, isUser = true, movies, sh
                         data={movieReviewData}
                         renderItem={({ item }) => <MyMoviewReviewItem item={item} isUser={isUser} />}
                         keyExtractor={moviewKeyExtractor}
+                        scrollEnabled={true} 
+                        nestedScrollEnabled={true}
                     />
                 }
                 </>

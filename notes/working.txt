@@ -7,3 +7,24 @@ Bundle ID: com.spakcomm.moviu
 SKU: spakcomm-moviu-v1
 Apple ID: 6739704580
 
+
+
+button: {
+            display: 'flex',
+            paddingVertical: 10,
+            width: '100%',
+            height: 50,
+            backgroundColor: Colors.tabActiveColor,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',                        
+        },
+        text: {                                    
+            fontFamily: Fonts.Family.Bold,
+            color: Colors.blackColor,
+            fontSize:Fonts.Size.Medium,
+            fontWeight:'700'
+        },
+        rippleEffect: {
+            opacity: 0.5
+        },

@@ -73,6 +73,3 @@ For Release :
 For Debug:
 1) XCode  > Product > Scheme >  Edit Scheme >  Build Configuration > Debug
 
-
-sandeep.parab@sgl-labs.com
-$gl@w$@2023

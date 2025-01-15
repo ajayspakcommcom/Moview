@@ -21,6 +21,7 @@ import { fetchFollowings } from '../../store/slices/followingSlice';
 import { fetchFollowers } from '../../store/slices/followerSlice';
 import HelpSupportModal from '../../components/HelpSupportModal/HelpSupportModal';
 import { Linking } from 'react-native';
+import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 
 type Props = {
     navigation: any;
@@ -32,11 +33,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const { user, logout, userDetail } = useAuth();
     const [myReviews, setMyReviews] = React.useState(0);
-
-    const [dialogVisible, setDialogVisible] = React.useState<boolean>(false);
-    const cancelDialog = () => setDialogVisible(false);
     const [isEditMode, setIsEditMode] = React.useState<boolean>(false);
-
     const { data: moviewReviews } = useSelector((state: RootState) => state.myMovieReview);
     const { data: showReviews } = useSelector((state: RootState) => state.myShowReview);
     const { count: followerCount } = useSelector((state: RootState) => state.myFollower);
@@ -44,8 +41,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const dispatch = useAppDispatch();
 
     const signOutDialog = () => {
-        logout();
-        setDialogVisible(false)
+        logout();        
     };
 
     const gotoScreen = (screen: string) => {
@@ -56,8 +52,15 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         navigation.navigate(tab, { screen: screen });
     };
 
-    const onLogoutHandler = () => {
-        setDialogVisible(true);        
+    const onLogoutHandler = () => {                
+        Alert.alert('Are you sure want to logout?', '', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'destructive',
+            },
+            {text: 'OK', onPress: () =>signOutDialog()},
+          ]);
     };
 
     const getFollowingCount = async () => {
@@ -184,7 +187,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                                     </>
                                 }
                                 {isEditMode && <UserProfileForm onCancel={onEditCancelHandler} />}
-                                <AlertDialog visible={dialogVisible} signOut={signOutDialog} cancelLogout={cancelDialog} isContent={false} title={'Are you sure want to logout?'} />
                             </View>                            
                         </View>
                     }

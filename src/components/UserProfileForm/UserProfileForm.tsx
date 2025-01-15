@@ -92,7 +92,7 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
               {
                 text: 'OK',
                 onPress: () => {
-                  onCancel(false);
+                  onCancel && onCancel(false);
                 },
               },
             ]);
@@ -132,11 +132,11 @@ const UserProfileForm: React.FC<Props> = ({ onCancel }) => {
   };
 
   const cancelHandler = () => {
-    onCancel(false);
+    onCancel && onCancel(false);
   };
 
   const openDeleteHandler = () => {
-    setDialogVisible(true);
+    setDialogVisible(true);    
   };
 
   const deleteHandler = async () => {
@@ -267,7 +267,10 @@ const styles = StyleSheet.create({
     borderRadius:10
   },
   deleteText: {
-    color: Colors.whiteColor        
+    color: Colors.whiteColor, 
+    fontFamily: Fonts.Family.Bold,    
+    fontSize:Fonts.Size.Medium,
+    fontWeight:'700'        
   },
   honest: {
     fontFamily: Fonts.Family.Medium,

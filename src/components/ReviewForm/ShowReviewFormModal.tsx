@@ -45,7 +45,7 @@ const ShowReviewFormModal: React.FC<Props> = ({ showItem, cancel }) => {
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{showItem.title}</Text>
                   </View>        
-                    <ShowReviewForm  showItem={showItem} onPress={() => console.log('Modal')} />                  
+                    <ShowReviewForm  showItem={showItem} onPress={() => cancel && cancel()} />                  
                 </ScrollView>              
             </LinearGradient>
           </View>

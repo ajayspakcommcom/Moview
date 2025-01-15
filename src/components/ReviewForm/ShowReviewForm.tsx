@@ -18,7 +18,7 @@ import { Filter } from 'bad-words'
 
 interface ItemProps {
     showItem: ShowItem,
-    onPress?: (bool: string) => void;
+    onPress?: () => void;
 }
 
 const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
@@ -43,6 +43,7 @@ const ShowReviewForm: React.FC<ItemProps> = ({ showItem, onPress }) => {
     };
 
     const hideDialog = () => {
+        onPress && onPress();
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'show', movie_show_id: showItem._id }));
     };
 

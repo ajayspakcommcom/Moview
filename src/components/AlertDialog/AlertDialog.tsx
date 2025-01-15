@@ -48,11 +48,11 @@ export default React.memo(AlertDialog);
 
 const styles = StyleSheet.create({
     outlinedBtn: {
-        borderWidth:2
+        borderWidth:1, 
     },
     btn: {
-        width:100, 
-        borderRadius:5
+        width:100,         
+        borderRadius:10
     },
     title: {
         fontSize: 18,

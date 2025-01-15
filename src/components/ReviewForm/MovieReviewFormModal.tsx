@@ -44,7 +44,7 @@ const MovieReviewFormModal: React.FC<Props> = ({ movieItem, visible, cancel }) =
                   <View style={styles.titleTextWrapper}>
                     <Text style={styles.titleText}>{movieItem.title}</Text>
                   </View>        
-                    <ReviewForm  movieItem={movieItem} onPress={() => console.log('Modal')} />                  
+                    <ReviewForm  movieItem={movieItem} onPress={() => cancel && cancel()} />                  
                 </ScrollView>              
             </LinearGradient>
           </View>

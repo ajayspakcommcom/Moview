@@ -19,7 +19,7 @@ import { Filter } from 'bad-words'
 
 interface ItemProps {
     movieItem: MovieItem,
-    onPress?: (bool: string) => void;
+    onPress?: () => void;
 }
 
 const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
@@ -36,6 +36,7 @@ const ReviewForm: React.FC<ItemProps> = ({ movieItem, onPress }) => {
     const dispatch = useAppDispatch();
 
     const hideDialog = () => {        
+        onPress && onPress();
         dispatch(createNotification({ url: `${API_URL}notification`, token: user?.token!, user_id: userDetail._id, title: userDetail.firstname, message: comment, type: 'movie', movie_show_id: movieItem._id }));
     };
 

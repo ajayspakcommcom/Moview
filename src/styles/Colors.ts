@@ -21,6 +21,7 @@ const Colors = {
     tagBorderColor: '#A7A9AC',    
     blueColor:'#007AFF', 
     startModalGradientColor:'#333333',    
+    tabTransparentColor: 'rgba(0, 0, 0, 0.80)'
 };
 
 export default Colors;

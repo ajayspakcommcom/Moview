@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blackColor
   },
   tabViewLogoBtn: {
-    flexWrap: 1,
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -355,7 +355,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    position: 'relative'
+    position: 'relative',     
+    backgroundColor:'red'
   },
   movieList: {
     flex: 1,

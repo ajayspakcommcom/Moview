@@ -27,7 +27,7 @@ const TabNavigationOptions: TabOptions = {
                {focused && <FastImage style={styles.icon} source={require(`../../assets/images/icons/home-y.png`)} />}
             </>
         ),
-        tabBarLabel: ''
+        tabBarLabel: ''        
     },
     Search: {
         tabBarIcon: ({ focused, color, size }) => (

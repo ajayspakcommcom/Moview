@@ -69,13 +69,15 @@ function App(): React.JSX.Element {
     tabBarActiveTintColor: Colors.tabActiveColor,
     tabBarInactiveTintColor: Colors.whiteColor,
     tabBarStyle: {
-      backgroundColor: 'rgba(0, 0, 0, 0.80)',
+      backgroundColor: Colors.tabTransparentColor,      
       position: 'absolute',
+      width:'100%',
       borderTopWidth: 0,
       elevation: 0,
       shadowOpacity: 0,
+      height:80
     },
-    tabBarLabelStyle: { fontSize: 10, lineHeight: 0, height: 0 }
+    tabBarLabelStyle: { fontSize: 10, height: 0 }
   };
 
 
@@ -105,7 +107,7 @@ function App(): React.JSX.Element {
               })}
             />
 
-            <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} />
+            {/* <Stack.Screen name="Test1" component={Test1} options={{ animationEnabled: false }} /> */}
             <Tab.Screen name="Search" component={SearchNavigation} options={TabNavigationOptions.Search} />
 
             <Tab.Screen

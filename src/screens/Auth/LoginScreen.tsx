@@ -258,7 +258,8 @@ const styles = StyleSheet.create({
         borderColor: Colors.whiteColor,
         width: '100%',
         alignItems: 'center',
-        padding: 15
+        padding: 15, 
+        borderRadius:10
     }
 });
 

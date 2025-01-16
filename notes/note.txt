@@ -22,7 +22,7 @@ npx react-native run-ios (for default)
 npx react-native run-ios --device "iPhone 16 Pro" (for specific)
 
 xcrun simctl list devices
-xcrun simctl boot A7012AD1-05B1-4AED-97B8-44F7A0A79EFC (Boot and Use Another Simulator)
+xcrun simctl boot C39948C8-B9DC-4BEF-AAF3-BABFCC242572 (Boot and Use Another Simulator)
 xcrun simctl shutdown 424A450E-3581-438D-8BE8-F34B19404A33 (shutdown)
 
 xcrun simctl shutdown all

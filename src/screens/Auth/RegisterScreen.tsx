@@ -231,7 +231,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation }) => {
                             onPressHandler={checked ? handleLogin : () => console.log('Ram...')}
                             textSize={20}
                             //isDisabled={(checked) ? true : false}                        
-                            style={{ backgroundColor: checked ? Colors.tabActiveColor : Colors.textInputDisabled }}
+                            style={{ backgroundColor: checked ? Colors.tabActiveColor : Colors.textInputDisabled,  }}
                         />
 
                         <View style={styles.footerTextWrapper}>
@@ -376,7 +376,8 @@ const styles = StyleSheet.create({
         borderColor: Colors.whiteColor,
         width: '100%',
         alignItems: 'center',
-        padding: 15
+        padding: 15, 
+        borderRadius:10
     }
 });
 

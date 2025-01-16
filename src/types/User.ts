@@ -13,4 +13,5 @@ export type UserItem = {
     username?: string;
     followers: any[];
     following: any[];
+    biography: string;
 }

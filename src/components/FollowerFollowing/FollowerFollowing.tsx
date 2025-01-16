@@ -95,8 +95,7 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
 
  
     const followHandler = async () => {        
-        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userData?._id!, followerId: userDetail._id }));          
-        console.log('followHandler', response);
+        const response = await dispatch(createFollower({ url: `${API_URL}follow`, token: user?.token!, userId: userData?._id!, followerId: userDetail._id }));                  
          if (response.meta.requestStatus === 'fulfilled') { 
              setIsFollowing(true);
              getFollowerCount();
@@ -119,17 +118,12 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
             <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <View style={styles.userTextIcon}>
-                        <View style={styles.userIcon}>
-                            {/* {Platform.OS === 'android' && <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />}
-                            {Platform.OS === 'ios' && <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />} */}
-
-                            {/* {Platform.OS === 'android' && <Icon name={'user-alt'} size={40} color={Colors.tabBgColor} style={styles.icon} />} */}
-                            <FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} />
-
+                        <View style={[styles.userIcon]}>
+                            <FastImage style={{width:25, height:25}} source={require('../../assets/images/icons/profile-y.png')} />
                         </View>
                         <View>
                             <Text style={styles.name}>{capitalizeFirstLetter(userData?.firstname as string)}</Text>
-                            <Text style={styles.critic}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+                            <Text style={styles.critic}>{userData?.biography!}</Text>
                         </View>
                     </View>
                 </View>
@@ -149,6 +143,8 @@ const FollowerFollowing: React.FC<Props> = ({ userData }) => {
                     <Text style={styles.follText}>Reviewed</Text>
                 </View>
             </View>
+
+            
 
             {isFollowing &&
                 <CustomButton

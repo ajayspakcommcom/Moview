@@ -11,6 +11,7 @@ import { API_URL } from '../../configure/config.ios';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import { useAppDispatch } from '../../store/index';
 import { createFollower,  removeFollower } from '../../store/slices/followerSlice';
+import FastImage from 'react-native-fast-image';
 
 type User = {
     _id: string;
@@ -82,10 +83,8 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
         <>            
             <View style={styles.mainWrapper}>
                 <View style={styles.container}>
-                    <View style={styles.user}>
-                        <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.gradient}>
-                            <Icon name={'user-circle'} size={30} color={Colors.whiteColor} />
-                        </LinearGradient>
+                    <View style={styles.user}>                      
+                        <View style={styles.user}><FastImage style={styles.icon} source={require('../../assets/images/icons/profile-y.png')} /></View>
                     </View>                    
                     <Text style={styles.name}>{follower.followerId.firstname}</Text>
                 </View>
@@ -124,6 +123,18 @@ const FollowerItem: React.FC<FollowerItemProps> = ({ follower }) => {
 };
 
 const styles = StyleSheet.create({
+    icon: {
+        width: 25,
+        height: 25
+    },
+    user: {
+        alignItems:'center',
+        justifyContent:'center',
+        width: 80,
+        height:80, 
+        backgroundColor:Colors.whiteColor, 
+        borderRadius:80
+    },
      dialogueHeading: {
         fontSize:Fonts.Size.Medium,
         fontFamily: Fonts.Family.Bold,
@@ -134,11 +145,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         height: 40,
         backgroundColor: Colors.tabActiveColor,
-        borderRadius: 1,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 10,
-        width: 100
+        width: 100, 
     },
     text: {
         fontSize: Fonts.Size.Medium - 1,
@@ -176,9 +187,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.whiteColor,
         paddingLeft: 10
-    },
-    user: {
-        width: 30
     },
     gradient: {
         borderRadius: 30

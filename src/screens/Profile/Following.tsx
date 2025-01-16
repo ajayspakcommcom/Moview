@@ -38,12 +38,11 @@ const Following: React.FC<Props> = ({ navigation, route }) => {
         navigation.setOptions({
             title: `Followings`,
             headerLeft: () => {
-                return  <Pressable onPress={backButtonHandler}>
-                {Platform.OS === 'android' && <FastImage style={styles.backBtn} source={require('../../assets/images/icons/back-w.png')} />}
-                {Platform.OS === 'ios' && <View style={styles.iosBackBtnWrapper}>
+                return  <Pressable onPress={backButtonHandler}>                
+                <View style={styles.iosBackBtnWrapper}>
                         <FastImage style={[styles.iosBackBtnImg]}  source={require('../../assets/images/icons/back-w-1.png')} />
                         <Text style={[styles.iosBackBtnText]}>  Back</Text>  
-                    </View>}
+                    </View>
             </Pressable>
             },
             headerRight: () => {

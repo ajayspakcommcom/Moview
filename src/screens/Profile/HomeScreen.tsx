@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: '100%',
         minHeight: 2,
-        backgroundColor: Colors.tabBgColor,
+        // backgroundColor: Colors.tabBgColor,
         borderRadius: 50
     },
     footerBtnsWrapper:{

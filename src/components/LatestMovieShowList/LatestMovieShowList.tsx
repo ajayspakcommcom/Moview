@@ -52,8 +52,7 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
                 const sortedData = result.data.sort((a: any, b: any) => {
                     return a.title.localeCompare(b.title);
                 });
-
-                setLatestMovieShowList(sortedData);
+                setLatestMovieShowList(sortedData);                                
                 setLoading(false);
 
             }
@@ -138,7 +137,6 @@ const LatestMovieShowList: React.FC<LatestMovieShowListProps> = ({filteredData})
                     colors={[Colors.blackColor, Colors.darkBackgroudColor, Colors.playPauseButtonColor]}
                     progressBackgroundColor={Colors.tabActiveColor}
                 />}
-
                 numColumns={2}
                 extraData={latestMovieShowList}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}                

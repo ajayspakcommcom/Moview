@@ -212,8 +212,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* <Header onPressedHandler={onHeaderPressedHandler} navigation={navigation} notificationCount={notificationCount} />   */}
+    <View style={styles.container}>      
       <View style={styles.movieList}>
         <React.Suspense fallback={<Loading />}>
           <TabView

@@ -130,10 +130,10 @@ const styles = StyleSheet.create({
     user: {
         alignItems:'center',
         justifyContent:'center',
-        width: 80,
-        height:80, 
+        width: 50,
+        height:50, 
         backgroundColor:Colors.whiteColor, 
-        borderRadius:80
+        borderRadius:50
     },
      dialogueHeading: {
         fontSize:Fonts.Size.Medium,
